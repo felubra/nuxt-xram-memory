@@ -17,12 +17,9 @@ export default {
       src="/img/logo.svg" 
       alt="XRAM-Memory logo" 
       title="Logotipo do XRAM-Memory"
-      width="370px">
+      width="100%">
   </div>
 </template>
 
 <style scoped>
-div {
-  padding: 150px;
-}
 </style>
