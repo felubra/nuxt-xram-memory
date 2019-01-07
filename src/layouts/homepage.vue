@@ -7,7 +7,7 @@
         <el-col 
           :span="5" 
           class="logo">
-          <xram-memory-logo/>
+          <xram-memory-logo width="250px"/>
         </el-col>
       </el-row>
     </el-header>

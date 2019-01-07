@@ -6,18 +6,24 @@
  *  - TODO: Imagem deve estar envolvida num link para a página inicial do site.
  */
 export default {
-  name: 'XramMemoryLogo'
+  name: 'XramMemoryLogo',
+  props: {
+    width: {
+      type: String,
+      default: '100%'
+    }
+  }
 }
 </script>
 
 
 <template>
   <div>
-    <img 
-      src="/img/logo.svg" 
-      alt="XRAM-Memory logo" 
-      title="Logotipo do XRAM-Memory"
-      width="100%">
+    <img
+      :width="width"
+      src="/img/logo.svg"
+      alt="XRAM-Memory logo"
+      title="Logotipo do XRAM-Memory">
   </div>
 </template>
 
