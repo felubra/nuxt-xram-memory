@@ -12,8 +12,9 @@ export default {
 
 <template>
   <div>
-    <el-input 
-      placeholder="Pesquisar o acervo" 
+    <el-input
+      :autofocus="true"
+      placeholder="Pesquisar o acervo"
       suffix-icon="el-icon-search"/>
   </div>
 </template>
