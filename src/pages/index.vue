@@ -1,41 +1,33 @@
 <template>
   <section class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        nuxt-xram-memory
-      </h1>
-      <h2 class="subtitle">
-        My neat Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+    <ReactiveBase app="archived_news-index" url="http://127.0.0.1:9200" >
+       <DataSearch
+        className="result-list-container"
+        categoryField="authors.raw"
+        componentId="BookSensor"
+        :dataField="['title', 'title.search']"
+        :URLParams="true"
+      />
+      <ReactiveList
+      componentId="SearchResult"
+      dataField="title.raw"
+      className="result-list-container"
+      :pagination="true"
+      :from="0"
+      :size="5"
+      :react="{and: ['BookSensor']}"
+    >
+        <div slot="onData" slot-scope="{ item }">
+          {{item.title}}
+        </div>
+
+      </ReactiveList>
+    </ReactiveBase>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
-export default {
-  components: {
-    Logo
-  }
-}
+export default {}
 </script>
 
 <style>
