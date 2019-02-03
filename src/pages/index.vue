@@ -1,33 +1,29 @@
 <template>
   <section class="container">
-    <ReactiveBase app="archived_news-index" url="http://127.0.0.1:9200" >
-       <DataSearch
-        className="result-list-container"
-        categoryField="authors.raw"
-        componentId="BookSensor"
-        :dataField="['title', 'title.search']"
+    <ReactiveBase app="news-index" url="http://127.0.0.1:9200">
+      <DataSearch
+        class="result-list-container"
+        categoryField="authors"
+        componentId="SearchSensor"
+        :fieldWeights="[10,7,1]"
+        :dataField="['title', 'teaser']"
+        iconPosition="right"
+        :autosuggest="false"
         :URLParams="true"
       />
-      <ReactiveList
-      componentId="SearchResult"
-      dataField="title.raw"
-      className="result-list-container"
-      :pagination="true"
-      :from="0"
-      :size="5"
-      :react="{and: ['BookSensor']}"
-    >
-        <div slot="onData" slot-scope="{ item }">
-          {{item.title}}
-        </div>
-
-      </ReactiveList>
+      <SingleDropdownList componentId="FilterSensor" data-field="keywords" title="Palavras-chave"/>
+      <ReactiveTagCloud/>
     </ReactiveBase>
   </section>
 </template>
 
 <script>
-export default {}
+import ReactiveTagCloud from '~/components/ReactiveTagCloud'
+export default {
+  components: {
+    ReactiveTagCloud
+  }
+}
 </script>
 
 <style>
