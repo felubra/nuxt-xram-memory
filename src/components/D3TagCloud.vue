@@ -80,10 +80,20 @@ export default {
     const layout = d3Cloud()
       .size([960, 500])
       .words(this.words)
-      .padding(5)
+      .padding(2)
       .rotate(function(d) {
-        const signal = Math.random() < 0.5 ? -1 : 1
-        return ~~(Math.random() * signal * 2 * (90 - Math.max(d.size, 90)))
+        const avaliableAngles = [15, 45, 60, 90]
+        const angle =
+          avaliableAngles[Math.floor(Math.random() * avaliableAngles.length)]
+        const avNums = [2, 3, 5, 9]
+        const numSteps = avNums[Math.floor(Math.random() * avNums.length)]
+        const step = (angle * 2) / numSteps
+        const angles = Array.apply(undefined, Array(numSteps + 1)).map(
+          (n, i, c) => {
+            return i * step - angle
+          }
+        )
+        return angles[Math.floor(Math.random() * angles.length)]
       })
       .font('Asmath Solid')
       .fontSize(function(d) {
