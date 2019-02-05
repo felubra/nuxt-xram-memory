@@ -18,9 +18,35 @@ export default {
       return this.keywords.map(keyword => {
         return {
           text: keyword.key,
-          size: 16 * Math.log(keyword.doc_count * 100)
+          size: (keyword.doc_count / this.wordsStdDeviation) * 14
         }
       })
+    },
+    wordsStdDeviation() {
+      function standardDeviation(values) {
+        const avg = average(values)
+
+        const squareDiffs = values.map(function(value) {
+          const diff = value - avg
+          const sqrDiff = diff * diff
+          return sqrDiff
+        })
+
+        const avgSquareDiff = average(squareDiffs)
+
+        const stdDev = Math.sqrt(avgSquareDiff)
+        return stdDev
+      }
+
+      function average(data) {
+        const sum = data.reduce(function(sum, value) {
+          return sum + value
+        }, 0)
+
+        const avg = sum / data.length
+        return avg
+      }
+      return standardDeviation(this.keywords.map(keyword => keyword.doc_count))
     }
   },
   mounted() {
@@ -42,7 +68,7 @@ export default {
         .style('font-size', function(d) {
           return d.size + 'px'
         })
-        .style('font-family', 'Impact')
+        .style('font-family', 'Asmath Solid')
         .attr('text-anchor', 'middle')
         .attr('transform', function(d) {
           return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')'
@@ -55,10 +81,11 @@ export default {
       .size([960, 500])
       .words(this.words)
       .padding(5)
-      .rotate(function() {
-        return ~(Math.random() * 2 * 90)
+      .rotate(function(d) {
+        const signal = Math.random() < 0.5 ? -1 : 1
+        return ~~(Math.random() * signal * 2 * (90 - Math.max(d.size, 90)))
       })
-      .font('sans-serif')
+      .font('Asmath Solid')
       .fontSize(function(d) {
         return d.size
       })

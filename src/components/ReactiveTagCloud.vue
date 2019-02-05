@@ -20,7 +20,7 @@ export default {
         return {
           aggs: {
             keywords: {
-              terms: { field: 'keywords' }
+              terms: { field: 'keywords', size: 150 }
             }
           },
           size: 0
