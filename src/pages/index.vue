@@ -13,6 +13,19 @@
         placeholder="Pesquisar no acervo"
         :showClear="false"
       />
+      <ReactiveList
+        :react="{and: ['SearchSensor']}"
+        componentId="SearchResult"
+        dataField="title.raw"
+        className="result-list-container"
+        :pagination="true"
+        :from="0"
+        :size="5"
+      >
+      <div slot="renderData" slot-scope="{ item }">
+        <h1>{{item.title}}</h1>
+      </div>
+      </ReactiveList>
       <no-ssr>
         <ReactiveTagCloud/>
       </no-ssr>
