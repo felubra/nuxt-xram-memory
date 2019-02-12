@@ -1,5 +1,5 @@
 <template>
-  <ReactiveComponent componentId="componentId" :defaultQuery="defaultQuery">
+  <ReactiveComponent componentId="componentId" :defaultQuery="query">
     <div slot-scope="{ aggregations }">
       <D3TagCloud :keywords="aggregations.keywords.buckets"/>
     </div>
@@ -14,22 +14,34 @@ export default {
     D3TagCloud
   },
   props: {
-    defaultQuery: {
-      type: Function,
-      default: function() {
+    customQuery: {
+      type: Function
+    },
+    componentId: {
+      type: String,
+      default: 'ReactiveTagCloud'
+    },
+    maxWords: {
+      type: Number,
+      default: 150
+    }
+  },
+  computed: {
+    query() {
+      if (this.customQuery) {
+        return this.customQuery
+      }
+      const maxWords = this.maxWords
+      return function() {
         return {
           aggs: {
             keywords: {
-              terms: { field: 'keywords', size: 150 }
+              terms: { field: 'keywords', size: maxWords }
             }
           },
           size: 0
         }
       }
-    },
-    componentId: {
-      type: String,
-      default: 'ReactiveTagCloud'
     }
   },
   name: 'ReactiveTagCloud',
