@@ -9,7 +9,9 @@
         :dataField="['title', 'teaser']"
         iconPosition="right"
         :autosuggest="false"
-        :URLParams="true"
+        className="searchBar"
+        placeholder="Pesquisar no acervo"
+        :showClear="false"
       />
       <no-ssr>
         <ReactiveTagCloud/>
@@ -57,5 +59,8 @@ export default {
 
 .links {
   padding-top: 15px;
+}
+.searchBar {
+  margin: 10px;
 }
 </style>
