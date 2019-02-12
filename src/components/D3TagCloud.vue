@@ -4,6 +4,7 @@
 
 <script>
 const d3Cloud = require('d3-cloud')
+const chromaJS = require('chroma-js')
 const d3 = require('d3')
 export default {
   name: 'D3TagCloud',
@@ -67,6 +68,13 @@ export default {
         .append('text')
         .style('font-size', function(d) {
           return d.size + 'px'
+        })
+        .style('fill', function(d) {
+          console.log(d.size)
+          const color = chromaJS.scale(['#AA0000', '#f00'])(
+            (d.size - 1) / (100 - 1)
+          )
+          return color
         })
         .style('font-family', 'Asmath Solid')
         .attr('text-anchor', 'middle')
