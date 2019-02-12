@@ -5,6 +5,7 @@
 <script>
 const d3Cloud = require('d3-cloud')
 const chromaJS = require('chroma-js')
+const slugify = require('slugify')
 const d3 = require('d3')
 export default {
   name: 'D3TagCloud',
@@ -80,6 +81,10 @@ export default {
         .attr('text-anchor', 'middle')
         .attr('transform', function(d) {
           return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')'
+        })
+        .append('a')
+        .attr('href', function(d) {
+          return '/keyword/' + slugify(d.text)
         })
         .text(function(d) {
           return d.text
