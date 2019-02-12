@@ -11,8 +11,9 @@
         :autosuggest="false"
         :URLParams="true"
       />
-      <SingleDropdownList componentId="FilterSensor" data-field="keywords" title="Palavras-chave"/>
-      <ReactiveTagCloud/>
+      <no-ssr>
+        <ReactiveTagCloud/>
+      </no-ssr>
     </ReactiveBase>
   </section>
 </template>
