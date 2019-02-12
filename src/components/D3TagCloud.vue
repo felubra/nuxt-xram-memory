@@ -71,7 +71,6 @@ export default {
           return d.size + 'px'
         })
         .style('fill', function(d) {
-          console.log(d.size)
           const color = chromaJS.scale(['#AA0000', '#f00'])(
             (d.size - 1) / (100 - 1)
           )
