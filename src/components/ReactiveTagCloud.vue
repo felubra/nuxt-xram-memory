@@ -1,7 +1,7 @@
 <template>
   <ReactiveComponent componentId="componentId" :defaultQuery="query">
     <div slot-scope="{ aggregations }">
-      <D3TagCloud :keywords="aggregations.keywords.buckets"/>
+      <D3TagCloud :keywords="aggregations.keywords.names.buckets"/>
     </div>
   </ReactiveComponent>
 </template>
@@ -34,14 +34,33 @@ export default {
       const maxWords = this.maxWords
       return function() {
         return {
-          aggs: {
-            keywords: {
-              terms: { field: 'keywords', size: maxWords }
+          "size" : 0,
+          "aggs": {
+            "keywords": { 
+              "nested": {
+                "path": "keywords"
+              },
+              "aggs": {
+                "slugs":{
+                  "terms": {
+                    "field": "keywords.slug"
+                  }
+                },
+                "names":{
+                    "terms": {
+                      "field": "keywords.name"
+                    }
+                }
+              }
             }
-          },
-          size: 0
+          }
         }
       }
+    },
+    keywords() {
+      /*TODO: [
+        {'slug': 'manha', "name":"manhã"}
+      ]*/
     }
   },
   name: 'ReactiveTagCloud',
