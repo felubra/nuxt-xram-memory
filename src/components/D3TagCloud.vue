@@ -7,6 +7,9 @@ const d3Cloud = require('d3-cloud')
 const chromaJS = require('chroma-js')
 const slugify = require('slugify')
 const d3 = require('d3')
+
+import {TAGCLOUD_KEYWORD_LOWKEY_COLOR, TAGCLOUD_KEYWORD_HIGHKEY_COLOR} from '@/config/constants'
+
 export default {
   name: 'D3TagCloud',
   props: {
@@ -61,6 +64,7 @@ export default {
         }
         d3.select(this.$refs.sky)
           .append('svg')
+          .attr('xmlns', "http://www.w3.org/2000/svg")
           .attr('width', this.layout.size()[0])
           .attr('height', this.layout.size()[1])
           .append('g')
@@ -75,12 +79,17 @@ export default {
           .selectAll('text')
           .data(words)
           .enter()
+          .append('a')
+          .attr('href', function(d) {
+            return '/keyword/' + slugify(d.text)
+          })
+          .attr('class', 'keywordLink')
           .append('text')
           .style('font-size', function(d) {
             return d.size + 'px'
           })
           .style('fill', function(d) {
-            const color = chromaJS.scale(['#AA0000', '#f00'])(
+            const color = chromaJS.scale([TAGCLOUD_KEYWORD_HIGHKEY_COLOR,TAGCLOUD_KEYWORD_LOWKEY_COLOR])(
               (d.size - 1) / (100 - 1)
             )
             return color
@@ -89,10 +98,6 @@ export default {
           .attr('text-anchor', 'middle')
           .attr('transform', function(d) {
             return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')'
-          })
-          .append('a')
-          .attr('href', function(d) {
-            return '/keyword/' + slugify(d.text)
           })
           .text(function(d) {
             return d.text
