@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <ReactiveBase app="artifact_news" url="http://127.0.0.1:9200">
+    
       <DataSearch
         class="result-list-container"
         categoryField="authors"
@@ -29,7 +29,7 @@
       <no-ssr>
         <ReactiveTagCloud/>
       </no-ssr>
-    </ReactiveBase>
+    
   </section>
 </template>
 
