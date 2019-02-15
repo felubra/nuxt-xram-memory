@@ -45,6 +45,9 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
   },
+  env: {
+    mediaUrl: process.env.MEDIA_SERVER_URL || 'http://localhost:8000'
+  },
 
   /*
   ** Build configuration
