@@ -43,13 +43,15 @@ export default {
               "aggs": {
                 "slugs":{
                   "terms": {
-                    "field": "keywords.slug"
-                  }
+                    "field": "keywords.slug",
+                    "size": maxWords
+                  },
                 },
                 "names":{
                     "terms": {
-                      "field": "keywords.name"
-                    }
+                      "field": "keywords.name",
+                      "size": maxWords
+                    },
                 }
               }
             }
