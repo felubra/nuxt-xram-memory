@@ -1,58 +1,55 @@
 <template>
   <section class="container">
-    
-      <ReactiveList
-        :react="{and: ['SearchSensor']}"
-        componentId="SearchResult"
-        dataField="title.raw"
-        :defaultQuery=query
-        className="result-list-container"
-        :pagination="true"
-        :from="0"
-        :size="5"
-      >
+    <ReactiveList
+      :react="{and: ['SearchSensor']}"
+      component-id="SearchResult"
+      data-field="title.raw"
+      :default-query="query"
+      class-name="result-list-container"
+      :pagination="true"
+      :from="0"
+      :size="5"
+    >
       <div slot="renderData" slot-scope="{ item }">
-        <NewsCard :newsItem="item"></NewsCard>
+        <NewsCard :news-item="item" />
       </div>
-      </ReactiveList>
-    
+    </ReactiveList>
   </section>
 </template>
 
 <script>
-//TODO: inserir o título da palavra-chave
+// TODO: inserir o título da palavra-chave
 import NewsCard from '~/components/NewsCard'
 
 export default {
-  name: 'slugPage',
+  name: 'SlugPage',
+  components: {
+    NewsCard
+  },
   computed: {
     slug() {
-      return this.$route.params['slug'] || ""
+      return this.$route.params.slug || ''
     },
     query() {
       const slug = this.slug
-        return function () {
-          return {
-            "query": {
-              "nested": {
-                "path": "keywords",
-                "query": {
-                  "match": {
-                    "keywords.slug": slug
-                  }
+      return function() {
+        return {
+          query: {
+            nested: {
+              path: 'keywords',
+              query: {
+                match: {
+                  'keywords.slug': slug
                 }
               }
             }
           }
-        };
-    },
-  },
-  components: {
-    NewsCard
+        }
+      }
+    }
   }
 }
 </script>
 
 <style>
-
 </style>

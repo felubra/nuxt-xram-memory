@@ -1,6 +1,6 @@
 # nuxt-xram-memory
 
-> My neat Nuxt.js project
+> Site do XRAM-Memory
 
 ## Build Setup
 

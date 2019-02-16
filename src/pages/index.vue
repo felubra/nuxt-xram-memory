@@ -1,35 +1,33 @@
 <template>
   <section class="container">
-    
-      <DataSearch
-        class="result-list-container"
-        categoryField="authors"
-        componentId="SearchSensor"
-        :fieldWeights="[10,7,1]"
-        :dataField="['title', 'teaser']"
-        iconPosition="right"
-        :autosuggest="false"
-        className="searchBar"
-        placeholder="Pesquisar no acervo"
-        :showClear="false"
-      />
-      <ReactiveList
-        :react="{and: ['SearchSensor']}"
-        componentId="SearchResult"
-        dataField="title.raw"
-        className="result-list-container"
-        :pagination="true"
-        :from="0"
-        :size="5"
-      >
+    <DataSearch
+      class="result-list-container"
+      category-field="authors"
+      component-id="SearchSensor"
+      :field-weights="[10,7,1]"
+      :data-field="['title', 'teaser']"
+      icon-position="right"
+      :autosuggest="false"
+      class-name="searchBar"
+      placeholder="Pesquisar no acervo"
+      :show-clear="false"
+    />
+    <ReactiveList
+      :react="{and: ['SearchSensor']}"
+      component-id="SearchResult"
+      data-field="title.raw"
+      class-name="result-list-container"
+      :pagination="true"
+      :from="0"
+      :size="5"
+    >
       <div slot="renderData" slot-scope="{ item }">
-        <h1>{{item.title}}</h1>
+        <h1>{{ item.title }}</h1>
       </div>
-      </ReactiveList>
-      <no-ssr>
-        <ReactiveTagCloud/>
-      </no-ssr>
-    
+    </ReactiveList>
+    <no-ssr>
+      <ReactiveTagCloud />
+    </no-ssr>
   </section>
 </template>
 
