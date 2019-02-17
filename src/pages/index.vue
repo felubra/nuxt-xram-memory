@@ -22,8 +22,9 @@
       :size="5"
     >
       <div slot="renderData" slot-scope="{ item }">
-        <h1>{{ item.title }}</h1>
+        <NewsCard :news-item="item" />
       </div>
+
     </ReactiveList>
     <no-ssr>
       <ReactiveComponent component-id="ReactiveD3TagCloud" :default-query="tagCloudQuery" >
@@ -37,6 +38,7 @@
 
 <script>
 import ReactiveD3TagCloud from '~/components/ReactiveD3TagCloud'
+import NewsCard from '~/components/NewsCard'
 import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {
   components: {
