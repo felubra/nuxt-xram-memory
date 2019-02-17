@@ -26,19 +26,29 @@
       </div>
     </ReactiveList>
     <no-ssr>
-      <ReactiveTagCloud />
+      <ReactiveComponent component-id="ReactiveD3TagCloud" :default-query="tagCloudQuery" >
+        <div slot-scope="{ aggregations, error }">
+	        <ReactiveD3TagCloud :aggregations="aggregations" :error="error"/>
+        </div>
+      </ReactiveComponent>
     </no-ssr>
   </section>
 </template>
 
 <script>
-/**
-TODO: lidar com estados de erro, atualmente a página fica em branco.
- */
-import ReactiveTagCloud from '~/components/ReactiveTagCloud'
+import ReactiveD3TagCloud from '~/components/ReactiveD3TagCloud'
+import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {
   components: {
-    ReactiveTagCloud
+    ReactiveD3TagCloud,
+    NewsCard
+  },
+  computed: {
+    tagCloudQuery() {
+      return function() {
+        return TAGCLOUD_QUERY
+      }
+    }
   }
 }
 </script>
