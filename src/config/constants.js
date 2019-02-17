@@ -9,16 +9,18 @@ export const TAGCLOUD_QUERY = {
         path: 'keywords'
       },
       aggs: {
-        slugs: {
-          terms: {
-            field: 'keywords.slug',
-            size: TAGCLOUD_NUM_KEYWORDS
-          }
-        },
         names: {
           terms: {
             field: 'keywords.name',
             size: TAGCLOUD_NUM_KEYWORDS
+          },
+          aggs: {
+            slug: {
+              terms: {
+                field: 'keywords.slug',
+                size: 1
+              }
+            }
           }
         }
       }

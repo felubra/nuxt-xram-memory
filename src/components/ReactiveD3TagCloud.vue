@@ -22,17 +22,14 @@ export default {
       // TODO: calcular o fator de tamanho da fonte em função da largura do container
       const FONT_SIZE_DELTA = 16
       if (this.hasKeywords()) {
-        return this.$props.aggregations.keywords.names.buckets.map(
-          (keyword, i) => {
-            return {
-              text: keyword.key,
-              slug: this.$props.aggregations.keywords.slugs.buckets[i].key,
-              size:
-                (keyword.doc_count / this.keywordsStdDeviation) *
-                FONT_SIZE_DELTA
-            }
+        return this.$props.aggregations.keywords.names.buckets.map(keyword => {
+          return {
+            text: keyword.key,
+            slug: keyword.slug.buckets[0].key,
+            size:
+              (keyword.doc_count / this.keywordsStdDeviation) * FONT_SIZE_DELTA
           }
-        )
+        })
       }
       return words
     },
@@ -77,13 +74,8 @@ export default {
         // checking for when component gets the aggregation results
         this.$props.aggregations &&
         this.$props.aggregations.keywords &&
-        this.$props.aggregations.keywords.slugs &&
-        this.$props.aggregations.keywords.slugs.buckets.length > 0 &&
-        this.$props.aggregations &&
-        this.$props.aggregations.keywords &&
         this.$props.aggregations.keywords.names &&
-        this.$props.aggregations.keywords.names.buckets.length ===
-          this.$props.aggregations.keywords.slugs.buckets.length
+        this.$props.aggregations.keywords.names.buckets.length > 0
       )
     }
   }
