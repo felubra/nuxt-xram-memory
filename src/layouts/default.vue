@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ReactiveBase app="artifact_news" url="http://127.0.0.1:9200" :theme="defaultTheme">
+    <ReactiveBase app="artifact_news" url="https://cvajs5fgeg:xjdngkcr5e@xram-memory-testing-1939220761.us-west-2.bonsaisearch.net" :theme="defaultTheme">
       <nuxt />
     </ReactiveBase>
   </div>
@@ -48,11 +48,5 @@ html {
 body {
   padding: 0;
   margin: 0;
-}
-
-@media only screen and (min-width: 410px) {
-  body {
-    padding: 1rem;
-  }
 }
 </style>
