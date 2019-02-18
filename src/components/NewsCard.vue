@@ -3,11 +3,12 @@
     <div class="news-body">
       <img v-if="image" :src="image" alt="" @error="removeImage">
       <div class="news-text">
+        <p v-if="label" class="label">Notícia</p>
         <h3>{{ newsItem.title }}</h3>
         <p class="teaser">{{teaser}}</p>
       </div>
     </div>
-    <div class="news-footer">
+    <div v-if="footer" class="news-footer">
       <p><a v-if="newspaper" :href="newspaper.url" class="newspaper"><strong>{{newspaper.title}}</strong></a> {{published_date}}</p>
     </div>
   </div>
@@ -24,6 +25,18 @@ export default {
       default: function() {
         return {}
       }
+    },
+    label: {
+      type: Boolean,
+      default: false
+    },
+    footer: {
+      type: Boolean,
+      default: true
+    },
+    info: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -73,10 +86,17 @@ export default {
 </script>
 
 <style scoped>
+p.label {
+  color: #aa0000;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.75rem;
+  font-family: 'Cabin', sans-serif;
+}
 div.news-card {
   background: #f3f1f1;
   padding: 1rem 1rem 0.6rem 1rem;
-  margin: 1.2rem 0;
   display: flex;
   flex-direction: column;
   text-align: center;
