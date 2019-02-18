@@ -12,20 +12,25 @@
       placeholder="Pesquisar no acervo"
       :show-clear="false"
     />
-    <ReactiveList
-      :react="{and: ['SearchSensor']}"
-      component-id="SearchResult"
-      data-field="title.raw"
-      class-name="result-list-container"
-      :pagination="true"
-      :from="0"
-      :size="5"
-    >
-      <div slot="renderData" slot-scope="{ item }">
-        <NewsCard :news-item="item" />
-      </div>
+    <div class="results">
+      <ReactiveList
+        :react="{and: ['SearchSensor']}"
+        component-id="SearchResult"
+        data-field="title.raw"
+        class-name="result-list-container"
+        :inner-class="{
+          resultsInfo: 'results-info'
+        }"
+        :pagination="true"
+        :from="0"
+        :size="5"
+      >
+        <div slot="renderData" slot-scope="{ item }">
+          <NewsCard class="news-card" :news-item="item" />
+        </div>
 
-    </ReactiveList>
+      </ReactiveList>
+    </div>
     <no-ssr>
       <ReactiveComponent component-id="ReactiveD3TagCloud" :default-query="tagCloudQuery" >
         <div slot-scope="{ aggregations, error }">
@@ -58,5 +63,17 @@ export default {
 <style>
 .searchBar {
   margin: 10px;
+}
+.results {
+  background: #e0e0e0;
+}
+.results-info {
+  color: #555555;
+  text-transform: uppercase;
+  font-family: 'Cabin', sans-serif;
+  margin-left: 12px;
+}
+.news-card {
+  margin: 0.75rem;
 }
 </style>
