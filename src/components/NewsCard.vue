@@ -1,14 +1,14 @@
 <template>
   <div class="news-card">
     <div class="news-body">
-      <img v-if="image" :src="image" alt="">
+      <img v-if="image" :src="image" alt="" @error="removeImage">
       <div class="news-text">
         <h3>{{ newsItem.title }}</h3>
         <p class="teaser">{{teaser}}</p>
       </div>
     </div>
     <div class="news-footer">
-      <p><strong>O Estado de São Paulo</strong> 14/02/2019</p>
+      <p><a v-if="newspaper" :href="newspaper.url" class="newspaper"><strong>{{newspaper.title}}</strong></a> {{published_date}}</p>
     </div>
   </div>
 </template>
@@ -39,6 +39,34 @@ export default {
       }
       /** TODO: retorne um ícone padrão se não houver imagem */
       return ''
+    },
+    newspaper() {
+      if (
+        this.newsItem.newspaper &&
+        this.newsItem.newspaper.url &&
+        this.newsItem.newspaper.title
+      ) {
+        return {
+          url: this.newsItem.newspaper.url,
+          title: this.newsItem.newspaper.title
+        }
+      }
+      return false
+    },
+    published_date() {
+      if (this.newsItem.published_date) {
+        try {
+          return new Date(this.newsItem.published_date).toLocaleDateString()
+        } catch {
+          return ''
+        }
+      }
+      return ''
+    }
+  },
+  methods: {
+    removeImage(e) {
+      e.target.remove()
     }
   }
 }
@@ -69,13 +97,22 @@ div.news-body img {
 
 div.news-body h3 {
   font-weight: 500;
-  margin: 0 0.5rem 1rem;
+  margin: 0 0 1rem;
   font-size: 1.25rem;
   line-height: 1.2;
 }
 
 div.news-footer {
   justify-content: flex-end;
+}
+div.news-footer a.newspaper {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #333333;
+}
+
+div.news-footer a.newspaper:visited {
+  color: #333333;
 }
 
 div.news-footer p {
@@ -98,16 +135,18 @@ div.news-footer p {
 
   div.news-body img {
     align-self: baseline;
+    margin: 0 0.5rem 0 0rem;
   }
 
   div.news-footer p {
     font-size: 0.8rem;
+    margin: 0.5rem 0 0 0;
   }
 
   div.news-body p.teaser {
     display: block;
     text-align: justify;
-    margin: 0 0.5rem 1.7rem;
+    margin: 0;
   }
 }
 </style>
