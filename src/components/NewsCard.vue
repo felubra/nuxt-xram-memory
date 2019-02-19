@@ -15,6 +15,7 @@
 </template>
 
 <script>
+/**TODO: adicionar prop centered */
 const smartTruncate = require('smart-truncate')
 
 export default {
