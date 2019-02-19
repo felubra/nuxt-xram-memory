@@ -12,17 +12,17 @@
       <dt>Data de publicação</dt>
       <dd>{{published_date}}</dd>
     </div>
-    <div v-if="captures_links">
-      <dt>Capturas</dt>
-      <dd>{{captures_links}}</dd>
+    <div v-if="pdf_captures">
+      <dt>Capturas em PDF</dt>
+      <dd><a v-for="capture in pdf_captures" :key="capture.url" :href="capture.url">{{capture.title}} </a> </dd>
     </div>
     <div v-if="subjects">
       <dt>Assuntos</dt>
-      <dd>{{subjects}}</dd>
+      <dd><a v-for="subject in subjects" :key="subject.url" :href="subject.url">{{subject.title}} </a></dd>
     </div>
     <div v-if="keywords">
       <dt>Palavras-chave</dt>
-      <dd>{{keywords}}</dd>
+      <dd><a v-for="keyword in keywords" :key="keyword.url" :href="keyword.url">{{keyword.title}} </a></dd>
     </div>
     <div v-if="teaser">
       <dt>Resumo</dt>
@@ -33,6 +33,7 @@
 
 <script>
 const smartTruncate = require('smart-truncate')
+const humanSize = require('human-size')
 export default {
   name: 'NewsInfo',
   props: {
@@ -48,16 +49,28 @@ export default {
       return this.newsItem.teaser
     },
     keywords() {
-      //TODO:
-      return ''
+      return this.newsItem.keywords.map(keyword => {
+        return {
+          url: `/keyword/${keyword.slug}`,
+          title: keyword.name
+        }
+      })
     },
     subjects() {
-      //TODO:
-      return ''
+      return this.newsItem.subjects.map(subject => {
+        return {
+          url: `/subjects/${subject.slug}`,
+          title: subject.name
+        }
+      })
     },
-    captures_links() {
-      //TODO:
-      return ''
+    pdf_captures() {
+      return this.newsItem.pdf_captures.map(capture => {
+        return {
+          url: capture.pdf_document.file_url,
+          title: this.captureNameAndSize(capture)
+        }
+      })
     },
     published_date() {
       if (this.newsItem.published_date) {
@@ -93,6 +106,27 @@ export default {
         url: this.newsItem.url,
         title: smartTruncate(this.newsItem.url, 120, { position: 20 })
       }
+    }
+  },
+  methods: {
+    captureNameAndSize(capture) {
+      let title = {}
+      try {
+        const date = new Date(capture.pdf_capture_date).toLocaleDateString()
+        title['date'] = date
+      } catch {
+        // não adicione
+      }
+
+      try {
+        const size = humanSize(parseInt(capture.pdf_document.file_size, 10))
+        title['size'] = size
+      } catch {
+        // não adicione
+      }
+      return `${title.date || 'Captura em PDF'} ${
+        title.size ? `(${title.size})` : ''
+      }`
     }
   }
 }

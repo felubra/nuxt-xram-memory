@@ -23,7 +23,48 @@ export default {
           url: 'http://www1.folha.uol.com.br'
         },
         featured: true,
-        keywords: [],
+        keywords: [
+          {
+            name: 'ganha',
+            slug: 'ganha'
+          },
+          {
+            name: 'lei',
+            slug: 'lei'
+          },
+          {
+            name: 'estadual',
+            slug: 'estadual'
+          },
+          {
+            name: 'normas',
+            slug: 'normas'
+          },
+          {
+            name: 'legal',
+            slug: 'legal'
+          },
+          {
+            name: 'diploma',
+            slug: 'diploma'
+          },
+          {
+            name: 'consumidor',
+            slug: 'consumidor'
+          },
+          {
+            name: 'defesa',
+            slug: 'defesa'
+          },
+          {
+            name: 'código',
+            slug: 'codigo'
+          },
+          {
+            name: 'pernambucano',
+            slug: 'pernambucano'
+          }
+        ],
         pdf_captures: [
           {
             pdf_capture_date: '2019-02-18T14:20:26.214143+00:00',
@@ -34,7 +75,16 @@ export default {
             }
           }
         ],
-        subjects: [],
+        subjects: [
+          {
+            name: 'Política',
+            slug: 'politica'
+          },
+          {
+            name: 'Brasil',
+            slug: 'brasil'
+          }
+        ],
         created_at: '2019-02-18T14:15:27.556044+00:00',
         language: '',
         published: true,
