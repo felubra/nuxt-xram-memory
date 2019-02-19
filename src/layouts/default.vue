@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ReactiveBase app="artifact_news" url="https://cvajs5fgeg:xjdngkcr5e@xram-memory-testing-1939220761.us-west-2.bonsaisearch.net" :theme="defaultTheme">
+    <ReactiveBase app="artifact_news" url="http://localhost:9200" :theme="defaultTheme">
       <nuxt />
     </ReactiveBase>
   </div>
@@ -55,5 +55,9 @@ body {
   color: #aa0000;
   font-family: 'Cabin', sans-serif;
   font-size: 0.625rem;
+}
+
+a.microtext {
+  text-decoration: none;
 }
 </style>
