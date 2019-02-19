@@ -22,9 +22,9 @@ export default {
           backgroundColor: '#fff',
           primaryTextColor: '#AA0000',
           primaryColor: '#2196F3',
-          titleColor: '#fff',
+          titleColor: '#AA0000',
           alertColor: '#d9534f',
-          borderColor: '#666'
+          borderColor: '#B9B9B9'
         }
       }
     }
@@ -48,5 +48,12 @@ html {
 body {
   padding: 0;
   margin: 0;
+}
+
+.microtext {
+  text-transform: uppercase;
+  color: #aa0000;
+  font-family: 'Cabin', sans-serif;
+  font-size: 0.625rem;
 }
 </style>
