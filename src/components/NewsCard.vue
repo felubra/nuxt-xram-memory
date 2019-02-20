@@ -1,6 +1,6 @@
 <template>
-  <div class="news-card">
-    <div class="news-body">
+  <div class="NewsCard">
+    <div class="NewsCard__Body">
       <img v-if="image" :src="image" alt="" @error="removeImage">
       <div class="news-text">
         <p v-if="label" class="label">Notícia</p>
@@ -8,7 +8,7 @@
         <p class="teaser">{{teaser}}</p>
       </div>
     </div>
-    <div v-if="footer" class="news-footer">
+    <div v-if="footer" class="NewsCard__Footer">
       <p><a v-if="newspaper" :href="newspaper.url" class="newspaper"><strong>{{newspaper.title}}</strong></a> {{published_date}}</p>
     </div>
   </div>
@@ -95,7 +95,7 @@ p.label {
   font-size: 0.75rem;
   font-family: 'Cabin', sans-serif;
 }
-div.news-card {
+div.NewsCard {
   background: #f3f1f1;
   padding: 1rem 1rem 0.6rem 1rem;
   display: flex;
@@ -104,49 +104,49 @@ div.news-card {
   max-width: 850px;
 }
 
-div.news-body {
+div.NewsCard__Body {
   justify-content: flex-start;
 }
 
-div.news-body p.teaser {
+div.NewsCard__Body p.teaser {
   display: none;
 }
 
-div.news-body img {
+div.NewsCard__Body img {
   min-width: 15.625rem;
 }
 
-div.news-body h3 {
+div.NewsCard__Body h3 {
   font-weight: 500;
   margin: 0 0 1rem;
   font-size: 1.25rem;
   line-height: 1.2;
 }
 
-div.news-footer {
+div.NewsCard__Footer {
   justify-content: flex-end;
 }
-div.news-footer a.newspaper {
+div.NewsCard__Footer a.newspaper {
   text-transform: uppercase;
   text-decoration: none;
   color: #333333;
 }
 
-div.news-footer a.newspaper:visited {
+div.NewsCard__Footer a.newspaper:visited {
   color: #333333;
 }
 
-div.news-footer p {
+div.NewsCard__Footer p {
   font-family: Cabin, sans-serif;
   font-size: 0.75rem;
   margin: 0;
   padding: 0;
 }
 @media only screen and (min-width: 768px) {
-  div.news-card {
+  div.NewsCard {
     text-align: left;
   }
-  div.news-body {
+  div.NewsCard__Body {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -154,17 +154,17 @@ div.news-footer p {
     text-align: left;
   }
 
-  div.news-body img {
+  div.NewsCard__Body img {
     align-self: baseline;
     margin: 0 0.5rem 0 0rem;
   }
 
-  div.news-footer p {
+  div.NewsCard__Footer p {
     font-size: 0.8rem;
     margin: 0.5rem 0 0 0;
   }
 
-  div.news-body p.teaser {
+  div.NewsCard__Body p.teaser {
     display: block;
     text-align: justify;
     margin: 0;

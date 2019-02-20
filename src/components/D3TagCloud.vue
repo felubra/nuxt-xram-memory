@@ -1,5 +1,5 @@
 <template>
-  <div ref="sky" class="sky" />
+  <div ref="Cloud" class="Cloud" />
 </template>
 
 <script>
@@ -38,12 +38,12 @@ export default {
     this.layout = {}
   },
   mounted() {
-    this.makeCloud(this.$refs.sky)
+    this.makeCloud(this.$refs.Cloud)
     window.addEventListener('resize', this.makeCloud)
   },
   methods: {
     makeCloud() {
-      const el = this.$refs.sky
+      const el = this.$refs.Cloud
       const dimensions = [Math.min(el.clientWidth, 1200), el.clientHeight]
       this.layout = d3Cloud()
         .size(dimensions)
@@ -71,11 +71,11 @@ export default {
       this.layout.start()
     },
     drawCloud(words) {
-      const svgEl = this.$refs.sky.querySelector('svg')
+      const svgEl = this.$refs.Cloud.querySelector('svg')
       if (svgEl) {
-        this.$refs.sky.removeChild(svgEl)
+        this.$refs.Cloud.removeChild(svgEl)
       }
-      d3.select(this.$refs.sky)
+      d3.select(this.$refs.Cloud)
         .append('svg')
         .attr('xmlns', 'http://www.w3.org/2000/svg')
         .attr('width', this.layout.size()[0])
@@ -96,7 +96,7 @@ export default {
         .attr('href', function(d) {
           return '/keyword/' + d.slug
         })
-        .attr('class', 'keywordLink')
+        .attr('class', 'Cloud__Word')
         .append('text')
         .style('font-size', function(d) {
           return d.size + 'px'
@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style>
-div.sky {
+div.Cloud {
   position: relative;
   width: 100%;
   min-height: 600px;

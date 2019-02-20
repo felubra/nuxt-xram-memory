@@ -1,30 +1,30 @@
 <template>
-  <dl>
-    <div v-if="url">
+  <dl class="NewsInfo">
+    <div v-if="url" class="NewsInfo__Field">
       <dt>Endereço original</dt>
       <dd><a :href="url.url">{{url.title}}</a></dd>
     </div>
-    <div v-if="newspaper">
+    <div v-if="newspaper" class="NewsInfo__Field">
       <dt>Site / veículo</dt>
       <dd><a :href="newspaper.url">{{newspaper.title}}</a></dd>
     </div>
-    <div v-if="published_date">
+    <div v-if="published_date" class="NewsInfo__Field">
       <dt>Data de publicação</dt>
       <dd>{{published_date}}</dd>
     </div>
-    <div v-if="pdf_captures">
+    <div v-if="pdf_captures" class="NewsInfo__Field">
       <dt>Capturas em PDF</dt>
       <dd><a v-for="capture in pdf_captures" :key="capture.url" :href="capture.url">{{capture.title}} </a> </dd>
     </div>
-    <div v-if="subjects">
+    <div v-if="subjects" class="NewsInfo__Field">
       <dt>Assuntos</dt>
       <dd><a v-for="subject in subjects" :key="subject.url" :href="subject.url">{{subject.title}} </a></dd>
     </div>
-    <div v-if="keywords">
+    <div v-if="keywords" class="NewsInfo__Field">
       <dt>Palavras-chave</dt>
       <dd><a v-for="keyword in keywords" :key="keyword.url" :href="keyword.url">{{keyword.title}} </a></dd>
     </div>
-    <div v-if="teaser">
+    <div v-if="teaser" class="NewsInfo__Field">
       <dt>Resumo</dt>
       <dd>{{teaser}}</dd>
     </div>
