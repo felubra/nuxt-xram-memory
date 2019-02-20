@@ -1,19 +1,17 @@
 <template>
-  <section class="container">
+  <section class="page-container">
     <div class="welcome-message">
       <p><em>O </em><strong>Xram-Memory</strong><em> tem o objetivo de manter a memória dos assuntos que a esquerda quer esquecer. </em><a href="/sobre" class="read-more microtext">Saiba mais</a></p>
     </div>
     <DataSearch
-      class="result-list-container"
       component-id="SearchSensor"
       :field-weights="[10,7]"
       :data-field="['title', 'teaser']"
       icon-position="right"
       :autosuggest="false"
-      class-name="searchBar"
+      class-name="SearchBar SearchBar--home"
       placeholder="Pesquisar no acervo"
       :show-clear="false"
-      :u-r-l-params="true"
       @keyPress="search"
     />
     <no-ssr>
@@ -55,15 +53,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-.searchBar {
-  margin: 25vh 1rem 15vh;
-}
-
 .welcome-message {
   font-size: 1.375rem;
   text-align: center;

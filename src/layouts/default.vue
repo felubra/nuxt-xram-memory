@@ -50,6 +50,7 @@ body {
   margin: 0;
 }
 
+/* Estilos globais */
 .microtext {
   text-transform: uppercase;
   color: #aa0000;
@@ -59,5 +60,73 @@ body {
 
 a.microtext {
   text-decoration: none;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.SearchResults {
+  background: #e0e0e0;
+  padding: 0.5rem 0.75rem;
+  flex-grow: 1;
+}
+.SearchResults .SearchResults__Result {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin: 0.5rem 0;
+}
+.SearchResults .SearchResults__ResultsInfo {
+  color: #555555;
+  text-transform: uppercase;
+  font-family: 'Cabin', sans-serif;
+}
+.FilterList {
+  background: #f3f1f1;
+  padding: 12px;
+}
+.FilterList .FilterList__FilterItem button {
+  border: none;
+  border-bottom: solid 1px #a1a1a1;
+  background: transparent;
+  font-family: 'Volkorn', serif;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.FilterList .FilterList__FilterItem ul > li {
+  font-family: 'Volkorn', serif;
+  font-size: 1rem;
+}
+
+.FilterList .FilterList__FilterItem h2 {
+  font-size: 0.875rem;
+}
+
+.FilterList .FilterList__FilterItem .FilterItem__DropdownList {
+  background: #f3f1f1;
+}
+
+.PageTitle {
+  margin: 1rem;
+}
+
+.PageTitle .PageTitle__Label {
+  color: #555555;
+  display: block;
+}
+.SearchBar {
+  margin: 1rem;
+}
+
+.SearchBar--home {
+  margin: 25vh 1rem 15vh;
+}
+
+.SearchBar .SearchBar__Input {
+  background-color: #fff;
 }
 </style>
