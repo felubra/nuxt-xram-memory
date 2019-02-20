@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <section class="page-container">
     <NewsCard :label=true :footer=false :news-item="newsItem" />
     <NewsInfo :news-item="newsItem" />
-  </div>
+  </section>
 </template>
 
 <script>
