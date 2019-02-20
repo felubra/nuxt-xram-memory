@@ -2,41 +2,27 @@
   <div>
     <div class="results">
       <DataSearch
-        class="result-list-container"
         component-id="SearchSensor"
         :field-weights="[10,7]"
         :data-field="['title', 'teaser']"
         icon-position="right"
         :autosuggest="false"
-        class-name="searchBar"
+        class-name="SearchBar"
         placeholder="Pesquisar no acervo"
         :show-clear="false"
         :default-selected="query"
-      />
-      <ReactiveList
-        :react="{and: ['SearchSensor','NewspaperSensor']}"
-        component-id="SearchResult"
-        :pagination="false"
-        data-field="title.raw"
-        class-name="result-list-container"
         :inner-class="{
-          resultsInfo: 'results-info'
+          input: 'SearchBar__Input'
         }"
-        :from="0"
-        :size="5"
-      >
-        <div slot="renderData" slot-scope="{ item }">
-          <NewsCard class="news-card" :news-item="item"/>
-        </div>
-      </ReactiveList>
-      <div class="filters">
+      />
+      <div class="FilterList">
         <single-dropdown-list
           :default-query="customFilterQuery"
           filter-label="Site/Veículo"
           component-id="NewspaperSensor"
           data-field="newspaper.title"
           nested-field="newspaper"
-          class-name="filterItem"
+          class-name="FilterList__FilterItem"
           placeholder="Todos"
           :inner-class="{
             title: 'microtext'
@@ -44,6 +30,20 @@
           title="Site/Veículo"
         />
       </div>
+      <ReactiveList
+        :react="{and: ['SearchSensor','NewspaperSensor']}"
+        component-id="SearchResults"
+        :pagination="false"
+        data-field="title.raw"
+        class-name="SearchResults"
+        :inner-class="{
+          resultsInfo: 'SearchResults__ResultsInfo'
+        }"
+        :from="0"
+        :size="5"
+      >
+        <NewsCard slot="renderData" slot-scope="{ item }" class='SearchResults__Result' :news-item="item"/>
+      </ReactiveList>
     </div>
   </div>
 </template>
@@ -99,24 +99,31 @@ export default {
 }
 </script>
 
-<style scoped>
-.results {
-  background: #e0e0e0;
+<style>
+.SearchBar {
+  margin: 1rem;
 }
-.results-info {
+.SearchBar .SearchBar__Input {
+  background-color: #fff;
+}
+
+.SearchResults {
+  background: #e0e0e0;
+  padding: 0.5rem 0.75rem;
+}
+.SearchResults .SearchResults__Result {
+  margin: 0.5rem 0;
+}
+.SearchResults .SearchResults__ResultsInfo {
   color: #555555;
   text-transform: uppercase;
   font-family: 'Cabin', sans-serif;
-  margin-left: 12px;
 }
-.news-card {
-  margin: 0.75rem;
-}
-.filters {
+.FilterList {
   background: #f3f1f1;
   padding: 12px;
 }
-.filterItem button {
+.FilterList .FilterList__FilterItem button {
   border: none;
   border-bottom: solid 1px #a1a1a1;
   background: transparent;
@@ -125,12 +132,12 @@ export default {
   font-style: italic;
 }
 
-.filterItem ul > li {
+.FilterList .FilterList__FilterItem ul > li {
   font-family: 'Volkorn', serif;
   font-size: 1rem;
 }
 
-.filterItem h2 {
+.FilterList .FilterList__FilterItem h2 {
   font-size: 0.875rem;
 }
 </style>
