@@ -9,7 +9,7 @@
       </div>
     </div>
     <div v-if="footer" class="NewsCard__Footer">
-      <p><a v-if="newspaper" :href="newspaper.url" class="newspaper"><strong>{{newspaper.title}}</strong></a> {{published_date}}</p>
+      <p><strong>{{newspaper.title}}</strong> {{published_date}}</p>
     </div>
   </div>
 </template>
