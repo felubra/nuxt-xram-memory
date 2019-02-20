@@ -1,6 +1,15 @@
-<template>
-  <div class="Logo" />
+<template functional>
+  <div class="Logo">
+    <img src="/logo.svg" alt="">
+  </div>
 </template>
-
-<style>
+<script>
+export default {
+  name: 'Logo'
+}
+</script>
+<style scoped>
+.Logo img {
+  width: 10rem;
+}
 </style>
