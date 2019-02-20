@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar />
     <ReactiveBase app="artifact_news" url="http://localhost:9200" :theme="defaultTheme">
       <nuxt />
     </ReactiveBase>
@@ -7,8 +8,12 @@
 </template>
 
 <script>
+import Navbar from '~/components/Navbar'
 export default {
   name: 'DefaultLayout',
+  components: {
+    Navbar
+  },
   computed: {
     defaultTheme() {
       return {
@@ -119,7 +124,7 @@ a.microtext {
   display: block;
 }
 .SearchBar {
-  margin: 1rem;
+  margin: 1rem 0.5rem;
 }
 
 .SearchBar--home {
