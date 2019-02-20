@@ -1,18 +1,25 @@
 <template>
-  <div>
-    <Navbar />
-    <ReactiveBase app="artifact_news" url="http://localhost:9200" :theme="defaultTheme">
-      <nuxt />
-    </ReactiveBase>
+  <div id="main-wrapper">
+    <header>
+      <Menu />
+      <Navbar/>
+    </header>
+    <main>
+      <ReactiveBase app="artifact_news" url="http://localhost:9200" :theme="defaultTheme">
+        <nuxt />
+      </ReactiveBase>
+    </main>
   </div>
 </template>
 
 <script>
 import Navbar from '~/components/Navbar'
+import Menu from '~/components/Menu'
 export default {
   name: 'DefaultLayout',
   components: {
-    Navbar
+    Navbar,
+    Menu
   },
   computed: {
     defaultTheme() {
@@ -53,6 +60,11 @@ html {
 body {
   padding: 0;
   margin: 0;
+}
+
+#main-wrapper {
+  overflow: hidden;
+  position: relative;
 }
 
 /* Estilos globais */

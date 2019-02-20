@@ -1,11 +1,12 @@
 <template>
   <nav class='Navbar'>
-    <a class="Navbar__Item" href="#main-menu" @click.prevent="menuToggle"><img src="/menu.svg" alt=""></a>
+    <a class="Navbar__Item" href="#main-menu" @click.prevent="menuToggle"><i class="material-icons">menu</i></a>
     <nuxt-link class="Navbar__Item" to="/"><Logo /></nuxt-link>
-    <nuxt-link class="Navbar__Item" to="search"><img src="/baseline-search.svg" alt=""></nuxt-link>
+    <nuxt-link class="Navbar__Item" to="/search"><i class="material-icons">search</i></nuxt-link>
   </nav>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import Logo from './Logo'
 export default {
   name: 'Navbar',
@@ -14,8 +15,9 @@ export default {
   },
   methods: {
     menuToggle() {
-      this.$emit('menuToggle')
-    }
+      this.toggleMenu()
+    },
+    ...mapActions(['toggleMenu'])
   }
 }
 </script>
