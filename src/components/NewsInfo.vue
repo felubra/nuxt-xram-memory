@@ -18,11 +18,11 @@
     </div>
     <div v-if="subjects" class="NewsInfo__Field">
       <dt>Assuntos</dt>
-      <dd><a v-for="subject in subjects" :key="subject.url" :href="subject.url">{{subject.title}} </a></dd>
+      <dd><nuxt-link v-for="subject in subjects" :key="subject.slug" :to="{name:'subject-slug', params:{ slug: subject.slug}, query:  {title:subject.name } }">{{subject.name}} </nuxt-link></dd>
     </div>
     <div v-if="keywords" class="NewsInfo__Field">
       <dt>Palavras-chave</dt>
-      <dd><a v-for="keyword in keywords" :key="keyword.url" :href="keyword.url">{{keyword.title}} </a></dd>
+      <dd><nuxt-link v-for="keyword in keywords" :key="keyword.slug" :to="{name:'keyword-slug', params:{ slug: keyword.slug}, query:  {title:keyword.name } }">{{keyword.name}} </nuxt-link></dd>
     </div>
     <div v-if="teaser" class="NewsInfo__Field">
       <dt>Resumo</dt>
@@ -49,20 +49,10 @@ export default {
       return this.newsItem.teaser
     },
     keywords() {
-      return this.newsItem.keywords.map(keyword => {
-        return {
-          url: `/keyword/${keyword.slug}`,
-          title: keyword.name
-        }
-      })
+      return this.newsItem.keywords
     },
     subjects() {
-      return this.newsItem.subjects.map(subject => {
-        return {
-          url: `/subjects/${subject.slug}`,
-          title: subject.name
-        }
-      })
+      return this.newsItem.subjects
     },
     pdf_captures() {
       return this.newsItem.pdf_captures.map(capture => {
