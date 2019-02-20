@@ -1,18 +1,21 @@
 <template>
-  <section class="container">
+  <section class="page-container">
+    <h1 class="PageTitle"><span class="PageTitle__Label microtext">Palavra-chave:</span> {{slugTitle}}</h1>
     <ReactiveList
-      :react="{and: ['SearchSensor']}"
-      component-id="SearchResult"
+      component-id="SearchResults"
+      :pagination="false"
       data-field="title.raw"
-      :default-query="query"
-      class-name="result-list-container"
-      :pagination="true"
+      class-name="SearchResults"
+      :inner-class="{
+        resultsInfo: 'SearchResults__ResultsInfo'
+      }"
       :from="0"
       :size="5"
+      :default-query="slugQuery"
     >
-      <div slot="renderData" slot-scope="{ item }">
-        <NewsCard :news-item="item" />
-      </div>
+      <a slot="renderData"  slot-scope="{ item }" class='SearchResults__Result' :href='`/news/${item.slug}`'>
+        <NewsCard :news-item="item"/>
+      </a>
     </ReactiveList>
   </section>
 </template>
@@ -30,7 +33,10 @@ export default {
     slug() {
       return this.$route.params.slug || ''
     },
-    query() {
+    slugTitle() {
+      return this.$route.query.title || this.slug
+    },
+    slugQuery() {
       const slug = this.slug
       return function() {
         return {

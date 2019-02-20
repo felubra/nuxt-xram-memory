@@ -94,7 +94,7 @@ export default {
         .enter()
         .append('a')
         .attr('href', function(d) {
-          return '/keyword/' + d.slug
+          return '/keyword/' + d.slug + '?title=' + d.text
         })
         .attr('class', 'Cloud__Word')
         .append('text')
