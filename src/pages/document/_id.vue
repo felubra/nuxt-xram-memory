@@ -1,8 +1,6 @@
 <template>
   <section class="page-container">
     <component :is="previewComponentType" :doc-item="document"></component>
-    <div v-if="!isUnknown" class="Document__Actions"></div>
-    <div class="Document__Info"></div>
   </section>
 </template>
 <script>
@@ -18,10 +16,12 @@ export default {
     },
     document() {
       return {
-        title: 'IMG_1054.jpeg',
-        teaser: 'Lula sendo preso',
+        title: 'Ejud.zip',
+        teaser: 'Arquivos do processo de Lula',
         file_size: 5 * 1000 * 1000,
-        url: '/media/abacate.txt'
+        url: '/media/abacate.txt',
+        createdAt: '2008-09-15T15:53:00+05:00',
+        modifiedAt: '2008-09-15T15:53:00+05:00'
       }
     },
     previewComponentType() {
