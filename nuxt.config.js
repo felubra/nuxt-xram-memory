@@ -22,7 +22,6 @@ module.exports = {
       }
     ]
   },
-
   /*
   ** Customize the progress-bar color
   */
@@ -31,7 +30,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: ['element-ui/lib/theme-chalk/index.css'],
+  css: ['element-ui/lib/theme-chalk/index.css', '~/css/main.css'],
 
   /*
   ** Plugins to load before mounting the App

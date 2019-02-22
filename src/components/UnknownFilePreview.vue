@@ -2,7 +2,9 @@
   <div class="UnknownFilePreview">
     <p class="microtext">Visualização não disponível.</p>
     <div class="UnknownFilePreview__Actions">
-      <a :href="file_url" class="UnknownFilePreview__Action"><i class="material-icons">download</i> Baixar</a>
+      <a :href="file_url" class="UnknownFilePreview__Action">
+        <i class="material-icons">download</i> Baixar
+      </a>
       <!-- TODO: compartilhar... -->
     </div>
   </div>
@@ -17,4 +19,8 @@ export default {
 </script>
 
 <style scoped>
+.UnknownFilePreview {
+  background: #ccc;
+  flex: 1;
+}
 </style>

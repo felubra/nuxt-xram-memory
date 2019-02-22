@@ -1,12 +1,17 @@
 <template>
   <div id="main-wrapper">
     <header>
-      <Menu />
+      <Menu/>
       <Navbar/>
     </header>
     <main>
-      <ReactiveBase app="artifact_news" url="http://localhost:9200" :theme="defaultTheme">
-        <nuxt />
+      <ReactiveBase
+        class-name="ReactiveBase"
+        app="artifact_news"
+        url="http://localhost:9200"
+        :theme="defaultTheme"
+      >
+        <nuxt/>
       </ReactiveBase>
     </main>
   </div>
@@ -46,6 +51,11 @@ export default {
 
 
 <style>
+html,
+body {
+  box-sizing: border-box;
+  height: 100%;
+}
 html {
   font-family: 'Vollkorn', serif;
   font-size: 16px;
@@ -65,6 +75,27 @@ body {
 #main-wrapper {
   overflow: hidden;
   position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ReactiveBase {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Estilos globais */
@@ -77,12 +108,6 @@ body {
 
 a.microtext {
   text-decoration: none;
-}
-
-.page-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
 }
 
 .SearchResults {
