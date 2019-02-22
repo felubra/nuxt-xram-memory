@@ -2,11 +2,15 @@
   <dl class="NewsInfo">
     <div v-if="url" class="NewsInfo__Field">
       <dt>Endereço original</dt>
-      <dd><a :href="url.url">{{url.title}}</a></dd>
+      <dd>
+        <a :href="url.url">{{url.title}}</a>
+      </dd>
     </div>
     <div v-if="newspaper" class="NewsInfo__Field">
       <dt>Site / veículo</dt>
-      <dd><a :href="newspaper.url">{{newspaper.title}}</a></dd>
+      <dd>
+        <a :href="newspaper.url">{{newspaper.title}}</a>
+      </dd>
     </div>
     <div v-if="published_date" class="NewsInfo__Field">
       <dt>Data de publicação</dt>
@@ -14,15 +18,29 @@
     </div>
     <div v-if="pdf_captures" class="NewsInfo__Field">
       <dt>Capturas em PDF</dt>
-      <dd><a v-for="capture in pdf_captures" :key="capture.url" :href="capture.url">{{capture.title}} </a> </dd>
+      <dd>
+        <a v-for="capture in pdf_captures" :key="capture.url" :href="capture.url">{{capture.title}}</a>
+      </dd>
     </div>
     <div v-if="subjects" class="NewsInfo__Field">
       <dt>Assuntos</dt>
-      <dd><nuxt-link v-for="subject in subjects" :key="subject.slug" :to="{name:'subject-slug', params:{ slug: subject.slug}, query:  {title:subject.name } }">{{subject.name}} </nuxt-link></dd>
+      <dd>
+        <nuxt-link
+          v-for="subject in subjects"
+          :key="subject.slug"
+          :to="{name:'subject-slug', params:{ slug: subject.slug}, query:  {title:subject.name } }"
+        >{{subject.name}}</nuxt-link>
+      </dd>
     </div>
     <div v-if="keywords" class="NewsInfo__Field">
       <dt>Palavras-chave</dt>
-      <dd><nuxt-link v-for="keyword in keywords" :key="keyword.slug" :to="{name:'keyword-slug', params:{ slug: keyword.slug}, query:  {title:keyword.name } }">{{keyword.name}} </nuxt-link></dd>
+      <dd>
+        <nuxt-link
+          v-for="keyword in keywords"
+          :key="keyword.slug"
+          :to="{name:'keyword-slug', params:{ slug: keyword.slug}, query:  {title:keyword.name } }"
+        >{{keyword.name}}</nuxt-link>
+      </dd>
     </div>
     <div v-if="teaser" class="NewsInfo__Field">
       <dt>Resumo</dt>
@@ -34,6 +52,7 @@
 <script>
 const smartTruncate = require('smart-truncate')
 const humanSize = require('human-size')
+const dayJs = require('dayjs')
 export default {
   name: 'NewsInfo',
   props: {
@@ -102,8 +121,11 @@ export default {
     captureNameAndSize(capture) {
       let title = {}
       try {
-        const date = new Date(capture.pdf_capture_date).toLocaleDateString()
-        title['date'] = date
+        const dateTime = dayJs(capture.pdf_capture_date)
+        if (!dateTime.isValid()) {
+          throw new Error()
+        }
+        title['date'] = dateTime.toDate().toLocaleDateString()
       } catch {
         // não adicione
       }

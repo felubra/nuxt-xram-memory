@@ -1,7 +1,7 @@
 <template>
   <div class="NewsCard">
     <div class="NewsCard__Body">
-      <img v-if="image" :src="image" alt="" @error="removeImage">
+      <img v-if="image" :src="image" alt @error="removeImage">
       <div class="news-text">
         <p v-if="label" class="label">Notícia</p>
         <h3>{{ newsItem.title }}</h3>
@@ -9,7 +9,10 @@
       </div>
     </div>
     <div v-if="footer" class="NewsCard__Footer">
-      <p><strong>{{newspaper.title}}</strong> {{published_date}}</p>
+      <p>
+        <strong>{{newspaper.title}}</strong>
+        {{published_date}}
+      </p>
     </div>
   </div>
 </template>
@@ -17,6 +20,7 @@
 <script>
 /**TODO: adicionar prop centered */
 const smartTruncate = require('smart-truncate')
+const dayJs = require('dayjs')
 
 export default {
   name: 'NewsCard',
@@ -68,14 +72,15 @@ export default {
       return false
     },
     published_date() {
-      if (this.newsItem.published_date) {
-        try {
-          return new Date(this.newsItem.published_date).toLocaleDateString()
-        } catch {
-          return ''
+      try {
+        const dateTime = dayJs(this.newsItem.published_date)
+        if (!dateTime.isValid()) {
+          throw new Error()
         }
+        return dateTime.toDate().toLocaleDateString()
+      } catch {
+        return ''
       }
-      return ''
     }
   },
   methods: {
