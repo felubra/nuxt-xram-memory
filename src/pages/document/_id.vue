@@ -1,15 +1,9 @@
 <template>
-  <div class="Document">
-    <div class="Document__Preview">
-      <component :is="previewComponentType" :doc-item="document"></component>
-    </div>
-    <div v-if="!isUnknown" class="Document__Actions">
-
-    </div>
-    <div class="Document__Info">
-
-    </div>
-  </div>
+  <section class="page-container">
+    <component :is="previewComponentType" :doc-item="document"></component>
+    <div v-if="!isUnknown" class="Document__Actions"></div>
+    <div class="Document__Info"></div>
+  </section>
 </template>
 <script>
 export default {
