@@ -53,7 +53,9 @@ module.exports = {
   env: {
     mediaUrl: process.env.MEDIA_SERVER_URL || 'http://localhost:8000'
   },
-
+  router: {
+    middleware: 'collapseMenu'
+  },
   /*
   ** Build configuration
   */
