@@ -1,19 +1,37 @@
 <template>
   <div :class="menuVisible ? 'Menu Menu--visible': 'Menu'">
     <header class="Menu__Header">
-      <a class="Menu__CloseButton" href="#close" @click.prevent="toggleMenu"><i class="material-icons">close</i></a>
-      <Logo />
+      <a class="Menu__CloseButton" href="#close" @click.prevent="toggleMenu">
+        <i class="material-icons">close</i>
+      </a>
+      <Logo class="Menu__Logo"/>
     </header>
     <ul class="Menu__Items Menu__Items--big">
-      <li class="Menu__Item Menu__Item--big"><nuxt-link :to="{name: 'search-query'}"><i class="material-icons">search</i>Pesquisar</nuxt-link></li>
-      <li class="Menu__Item Menu__Item--big"><nuxt-link to="about"><i class="material-icons">info</i>Sobre o projeto</nuxt-link></li>
-      <li class="Menu__Item Menu__Item--big"><nuxt-link to="contact"><i class="material-icons">feedback</i>Contato</nuxt-link></li>
+      <li class="Menu__Item Menu__Item--big">
+        <nuxt-link :to="{name: 'search-query'}">
+          <i class="material-icons">search</i>Pesquisar
+        </nuxt-link>
+      </li>
+      <li class="Menu__Item Menu__Item--big">
+        <nuxt-link to="about">
+          <i class="material-icons">info</i>Sobre o projeto
+        </nuxt-link>
+      </li>
+      <li class="Menu__Item Menu__Item--big">
+        <nuxt-link to="contact">
+          <i class="material-icons">feedback</i>Contato
+        </nuxt-link>
+      </li>
     </ul>
     <footer class="Menu__Footer">
       <p class="center">Copyright © 2019 Xram-Memory</p>
       <ul class="Menu__Items Menu__Items--inline">
-        <li class="Menu__Item Menu__Item--inline"><nuxt-link :to="{name: 'page', params:{slug: 'terms'}}">Termos de uso</nuxt-link></li>
-        <li class="Menu__Item Menu__Item--inline"><nuxt-link :to="{name: 'page', params:{slug: 'privacy_terms'}}">Política de Privacidade</nuxt-link></li>
+        <li class="Menu__Item Menu__Item--inline">
+          <nuxt-link :to="{name: 'page', params:{slug: 'terms'}}">Termos de uso</nuxt-link>
+        </li>
+        <li class="Menu__Item Menu__Item--inline">
+          <nuxt-link :to="{name: 'page', params:{slug: 'privacy_terms'}}">Política de Privacidade</nuxt-link>
+        </li>
       </ul>
     </footer>
   </div>
@@ -55,13 +73,16 @@ export default {
 .Menu__Header {
   text-align: center;
   padding: 1rem 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.Logo {
+  flex-grow: 1;
 }
 
 .Menu__CloseButton {
   color: #f3f1f1;
-  position: absolute;
-  left: 0;
-  top: 0;
 }
 
 .Menu__Items {
