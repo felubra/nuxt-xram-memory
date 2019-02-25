@@ -24,7 +24,8 @@
     "element-ui": "^2.4.11",
     "human-size": "^1.1.0",
     "nuxt": "^2.4.3",
-    "smart-truncate": "^1.0.1"
+    "smart-truncate": "^1.0.1",
+    "v-viewer": "^1.4.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",

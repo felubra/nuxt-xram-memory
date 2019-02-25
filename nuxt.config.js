@@ -35,7 +35,11 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/element-ui', '@/plugins/reactive-search'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/reactive-search',
+    '@/plugins/v-viewer'
+  ],
 
   /*
   ** Nuxt.js modules
