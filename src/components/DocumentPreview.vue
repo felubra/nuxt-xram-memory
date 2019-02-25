@@ -1,6 +1,7 @@
 <script>
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
+const { getMediaUrl } = require('~/utils')
 export default {
   name: 'DocumentPreview',
   props: {
@@ -12,7 +13,7 @@ export default {
   computed: {
     file_url() {
       /** TODO: adicionar prefixo */
-      return this.docItem.url
+      return getMediaUrl(this.docItem.url)
     },
     title() {
       /** TODO: sanitizar */

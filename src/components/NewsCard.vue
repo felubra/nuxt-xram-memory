@@ -21,7 +21,7 @@
 /**TODO: adicionar prop centered */
 const smartTruncate = require('smart-truncate')
 const dayJs = require('dayjs')
-
+const { getMediaUrl } = require('~/utils')
 export default {
   name: 'NewsCard',
   props: {
@@ -53,7 +53,7 @@ export default {
     },
     image() {
       if (this.newsItem.image_capture) {
-        return `${process.env.mediaUrl}${this.newsItem.image_capture}`
+        return getMediaUrl(this.newsItem.image_capture)
       }
       /** TODO: retorne um ícone padrão se não houver imagem */
       return ''
