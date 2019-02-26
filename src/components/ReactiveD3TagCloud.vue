@@ -1,6 +1,6 @@
 <template>
-  <div >
-    <D3TagCloud v-if="!error" :keywords="keywords" />
+  <div ref="container" class="ReactiveD3TagCloud">
+    <D3TagCloud v-if="!error" :keywords="keywords"/>
   </div>
 </template>
 
@@ -19,8 +19,14 @@ export default {
   computed: {
     keywords() {
       let words = []
-      // TODO: calcular o fator de tamanho da fonte em função da largura do container
-      const FONT_SIZE_DELTA = 16
+      let FONT_SIZE_DELTA
+      try {
+        FONT_SIZE_DELTA = this.$refs.container.clientWidth / 22.5
+      } catch {
+        FONT_SIZE_DELTA = 16
+      }
+      FONT_SIZE_DELTA = Math.max(FONT_SIZE_DELTA, 20)
+
       if (this.hasKeywords()) {
         return this.$props.aggregations.keywords.names.buckets.map(keyword => {
           return {
