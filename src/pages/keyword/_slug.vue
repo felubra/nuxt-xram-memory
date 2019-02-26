@@ -1,6 +1,9 @@
 <template>
   <section class="page-container">
-    <h1 class="PageTitle"><span class="PageTitle__Label microtext">Palavra-chave:</span> {{slugTitle}}</h1>
+    <h1 class="PageTitle">
+      <span class="PageTitle__Label microtext">Palavra-chave:</span>
+      {{slugTitle}}
+    </h1>
     <ReactiveList
       component-id="SearchResults"
       :pagination="false"
@@ -13,7 +16,12 @@
       :size="5"
       :default-query="slugQuery"
     >
-      <a slot="renderData"  slot-scope="{ item }" class='SearchResults__Result' :href='`/news/${item.slug}`'>
+      <a
+        slot="renderData"
+        slot-scope="{ item }"
+        class="SearchResults__Result"
+        :href="`/news/${item.slug}`"
+      >
         <NewsCard :news-item="item"/>
       </a>
     </ReactiveList>
@@ -22,7 +30,7 @@
 
 <script>
 // TODO: inserir o título da palavra-chave
-import NewsCard from '~/components/NewsCard'
+import NewsCard from '~/components/news/NewsCard'
 
 export default {
   name: 'SlugPage',

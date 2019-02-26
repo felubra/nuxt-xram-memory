@@ -45,7 +45,12 @@
       :from="0"
       :size="5"
     >
-      <a slot="renderData"  slot-scope="{ item }" class='SearchResults__Result' :href='`/news/${item.slug}`'>
+      <a
+        slot="renderData"
+        slot-scope="{ item }"
+        class="SearchResults__Result"
+        :href="`/news/${item.slug}`"
+      >
         <NewsCard :news-item="item"/>
       </a>
     </ReactiveList>
@@ -53,7 +58,7 @@
 </template>
 
 <script>
-import NewsCard from '~/components/NewsCard'
+import NewsCard from '~/components/news/NewsCard'
 
 export default {
   name: 'SearchPage',

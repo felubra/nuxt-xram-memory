@@ -6,9 +6,9 @@
 <script>
 export default {
   components: {
-    UnknownFilePreview: () => import('~/components/UnknownFilePreview'),
-    PDFFilePreview: () => import('~/components/PDFFilePreview'),
-    ImageFilePreview: () => import('~/components/ImageFilePreview')
+    UnknownFilePreview: () => import('~/components/viewers/UnknownFilePreview'),
+    PDFFilePreview: () => import('~/components/viewers/PDFFilePreview'),
+    ImageFilePreview: () => import('~/components/viewers/ImageFilePreview')
   },
   computed: {
     documentId() {

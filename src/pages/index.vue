@@ -1,7 +1,12 @@
 <template>
   <section class="page-container">
     <div class="welcome-message">
-      <p><em>O </em><strong>Xram-Memory</strong><em> tem o objetivo de manter a memória dos assuntos que a esquerda quer esquecer. </em><a href="/sobre" class="read-more microtext">Saiba mais</a></p>
+      <p>
+        <em>O</em>
+        <strong>Xram-Memory</strong>
+        <em>tem o objetivo de manter a memória dos assuntos que a esquerda quer esquecer.</em>
+        <a href="/sobre" class="read-more microtext">Saiba mais</a>
+      </p>
     </div>
     <DataSearch
       component-id="SearchSensor"
@@ -15,9 +20,9 @@
       @keyPress="search"
     />
     <no-ssr>
-      <ReactiveComponent component-id="ReactiveD3TagCloud" :default-query="tagCloudQuery" >
+      <ReactiveComponent component-id="ReactiveD3TagCloud" :default-query="tagCloudQuery">
         <div slot-scope="{ aggregations, error }">
-	        <ReactiveD3TagCloud :aggregations="aggregations" :error="error"/>
+          <ReactiveD3TagCloud :aggregations="aggregations" :error="error"/>
         </div>
       </ReactiveComponent>
     </no-ssr>
@@ -25,7 +30,7 @@
 </template>
 
 <script>
-import ReactiveD3TagCloud from '~/components/ReactiveD3TagCloud'
+import ReactiveD3TagCloud from '~/components/tag-cloud/ReactiveD3TagCloud'
 
 import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {

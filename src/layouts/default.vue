@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import Navbar from '~/components/Navbar'
-import Menu from '~/components/Menu'
+import Navbar from '~/components/common/Navbar'
+import Menu from '~/components/common/Menu'
 export default {
   name: 'DefaultLayout',
   components: {

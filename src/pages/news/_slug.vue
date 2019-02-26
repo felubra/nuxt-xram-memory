@@ -1,13 +1,13 @@
 <template>
   <section class="page-container">
-    <NewsCard :label=true :footer=false :news-item="newsItem" />
-    <NewsInfo :news-item="newsItem" />
+    <NewsCard :label="true" :footer="false" :news-item="newsItem"/>
+    <NewsInfo :news-item="newsItem"/>
   </section>
 </template>
 
 <script>
-import NewsCard from '~/components/NewsCard'
-import NewsInfo from '~/components/NewsInfo'
+import NewsCard from '~/components/news/NewsCard'
+import NewsInfo from '~/components/news/NewsInfo'
 export default {
   components: {
     NewsCard,
