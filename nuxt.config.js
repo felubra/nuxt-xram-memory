@@ -35,11 +35,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-    '@/plugins/element-ui',
-    '@/plugins/reactive-search',
-    '@/plugins/v-viewer'
-  ],
+  plugins: ['@/plugins/reactive-search', '@/plugins/v-viewer'],
 
   /*
   ** Nuxt.js modules
@@ -69,6 +65,8 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+      // Necessário para utilizar o componente pdfVuer: https://github.com/webpack/webpack/issues/6525
+      config.output.globalObject = '(self || this)'
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.devtool = 'source-map'
