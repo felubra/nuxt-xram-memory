@@ -35,6 +35,16 @@ export default {
             '/media/artifacts/documents/image_files/_2019-01-29_14.28.51.0854001546379483822.jpg',
           createdAt: '2008-09-15T15:53:00+05:00',
           modifiedAt: '2008-09-15T15:53:00+05:00'
+        },
+        {
+          id: 3,
+          title: 'Processo.pdf',
+          teaser: 'Processo abacate',
+          mime_type: 'application/pdf',
+          file_size: 666 * 1000,
+          url: '/s__2019-02-10_203142562315.pdf',
+          createdAt: '2008-08-15T15:53:00+05:00',
+          modifiedAt: '2008-10-15T15:53:00+05:00'
         }
       ]
     },
