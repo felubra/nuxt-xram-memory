@@ -1,12 +1,13 @@
 <template>
   <div class="PDFFilePreview">
-    <div class="PDFFilePreview__Preview">
+    <div class="FilePreview__Preview FilePreview__Preview--pdf_file">
       <no-ssr>
         <pdf src="/melancoliallull.pdf" :page="1" scale="page-width">
-          <template slot="loading">Carregando...
-            <div class="UnknownFilePreview__Actions UnknownFilePreview__Actions--big">
-              <a :href="file_url" class="UnknownFilePreview__Action">
-                <i class="material-icons">get_app</i> Baixar
+          <template slot="loading">
+            <p class="FilePreview__Message microtext">Carregando...</p>
+            <div class="FilePreview__Actions FilePreview__Actions--big">
+              <a :href="file_url" class="FilePreview__Action">
+                <i class="material-icons">get_app</i>
               </a>
               <!-- TODO: compartilhar... -->
             </div>
@@ -14,29 +15,29 @@
         </pdf>
       </no-ssr>
     </div>
-    <div class="PDFFilePreview__Actions PDFFilePreview__Actions--toolbar">
-      <a href="#document-info" class="PDFFilePreview__Action PDFFilePreview__Action--toolbar">
+    <div class="FilePreview__Actions FilePreview__Actions--toolbar">
+      <a href="#document-info" class="FilePreview__Action FilePreview__Action--toolbar">
         <i class="material-icons">info</i>Mais informações
       </a>
-      <a :href="file_url" download class="PDFFilePreview__Action PDFFilePreview__Action--toolbar">
+      <a :href="file_url" download class="FilePreview__Action FilePreview__Action--toolbar">
         <i class="material-icons">get_app</i> Baixar
       </a>
       <!-- TODO: compartilhar
-      <a :href="file_url" download class="PDFFilePreview__Action PDFFilePreview__Action--toolbar">
+      <a :href="file_url" download class="FilePreview__Action FilePreview__Action--toolbar">
         <i class="material-icons">share</i> Compartilhar
       </a>
       -->
     </div>
-    <div class="PDFFilePreview__Footer">
-      <div id="document-info" class="PDFFilePreview__DocumentInfo">
-        <p class="PDFFilePreview__Label microtext">Arquivo</p>
-        <h1 class="PDFFilePreview__Title">{{title}}</h1>
-        <p class="PDFFilePreview__Description">{{description}}</p>
-        <p class="PDFFilePreview__Size">{{size}}</p>
-        <p class="PDFFilePreview__SendDate">{{sendDate}}</p>
+    <div class="FilePreview__Footer FilePreview__Footer--pdf-file">
+      <div id="document-info" class="FilePreview__DocumentInfo">
+        <p class="FilePreview__Label microtext">Arquivo</p>
+        <h1 class="FilePreview__Title">{{title}}</h1>
+        <p class="FilePreview__Description">{{description}}</p>
+        <p class="FilePreview__Size">{{size}}</p>
+        <p class="FilePreview__SendDate">{{sendDate}}</p>
       </div>
-      <div class="PDFFilePreview__Actions PDFFilePreview__Actions--stacked">
-        <a :href="file_url" download class="PDFFilePreview__Action PDFFilePreview__Action--stacked">
+      <div class="FilePreview__Actions FilePreview__Actions--stacked">
+        <a :href="file_url" download class="FilePreview__Action FilePreview__Action--stacked">
           <i class="material-icons">get_app</i>
         </a>
         <!-- TODO: compartilhar... -->
@@ -59,7 +60,10 @@ export default {
       return {}
     }
   },
-  extends: DocumentPreview
+  extends: DocumentPreview,
+  mounted() {
+    this.a = 1
+  }
 }
 </script>
 
@@ -75,98 +79,11 @@ export default {
   flex-direction: column;
 }
 
-.PDFFilePreview__Preview {
+.FilePreview__Preview--pdf_file {
+  height: 75vh;
+}
+
+.FilePreview__Footer--pdf-file {
   flex-grow: 1;
-  color: #333;
-  text-align: center;
-  overflow: hidden;
-}
-
-.PDFFilePreview__Message {
-  color: inherit;
-  margin: 1rem;
-}
-
-.PDFFilePreview__Footer {
-  background: #a8a8a8;
-  color: #fefefe;
-  padding: 0.5rem;
-  font-family: 'Cabin', sans-serif;
-  display: flex;
-}
-
-.PDFFilePreview__Label {
-  color: inherit;
-  font-size: 0.75rem;
-  margin-top: 0;
-}
-.PDFFilePreview__Title {
-  margin: 0;
-  font-weight: normal;
-}
-.PDFFilePreview__Description {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.PDFFilePreview__DocumentInfo {
-  flex-grow: 2;
-}
-.PDFFilePreview__Actions {
-  flex-basis: 1.5rem;
-  text-align: right;
-  font-size: 1.75rem;
-  font-family: 'Cabin', serif;
-}
-.PDFFilePreview__Actions--big {
-  text-align: center;
-}
-
-.PDFFilePreview__Actions--big i {
-  font-size: 3.5rem;
-}
-
-.PDFFilePreview__Action {
-  color: inherit;
-  display: inline-block;
-}
-
-.PDFFilePreview__Action--stacked {
-  display: block;
-}
-
-.PDFFilePreview__Actions--toolbar {
-  display: flex;
-  flex-basis: 2rem;
-  justify-content: space-between;
-  align-items: center;
-  background: #eeeeee;
-  color: #333;
-  padding: 1rem 0.5rem;
-}
-
-.PDFFilePreview__Actions--dark {
-  background: #333;
-  color: #eeeeee;
-}
-
-.PDFFilePreview__Action--toolbar {
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-.PDFFilePreview__Action--toolbar > i {
-  padding-right: 0.2rem;
-}
-
-.PDFFilePreview__Size,
-.PDFFilePreview__SendDate {
-  display: inline-block;
-  font-size: 0.75rem;
-  margin-right: 1rem;
-  margin-bottom: 0;
 }
 </style>
