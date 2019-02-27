@@ -3,12 +3,19 @@
     <div class="PDFFilePreview__Preview">
       <no-ssr>
         <pdf src="/melancoliallull.pdf" :page="1" scale="page-width">
-          <template slot="loading">Carregando...</template>
+          <template slot="loading">Carregando...
+            <div class="UnknownFilePreview__Actions UnknownFilePreview__Actions--big">
+              <a :href="file_url" class="UnknownFilePreview__Action">
+                <i class="material-icons">get_app</i> Baixar
+              </a>
+              <!-- TODO: compartilhar... -->
+            </div>
+          </template>
         </pdf>
       </no-ssr>
     </div>
     <div class="PDFFilePreview__Actions PDFFilePreview__Actions--toolbar">
-      <a :href="file_url" download class="PDFFilePreview__Action PDFFilePreview__Action--toolbar">
+      <a href="#document-info" class="PDFFilePreview__Action PDFFilePreview__Action--toolbar">
         <i class="material-icons">info</i>Mais informações
       </a>
       <a :href="file_url" download class="PDFFilePreview__Action PDFFilePreview__Action--toolbar">
@@ -21,7 +28,7 @@
       -->
     </div>
     <div class="PDFFilePreview__Footer">
-      <div class="PDFFilePreview__DocumentInfo">
+      <div id="document-info" class="PDFFilePreview__DocumentInfo">
         <p class="PDFFilePreview__Label microtext">Arquivo</p>
         <h1 class="PDFFilePreview__Title">{{title}}</h1>
         <p class="PDFFilePreview__Description">{{description}}</p>
