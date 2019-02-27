@@ -6,9 +6,12 @@
 <script>
 export default {
   components: {
-    UnknownFilePreview: () => import('~/components/viewers/UnknownFilePreview'),
-    PDFFilePreview: () => import('~/components/viewers/PDFFilePreview'),
-    ImageFilePreview: () => import('~/components/viewers/ImageFilePreview')
+    UnknownFilePreview: () =>
+      import(/* webpackChunkName: "UnknownFilePreview" */ '~/components/viewers/UnknownFilePreview'),
+    PDFFilePreview: () =>
+      import(/* webpackChunkName: "PDFFilePreview" */ '~/components/viewers/PDFFilePreview'),
+    ImageFilePreview: () =>
+      import(/* webpackChunkName: "ImageFilePreview" */ '~/components/viewers/ImageFilePreview')
   },
   computed: {
     documentId() {
