@@ -85,7 +85,7 @@ export default {
     /**
      * Aparentemente a query montada pelo ReactiveSearch não funciona, então usemos esta.
      */
-    customFilterQuery(_, { nestedField, dataField }) {
+    customFilterQuery(_, { nestedField, dataField, size }) {
       return {
         query: {
           match_all: {}
@@ -100,7 +100,7 @@ export default {
               [dataField]: {
                 terms: {
                   field: dataField,
-                  size: '10',
+                  size,
                   order: {
                     _count: 'desc'
                   }
