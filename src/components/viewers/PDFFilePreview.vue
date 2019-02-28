@@ -30,7 +30,7 @@
     </div>
     <div class="FilePreview__Footer FilePreview__Footer--blue FilePreview__Footer--pdf-file">
       <div id="document-info" class="FilePreview__DocumentInfo">
-        <p class="FilePreview__Label microtext">Arquivo</p>
+        <p class="FilePreview__Label microtext">Documento</p>
         <h1 class="FilePreview__Title">{{title}}</h1>
         <p class="FilePreview__Description">{{description}}</p>
         <p class="FilePreview__Size">{{size}}</p>

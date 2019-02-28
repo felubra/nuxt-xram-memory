@@ -18,7 +18,7 @@
     </div>
     <div class="FilePreview__Footer FilePreview__Footer--blue">
       <div class="FilePreview__DocumentInfo">
-        <p class="FilePreview__Label microtext">Arquivo</p>
+        <p class="FilePreview__Label microtext">Imagem</p>
         <h1 class="FilePreview__Title">{{title}}</h1>
         <p class="FilePreview__Description">{{description}}</p>
         <p class="FilePreview__Size">{{size}}</p>
