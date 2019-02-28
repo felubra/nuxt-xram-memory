@@ -10105,6 +10105,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-class-component@^6.2.0:
+  version "6.3.2"
+  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.3.2.tgz#e6037e84d1df2af3bde4f455e50ca1b9eec02be6"
+  integrity sha512-cH208IoM+jgZyEf/g7mnFyofwPDJTM/QvBNhYMjqGB8fCsRyTf68rH2ISw/G20tJv+5mIThQ3upKwoL4jLTr1A==
+
 vue-emotion@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/vue-emotion/-/vue-emotion-0.4.2.tgz#df97359aadd49cc476eb23ba44b7d2962a669ced"
@@ -10125,7 +10130,17 @@ vue-eslint-parser@^5.0.0:
     esquery "^1.0.1"
     lodash "^4.17.11"
 
-vue-hot-reload-api@^2.3.0:
+vue-fixed-header@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/vue-fixed-header/-/vue-fixed-header-2.0.2.tgz#5475783dcb5410ca30f76c7e693e8b4459708ac3"
+  integrity sha512-O1MQV/oCHtDEiRQsPoq7M0vvN2semIYcRCZxAq9+01vhQrY/cFPEZCypTzU/DOG3rTiXxuBXiUD4DJNR4nXbLQ==
+  dependencies:
+    vue "^2.5.17"
+    vue-class-component "^6.2.0"
+    vue-hot-reload-api "^2.3.1"
+    vue-property-decorator "^7.2.0"
+
+vue-hot-reload-api@^2.3.0, vue-hot-reload-api@^2.3.1:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
   integrity sha512-KmvZVtmM26BQOMK1rwUZsrqxEGeKiYSZGA7SNWE6uExx8UX/cj9hq2MRV/wWC3Cq6AoeDGk57rL9YMFRel/q+g==
@@ -10155,6 +10170,13 @@ vue-no-ssr@^1.1.0, vue-no-ssr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
+
+vue-property-decorator@^7.2.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-7.3.0.tgz#d50d67f0b0f1c814f9f2fba36d6eeccbcc62dbb6"
+  integrity sha512-HarXfTQ/Nxm4s/APpAaGIGHq5ZzslApImQy8ZrtkfGamw8rUFAVgMS5C50/AQ80+wfw3Wpnf4bNzbmj75m/k2Q==
+  dependencies:
+    vue-class-component "^6.2.0"
 
 vue-resize-sensor@^2.0.0:
   version "2.0.0"
