@@ -25,6 +25,7 @@
         nested-field="newspaper"
         class-name="FilterList__FilterItem"
         :show-count="false"
+        :size="25"
         placeholder="Todos"
         :show-filter="true"
         :inner-class="{
