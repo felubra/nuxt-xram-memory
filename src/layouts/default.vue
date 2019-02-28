@@ -173,6 +173,10 @@ a.microtext {
   background-color: #fff;
 }
 
+.FilterList__FilterItem {
+  margin: 0.5rem 0;
+}
+
 .FilterList__SelectedFilters {
   font-family: 'Cabin', sans-serif;
   font-size: 0.625rem;
