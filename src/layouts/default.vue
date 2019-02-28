@@ -172,4 +172,13 @@ a.microtext {
 .SearchBar .SearchBar__Input {
   background-color: #fff;
 }
+
+.FilterList__SelectedFilters {
+  font-family: 'Cabin', sans-serif;
+  font-size: 0.625rem;
+}
+.FilterList__SelectedFilter {
+  background: #dfdfdf !important;
+  margin: 0.5rem 0.5rem 0.2rem 0 !important;
+}
 </style>

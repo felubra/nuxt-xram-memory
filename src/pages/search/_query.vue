@@ -8,6 +8,7 @@
       :autosuggest="false"
       class-name="SearchBar"
       placeholder="Pesquisar no acervo"
+      filter-label="Pesquisa"
       :show-clear="false"
       :default-selected="query"
       :inner-class="{
@@ -25,12 +26,18 @@
         class-name="FilterList__FilterItem"
         :show-count="false"
         placeholder="Todos"
+        :show-filter="true"
         :inner-class="{
           title: 'microtext',
           select: 'FilterItem__DropdownToggle',
           list: 'FilterItem__DropdownList'
         }"
         title="Site/Veículo"
+      />
+      <selected-filters
+        class-name="FilterList__SelectedFilters"
+        clear-all-label="Limpar filtros"
+        :inner-class="{button:'FilterList__SelectedFilter'}"
       />
     </div>
     <ReactiveList
@@ -107,3 +114,6 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+</style>
