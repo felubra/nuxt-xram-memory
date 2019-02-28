@@ -35,30 +35,52 @@
         }"
         title="Site/Veículo"
       />
-      <multi-dropdown-list
-        :default-query="customFilterQuery"
-        filter-label="Palavras-chave"
-        component-id="KeywordsSensor"
-        data-field="keywords.name"
-        nested-field="keywords"
-        :show-search="true"
-        :size="100"
-        class-name="FilterList__FilterItem"
-        :show-count="false"
-        placeholder="Todas"
-        :show-filter="true"
-        :inner-class="{
+      <div
+        :class="filterListOpened ?  'FilterList__MoreFilters FilterList__MoreFilters--open' : 'FilterList__MoreFilters'"
+      >
+        <multi-dropdown-list
+          :default-query="customFilterQuery"
+          filter-label="Palavras-chave"
+          component-id="KeywordsSensor"
+          data-field="keywords.name"
+          nested-field="keywords"
+          :show-search="true"
+          :size="100"
+          class-name="FilterList__FilterItem"
+          :show-count="false"
+          placeholder="Todas"
+          :show-filter="true"
+          :inner-class="{
           title: 'microtext',
           select: 'FilterItem__DropdownToggle',
           list: 'FilterItem__DropdownList'
         }"
-        title="Palavras-chave"
-      />
+          title="Palavras-chave"
+        />
+      </div>
       <selected-filters
         class-name="FilterList__SelectedFilters"
         clear-all-label="Limpar filtros"
         :inner-class="{button:'FilterList__SelectedFilter'}"
       />
+      <a
+        v-if="filterListOpened"
+        class="FilterList__ToggleFilters microtext"
+        href="#moreFilters"
+        @click.prevent="toggleFilters"
+      >
+        <i class="material-icons">close</i>
+        Fechar
+      </a>
+      <a
+        v-else
+        class="FilterList__ToggleFilters microtext"
+        href="#moreFilters"
+        @click.prevent="toggleFilters"
+      >
+        <i class="material-icons">filter_list</i>
+        Mais filtros
+      </a>
     </div>
     <ReactiveList
       :react="{and: ['SearchSensor','NewspaperSensor']}"
@@ -91,6 +113,11 @@ export default {
   components: {
     NewsCard
   },
+  data() {
+    return {
+      filterListOpened: false
+    }
+  },
   computed: {
     query() {
       try {
@@ -101,6 +128,12 @@ export default {
     }
   },
   methods: {
+    /**
+     *
+     */
+    toggleFilters() {
+      this.filterListOpened = !this.filterListOpened
+    },
     /**
      * Aparentemente a query montada pelo ReactiveSearch não funciona, então usemos esta.
      */
@@ -135,4 +168,20 @@ export default {
 </script>
 
 <style scoped>
+.FilterList__ToggleFilters {
+  padding: 1rem 0 0;
+  display: flex;
+  align-items: center;
+  float: right;
+}
+.FilterList__MoreFilters {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-in-out;
+}
+
+.FilterList__MoreFilters--open {
+  max-height: 500px;
+  overflow: visible;
+}
 </style>
