@@ -81,6 +81,8 @@ export default {
 
 .FilePreview__Preview--pdf_file {
   height: 75vh;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .FilePreview__Footer--pdf-file {
