@@ -2,7 +2,7 @@
   <div class="PDFFilePreview">
     <div class="FilePreview__Preview FilePreview__Preview--pdf_file">
       <no-ssr>
-        <pdf src="/melancoliallull.pdf" :page="1" scale="page-width">
+        <pdf :src="file_url" :page="1" scale="page-width">
           <template slot="loading">
             <p class="FilePreview__Message microtext">Carregando...</p>
             <div class="FilePreview__Actions FilePreview__Actions--big">
