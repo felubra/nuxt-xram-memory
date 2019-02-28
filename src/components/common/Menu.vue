@@ -150,5 +150,6 @@ export default {
   text-transform: uppercase;
   color: #fff;
   text-align: center;
+  padding-bottom: 1rem;
 }
 </style>
