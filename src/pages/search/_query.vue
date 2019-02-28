@@ -35,6 +35,25 @@
         }"
         title="Site/Veículo"
       />
+      <multi-dropdown-list
+        :default-query="customFilterQuery"
+        filter-label="Palavras-chave"
+        component-id="KeywordsSensor"
+        data-field="keywords.name"
+        nested-field="keywords"
+        :show-search="true"
+        :size="100"
+        class-name="FilterList__FilterItem"
+        :show-count="false"
+        placeholder="Todas"
+        :show-filter="true"
+        :inner-class="{
+          title: 'microtext',
+          select: 'FilterItem__DropdownToggle',
+          list: 'FilterItem__DropdownList'
+        }"
+        title="Palavras-chave"
+      />
       <selected-filters
         class-name="FilterList__SelectedFilters"
         clear-all-label="Limpar filtros"
@@ -67,7 +86,6 @@
 
 <script>
 import NewsCard from '~/components/news/NewsCard'
-
 export default {
   name: 'SearchPage',
   components: {
