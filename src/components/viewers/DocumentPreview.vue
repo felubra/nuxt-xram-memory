@@ -13,7 +13,7 @@ export default {
   computed: {
     file_url() {
       /** TODO: adicionar prefixo */
-      return getMediaUrl(this.docItem.url)
+      return getMediaUrl(this.docItem.file)
     },
     title() {
       /** TODO: sanitizar */
