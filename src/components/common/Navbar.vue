@@ -3,9 +3,7 @@
     <a class="Navbar__Item" href="#main-menu" @click.prevent="menuToggle">
       <i class="material-icons">menu</i>
     </a>
-    <nuxt-link class="Navbar__Item" to="/">
-      <Logo/>
-    </nuxt-link>
+    <Logo/>
     <nuxt-link class="Navbar__Item" to="/search">
       <i class="material-icons">search</i>
     </nuxt-link>
