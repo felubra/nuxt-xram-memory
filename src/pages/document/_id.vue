@@ -39,11 +39,9 @@ export default {
   },
   async asyncData({ $axios, route }) {
     const documentId = parseInt(route.params.id) || null
-    return $axios
-      .$get(`/api/v1/document/${documentId}`, { proxy: false })
-      .then(document => {
-        return { document }
-      })
+    return $axios.$get(`/api/v1/document/${documentId}`).then(document => {
+      return { document }
+    })
   }
 }
 </script>
