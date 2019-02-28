@@ -4,7 +4,7 @@
       <a class="Menu__CloseButton" href="#close" @click.prevent="toggleMenu">
         <i class="material-icons">close</i>
       </a>
-      <Logo class="Menu__Logo"/>
+      <Logo class="Menu__Logo" variant="pb--branco"/>
     </header>
     <ul class="Menu__Items Menu__Items--big">
       <li class="Menu__Item Menu__Item--big">
