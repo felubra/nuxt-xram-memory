@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return { document: {} }
-    },
+  },
   computed: {
     previewComponentType() {
       try {
@@ -36,6 +36,12 @@ export default {
     isUnknown() {
       return this.previewComponentType === 'UnknownFilePreview'
     }
+  },
+  async asyncData({ $axios, route }) {
+    const documentId = parseInt(route.params.id) || null
+    return $axios.$get(`/api/v1/document/${documentId}`).then(document => {
+      return { document }
+    })
   }
 }
 </script>
