@@ -19,7 +19,7 @@ export default {
   computed: {
     previewComponentType() {
       try {
-        if (this.document.mime_type) {
+        if (this.document && this.document.mime_type) {
           if (this.document.mime_type === 'application/pdf') {
             return 'PDFFilePreview'
           } else if (this.document.mime_type.includes('image/')) {
