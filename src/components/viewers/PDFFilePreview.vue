@@ -28,7 +28,7 @@
       </a>
       -->
     </div>
-    <div class="FilePreview__Footer FilePreview__Footer--pdf-file">
+    <div class="FilePreview__Footer FilePreview__Footer--blue FilePreview__Footer--pdf-file">
       <div id="document-info" class="FilePreview__DocumentInfo">
         <p class="FilePreview__Label microtext">Arquivo</p>
         <h1 class="FilePreview__Title">{{title}}</h1>

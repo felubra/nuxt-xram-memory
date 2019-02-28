@@ -62,6 +62,10 @@ export default {
   display: flex;
 }
 
+.FilePreview__Footer--blue {
+  background: #305390;
+}
+
 .FilePreview__Label {
   color: inherit;
   font-size: 0.75rem;
@@ -70,6 +74,7 @@ export default {
 .FilePreview__Title {
   margin: 0;
   font-weight: normal;
+  font-size: 1.375rem;
 }
 .FilePreview__Description {
   margin: 0;
