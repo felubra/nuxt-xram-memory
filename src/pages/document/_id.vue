@@ -1,5 +1,5 @@
 <template>
-  <section class="page-container">
+  <section class="Page">
     <component :is="previewComponentType" :doc-item="document"></component>
   </section>
 </template>

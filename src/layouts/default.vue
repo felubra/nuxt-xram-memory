@@ -92,7 +92,7 @@ main {
   flex-direction: column;
 }
 
-.page-container {
+.Page {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -152,11 +152,12 @@ a.microtext {
   background: #f3f1f1;
 }
 
-.PageTitle {
+.Page__Title {
   margin: 1rem;
+  color: #aa0000;
 }
 
-.PageTitle .PageTitle__Label {
+.Page__Label {
   color: #555555;
   display: block;
 }

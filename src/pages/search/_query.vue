@@ -1,5 +1,5 @@
 <template>
-  <section class="page-container">
+  <section class="Page">
     <DataSearch
       component-id="SearchSensor"
       :field-weights="[10,7]"

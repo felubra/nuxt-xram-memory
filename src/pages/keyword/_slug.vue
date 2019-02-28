@@ -1,7 +1,7 @@
 <template>
-  <section class="page-container">
-    <h1 class="PageTitle">
-      <span class="PageTitle__Label microtext">Palavra-chave:</span>
+  <section class="Page">
+    <h1 class="Page__Title">
+      <span class="Page__Label microtext">Palavra-chave:</span>
       {{slugTitle}}
     </h1>
     <ReactiveList

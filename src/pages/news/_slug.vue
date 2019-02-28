@@ -1,5 +1,5 @@
 <template>
-  <section class="page-container">
+  <section class="Page">
     <NewsCard :label="true" :footer="false" :news-item="newsItem"/>
     <NewsInfo :news-item="newsItem"/>
   </section>

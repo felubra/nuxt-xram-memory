@@ -1,5 +1,5 @@
 <template>
-  <section class="page-container">
+  <section class="Page">
     <div class="welcome-message">
       <p>
         <em>O</em>
