@@ -68,47 +68,58 @@ export default {
       return this.newsItem.teaser
     },
     keywords() {
-      return this.newsItem.keywords
+      return (
+        this.newsItem.keywords &&
+        this.newsItem.keywords.length &&
+        this.newsItem.keywords
+      )
     },
     subjects() {
-      return this.newsItem.subjects
+      return (
+        this.newsItem.subjects &&
+        this.newsItem.subjects.length &&
+        this.newsItem.subjects
+      )
     },
     pdf_captures() {
-      return this.newsItem.pdf_captures.map(capture => {
-        return {
-          url: capture.pdf_document.file_url,
-          title: this.captureNameAndSize(capture)
-        }
-      })
+      try {
+        return (
+          this.newsItem.pdf_captures &&
+          this.newsItem.pdf_captures.map(capture => {
+            return {
+              url: capture.pdf_document.file_url,
+              title: this.captureNameAndSize(capture)
+            }
+          })
+        )
+      } catch {
+        return ''
+      }
     },
     published_date() {
-      if (this.newsItem.published_date) {
-        try {
-          const time = new Date(
-            this.newsItem.published_date
-          ).toLocaleTimeString()
-          const date = new Date(
-            this.newsItem.published_date
-          ).toLocaleDateString()
-          return `${date} ${time}`
-        } catch {
-          return ''
-        }
+      try {
+        const [time, date] = this.newsItem.published_date && [
+          new Date(this.newsItem.published_date).toLocaleTimeString(),
+          new Date(this.newsItem.published_date).toLocaleDateString()
+        ]
+        return `${date} ${time}`
+      } catch {
+        return ''
       }
-      return ''
     },
     newspaper() {
-      if (
-        this.newsItem.newspaper &&
-        this.newsItem.newspaper.url &&
-        this.newsItem.newspaper.title
-      ) {
-        return {
-          url: this.newsItem.newspaper.url,
-          title: this.newsItem.newspaper.title
-        }
+      try {
+        return (
+          this.newsItem.newspaper &&
+          this.newsItem.newspaper.url &&
+          this.newsItem.newspaper.title && {
+            url: this.newsItem.newspaper.url,
+            title: this.newsItem.newspaper.title
+          }
+        )
+      } catch {
+        return ''
       }
-      return false
     },
     url() {
       return {
