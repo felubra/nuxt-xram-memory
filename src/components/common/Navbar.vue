@@ -31,7 +31,7 @@ export default {
   flex: 1;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0.5rem;
+  padding: 0.35rem 0.5rem;
   background: #fff;
   box-sizing: border-box;
   z-index: 8;
@@ -45,5 +45,8 @@ export default {
 
 .Navbar__Item {
   color: #333;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 </style>
