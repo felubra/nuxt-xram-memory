@@ -195,4 +195,8 @@ a.microtext {
   background: #dfdfdf !important;
   margin: 0.5rem 0.5rem 0.2rem 0 !important;
 }
+
+.FilterList__Slider .vue-slider-component .vue-slider-process {
+  background-color: #aa0000 !important;
+}
 </style>

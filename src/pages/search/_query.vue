@@ -51,11 +51,24 @@
           placeholder="Todas"
           :show-filter="true"
           :inner-class="{
-          title: 'microtext',
-          select: 'FilterItem__DropdownToggle',
-          list: 'FilterItem__DropdownList'
-        }"
+            title: 'microtext',
+            select: 'FilterItem__DropdownToggle',
+            list: 'FilterItem__DropdownList'
+          }"
           title="Palavras-chave"
+          :react="{and: ['SearchSensor','NewspaperSensor', 'PublishedYearSensor']}"
+        />
+        <DynamicRangeSlider
+          data-field="published_year"
+          component-id="PublishedYearSensor"
+          class-name="FilterList__FilterItem"
+          title="Anos de publicação"
+          filter-label="Intervalo (anos)"
+          :inner-class="{
+            title: 'microtext',
+            slider: 'FilterList__Slider',
+          }"
+          :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor']}"
         />
       </div>
       <selected-filters
@@ -83,7 +96,7 @@
       </a>
     </div>
     <ReactiveList
-      :react="{and: ['SearchSensor','NewspaperSensor']}"
+      :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor','PublishedYearSensor']}"
       component-id="SearchResults"
       :pagination="false"
       data-field="title.raw"
