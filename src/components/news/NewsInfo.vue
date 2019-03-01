@@ -3,13 +3,13 @@
     <div v-if="url" class="NewsInfo__Field">
       <dt>Endereço original</dt>
       <dd>
-        <a :href="url.url">{{url.title}}</a>
+        <a :href="url.url" target="_blank">Link original</a>
       </dd>
     </div>
     <div v-if="newspaper" class="NewsInfo__Field">
       <dt>Site / veículo</dt>
       <dd>
-        <a :href="newspaper.url">{{newspaper.title}}</a>
+        <a :href="newspaper.url" target="_blank">{{newspaper.title}}</a>
       </dd>
     </div>
     <div v-if="published_date" class="NewsInfo__Field">
@@ -19,7 +19,16 @@
     <div v-if="pdf_captures" class="NewsInfo__Field">
       <dt>Capturas em PDF</dt>
       <dd>
-        <a v-for="capture in pdf_captures" :key="capture.url" :href="capture.url">{{capture.title}}</a>
+        <nuxt-link
+          v-for="capture in pdf_captures"
+          :key="capture.url"
+          :to="{
+            name: 'document-id',
+            params: {
+              id: capture.document_id
+            },
+          }"
+        >{{capture.title}}</nuxt-link>
       </dd>
     </div>
     <div v-if="subjects" class="NewsInfo__Field">
@@ -32,17 +41,15 @@
         >{{subject.name}}</nuxt-link>
       </dd>
     </div>
-    <div v-if="keywords" class="NewsInfo__Field">
+    <div v-if="keywords" class="NewsInfo__Field NewsInfo__Field--multicol">
       <dt>Palavras-chave</dt>
-      <dd>
+      <dd v-for="keyword in keywords" :key="keyword.slug">
         <nuxt-link
-          v-for="keyword in keywords"
-          :key="keyword.slug"
           :to="{name:'keyword-slug', params:{ slug: keyword.slug}, query:  {title:keyword.name } }"
         >{{keyword.name}}</nuxt-link>
       </dd>
     </div>
-    <div v-if="teaser" class="NewsInfo__Field">
+    <div v-if="teaser" class="NewsInfo__Field NewsInfo__Field--summary">
       <dt>Resumo</dt>
       <dd>{{teaser}}</dd>
     </div>
@@ -87,7 +94,7 @@ export default {
           this.newsItem.pdf_captures &&
           this.newsItem.pdf_captures.map(capture => {
             return {
-              url: capture.pdf_document.file_url,
+              document_id: capture.pdf_document.id,
               title: this.captureNameAndSize(capture)
             }
           })
@@ -156,6 +163,15 @@ export default {
 </script>
 
 <style scoped>
+.NewsInfo {
+  font-family: 'Cabin', sans-serif;
+}
+
+.NewsInfo a {
+  color: #aa0000;
+  text-decoration: none;
+}
+
 dt {
   color: #555555;
   text-transform: uppercase;
@@ -173,5 +189,26 @@ dl {
 dd {
   margin: 0.5rem 0;
   font-size: 0.875rem;
+}
+.NewsInfo__Field:first-child {
+  margin-top: 0;
+}
+.NewsInfo__Field {
+  margin: 1rem 0;
+}
+.NewsInfo__Field--multicol {
+  column-count: 3;
+}
+
+.NewsInfo__Field--multicol > dd {
+  display: inline-block;
+}
+
+.NewsInfo__Field--multicol > dt {
+  column-span: all;
+}
+
+.NewsInfo__Field--summary {
+  font-family: 'Cabin', sans-serif;
 }
 </style>
