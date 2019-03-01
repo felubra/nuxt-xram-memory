@@ -17,5 +17,8 @@ export const mutations = {
 export const actions = {
   toggleMenu({ commit }) {
     commit('toggleMenu')
+  },
+  hideMenu({ commit }) {
+    commit('hideMenu')
   }
 }
