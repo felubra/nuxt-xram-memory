@@ -109,7 +109,7 @@
         slot="renderData"
         slot-scope="{ item }"
         class="SearchResults__Result"
-        :href="`/news/${item.slug}`"
+        :href="`/news/${item.id}`"
       >
         <NewsCard :news-item="item"/>
       </a>
