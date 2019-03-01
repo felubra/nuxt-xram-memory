@@ -2,7 +2,7 @@
   <div id="main-wrapper">
     <header>
       <Menu/>
-      <fixed-header :fixed.sync="navBarFixed" :threshold="100">
+      <fixed-header :fixed.sync="navBarFixed">
         <Navbar :class="{ 'NavBar--fixed': navBarFixed }"/>
       </fixed-header>
     </header>
