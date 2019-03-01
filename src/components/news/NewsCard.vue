@@ -59,17 +59,17 @@ export default {
           typeof this.newsItem.image_capture === 'string'
         ) {
           // path obtido por um resultado do ElasticSearch
-        return getMediaUrl(this.newsItem.image_capture)
+          return getMediaUrl(this.newsItem.image_capture)
         } else {
           // path obtido pela API
           return (
             this.newsItem.image_capture.image_document &&
             getMediaUrl(this.newsItem.image_capture.image_document.file)
           )
-      }
+        }
       } catch {
-      /** TODO: retorne um ícone padrão se não houver imagem */
-      return ''
+        /** TODO: retorne um ícone padrão se não houver imagem */
+        return ''
       }
     },
     newspaper() {
