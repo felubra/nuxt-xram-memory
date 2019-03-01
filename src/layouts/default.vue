@@ -120,48 +120,6 @@ a.microtext {
   text-decoration: none;
 }
 
-.SearchResults {
-  background: #e0e0e0;
-  padding: 0.5rem 0.75rem;
-  flex-grow: 1;
-}
-.SearchResults .SearchResults__Result {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  margin: 0.5rem 0;
-}
-.SearchResults .SearchResults__ResultsInfo {
-  color: #555555;
-  text-transform: uppercase;
-  font-family: 'Cabin', sans-serif;
-}
-.FilterList {
-  background: #f3f1f1;
-  padding: 12px;
-}
-.FilterList .FilterList__FilterItem button {
-  border: none;
-  border-bottom: solid 1px #a1a1a1;
-  background: transparent;
-  font-family: 'Volkorn', serif;
-  font-size: 1rem;
-  font-style: italic;
-}
-
-.FilterList .FilterList__FilterItem ul > li {
-  font-family: 'Volkorn', serif;
-  font-size: 1rem;
-}
-
-.FilterList .FilterList__FilterItem h2 {
-  font-size: 0.875rem;
-}
-
-.FilterList .FilterList__FilterItem .FilterItem__DropdownList {
-  background: #f3f1f1;
-}
-
 .Page__Title {
   margin: 1rem;
   color: #aa0000;
@@ -172,7 +130,7 @@ a.microtext {
   display: block;
 }
 .SearchBar {
-  margin: 1rem 0.5rem;
+  margin: 0.2rem 0.5rem;
 }
 
 .SearchBar--home {
@@ -181,22 +139,5 @@ a.microtext {
 
 .SearchBar .SearchBar__Input {
   background-color: #fff;
-}
-
-.FilterList__FilterItem {
-  margin: 0.5rem 0;
-}
-
-.FilterList__SelectedFilters {
-  font-family: 'Cabin', sans-serif;
-  font-size: 0.625rem;
-}
-.FilterList__SelectedFilter {
-  background: #dfdfdf !important;
-  margin: 0.5rem 0.5rem 0.2rem 0 !important;
-}
-
-.FilterList__Slider .vue-slider-component .vue-slider-process {
-  background-color: #aa0000 !important;
 }
 </style>
