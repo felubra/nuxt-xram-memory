@@ -44,5 +44,9 @@ export const actions = {
   async fetchPagesInMenu({ commit }) {
     const pagesInMenu = await this.$axios.$get('api/v1/pages/in_menu')
     commit('addPages', pagesInMenu)
+  },
+  async fetchFeaturedPages({ commit }) {
+    const featuredPages = await this.$axios.$get('api/v1/pages/featured')
+    commit('addPages', featuredPages)
   }
 }
