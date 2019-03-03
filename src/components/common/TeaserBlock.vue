@@ -1,6 +1,11 @@
 <template>
-  <section class="TeaserBlock">
-    <div v-if="teaser" class="ql-editor" v-html="teaser"></div>
+  <section v-if="teaser" class="TeaserBlock">
+    <div class="TeaserBlock__Body ql-editor" v-html="teaser"></div>
+    <nuxt-link
+      v-if="slug"
+      :to="{name: 'page-slug', params: {slug: slug} }"
+      class="TeaserBlock__Link microtext"
+    >Saiba mais</nuxt-link>
   </section>
 </template>
 
@@ -34,7 +39,18 @@ export default {
         this.pageItem.teaser !== undefined &&
         xss(this.pageItem.teaser, appClassesXSSFilter)
       )
+    },
+    slug() {
+      return this.pageItem.url !== undefined && xss(this.pageItem.url)
     }
   }
 }
 </script>
+
+<style scoped>
+.TeaserBlock__Link {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+}
+</style>
