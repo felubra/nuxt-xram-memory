@@ -28,6 +28,9 @@ export const mutations = {
 export const getters = {
   menuPageLinks({ pages }) {
     return pages.filter(page => page.show_in_menu === true)
+  },
+  featuredPages({ pages }) {
+    return pages.filter(page => page.featured === true)
   }
 }
 
