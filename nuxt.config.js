@@ -38,7 +38,8 @@ module.exports = {
   plugins: [
     '@/plugins/reactive-search',
     '@/plugins/v-viewer',
-    '@/plugins/axios'
+    '@/plugins/axios',
+    '@/plugins/essential-content.js'
   ],
 
   /*
