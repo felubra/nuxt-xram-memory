@@ -12,9 +12,19 @@
           <i class="material-icons">search</i>Pesquisar
         </nuxt-link>
       </li>
-      <li class="Menu__Item Menu__Item--big">
-        <nuxt-link to="about">
-          <i class="material-icons">info</i>Sobre o projeto
+      <li v-for="page in menuPageLinks" :key="page.id" class="Menu__Item Menu__Item--big">
+        <nuxt-link
+          :title="page.teaser"
+          :alt="`Clique para visitar a página '${page.title}'`"
+          :to="{
+          name: 'page-slug',
+          params: {
+            slug: page.url
+          }
+        }"
+        >
+          <i class="material-icons">info</i>
+          {{page.title}}
         </nuxt-link>
       </li>
       <li class="Menu__Item Menu__Item--big">
@@ -39,7 +49,7 @@
 
 <script>
 import Logo from './Logo'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Menu',
   components: {
@@ -49,7 +59,8 @@ export default {
     ...mapActions(['toggleMenu'])
   },
   computed: {
-    ...mapState(['menuVisible'])
+    ...mapState(['menuVisible']),
+    ...mapGetters(['menuPageLinks'])
   }
 }
 </script>
