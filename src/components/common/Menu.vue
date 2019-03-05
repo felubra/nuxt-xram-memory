@@ -83,7 +83,7 @@ export default {
 
 .Menu__Header {
   text-align: center;
-  padding: 1rem 0.5rem;
+  padding: 0.35rem 0.5rem;
   display: flex;
   align-items: center;
 }
@@ -94,6 +94,9 @@ export default {
 
 .Menu__CloseButton {
   color: #f3f1f1;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .Menu__Items {

@@ -1,6 +1,6 @@
 <template>
   <div class="Logo">
-    <nuxt-link to="/">
+    <nuxt-link class="Logo__Link" to="/">
       <img :src="src" alt>
     </nuxt-link>
   </div>
@@ -33,6 +33,11 @@ export default {
 </script>
 <style scoped>
 .Logo img {
-  width: 10rem;
+  height: 2.4rem;
+}
+.Logo__Link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
