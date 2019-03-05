@@ -1,5 +1,5 @@
 <template>
-  <section v-if="teaser" class="TeaserBlock">
+  <section v-if="teaser" :class="{'TeaserBlock': true, 'TeaserBlock--home': home}">
     <div class="TeaserBlock__Body ql-editor" v-html="teaser"></div>
     <nuxt-link
       v-if="slug"
@@ -31,6 +31,10 @@ export default {
       validator: function(value) {
         return ['full', 'teaser'].includes(value)
       }
+    },
+    home: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -48,6 +52,10 @@ export default {
 </script>
 
 <style scoped>
+.TeaserBlock--home {
+  margin: 10vh 0.5rem;
+}
+
 .TeaserBlock__Link {
   display: block;
   text-align: right;
