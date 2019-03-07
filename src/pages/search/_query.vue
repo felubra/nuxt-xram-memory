@@ -229,7 +229,7 @@ export default {
   align-self: flex-start;
   justify-content: flex-end;
   padding: 0.5rem;
-  color: #333;
+  color: #555;
 }
 
 .SelectedFilters {
