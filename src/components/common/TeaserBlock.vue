@@ -3,7 +3,7 @@
     <div class="TeaserBlock__Body ql-editor" v-html="teaser"></div>
     <nuxt-link
       v-if="slug"
-      :to="{name: 'page-slug', params: {slug: slug} }"
+      :to="{name: 'id', params: {id: pageId} }"
       class="TeaserBlock__Link microtext"
     >Saiba mais</nuxt-link>
   </section>
@@ -43,6 +43,9 @@ export default {
         this.pageItem.teaser !== undefined &&
         xss(this.pageItem.teaser, appClassesXSSFilter)
       )
+    },
+    pageId() {
+      return this.pageItem.id
     },
     slug() {
       return this.pageItem.url !== undefined && xss(this.pageItem.url)

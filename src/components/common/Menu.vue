@@ -17,9 +17,9 @@
           :title="page.teaser"
           :alt="`Clique para visitar a página '${page.title}'`"
           :to="{
-          name: 'page-slug',
+          name: 'id',
           params: {
-            slug: page.url
+            id: page.id
           }
         }"
         >
