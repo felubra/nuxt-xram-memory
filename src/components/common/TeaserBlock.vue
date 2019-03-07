@@ -25,13 +25,6 @@ export default {
         return {}
       }
     },
-    mode: {
-      type: String,
-      default: 'full',
-      validator: function(value) {
-        return ['full', 'teaser'].includes(value)
-      }
-    },
     home: {
       type: Boolean,
       default: true
