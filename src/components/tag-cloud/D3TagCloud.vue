@@ -127,4 +127,8 @@ div.Cloud {
   width: 100%;
   min-height: 600px;
 }
+svg {
+  display: block;
+  margin: 0 auto;
+}
 </style>

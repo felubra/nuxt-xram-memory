@@ -6,16 +6,14 @@
         <Navbar :class="{ 'NavBar--fixed': navBarFixed }"/>
       </fixed-header>
     </header>
-    <main>
-      <ReactiveBase
-        class-name="ReactiveBase"
-        app="artifact_news"
-        url="http://localhost:9200"
-        :theme="defaultTheme"
-      >
-        <nuxt/>
-      </ReactiveBase>
-    </main>
+    <ReactiveBase
+      class-name="ReactiveBase"
+      app="artifact_news"
+      url="http://localhost:9200"
+      :theme="defaultTheme"
+    >
+      <nuxt/>
+    </ReactiveBase>
   </div>
 </template>
 
@@ -94,10 +92,8 @@ main {
   flex-direction: column;
   align-self: center;
   width: 100%;
-  max-width: 66.6rem;
 }
 
-/* Estilos globais */
 .microtext {
   text-transform: uppercase;
   color: #aa0000;
@@ -119,11 +115,11 @@ a.microtext {
   display: block;
 }
 .SearchBar {
-  margin: 2rem 0.5rem 1rem;
-}
-
-.SearchBar--home {
-  margin: 25vh 1rem 15vh;
+  margin: 2rem 0;
+  padding: 0 0.5rem;
+  max-width: 40.5rem;
+  align-self: center;
+  width: 100%;
 }
 
 .SearchBar .SearchBar__Input {

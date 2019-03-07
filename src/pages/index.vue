@@ -1,6 +1,6 @@
 <template>
   <section class="Page">
-    <TeaserBlock v-if="featuredPage" :page-item="featuredPage"></TeaserBlock>
+    <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
     <DataSearch
       component-id="SearchSensor"
       :field-weights="[10,7]"
@@ -13,7 +13,11 @@
       @keyPress="search"
     />
     <no-ssr>
-      <ReactiveComponent component-id="ReactiveD3TagCloud" :default-query="tagCloudQuery">
+      <ReactiveComponent
+        class="ReactiveD3TagCloud--home"
+        component-id="ReactiveD3TagCloud"
+        :default-query="tagCloudQuery"
+      >
         <div slot-scope="{ aggregations, error }">
           <ReactiveD3TagCloud :aggregations="aggregations" :error="error"/>
         </div>
@@ -56,3 +60,35 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.SearchBar--home {
+  margin: 10vh 0 15vh;
+}
+
+.SearchBar .SearchBar__Input {
+  background-color: #fff;
+}
+
+.ReactiveD3TagCloud--home {
+  order: 2;
+  margin-top: 15vh;
+}
+.FeaturedPage {
+  order: 0;
+  margin: 10vh;
+}
+
+@media only screen and (min-width: 768px) {
+  .SearchBar--home {
+    margin: 15rem 0 2rem;
+  }
+  .FeaturedPage {
+    order: 1;
+    margin: 0;
+  }
+  .ReactiveD3TagCloud--home {
+    margin-top: 35vh;
+  }
+}
+</style>

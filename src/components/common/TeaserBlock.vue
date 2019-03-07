@@ -48,8 +48,11 @@ export default {
 </script>
 
 <style scoped>
-.TeaserBlock--home {
-  margin: 10vh 0.5rem;
+.TeaserBlock {
+  max-width: 46.5rem;
+  align-self: center;
+  width: 100%;
+  padding: 0 0.5rem;
 }
 
 .TeaserBlock__Link {

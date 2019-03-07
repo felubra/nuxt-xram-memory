@@ -1,120 +1,124 @@
 <template>
-  <section class="Page">
-    <DataSearch
-      component-id="SearchSensor"
-      :field-weights="[10,7]"
-      :data-field="['title', 'teaser']"
-      icon-position="right"
-      :autosuggest="false"
-      class-name="SearchBar"
-      placeholder="Pesquisar no acervo"
-      filter-label="Pesquisa"
-      :show-clear="false"
-      :show-filter="false"
-      :default-selected="query"
-      :inner-class="{
+  <div class="Page">
+    <aside>
+      <DataSearch
+        component-id="SearchSensor"
+        :field-weights="[10,7]"
+        :data-field="['title', 'teaser']"
+        icon-position="right"
+        :autosuggest="false"
+        class-name="SearchBar"
+        placeholder="Pesquisar no acervo"
+        filter-label="Pesquisa"
+        :show-clear="false"
+        :show-filter="false"
+        :default-selected="query"
+        :inner-class="{
         input: 'SearchBar__Input'
       }"
-      :u-r-l-params="false"
-    />
-    <selected-filters
-      class-name="SelectedFilters"
-      clear-all-label="Limpar filtros"
-      :inner-class="{button:'SelectedFilters__Filter'}"
-    />
-    <div
-      class="FilterList"
-      :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
-    >
-      <single-dropdown-list
-        :default-query="customFilterQuery"
-        filter-label="Site/Veículo"
-        component-id="NewspaperSensor"
-        data-field="newspaper.title"
-        nested-field="newspaper"
-        class-name="FilterList__FilterItem"
-        :show-count="false"
-        :size="25"
-        placeholder="Todos"
-        :show-filter="true"
-        :inner-class="{
+        :u-r-l-params="false"
+      />
+      <selected-filters
+        class-name="SelectedFilters"
+        clear-all-label="Limpar filtros"
+        :inner-class="{button:'SelectedFilters__Filter'}"
+      />
+      <div
+        class="FilterList"
+        :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
+      >
+        <single-dropdown-list
+          :default-query="customFilterQuery"
+          filter-label="Site/Veículo"
+          component-id="NewspaperSensor"
+          data-field="newspaper.title"
+          nested-field="newspaper"
+          class-name="FilterList__FilterItem"
+          :show-count="false"
+          :size="25"
+          placeholder="Todos"
+          :show-filter="true"
+          :inner-class="{
           title: 'microtext',
           select: 'FilterItem__DropdownToggle',
           list: 'FilterItem__DropdownList'
         }"
-        title="Site/Veículo"
-      />
+          title="Site/Veículo"
+        />
 
-      <multi-dropdown-list
-        :default-query="customFilterQuery"
-        filter-label="Palavras-chave"
-        component-id="KeywordsSensor"
-        data-field="keywords.name"
-        nested-field="keywords"
-        :show-search="true"
-        :size="100"
-        class-name="FilterList__FilterItem"
-        :show-count="false"
-        placeholder="Todas"
-        :show-filter="true"
-        :inner-class="{
+        <multi-dropdown-list
+          :default-query="customFilterQuery"
+          filter-label="Palavras-chave"
+          component-id="KeywordsSensor"
+          data-field="keywords.name"
+          nested-field="keywords"
+          :show-search="true"
+          :size="100"
+          class-name="FilterList__FilterItem"
+          :show-count="false"
+          placeholder="Todas"
+          :show-filter="true"
+          :inner-class="{
             title: 'microtext',
             select: 'FilterItem__DropdownToggle',
             list: 'FilterItem__DropdownList'
           }"
-        title="Palavras-chave"
-        :react="{and: ['SearchSensor','NewspaperSensor', 'PublishedYearSensor']}"
-      />
-      <DynamicRangeSlider
-        data-field="published_year"
-        component-id="PublishedYearSensor"
-        class-name="FilterList__FilterItem"
-        title="Anos de publicação"
-        filter-label="Intervalo (anos)"
-        :inner-class="{
+          title="Palavras-chave"
+          :react="{and: ['SearchSensor','NewspaperSensor', 'PublishedYearSensor']}"
+        />
+        <DynamicRangeSlider
+          data-field="published_year"
+          component-id="PublishedYearSensor"
+          class-name="FilterList__FilterItem"
+          title="Anos de publicação"
+          filter-label="Intervalo (anos)"
+          :inner-class="{
             title: 'microtext',
             slider: 'FilterList__Slider',
           }"
-        :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor']}"
-      />
-    </div>
-    <div class="FilterList__ToggleFilters">
-      <a
-        v-if="filterListOpened"
-        class="microtext"
-        href="#moreFilters"
-        @click.prevent="toggleFilters"
-      >
-        <i class="material-icons">close</i>
-        Fechar
-      </a>
-      <a v-else class="microtext" href="#moreFilters" @click.prevent="toggleFilters">
-        <i class="material-icons">filter_list</i>
-        Filtros
-      </a>
-    </div>
-    <ReactiveList
-      :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor','PublishedYearSensor']}"
-      component-id="SearchResults"
-      :pagination="false"
-      data-field="title.raw"
-      class-name="SearchResults"
-      :inner-class="{
+          :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor']}"
+        />
+      </div>
+      <div class="FilterList__ToggleFilters">
+        <a
+          v-if="filterListOpened"
+          class="microtext"
+          href="#moreFilters"
+          @click.prevent="toggleFilters"
+        >
+          <i class="material-icons">close</i>
+          Fechar
+        </a>
+        <a v-else class="microtext" href="#moreFilters" @click.prevent="toggleFilters">
+          <i class="material-icons">filter_list</i>
+          Filtros
+        </a>
+      </div>
+    </aside>
+    <main>
+      <ReactiveList
+        :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor','PublishedYearSensor']}"
+        component-id="SearchResults"
+        :pagination="false"
+        data-field="title.raw"
+        class-name="SearchResults"
+        :inner-class="{
         resultsInfo: 'SearchResults__ResultsInfo'
       }"
-      :from="0"
-      :size="5"
-    >
-      <a
-        slot="renderData"
-        slot-scope="{ item }"
-        class="SearchResults__Result"
-        :href="`/news/${item.id}`"
+        :from="0"
+        :size="5"
       >
-        <NewsCard :news-item="item"/>
-      </a>
-    </ReactiveList>
-  </section>
+        <a
+          slot="renderData"
+          slot-scope="{ item }"
+          class="SearchResults__Result"
+          :href="`/news/${item.id}`"
+        >
+          <NewsCard :news-item="item"/>
+        </a>
+      </ReactiveList>
+    </main>
+  </div>
 </template>
 
 <script>
