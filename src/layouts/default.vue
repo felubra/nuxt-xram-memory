@@ -129,7 +129,7 @@ a.microtext {
   display: block;
 }
 .SearchBar {
-  margin: 0.2rem 0.5rem;
+  margin: 2rem 0.5rem 1rem;
 }
 
 .SearchBar--home {
