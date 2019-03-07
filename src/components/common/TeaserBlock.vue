@@ -1,6 +1,6 @@
 <template>
   <section v-if="teaser" :class="{'TeaserBlock': true, 'TeaserBlock--home': home}">
-    <div class="TeaserBlock__Body ql-editor" v-html="teaser"></div>
+    <div class="ql-editor TeaserBlock__Body" v-html="teaser"></div>
     <nuxt-link
       v-if="slug"
       :to="{name: 'id', params: {id: pageId} }"
