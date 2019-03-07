@@ -27,3 +27,19 @@ export const TAGCLOUD_QUERY = {
     }
   }
 }
+
+export const defaultTheme = {
+  typography: {
+    fontFamily: 'Vollkorn, serif',
+    fontSize: '16px'
+  },
+  colors: {
+    textColor: '#333333',
+    backgroundColor: '#fff',
+    primaryTextColor: '#AA0000',
+    primaryColor: '#AA0000',
+    titleColor: '#AA0000',
+    alertColor: '#d9534f',
+    borderColor: '#B9B9B9'
+  }
+}

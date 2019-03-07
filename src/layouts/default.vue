@@ -23,6 +23,7 @@
 import Navbar from '~/components/common/Navbar'
 import Menu from '~/components/common/Menu'
 import FixedHeader from 'vue-fixed-header'
+import { defaultTheme } from '~/config/constants'
 
 export default {
   name: 'DefaultLayout',
@@ -38,21 +39,7 @@ export default {
   },
   computed: {
     defaultTheme() {
-      return {
-        typography: {
-          fontFamily: 'Vollkorn, serif',
-          fontSize: '16px'
-        },
-        colors: {
-          textColor: '#333333',
-          backgroundColor: '#fff',
-          primaryTextColor: '#AA0000',
-          primaryColor: '#AA0000',
-          titleColor: '#AA0000',
-          alertColor: '#d9534f',
-          borderColor: '#B9B9B9'
-        }
-      }
+      return defaultTheme
     }
   }
 }
@@ -105,6 +92,9 @@ main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  align-self: center;
+  width: 100%;
+  max-width: 66.6rem;
 }
 
 /* Estilos globais */
