@@ -1,5 +1,5 @@
 <template>
-  <div ref="Cloud" class="Cloud" />
+  <div ref="Cloud" class="Cloud"/>
 </template>
 
 <script>
@@ -63,7 +63,7 @@ export default {
           )
           return angles[Math.floor(Math.random() * angles.length)]
         })
-        .font('Asmath Solid')
+        .font('Vollkorn')
         .fontSize(function(d) {
           return d.size
         })
@@ -108,7 +108,7 @@ export default {
           ])((d.size - 1) / (100 - 1))
           return color
         })
-        .style('font-family', 'Asmath Solid')
+        .style('font-family', 'Vollkorn')
         .attr('text-anchor', 'middle')
         .attr('transform', function(d) {
           return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')'
