@@ -49,6 +49,7 @@ html,
 body {
   box-sizing: border-box;
   height: 100%;
+  background: #f3f1f1;
 }
 html {
   font-family: 'Vollkorn', serif;
