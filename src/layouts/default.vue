@@ -125,4 +125,10 @@ a.microtext {
 .SearchBar .SearchBar__Input {
   background-color: #fff;
 }
+
+@media only screen and (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
+}
 </style>
