@@ -60,4 +60,7 @@ export default {
   text-align: right;
   font-size: 0.75rem;
 }
+.TeaserBlock__Body {
+  font-size: 1rem;
+}
 </style>
