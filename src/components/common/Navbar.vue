@@ -32,7 +32,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0.35rem 0.5rem;
-  background: #fff;
+  background: transparent;
   box-sizing: border-box;
   z-index: 8;
 }
@@ -41,6 +41,7 @@ export default {
   position: fixed;
   backface-visibility: hidden;
   width: 100%;
+  background: #fff;
 }
 
 .Navbar__Item {
