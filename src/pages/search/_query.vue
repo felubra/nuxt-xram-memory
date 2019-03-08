@@ -1,6 +1,6 @@
 <template>
   <div class="Page">
-    <aside>
+    <aside class="SearchOptions">
       <DataSearch
         component-id="SearchSensor"
         :field-weights="[10,7]"
@@ -103,8 +103,9 @@
         data-field="title.raw"
         class-name="SearchResults"
         :inner-class="{
-        resultsInfo: 'SearchResults__ResultsInfo'
-      }"
+          resultsInfo: 'SearchResults__ResultsInfo',
+          list: 'SearchResults__List'
+        }"
         :from="0"
         :size="5"
       >
@@ -183,9 +184,25 @@ export default {
 </script>
 
 <style>
+.SearchOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #f3f1f1;
+}
+
+.SearchOptions > * {
+  width: 100%;
+}
 .FilterList {
   background: #f3f1f1;
 }
+
+.FilterList .FilterList__FilterItem {
+  text-align: left;
+}
+
 .FilterList .FilterList__FilterItem button {
   border: none;
   border-bottom: solid 1px #a1a1a1;
@@ -212,7 +229,7 @@ export default {
   margin: 0.5rem 0.5rem;
 }
 
-.FilterList__Slider .vue-slider-component .vue-slider-process {
+.FilterList .FilterList__Slider .vue-slider-component .vue-slider-process {
   background-color: #aa0000 !important;
 }
 
@@ -220,6 +237,8 @@ export default {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease-in-out;
+  display: flex;
+  flex-direction: column;
 }
 
 .FilterList--open {
@@ -272,5 +291,33 @@ export default {
 .SearchResults .SearchResults__ResultsInfo p {
   margin: 0.5rem 0 0;
   font-size: 0.75rem;
+}
+
+.SearchResults .SearchResults__List {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 768px) {
+  .FilterList {
+    max-height: 500px;
+    overflow: visible;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 66rem;
+  }
+  .FilterList .FilterList__FilterItem {
+    width: 100%;
+  }
+  .FilterList__ToggleFilters {
+    display: none;
+  }
+  .SelectedFilters {
+    order: 9;
+  }
+  .SearchResults .SearchResults__Result {
+    margin: 0.5rem;
+  }
 }
 </style>
