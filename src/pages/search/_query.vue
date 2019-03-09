@@ -296,7 +296,7 @@ export default {
 .SearchResults .SearchResults__List {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 @media only screen and (min-width: 768px) {
