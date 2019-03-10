@@ -100,6 +100,12 @@ main {
   padding-top: 0;
 }
 
+.content-container {
+  max-width: 55rem;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
 .microtext {
   text-transform: uppercase;
   color: #aa0000;

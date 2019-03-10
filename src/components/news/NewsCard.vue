@@ -1,7 +1,9 @@
 <template>
   <div class="NewsCard">
     <div class="NewsCard__Body">
-      <img v-if="image" :src="image" alt @error="removeImage">
+      <div class="NewCard__Image">
+        <img v-if="image" :src="image" alt @error="removeImage">
+      </div>
       <div class="news-text">
         <p v-if="label" class="label">Notícia</p>
         <h3>{{ newsItem.title }}</h3>
@@ -105,7 +107,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 p.label {
   color: #aa0000;
   text-transform: uppercase;
@@ -131,7 +133,7 @@ div.NewsCard__Body p.teaser {
   display: none;
 }
 
-div.NewsCard__Body img {
+div.NewCard__Image {
   min-width: 15.625rem;
 }
 

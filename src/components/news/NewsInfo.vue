@@ -1,9 +1,13 @@
 <template>
   <dl class="NewsInfo">
+    <div v-if="teaser" class="NewsInfo__Field NewsInfo__Field--summary">
+      <dt>Resumo</dt>
+      <dd>{{teaser}}</dd>
+    </div>
     <div v-if="url" class="NewsInfo__Field">
-      <dt>Endereço original</dt>
+      <dt>Endereço original da notícia</dt>
       <dd>
-        <a :href="url.url" target="_blank">Link original</a>
+        <a :href="url.url" target="_blank">{{url.url}}</a>
       </dd>
     </div>
     <div v-if="newspaper" class="NewsInfo__Field">
@@ -16,10 +20,11 @@
       <dt>Data de publicação</dt>
       <dd>{{published_date}}</dd>
     </div>
-    <div v-if="pdf_captures" class="NewsInfo__Field">
-      <dt>Capturas em PDF</dt>
+    <div v-if="pdf_captures" class="NewsInfo__Field NewsInfo__Field--stacked">
+      <dt>Capturas de página</dt>
       <dd>
         <nuxt-link
+          class="NewsInfo__PDFCapture"
           v-for="capture in pdf_captures"
           :key="capture.url"
           :to="{
@@ -28,7 +33,15 @@
               id: capture.document_id
             },
           }"
-        >{{capture.title}}</nuxt-link>
+        >
+          <img
+            v-if="thumbnailForDocument(capture.document_id)"
+            :src="thumbnailForDocument(capture.document_id)"
+            :alt="capture.title"
+            :title="capture.title"
+          >
+          <span>{{capture.title}}</span>
+        </nuxt-link>
       </dd>
     </div>
     <div v-if="subjects" class="NewsInfo__Field">
@@ -49,10 +62,6 @@
         >{{keyword.name}}</nuxt-link>
       </dd>
     </div>
-    <div v-if="teaser" class="NewsInfo__Field NewsInfo__Field--summary">
-      <dt>Resumo</dt>
-      <dd>{{teaser}}</dd>
-    </div>
   </dl>
 </template>
 
@@ -60,6 +69,7 @@
 const smartTruncate = require('smart-truncate')
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
+import { getMediaUrl } from '@/utils'
 export default {
   name: 'NewsInfo',
   props: {
@@ -68,6 +78,11 @@ export default {
       default: function() {
         return {}
       }
+    }
+  },
+  data() {
+    return {
+      documents: []
     }
   },
   computed: {
@@ -157,6 +172,36 @@ export default {
       return `${title.date || 'Captura em PDF'} ${
         title.size ? `(${title.size})` : ''
       }`
+    },
+    getDocumentsInfo() {
+      Promise.all(
+        this.pdf_captures.map(capture => {
+          return this.$axios
+            .$get(`/api/v1/document/${capture.document_id}`)
+            .then(document => {
+              return document
+            })
+        })
+      ).then(documents => {
+        this.documents = documents
+      })
+    },
+    thumbnailForDocument(id) {
+      try {
+        return getMediaUrl(
+          this.documents.find(document => document.id === id).thumbnail
+        )
+      } catch {
+        return false
+      }
+    }
+  },
+  watch: {
+    pdf_captures: {
+      immediate: true,
+      handler() {
+        this.getDocumentsInfo()
+      }
     }
   }
 }
@@ -176,39 +221,71 @@ dt {
   color: #555555;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 0.75rem;
   font-family: 'Cabin', sans-serif;
 }
 dl {
-  background: #e0e0e0;
   position: relative;
   height: 100%;
-  padding: 0.75rem;
   margin: 0;
 }
 dd {
   margin: 0.5rem 0;
-  font-size: 0.875rem;
 }
 .NewsInfo__Field:first-child {
   margin-top: 0;
 }
 .NewsInfo__Field {
-  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  margin: 2.5rem 0;
+  align-items: flex-start;
 }
-.NewsInfo__Field--multicol {
-  column-count: 3;
+.NewsInfo__Field--summary {
+  font-family: 'Cabin', sans-serif;
 }
 
-.NewsInfo__Field--multicol > dd {
-  display: inline-block;
+.NewsInfo__Field--multicol {
 }
 
 .NewsInfo__Field--multicol > dt {
   column-span: all;
 }
 
-.NewsInfo__Field--summary {
-  font-family: 'Cabin', sans-serif;
+.NewsInfo__Field--multicol > dd {
+  margin: 0.5rem;
+}
+
+.NewsInfo__PDFCapture {
+  display: inline-block;
+  text-align: center;
+}
+
+.NewsInfo__PDFCapture > span {
+  text-align: center;
+  display: block;
+}
+
+@media only screen and (min-width: 768px) {
+  .NewsInfo__Field {
+    flex-direction: row;
+    align-items: baseline;
+  }
+  .NewsInfo__Field--stacked {
+    flex-direction: column;
+  }
+  .NewsInfo__Field > dd {
+    margin: 0 0 0 1.5rem;
+  }
+  .NewsInfo__Field--stacked > dd {
+    margin: 0.5rem;
+  }
+
+  .NewsInfo__Field--stacked > dd::first-child {
+    margin-left: 0;
+  }
+
+  .NewsInfo__Field > dt {
+    display: inline-block;
+  }
 }
 </style>
