@@ -73,7 +73,6 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  padding-top: 3.098rem;
 }
 
 main {
@@ -94,6 +93,11 @@ main {
   flex-direction: column;
   align-self: center;
   width: 100%;
+  padding-top: 3.098rem;
+}
+
+.Page--bare {
+  padding-top: 0;
 }
 
 .microtext {

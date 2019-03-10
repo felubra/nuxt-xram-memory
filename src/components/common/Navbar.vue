@@ -1,10 +1,10 @@
 <template>
   <nav class="Navbar">
-    <a class="Navbar__Item" href="#main-menu" @click.prevent="menuToggle">
+    <a class="Navbar__Item Navbar__MenuToggle" href="#main-menu" @click.prevent="menuToggle">
       <i class="material-icons">menu</i>
     </a>
-    <Logo/>
-    <nuxt-link class="Navbar__Item" to="/search">
+    <Logo class="Navbar__Item Navbar__Logo"/>
+    <nuxt-link class="Navbar__Item Navbar__Search" to="/search">
       <i class="material-icons">search</i>
     </nuxt-link>
   </nav>
@@ -45,16 +45,35 @@ export default {
 }
 
 .NavBar--fixed {
-  position: fixed;
-  backface-visibility: hidden;
-  width: 100%;
   background: #fff;
+  transition: padding cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
 }
 
 .Navbar__Item {
-  color: #333;
+  color: inherit;
   display: flex;
   align-items: center;
   text-decoration: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .Navbar {
+    width: auto;
+  }
+  .Navbar__Logo,
+  .Navbar__Search {
+    display: none;
+  }
+  .NavBar--fixed {
+    width: auto;
+    padding: 0;
+    background: #ce5454;
+    color: #fff;
+    min-height: 0;
+  }
+  .NavBar--fixed .Navbar__MenuToggle {
+    padding: 0 0.5rem;
+    min-height: 3.098rem;
+  }
 }
 </style>
