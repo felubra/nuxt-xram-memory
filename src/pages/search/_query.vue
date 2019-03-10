@@ -270,35 +270,6 @@ export default {
   font-size: 0.775rem;
 }
 
-.SearchResults {
-  background: #e0e0e0;
-  padding: 0.5rem 0.75rem;
-  flex-grow: 1;
-}
-
-.SearchResults .SearchResults__Result {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  margin: 0.5rem 0;
-}
-.SearchResults .SearchResults__ResultsInfo {
-  color: #555555;
-  text-transform: uppercase;
-  font-family: 'Cabin', sans-serif;
-}
-
-.SearchResults .SearchResults__ResultsInfo p {
-  margin: 0.5rem 0 0;
-  font-size: 0.75rem;
-}
-
-.SearchResults .SearchResults__List {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
 @media only screen and (min-width: 768px) {
   .FilterList {
     max-height: 500px;

@@ -54,7 +54,6 @@ body {
 html {
   font-family: 'Vollkorn', serif;
   font-size: 16px;
-  word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
@@ -138,9 +137,41 @@ a.microtext {
   background-color: #fff;
 }
 
+.SearchResults {
+  background: #e0e0e0;
+  padding: 0.5rem 0.75rem;
+  flex-grow: 1;
+}
+
+.SearchResults .SearchResults__Result {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin: 0.5rem 0;
+}
+.SearchResults .SearchResults__ResultsInfo {
+  color: #555555;
+  text-transform: uppercase;
+  font-family: 'Cabin', sans-serif;
+}
+
+.SearchResults .SearchResults__ResultsInfo p {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+}
+
+.SearchResults .SearchResults__List {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 @media only screen and (min-width: 768px) {
   html {
     font-size: 18px;
+  }
+  .SearchResults .SearchResults__Result {
+    margin: 0.5rem;
   }
 }
 </style>
