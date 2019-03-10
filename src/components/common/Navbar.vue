@@ -27,6 +27,7 @@ export default {
 </script>
 <style scoped>
 .Navbar {
+  backface-visibility: hidden;
   display: flex;
   flex: 1;
   justify-content: space-between;
@@ -35,6 +36,12 @@ export default {
   background: transparent;
   box-sizing: border-box;
   z-index: 8;
+  height: 3.098rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  color: #333;
+  transform: translate3d(0, 0, 0);
 }
 
 .NavBar--fixed {
