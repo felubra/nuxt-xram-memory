@@ -70,11 +70,13 @@ export default {
   display: flex;
   flex-direction: column;
   position: fixed;
+  top: 0;
   height: 100%;
   background: #ce5454;
   z-index: 10;
   transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s;
   transform: translate3d(-100%, 0, 0);
+  backface-visibility: hidden;
 }
 
 .Menu--visible {
@@ -126,7 +128,7 @@ export default {
   padding: 1rem 2rem;
   margin: 0 1.5rem 0 0;
   padding-top: 25vh;
-  font-size: 1.375rem;
+  font-size: 1.2rem;
   flex-grow: 1;
 }
 
@@ -154,13 +156,13 @@ export default {
 }
 
 .Menu__Item--inline {
-  display: inline;
+  margin: 0 0.5rem;
 }
 
 .Menu__Footer {
   justify-self: flex-end;
   font-family: 'Cabin', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.675rem;
   text-transform: uppercase;
   color: #fff;
   text-align: center;
