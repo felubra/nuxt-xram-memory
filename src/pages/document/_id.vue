@@ -4,10 +4,10 @@
   </section>
 </template>
 <script>
+import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
 export default {
   components: {
-    UnknownFilePreview: () =>
-      import(/* webpackChunkName: "UnknownFilePreview" */ '~/components/viewers/UnknownFilePreview'),
+    UnknownFilePreview,
     PDFFilePreview: () =>
       import(/* webpackChunkName: "PDFFilePreview" */ '~/components/viewers/PDFFilePreview'),
     ImageFilePreview: () =>
