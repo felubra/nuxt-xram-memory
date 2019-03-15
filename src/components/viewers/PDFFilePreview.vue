@@ -2,7 +2,7 @@
   <div class="PDFFilePreview">
     <div class="FilePreview__Preview FilePreview__Preview--pdf_file">
       <no-ssr>
-        <pdf :src="file_url" :page="1" scale="page-width">
+        <pdf class="PDFFilePreview__PDFComponent" :src="file_url" :page="1" :scale="scale">
           <template slot="loading">
             <p class="FilePreview__Message microtext">Carregando...</p>
             <div class="FilePreview__Actions FilePreview__Actions--big">
@@ -37,7 +37,7 @@
         <p class="FilePreview__SendDate">{{sendDate}}</p>
       </div>
       <div class="FilePreview__Actions FilePreview__Actions--stacked">
-        <a :href="file_url" download class="FilePreview__Action FilePreview__Action--stacked">
+        <a :href="file_url" class="FilePreview__Action FilePreview__Action--stacked" download>
           <i class="material-icons">get_app</i>
         </a>
         <!-- TODO: compartilhar... -->
@@ -61,13 +61,22 @@ export default {
     }
   },
   extends: DocumentPreview,
+  computed: {
+    scale() {
+      try {
+        return window.innerWidth < 768 ? 'page-width' : 'page-height'
+      } catch {
+        return 'page-width'
+      }
+    }
+  },
   mounted() {
     this.a = 1
   }
 }
 </script>
 
-<style scoped>
+<style>
 .PDFFilePreview__OriginalImage {
   display: none;
 }
@@ -87,5 +96,32 @@ export default {
 
 .FilePreview__Footer--pdf-file {
   flex-grow: 1;
+}
+
+@media only screen and (min-width: 768px) {
+  .PDFFilePreview {
+    background: #fefefe;
+    display: block;
+  }
+
+  .PDFFilePreview__PDFComponent .page {
+    margin: 0 auto;
+  }
+  .FilePreview__Preview--pdf_file {
+    overflow: visible;
+    min-height: calc(75vh + 2rem);
+    background: #f3f1f1;
+  }
+  .FilePreview__Footer--pdf-file {
+    background: transparent;
+  }
+  #viewerContainer {
+    height: 75vh;
+    padding: 1rem;
+  }
+  #viewerContainer canvas {
+    border: solid 1px #ccc;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 }
 </style>

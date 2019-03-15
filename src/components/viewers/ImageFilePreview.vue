@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .ImageFilePreview__OriginalImage {
   display: none;
 }
@@ -75,5 +75,8 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+.ImageFilePreview .viewer-canvas {
+  background: #f3f1f1;
 }
 </style>
