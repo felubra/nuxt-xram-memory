@@ -1,47 +1,64 @@
 <template>
   <div class="PDFFilePreview">
-    <div class="FilePreview__Preview FilePreview__Preview--pdf_file">
-      <no-ssr>
-        <pdf
-          class="PDFFilePreview__PDFComponent"
-          :src="file_url"
-          :page="currentPage"
-          :scale="scale"
-        >
-          <template slot="loading">
-            <p class="FilePreview__Message microtext">Carregando...</p>
-            <div class="FilePreview__Actions FilePreview__Actions--big">
-              <a :href="file_url" class="FilePreview__Action">
-                <i class="material-icons">get_app</i>
-              </a>
-              <!-- TODO: compartilhar... -->
-            </div>
-          </template>
-        </pdf>
-        <ul class="PDFFilePreview__PageControls">
-          <li>
-            <a href="#" title="Página anterior" @click.prevent="pageBefore">
-              <i class="material-icons">navigate_before</i>
+    <div ref="pdfContainer" class="FilePreview__Preview FilePreview__Preview--pdf_file">
+      <pdf
+        ref="pdfComponent"
+        class="PDFFilePreview__PDFComponent"
+        :src="file_url"
+        :page="currentPage"
+        style="display: none"
+      >
+        <template slot="loading">
+          <p class="FilePreview__Message microtext">Carregando...</p>
+          <div class="FilePreview__Actions FilePreview__Actions--big">
+            <a :href="file_url" class="FilePreview__Action">
+              <i class="material-icons">get_app</i>
             </a>
-          </li>
-          <!--
+            <!-- TODO: compartilhar... -->
+          </div>
+        </template>
+      </pdf>
+      <ul class="PDFFilePreview__PageControls">
+        <li>
+          <a href="#" title="Página anterior" @click.prevent="pageBefore">
+            <i class="material-icons">navigate_before</i>
+          </a>
+        </li>
+        <!--
           <li>
             <a href="#" title="Tela Inteira" @click.prevent="fullScreen">
               <i class="material-icons">fullscreen</i>
             </a>
-          </li>-->
-          <li>
-            <a href="#" title="Próxima página" @click.prevent="nextPage">
-              <i class="material-icons">navigate_next</i>
-            </a>
-          </li>
-        </ul>
-      </no-ssr>
+        </li>-->
+        <li>
+          <a href="#" title="Próxima página" @click.prevent="nextPage">
+            <i class="material-icons">navigate_next</i>
+          </a>
+        </li>
+      </ul>
     </div>
     <div class="FilePreview__Actions FilePreview__Actions--toolbar">
       <a href="#document-info" class="FilePreview__Action FilePreview__Action--toolbar">
         <i class="material-icons">info</i>Mais informações
       </a>
+      <ul class="PDFFilePreview__PageControls PDFFilePreview__PageControls--toolbar">
+        <li>
+          <a href="#" title="Página anterior" @click.prevent="pageBefore">
+            <i class="material-icons">navigate_before</i>
+          </a>
+        </li>
+        <!--
+          <li>
+            <a href="#" title="Tela Inteira" @click.prevent="fullScreen">
+              <i class="material-icons">fullscreen</i>
+            </a>
+        </li>-->
+        <li>
+          <a href="#" title="Próxima página" @click.prevent="nextPage">
+            <i class="material-icons">navigate_next</i>
+          </a>
+        </li>
+      </ul>
       <a :href="file_url" download class="FilePreview__Action FilePreview__Action--toolbar">
         <i class="material-icons">get_app</i> Baixar
       </a>
@@ -71,45 +88,54 @@
 
 <script>
 import DocumentPreview from './DocumentPreview'
+import pdf from 'vue-pdf'
 export default {
   name: 'PDFFilePreview',
   components: {
-    pdf: () => {
-      /** Não carregue este componente a menos que estejamos no browser, pois o remédio <no-ssr>
-       acima é suficiente */
-      if (typeof window !== 'undefined') {
-        return import(/* webpackChunkName: "pdfVuer" */ 'pdfvuer')
-      }
-      return {}
-    }
+    pdf: pdf
   },
   extends: DocumentPreview,
   data() {
     return {
-      currentPage: 1
-    }
-  },
-  computed: {
-    scale() {
-      try {
-        return window.innerWidth < 768 ? 'page-width' : 'page-height'
-      } catch {
-        return 'page-width'
-      }
+      currentPage: 1,
+      numPages: 0
     }
   },
   mounted() {
-    this.a = 1
+    this.loadingTask().then(pdf => {
+      this.numPages = pdf.numPages
+
+      pdf.getPage(1).then(page => {
+        const { width, height } = page.getViewport(1)
+        const container = this.$refs.pdfContainer
+
+        const heightScale = (container.clientHeight / height) * 1
+        const widthScale = (container.clientWidth / width) * 1
+        const newWidth =
+          window.innerWidth < 768 ? width * widthScale : width * heightScale
+
+        this.$refs.pdfComponent.$el.setAttribute(
+          'style',
+          `width: ${newWidth}px;`
+        )
+      })
+    })
   },
   methods: {
     pageBefore() {
       this.currentPage = this.currentPage - 1 >= 1 ? this.currentPage - 1 : 1
     },
     nextPage() {
-      this.currentPage = this.currentPage + 1
+      this.currentPage =
+        this.currentPage === this.numPages
+          ? this.numPages
+          : this.currentPage + 1
     },
     fullScreen() {
       /** TODO: */
+    },
+    loadingTask() {
+      return pdf.createLoadingTask(this.file_url)
     }
   }
 }
@@ -132,6 +158,9 @@ export default {
   overflow: hidden;
   overflow-y: scroll;
 }
+.PDFFilePreview__PDFComponent {
+  position: relative;
+}
 
 .FilePreview__Footer--pdf-file {
   flex-grow: 1;
@@ -140,7 +169,8 @@ export default {
 .PDFFilePreview__PageControls {
   display: block;
   list-style-type: none;
-  padding: 1rem 0;
+  padding: 0;
+  margin: 0;
 }
 
 .PDFFilePreview__PageControls > li {
@@ -151,30 +181,41 @@ export default {
   color: #333;
 }
 
+.PDFFilePreview__PageControls {
+  display: none;
+}
+
+.PDFFilePreview__PageControls--toolbar {
+  display: block;
+}
+
 @media only screen and (min-width: 768px) {
   .PDFFilePreview {
     background: #fefefe;
     display: block;
   }
-
-  .PDFFilePreview__PDFComponent .page {
-    margin: 0 auto;
+  .PDFFilePreview__PDFComponent {
+    display: inline-block;
+    padding: 1rem;
   }
   .FilePreview__Preview--pdf_file {
     overflow: visible;
-    min-height: calc(75vh + 4rem);
+    height: auto;
+    min-height: 75vh;
     background: #f3f1f1;
   }
   .FilePreview__Footer--pdf-file {
     background: transparent;
   }
-  #viewerContainer {
-    height: 75vh;
-    padding: 1rem;
-  }
-  #viewerContainer canvas {
+  .PDFFilePreview__PDFComponent > canvas {
     border: solid 1px #ccc;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  .PDFFilePreview__PageControls {
+    display: block;
+  }
+  .PDFFilePreview__PageControls--toolbar {
+    display: none;
   }
 }
 </style>

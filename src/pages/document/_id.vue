@@ -1,6 +1,8 @@
 <template>
   <section class="Page Page--bare">
-    <component :is="previewComponentType" :doc-item="document"></component>
+    <no-ssr>
+      <component :is="previewComponentType" :doc-item="document"></component>
+    </no-ssr>
   </section>
 </template>
 <script>
