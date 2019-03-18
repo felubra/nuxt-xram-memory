@@ -10,8 +10,12 @@ import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
 export default {
   components: {
     UnknownFilePreview,
-    PDFFilePreview: () =>
-      import(/* webpackChunkName: "PDFFilePreview" */ '~/components/viewers/PDFFilePreview'),
+    PDFFilePreview: () => {
+      if (typeof window !== 'undefined') {
+        return import(/* webpackChunkName: "PDFFilePreview" */ '~/components/viewers/PDFFilePreview')
+      }
+      return {} // não carregue este componente server-side
+    },
     ImageFilePreview: () =>
       import(/* webpackChunkName: "ImageFilePreview" */ '~/components/viewers/ImageFilePreview')
   },
