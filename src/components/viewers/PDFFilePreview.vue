@@ -117,7 +117,7 @@ export default {
         const { width, height } = page.getViewport(1)
         const container = this.$refs.pdfContainer
 
-        const heightScale = (container.clientHeight / height) * 1
+        const heightScale = ((container.clientHeight - 32) / height) * 1
         const widthScale = (container.clientWidth / width) * 1
         const newWidth =
           window.innerWidth < 768 ? width * widthScale : width * heightScale
