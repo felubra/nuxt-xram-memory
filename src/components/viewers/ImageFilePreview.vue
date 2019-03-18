@@ -79,4 +79,14 @@ export default {
 .ImageFilePreview .viewer-canvas {
   background: #f3f1f1;
 }
+
+.FilePreview__Preview {
+  min-height: 75vh;
+}
+@media only screen and (min-width: 768px) {
+  .ImageFilePreview {
+    flex: 1;
+    display: block;
+  }
+}
 </style>
