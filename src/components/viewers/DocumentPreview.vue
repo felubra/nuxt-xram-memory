@@ -144,4 +144,16 @@ export default {
   color: inherit;
   margin: 1rem;
 }
+
+@media only screen and (min-width: 768px) {
+  .FilePreview__Actions--toolbar {
+    display: none;
+  }
+  .FilePreview__Footer {
+    max-width: 38rem;
+    margin: 1rem auto 0;
+    background: transparent;
+    color: #333;
+  }
+}
 </style>

@@ -1,15 +1,21 @@
 <template>
   <section class="Page Page--bare">
-    <component :is="previewComponentType" :doc-item="document"></component>
+    <no-ssr>
+      <component :is="previewComponentType" :doc-item="document"></component>
+    </no-ssr>
   </section>
 </template>
 <script>
+import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
 export default {
   components: {
-    UnknownFilePreview: () =>
-      import(/* webpackChunkName: "UnknownFilePreview" */ '~/components/viewers/UnknownFilePreview'),
-    PDFFilePreview: () =>
-      import(/* webpackChunkName: "PDFFilePreview" */ '~/components/viewers/PDFFilePreview'),
+    UnknownFilePreview,
+    PDFFilePreview: () => {
+      if (typeof window !== 'undefined') {
+        return import(/* webpackChunkName: "PDFFilePreview" */ '~/components/viewers/PDFFilePreview')
+      }
+      return {} // não carregue este componente server-side
+    },
     ImageFilePreview: () =>
       import(/* webpackChunkName: "ImageFilePreview" */ '~/components/viewers/ImageFilePreview')
   },

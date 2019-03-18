@@ -37,12 +37,27 @@ export default {
 
 <style scoped>
 .UnknownFilePreview {
-  background: #fefefe;
   flex: 1;
   display: flex;
   flex-direction: column;
+  background: #fefefe;
 }
 .FilePreview__Preview--unknown {
-  padding-top: 50%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #f3f1f1;
+}
+
+@media only screen and (min-width: 768px) {
+  .UnknownFilePreview {
+    flex: 1;
+    display: block;
+  }
+  .FilePreview__Preview--unknown {
+    padding-top: 0;
+    min-height: 75vh;
+  }
 }
 </style>

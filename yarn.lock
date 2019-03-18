@@ -7439,23 +7439,13 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pdfjs-dist@^2.0.489:
+pdfjs-dist@2.0.943:
   version "2.0.943"
   resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-2.0.943.tgz#32fb9a2d863df5a1d89521a0b3cd900c16e7edde"
   integrity sha512-iLhNcm4XceTHRaSU5o22ZGCm4YpuW5+rf4+BJFH/feBhMQLbCGBry+Jet8Q419QDI4qgARaIQzXuiNrsNWS8Yw==
   dependencies:
     node-ensure "^0.0.0"
     worker-loader "^2.0.0"
-
-pdfvuer@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/pdfvuer/-/pdfvuer-1.1.0.tgz#d26f0d17faf87162149684892451e21dd5294c75"
-  integrity sha512-e5A6iKceuivW0uYJXbWP9F0fLA1a18b652g6mb0hk0UjEjLhdUQ3NesHBQvXUYc6d8GovoikKtlk2/StSze5mQ==
-  dependencies:
-    babel-plugin-syntax-dynamic-import "^6.18.0"
-    pdfjs-dist "^2.0.489"
-    raw-loader "^0.5.1"
-    vue-resize-sensor "^2.0.0"
 
 performance-now@^2.1.0:
   version "2.1.0"
@@ -10211,6 +10201,11 @@ vue-class-component@^6.2.0:
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.3.2.tgz#e6037e84d1df2af3bde4f455e50ca1b9eec02be6"
   integrity sha512-cH208IoM+jgZyEf/g7mnFyofwPDJTM/QvBNhYMjqGB8fCsRyTf68rH2ISw/G20tJv+5mIThQ3upKwoL4jLTr1A==
 
+vue-dragscroll@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/vue-dragscroll/-/vue-dragscroll-1.8.3.tgz#ddde45d2bf5f02c1d27a748f6f0a3fd4950913cb"
+  integrity sha512-Rp9FquSwgleZVwQ/2w1zRsfBBCFfTwbpFR2xPvi+Y2GV5RQ/1rVfZoKtncqxMwrXHAdHaTtDraYSh1Lc10dLqA==
+
 vue-emotion@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/vue-emotion/-/vue-emotion-0.4.2.tgz#df97359aadd49cc476eb23ba44b7d2962a669ced"
@@ -10271,6 +10266,16 @@ vue-no-ssr@^1.1.0, vue-no-ssr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
+
+vue-pdf@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/vue-pdf/-/vue-pdf-4.0.6.tgz#6432e68aded8c551f4ce058c81119d7fdd97f2ff"
+  integrity sha512-3ay68wqmtwLFKHXNLgIjxv8mbXg/o2qjDg/J7lj/Ad9RQftj0NtddZEyK1lucmGAtg2b1nrEWE/fq6LY/tfk9A==
+  dependencies:
+    babel-plugin-syntax-dynamic-import "^6.18.0"
+    pdfjs-dist "2.0.943"
+    raw-loader "^0.5.1"
+    vue-resize-sensor "^2.0.0"
 
 vue-property-decorator@^7.2.0:
   version "7.3.0"
