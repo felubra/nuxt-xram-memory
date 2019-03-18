@@ -1,6 +1,10 @@
 <template>
   <div class="PDFFilePreview">
-    <div ref="pdfContainer" class="FilePreview__Preview FilePreview__Preview--pdf_file">
+    <div
+      ref="pdfContainer"
+      v-dragscroll
+      class="FilePreview__Preview FilePreview__Preview--pdf_file"
+    >
       <pdf
         ref="pdfComponent"
         class="PDFFilePreview__PDFComponent"
@@ -88,11 +92,15 @@
 
 <script>
 import DocumentPreview from './DocumentPreview'
+import { dragscroll } from 'vue-dragscroll'
 import pdf from 'vue-pdf'
 export default {
   name: 'PDFFilePreview',
   components: {
     pdf: pdf
+  },
+  directives: {
+    dragscroll
   },
   extends: DocumentPreview,
   data() {
@@ -199,9 +207,10 @@ export default {
     padding: 1rem;
   }
   .FilePreview__Preview--pdf_file {
-    overflow: visible;
+    overflow: hidden;
     height: auto;
     min-height: 75vh;
+    max-height: 100vh;
     background: #f3f1f1;
   }
   .FilePreview__Footer--pdf-file {
