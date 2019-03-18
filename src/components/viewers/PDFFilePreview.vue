@@ -2,7 +2,12 @@
   <div class="PDFFilePreview">
     <div class="FilePreview__Preview FilePreview__Preview--pdf_file">
       <no-ssr>
-        <pdf class="PDFFilePreview__PDFComponent" :src="file_url" :page="1" :scale="scale">
+        <pdf
+          class="PDFFilePreview__PDFComponent"
+          :src="file_url"
+          :page="currentPage"
+          :scale="scale"
+        >
           <template slot="loading">
             <p class="FilePreview__Message microtext">Carregando...</p>
             <div class="FilePreview__Actions FilePreview__Actions--big">
@@ -13,6 +18,24 @@
             </div>
           </template>
         </pdf>
+        <ul class="PDFFilePreview__PageControls">
+          <li>
+            <a href="#" title="Página anterior" @click.prevent="pageBefore">
+              <i class="material-icons">navigate_before</i>
+            </a>
+          </li>
+          <!--
+          <li>
+            <a href="#" title="Tela Inteira" @click.prevent="fullScreen">
+              <i class="material-icons">fullscreen</i>
+            </a>
+          </li>-->
+          <li>
+            <a href="#" title="Próxima página" @click.prevent="nextPage">
+              <i class="material-icons">navigate_next</i>
+            </a>
+          </li>
+        </ul>
       </no-ssr>
     </div>
     <div class="FilePreview__Actions FilePreview__Actions--toolbar">
@@ -61,6 +84,11 @@ export default {
     }
   },
   extends: DocumentPreview,
+  data() {
+    return {
+      currentPage: 1
+    }
+  },
   computed: {
     scale() {
       try {
@@ -72,6 +100,17 @@ export default {
   },
   mounted() {
     this.a = 1
+  },
+  methods: {
+    pageBefore() {
+      this.currentPage = this.currentPage - 1 >= 1 ? this.currentPage - 1 : 1
+    },
+    nextPage() {
+      this.currentPage = this.currentPage + 1
+    },
+    fullScreen() {
+      /** TODO: */
+    }
   }
 }
 </script>
@@ -98,6 +137,20 @@ export default {
   flex-grow: 1;
 }
 
+.PDFFilePreview__PageControls {
+  display: block;
+  list-style-type: none;
+  padding: 1rem 0;
+}
+
+.PDFFilePreview__PageControls > li {
+  display: inline;
+}
+
+.PDFFilePreview__PageControls a {
+  color: #333;
+}
+
 @media only screen and (min-width: 768px) {
   .PDFFilePreview {
     background: #fefefe;
@@ -109,7 +162,7 @@ export default {
   }
   .FilePreview__Preview--pdf_file {
     overflow: visible;
-    min-height: calc(75vh + 2rem);
+    min-height: calc(75vh + 4rem);
     background: #f3f1f1;
   }
   .FilePreview__Footer--pdf-file {
