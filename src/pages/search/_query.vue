@@ -1,98 +1,101 @@
 <template>
-  <div class="Page">
+  <div class="Page Page--Search">
     <aside class="SearchOptions">
-      <DataSearch
-        component-id="SearchSensor"
-        :field-weights="[10,7]"
-        :data-field="['title', 'teaser']"
-        icon-position="right"
-        :autosuggest="false"
-        class-name="SearchBar"
-        placeholder="Pesquisar no acervo"
-        filter-label="Pesquisa"
-        :show-clear="false"
-        :show-filter="false"
-        :default-selected="query"
-        :inner-class="{
+      <div class="SearchOptions__inside">
+        <DataSearch
+          component-id="SearchSensor"
+          :field-weights="[10,7]"
+          :data-field="['title', 'teaser']"
+          icon-position="right"
+          :autosuggest="false"
+          class-name="SearchBar"
+          placeholder="Pesquisar no acervo"
+          filter-label="Pesquisa"
+          :show-clear="false"
+          :show-filter="false"
+          :default-selected="query"
+          :inner-class="{
         input: 'SearchBar__Input'
       }"
-        :u-r-l-params="false"
-      />
-      <selected-filters
-        class-name="SelectedFilters"
-        clear-all-label="Limpar filtros"
-        :inner-class="{button:'SelectedFilters__Filter'}"
-      />
-      <div
-        class="FilterList"
-        :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
-      >
-        <single-dropdown-list
-          :default-query="customFilterQuery"
-          filter-label="Site/Veículo"
-          component-id="NewspaperSensor"
-          data-field="newspaper.title"
-          nested-field="newspaper"
-          class-name="FilterList__FilterItem"
-          :show-count="false"
-          :size="25"
-          placeholder="Todos"
-          :show-filter="true"
-          :inner-class="{
+          :u-r-l-params="false"
+        />
+        <selected-filters
+          class-name="SelectedFilters"
+          clear-all-label="Limpar filtros"
+          :inner-class="{button:'SelectedFilters__Filter'}"
+        />
+        <div
+          class="FilterList"
+          :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
+        >
+          <single-dropdown-list
+            :default-query="customFilterQuery"
+            filter-label="Site/Veículo"
+            component-id="NewspaperSensor"
+            data-field="newspaper.title"
+            nested-field="newspaper"
+            class-name="FilterList__FilterItem"
+            :show-count="false"
+            :size="25"
+            placeholder="Todos"
+            :show-filter="true"
+            :inner-class="{
           title: 'microtext',
           select: 'FilterItem__DropdownToggle',
           list: 'FilterItem__DropdownList'
         }"
-          title="Site/Veículo"
-        />
+            title="Site/Veículo"
+          />
 
-        <multi-dropdown-list
-          :default-query="customFilterQuery"
-          filter-label="Palavras-chave"
-          component-id="KeywordsSensor"
-          data-field="keywords.name"
-          nested-field="keywords"
-          :show-search="true"
-          :size="100"
-          class-name="FilterList__FilterItem"
-          :show-count="false"
-          placeholder="Todas"
-          :show-filter="true"
-          :inner-class="{
+          <multi-dropdown-list
+            :default-query="customFilterQuery"
+            filter-label="Palavras-chave"
+            component-id="KeywordsSensor"
+            data-field="keywords.name"
+            nested-field="keywords"
+            :show-search="true"
+            :size="100"
+            class-name="FilterList__FilterItem"
+            :show-count="false"
+            :u-r-l-params="true"
+            placeholder="Todas"
+            :show-filter="true"
+            :inner-class="{
             title: 'microtext',
             select: 'FilterItem__DropdownToggle',
             list: 'FilterItem__DropdownList'
           }"
-          title="Palavras-chave"
-          :react="{and: ['SearchSensor','NewspaperSensor', 'PublishedYearSensor']}"
-        />
-        <DynamicRangeSlider
-          data-field="published_year"
-          component-id="PublishedYearSensor"
-          class-name="FilterList__FilterItem"
-          title="Anos de publicação"
-          filter-label="Intervalo (anos)"
-          :inner-class="{
+            title="Palavras-chave"
+            :react="{and: ['SearchSensor','NewspaperSensor', 'PublishedYearSensor']}"
+          />
+          <DynamicRangeSlider
+            data-field="published_year"
+            component-id="PublishedYearSensor"
+            class-name="FilterList__FilterItem"
+            title="Anos de publicação"
+            filter-label="Intervalo (anos)"
+            :inner-class="{
             title: 'microtext',
             slider: 'FilterList__Slider',
           }"
-          :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor']}"
-        />
-      </div>
-      <div class="FilterList__ToggleFilters">
-        <a
-          v-if="filterListOpened"
-          class="microtext"
-          href="#moreFilters"
-          @click.prevent="toggleFilters"
-        >
-          <i class="material-icons">close</i>
-          Fechar
-        </a>
-        <a v-else class="microtext" href="#moreFilters" @click.prevent="toggleFilters">
-          <i class="material-icons">filter_list</i>
-          Filtros
-        </a>
+            :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor']}"
+          />
+        </div>
+        <div class="FilterList__ToggleFilters">
+          <a
+            v-if="filterListOpened"
+            class="microtext"
+            href="#moreFilters"
+            @click.prevent="toggleFilters"
+          >
+            <i class="material-icons">close</i>
+            Fechar
+          </a>
+          <a v-else class="microtext" href="#moreFilters" @click.prevent="toggleFilters">
+            <i class="material-icons">filter_list</i>
+            Filtros
+          </a>
+        </div>
       </div>
     </aside>
     <main>
@@ -109,25 +112,25 @@
         :from="0"
         :size="5"
       >
-        <a
-          slot="renderData"
-          slot-scope="{ item }"
-          class="SearchResults__Result"
-          :href="`/news/${item.id}`"
-        >
-          <NewsCard :news-item="item"/>
-        </a>
+        <NewsCardList
+          slot="renderAllData"
+          slot-scope="{ results }"
+          :items="results"
+          :news-item="item"
+        />
       </ReactiveList>
     </main>
   </div>
 </template>
 
 <script>
-import NewsCard from '~/components/news/NewsCard'
+import NewsCardList from '~/components/news/NewsCardList'
+import Logo from '~/components/common/Logo'
 export default {
   name: 'SearchPage',
   components: {
-    NewsCard
+    NewsCardList,
+    Logo
   },
   data() {
     return {
@@ -184,19 +187,23 @@ export default {
 </script>
 
 <style>
+.SearchOptions__Logo {
+  display: none;
+}
 .SearchOptions {
+  background: #f3f1f1;
+}
+
+.SearchOptions__inside {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: #f3f1f1;
 }
 
-.SearchOptions > * {
-  width: 100%;
-}
 .FilterList {
   background: #f3f1f1;
+  width: 100%;
 }
 
 .FilterList .FilterList__FilterItem {
@@ -271,15 +278,23 @@ export default {
 }
 
 @media only screen and (min-width: 768px) {
+  .SearchOptions__Logo {
+    display: block;
+  }
+  .SearchOptions {
+    flex-basis: 350px;
+    flex-shrink: 0;
+  }
+  .SearchOptions__inside {
+    position: fixed;
+    width: 350px;
+    top: 100px;
+  }
   .FilterList {
     max-height: 500px;
     overflow: visible;
-    flex-direction: row;
     justify-content: space-around;
     max-width: 66rem;
-  }
-  .FilterList .FilterList__FilterItem {
-    width: 100%;
   }
   .FilterList__ToggleFilters {
     display: none;

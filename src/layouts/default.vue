@@ -170,6 +170,10 @@ a.microtext {
   html {
     font-size: 18px;
   }
+  .Page--Search {
+    flex-direction: row;
+    padding-top: 0;
+  }
   .SearchResults .SearchResults__Result {
     margin: 0.5rem;
   }
