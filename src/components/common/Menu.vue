@@ -77,6 +77,7 @@ export default {
   transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s;
   transform: translate3d(-100%, 0, 0);
   backface-visibility: hidden;
+  width: 350px;
 }
 
 .Menu--visible {
