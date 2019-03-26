@@ -55,20 +55,11 @@ export default {
     },
     image() {
       try {
-        if (
-          this.newsItem &&
-          this.newsItem.image_capture &&
-          typeof this.newsItem.image_capture === 'string'
-        ) {
-          // path obtido por um resultado do ElasticSearch
-          return getMediaUrl(this.newsItem.image_capture)
-        } else {
-          // path obtido pela API
           return (
-            this.newsItem.image_capture.image_document &&
-            getMediaUrl(this.newsItem.image_capture.image_document.file)
+          (this.newsItem.image_capture &&
+            getMediaUrl(this.newsItem.image_capture)) ||
+          (this.newsItem.thumbnail && getMediaUrl(this.newsItem.thumbnail))
           )
-        }
       } catch {
         /** TODO: retorne um ícone padrão se não houver imagem */
         return ''
