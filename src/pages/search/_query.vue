@@ -111,12 +111,7 @@
         :from="0"
         :size="5"
       >
-        <NewsCardList
-          slot="renderAllData"
-          slot-scope="{ results }"
-          :items="results"
-          :news-item="item"
-        />
+        <NewsCardList slot="renderAllData" slot-scope="{ results }" :items="results"/>
       </ReactiveList>
     </main>
   </div>
