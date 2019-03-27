@@ -1,22 +1,24 @@
 <template>
-  <div class="NewsCard">
-    <div class="NewsCard__Body">
-      <div class="NewCard__Image">
-        <img v-if="image" :src="image" alt @error="removeImage">
+  <nuxt-link :to="{name:'news-id', params:{id:newsItem.id}}">
+    <div class="NewsCard">
+      <div class="NewsCard__Body">
+        <div class="NewCard__Image">
+          <img v-if="image" :src="image" alt @error="removeImage">
+        </div>
+        <div class="news-text">
+          <p v-if="label" class="label">Notícia</p>
+          <h3>{{ newsItem.title }}</h3>
+          <p class="teaser">{{teaser}}</p>
+        </div>
       </div>
-      <div class="news-text">
-        <p v-if="label" class="label">Notícia</p>
-        <h3>{{ newsItem.title }}</h3>
-        <p class="teaser">{{teaser}}</p>
+      <div v-if="footer" class="NewsCard__Footer">
+        <p>
+          <strong>{{newspaper.title}}</strong>
+          {{published_date}}
+        </p>
       </div>
     </div>
-    <div v-if="footer" class="NewsCard__Footer">
-      <p>
-        <strong>{{newspaper.title}}</strong>
-        {{published_date}}
-      </p>
-    </div>
-  </div>
+  </nuxt-link>
 </template>
 
 <script>
@@ -55,11 +57,11 @@ export default {
     },
     image() {
       try {
-          return (
+        return (
           (this.newsItem.image_capture &&
             getMediaUrl(this.newsItem.image_capture)) ||
           (this.newsItem.thumbnail && getMediaUrl(this.newsItem.thumbnail))
-          )
+        )
       } catch {
         /** TODO: retorne um ícone padrão se não houver imagem */
         return ''
@@ -99,6 +101,11 @@ export default {
 </script>
 
 <style>
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 p.label {
   color: #aa0000;
   text-transform: uppercase;
@@ -113,7 +120,7 @@ div.NewsCard {
   display: flex;
   flex-direction: column;
   text-align: center;
-  max-width: 850px;
+  width: 100%;
 }
 
 div.NewsCard__Body {
