@@ -78,7 +78,6 @@
               title: 'microtext',
               slider: 'FilterList__Slider',
             }"
-            :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor']}"
           />
         </div>
         <div class="FilterList__ToggleFilters">
