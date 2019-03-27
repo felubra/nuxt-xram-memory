@@ -155,30 +155,34 @@ export default {
     /**
      * Aparentemente a query montada pelo ReactiveSearch não funciona, então usemos esta.
      */
-    customFilterQuery(_, { nestedField, dataField, size }) {
-      return {
-        query: {
-          match_all: {}
-        },
-        size: 0,
-        aggs: {
-          reactivesearch_nested: {
-            nested: {
-              path: nestedField
-            },
-            aggs: {
-              [dataField]: {
-                terms: {
-                  field: dataField,
-                  size,
-                  order: {
-                    _count: 'desc'
+    customFilterQuery(value, props) {
+      try {
+        return {
+          query: {
+            match_all: {}
+          },
+          size: 0,
+          aggs: {
+            reactivesearch_nested: {
+              nested: {
+                path: props.nestedField
+              },
+              aggs: {
+                [props.dataField]: {
+                  terms: {
+                    field: props.dataField,
+                    size: props.size,
+                    order: {
+                      _count: 'desc'
+                    }
                   }
                 }
               }
             }
           }
         }
+      } catch {
+        return {}
       }
     }
   }
