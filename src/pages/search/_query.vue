@@ -3,7 +3,7 @@
     <aside class="SearchOptions">
       <div class="SearchOptions__inside">
         <DataSearch
-          component-id="SearchSensor"
+          component-id="search"
           :field-weights="[10,7]"
           :data-field="['title', 'teaser']"
           icon-position="right"
@@ -15,9 +15,9 @@
           :show-filter="false"
           :default-selected="query"
           :inner-class="{
-        input: 'SearchBar__Input'
-      }"
-          :u-r-l-params="false"
+              input: 'SearchBar__Input'
+          }"
+          :u-r-l-params="true"
         />
         <selected-filters
           class-name="SelectedFilters"
@@ -31,7 +31,7 @@
           <single-dropdown-list
             :default-query="customFilterQuery"
             filter-label="Site/Veículo"
-            component-id="NewspaperSensor"
+            component-id="newspaper"
             data-field="newspaper.title"
             nested-field="newspaper"
             class-name="FilterList__FilterItem"
@@ -40,17 +40,17 @@
             placeholder="Todos"
             :show-filter="true"
             :inner-class="{
-          title: 'microtext',
-          select: 'FilterItem__DropdownToggle',
-          list: 'FilterItem__DropdownList'
-        }"
+              title: 'microtext',
+              select: 'FilterItem__DropdownToggle',
+              list: 'FilterItem__DropdownList'
+            }"
             title="Site/Veículo"
           />
 
           <multi-dropdown-list
             :default-query="customFilterQuery"
             filter-label="Palavras-chave"
-            component-id="KeywordsSensor"
+            component-id="keywords"
             data-field="keywords.name"
             nested-field="keywords"
             :show-search="true"
@@ -61,23 +61,23 @@
             placeholder="Todas"
             :show-filter="true"
             :inner-class="{
-            title: 'microtext',
-            select: 'FilterItem__DropdownToggle',
-            list: 'FilterItem__DropdownList'
-          }"
+              title: 'microtext',
+              select: 'FilterItem__DropdownToggle',
+              list: 'FilterItem__DropdownList'
+            }"
             title="Palavras-chave"
-            :react="{and: ['SearchSensor','NewspaperSensor', 'PublishedYearSensor']}"
+            :react="{and: ['search','newspaper', 'pub_year']}"
           />
           <DynamicRangeSlider
             data-field="published_year"
-            component-id="PublishedYearSensor"
+            component-id="pub_year"
             class-name="FilterList__FilterItem"
             title="Anos de publicação"
             filter-label="Intervalo (anos)"
             :inner-class="{
-            title: 'microtext',
-            slider: 'FilterList__Slider',
-          }"
+              title: 'microtext',
+              slider: 'FilterList__Slider',
+            }"
             :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor']}"
           />
         </div>
@@ -100,7 +100,7 @@
     </aside>
     <main>
       <ReactiveList
-        :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor','PublishedYearSensor']}"
+        :react="{and: ['search','newspaper', 'keywords','pub_year']}"
         component-id="SearchResults"
         :pagination="false"
         data-field="title.raw"
@@ -131,6 +131,11 @@ export default {
   components: {
     NewsCardList,
     Logo
+  },
+  head: {
+    bodyAttrs: {
+      class: 'fixed-sidebar'
+    }
   },
   data() {
     return {
