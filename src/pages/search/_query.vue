@@ -17,7 +17,6 @@
           :inner-class="{
               input: 'SearchBar__Input'
           }"
-          :u-r-l-params="true"
         />
         <selected-filters
           class-name="SelectedFilters"
@@ -50,14 +49,13 @@
           <multi-dropdown-list
             :default-query="customFilterQuery"
             filter-label="Palavras-chave"
-            component-id="keywords"
+            component-id="KeywordSensor"
             data-field="keywords.name"
             nested-field="keywords"
             :show-search="true"
             :size="100"
             class-name="FilterList__FilterItem"
             :show-count="false"
-            :u-r-l-params="true"
             placeholder="Todas"
             :show-filter="true"
             :inner-class="{
@@ -67,6 +65,7 @@
             }"
             title="Palavras-chave"
             :react="{and: ['search','newspaper', 'pub_year']}"
+            :default-selected="keywords"
           />
           <DynamicRangeSlider
             data-field="published_year"
@@ -99,7 +98,7 @@
     </aside>
     <main>
       <ReactiveList
-        :react="{and: ['search','newspaper', 'keywords','pub_year']}"
+        :react="{and: ['search','newspaper', 'KeywordSensor','pub_year']}"
         component-id="SearchResults"
         :pagination="false"
         data-field="title.raw"
@@ -142,6 +141,13 @@ export default {
         return this.$route.params.query
       } catch {
         return ''
+      }
+    },
+    keywords() {
+      try {
+        return JSON.parse(this.$route.query.keywords)
+      } catch {
+        return []
       }
     }
   },
