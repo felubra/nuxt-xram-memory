@@ -14,7 +14,7 @@
     "test": "ava"
   },
   "dependencies": {
-    "@appbaseio/reactivesearch-vue": "^1.0.0-beta.8",
+    "@appbaseio/reactivesearch-vue": "^1.0.0-beta.9",
     "@nuxtjs/axios": "^5.3.6",
     "chroma-js": "^2.0.2",
     "cross-env": "^5.2.0",
@@ -30,6 +30,7 @@
     "vue-dragscroll": "^1.8.3",
     "vue-fixed-header": "^2.0.2",
     "vue-pdf": "^4.0.6",
+    "vue-template-compiler": "2.6.10",
     "worker-loader": "^2.0.0",
     "xss": "^1.0.3"
   },
