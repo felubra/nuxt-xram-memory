@@ -50,7 +50,7 @@
         <nuxt-link
           v-for="subject in subjects"
           :key="subject.slug"
-          :to="{name:'subject-slug', params:{ slug: subject.slug}, query:  {title:subject.name } }"
+          :to="{name:'search-query', query:{ subjects: JSON.stringify([subject.name])} }"
         >{{subject.name}}</nuxt-link>
       </dd>
     </div>
@@ -58,7 +58,7 @@
       <dt>Palavras-chave</dt>
       <dd v-for="keyword in keywords" :key="keyword.slug">
         <nuxt-link
-          :to="{name:'keyword-slug', params:{ slug: keyword.slug}, query:  {title:keyword.name } }"
+          :to="{name:'search-query', query:{ keywords: JSON.stringify([keyword.name])} }"
         >{{keyword.name}}</nuxt-link>
       </dd>
     </div>

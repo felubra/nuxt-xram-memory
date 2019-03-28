@@ -3,6 +3,9 @@
 </template>
 
 <script>
+/**
+ * TODO: tentar a abordagem de https://travishorn.com/vue-svg-2310f1b151d4
+ */
 import {
   TAGCLOUD_KEYWORD_LOWKEY_COLOR,
   TAGCLOUD_KEYWORD_HIGHKEY_COLOR
@@ -94,7 +97,7 @@ export default {
         .enter()
         .append('a')
         .attr('href', function(d) {
-          return '/search?keywords=["' + d.text + '"]'
+          return `/search?keywords=${JSON.stringify([d.text])}`
         })
         .attr('class', 'Cloud__Word')
         .append('text')
