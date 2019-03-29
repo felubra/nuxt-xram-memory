@@ -164,7 +164,7 @@ export default {
       }
 
       try {
-        const size = humanSize(parseInt(capture.pdf_document.file_size, 10))
+        const size = humanSize(parseInt(capture.pdf_document.size, 10))
         title['size'] = size
       } catch {
         // não adicione
@@ -263,6 +263,18 @@ dd {
 .NewsInfo__PDFCapture > span {
   text-align: center;
   display: block;
+  margin-top: 0.5rem;
+}
+.NewsInfo__PDFCapture > img {
+  border: solid 1px #efefef;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+}
+
+.NewsInfo__PDFCapture:hover > img {
+  border: solid 1px #ccc;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
 }
 
 @media only screen and (min-width: 768px) {
