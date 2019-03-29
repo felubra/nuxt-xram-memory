@@ -173,6 +173,15 @@ div.NewsCard__Footer p {
     text-align: left;
   }
 
+  div.NewsCard__Body p.teaser {
+    font-size: 1rem;
+  }
+
+  div.NewsCard__Body h3 {
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+
   div.NewsCard__Body img {
     align-self: baseline;
     margin: 0 0.5rem 0 0rem;
