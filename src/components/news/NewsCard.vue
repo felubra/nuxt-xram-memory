@@ -161,14 +161,14 @@ div.NewsCard__Footer p {
   margin: 0;
   padding: 0;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1080px) {
   div.NewsCard {
     text-align: left;
   }
   div.NewsCard__Body {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     position: relative;
     text-align: left;
   }
