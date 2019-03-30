@@ -34,7 +34,7 @@
       </li>
     </ul>
     <footer class="Menu__Footer">
-      <p class="center">Copyright © 2019 Xram-Memory</p>
+      <p class="center">Copyright © 2019 xraM-Memory</p>
       <ul class="Menu__Items Menu__Items--inline">
         <li class="Menu__Item Menu__Item--inline">
           <nuxt-link :to="{name: 'page', params:{slug: 'terms'}}">Termos de uso</nuxt-link>

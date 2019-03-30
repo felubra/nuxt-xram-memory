@@ -128,7 +128,9 @@ export default {
   head: {
     bodyAttrs: {
       class: 'fixed-sidebar'
-    }
+    },
+    title: 'Pesquisa',
+    titleTemplate: 'xraM-Memory - %s'
   },
   data() {
     return {

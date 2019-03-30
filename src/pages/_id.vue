@@ -9,6 +9,12 @@ export default {
   components: {
     AbstractPage
   },
+  head() {
+    return {
+      title: this.staticPage.title,
+      titleTemplate: 'xraM-Memory - %s'
+    }
+  },
   data() {
     return { staticPage: {} }
   },

@@ -37,6 +37,9 @@ export default {
     ReactiveD3TagCloud,
     TeaserBlock
   },
+  head: {
+    title: 'xraM-Memory'
+  },
   computed: {
     tagCloudQuery() {
       return function() {

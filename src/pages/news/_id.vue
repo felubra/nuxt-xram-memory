@@ -13,6 +13,12 @@ export default {
     NewsInfo,
     AbstractPage
   },
+  head() {
+    return {
+      title: this.newsItem.title,
+      titleTemplate: 'xraM-Memory - %s'
+    }
+  },
   data() {
     return {
       newsItem: {}
