@@ -258,6 +258,11 @@ dd {
 .NewsInfo__PDFCapture {
   display: inline-block;
   text-align: center;
+  margin: 0 0.5rem;
+}
+
+.NewsInfo__PDFCapture:first-of-type {
+  margin-left: 0;
 }
 
 .NewsInfo__PDFCapture > span {
@@ -267,7 +272,6 @@ dd {
 }
 .NewsInfo__PDFCapture > img {
   border: solid 1px #efefef;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   padding: 1rem;
 }
 
@@ -284,15 +288,17 @@ dd {
   }
   .NewsInfo__Field--stacked {
     flex-direction: column;
+    overflow: auto;
   }
   .NewsInfo__Field > dd {
     margin: 0 0 0 1.5rem;
   }
-  .NewsInfo__Field--stacked > dd {
+  .NewsInfo__Field--stacked dd {
     margin: 0.5rem;
+    border-collapse: separate;
   }
 
-  .NewsInfo__Field--stacked > dd::first-child {
+  .NewsInfo__Field--stacked dd:first-of-type {
     margin-left: 0;
   }
 
