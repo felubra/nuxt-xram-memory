@@ -26,7 +26,6 @@ ul {
   margin: 0;
   padding: 0;
   display: block;
-  max-width: 70rem;
 }
 
 li {
