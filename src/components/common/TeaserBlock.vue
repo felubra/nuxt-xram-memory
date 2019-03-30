@@ -49,7 +49,7 @@ export default {
 
 <style scoped>
 .TeaserBlock {
-  max-width: 46.5rem;
+  max-width: 40.5rem;
   align-self: center;
   width: 100%;
   padding: 0 0.5rem;
