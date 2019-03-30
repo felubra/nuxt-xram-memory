@@ -126,7 +126,7 @@ a.microtext {
   display: block;
 }
 .SearchBar {
-  margin: 2rem 0;
+  margin: 1rem 0 1rem;
   padding: 0 0.5rem;
   max-width: 40.5rem;
   align-self: center;
