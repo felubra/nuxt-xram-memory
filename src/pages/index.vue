@@ -3,6 +3,7 @@
     <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
     <Logo :big="true"/>
     <DataSearch
+      v-inner-input-focus
       component-id="SearchSensor"
       :field-weights="[10,7]"
       :data-field="['title', 'teaser']"
@@ -12,6 +13,7 @@
       placeholder="Pesquisar no acervo"
       :show-clear="false"
       @keyPress="search"
+      :innerRef="innerRef"
     />
     <no-ssr>
       <ReactiveComponent
@@ -32,6 +34,7 @@ import ReactiveD3TagCloud from '~/components/tag-cloud/ReactiveD3TagCloud'
 import TeaserBlock from '~/components/common/TeaserBlock'
 import Logo from '~/components/common/Logo'
 import { mapGetters } from 'vuex'
+import { innerInputFocus } from '~/utils'
 
 import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {
@@ -39,6 +42,9 @@ export default {
     ReactiveD3TagCloud,
     TeaserBlock,
     Logo
+  },
+  directives: {
+    'inner-input-focus': innerInputFocus
   },
   head: {
     title: 'xraM-Memory',

@@ -71,3 +71,10 @@ const allowQuillClasses = classes =>
   classes.filter(klass => klass.startsWith('ql-'))
 
 export const appClassesXSSFilter = xssFilterFactory(allowQuillClasses)
+
+
+export const innerInputFocus = {
+  inserted: function(el) {
+    el.querySelector('input').focus()
+  }
+}

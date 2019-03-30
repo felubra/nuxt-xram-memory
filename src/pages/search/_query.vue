@@ -3,6 +3,7 @@
     <aside class="SearchOptions">
       <div class="SearchOptions__inside">
         <DataSearch
+          v-inner-input-focus
           component-id="search"
           :field-weights="[10,7]"
           :data-field="['title', 'teaser']"
@@ -25,6 +26,7 @@
         />
         <div
           class="FilterList"
+          v-on:animationend="toggleOverflow"
           :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
         >
           <single-dropdown-list
@@ -119,11 +121,15 @@
 <script>
 import NewsCardList from '~/components/news/NewsCardList'
 import Logo from '~/components/common/Logo'
+import { innerInputFocus } from '~/utils'
 export default {
   name: 'SearchPage',
   components: {
     NewsCardList,
     Logo
+  },
+  directives: {
+    'inner-input-focus': innerInputFocus
   },
   head: {
     bodyAttrs: {
@@ -159,6 +165,9 @@ export default {
      */
     toggleFilters() {
       this.filterListOpened = !this.filterListOpened
+    },
+    toggleOverflow(e) {
+      console.log('a')
     },
     /**
      * Aparentemente a query montada pelo ReactiveSearch não funciona, então usemos esta.
