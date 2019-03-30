@@ -23,7 +23,6 @@
 
 <script>
 /**TODO: adicionar prop centered */
-const smartTruncate = require('smart-truncate')
 const dayJs = require('dayjs')
 const { getMediaUrl } = require('~/utils')
 export default {
@@ -53,7 +52,7 @@ export default {
       return this.newsItem.title
     },
     teaser() {
-      return smartTruncate(this.newsItem.teaser, 300)
+      return this.newsItem.teaser
     },
     image() {
       try {
