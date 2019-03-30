@@ -49,7 +49,7 @@ export default {
   head: {
     title: 'xraM-Memory',
     bodyAttrs: {
-      class: 'home'
+      class: 'Navbar--no-logo'
     }
   },
   computed: {
