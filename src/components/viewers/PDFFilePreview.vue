@@ -2,7 +2,7 @@
   <div class="PDFFilePreview">
     <div
       ref="pdfContainer"
-      v-dragscroll
+      v-dragscroll.y="true"
       class="FilePreview__Preview FilePreview__Preview--pdf_file"
     >
       <pdf
@@ -119,8 +119,7 @@ export default {
 
         const heightScale = ((container.clientHeight - 32) / height) * 1
         const widthScale = (container.clientWidth / width) * 1
-        const newWidth =
-          window.innerWidth < 768 ? width * widthScale : width * heightScale
+        const newWidth = width * widthScale
 
         this.$refs.pdfComponent.$el.setAttribute(
           'style',
@@ -155,7 +154,6 @@ export default {
 }
 
 .PDFFilePreview {
-  background: #fefefe;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -165,7 +163,13 @@ export default {
   height: 75vh;
   overflow: hidden;
   overflow-y: scroll;
+  cursor: grab;
 }
+
+.FilePreview__Preview--pdf_file:active {
+  cursor: grabbing;
+}
+
 .PDFFilePreview__PDFComponent {
   position: relative;
 }
@@ -199,26 +203,27 @@ export default {
 
 @media only screen and (min-width: 768px) {
   .PDFFilePreview {
-    background: #fefefe;
-    display: block;
+    flex-direction: row;
   }
   .PDFFilePreview__PDFComponent {
     display: inline-block;
     padding: 1rem;
   }
   .FilePreview__Preview--pdf_file {
-    overflow: hidden;
+    overflow-x: hidden;
     height: auto;
     min-height: 75vh;
     max-height: 100vh;
-    background: #f3f1f1;
+    background: #e3e1e1;
   }
   .FilePreview__Footer--pdf-file {
     background: transparent;
+    flex-grow: 0;
+    background: #f3f1f1;
   }
   .PDFFilePreview__PDFComponent > canvas {
     border: solid 1px #ccc;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
   }
   .PDFFilePreview__PageControls {
     display: block;

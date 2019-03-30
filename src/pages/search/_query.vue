@@ -1,103 +1,106 @@
 <template>
-  <div class="Page">
+  <div class="Page Page--Search">
     <aside class="SearchOptions">
-      <DataSearch
-        component-id="SearchSensor"
-        :field-weights="[10,7]"
-        :data-field="['title', 'teaser']"
-        icon-position="right"
-        :autosuggest="false"
-        class-name="SearchBar"
-        placeholder="Pesquisar no acervo"
-        filter-label="Pesquisa"
-        :show-clear="false"
-        :show-filter="false"
-        :default-selected="query"
-        :inner-class="{
-        input: 'SearchBar__Input'
-      }"
-        :u-r-l-params="false"
-      />
-      <selected-filters
-        class-name="SelectedFilters"
-        clear-all-label="Limpar filtros"
-        :inner-class="{button:'SelectedFilters__Filter'}"
-      />
-      <div
-        class="FilterList"
-        :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
-      >
-        <single-dropdown-list
-          :default-query="customFilterQuery"
-          filter-label="Site/Veículo"
-          component-id="NewspaperSensor"
-          data-field="newspaper.title"
-          nested-field="newspaper"
-          class-name="FilterList__FilterItem"
-          :show-count="false"
-          :size="25"
-          placeholder="Todos"
-          :show-filter="true"
+      <div class="SearchOptions__inside">
+        <DataSearch
+          v-inner-input-focus
+          component-id="search"
+          :field-weights="[10,7]"
+          :data-field="['title', 'teaser']"
+          icon-position="right"
+          :autosuggest="false"
+          class-name="SearchBar"
+          placeholder="Pesquisar no acervo"
+          filter-label="Pesquisa"
+          :show-clear="false"
+          :show-filter="false"
+          :default-selected="query"
           :inner-class="{
-          title: 'microtext',
-          select: 'FilterItem__DropdownToggle',
-          list: 'FilterItem__DropdownList'
-        }"
-          title="Site/Veículo"
-        />
-
-        <multi-dropdown-list
-          :default-query="customFilterQuery"
-          filter-label="Palavras-chave"
-          component-id="KeywordsSensor"
-          data-field="keywords.name"
-          nested-field="keywords"
-          :show-search="true"
-          :size="100"
-          class-name="FilterList__FilterItem"
-          :show-count="false"
-          placeholder="Todas"
-          :show-filter="true"
-          :inner-class="{
-            title: 'microtext',
-            select: 'FilterItem__DropdownToggle',
-            list: 'FilterItem__DropdownList'
+              input: 'SearchBar__Input'
           }"
-          title="Palavras-chave"
-          :react="{and: ['SearchSensor','NewspaperSensor', 'PublishedYearSensor']}"
         />
-        <DynamicRangeSlider
-          data-field="published_year"
-          component-id="PublishedYearSensor"
-          class-name="FilterList__FilterItem"
-          title="Anos de publicação"
-          filter-label="Intervalo (anos)"
-          :inner-class="{
-            title: 'microtext',
-            slider: 'FilterList__Slider',
-          }"
-          :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor']}"
+        <selected-filters
+          class-name="SelectedFilters"
+          clear-all-label="Limpar filtros"
+          :inner-class="{button:'SelectedFilters__Filter'}"
         />
-      </div>
-      <div class="FilterList__ToggleFilters">
-        <a
-          v-if="filterListOpened"
-          class="microtext"
-          href="#moreFilters"
-          @click.prevent="toggleFilters"
+        <div
+          class="FilterList"
+          v-on:animationend="toggleOverflow"
+          :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
         >
-          <i class="material-icons">close</i>
-          Fechar
-        </a>
-        <a v-else class="microtext" href="#moreFilters" @click.prevent="toggleFilters">
-          <i class="material-icons">filter_list</i>
-          Filtros
-        </a>
+          <single-dropdown-list
+            :default-query="customFilterQuery"
+            filter-label="Site/Veículo"
+            component-id="newspaper"
+            data-field="newspaper.title"
+            nested-field="newspaper"
+            class-name="FilterList__FilterItem"
+            :show-count="false"
+            :size="25"
+            placeholder="Todos"
+            :show-filter="true"
+            :inner-class="{
+              title: 'microtext',
+              select: 'FilterItem__DropdownToggle',
+              list: 'FilterItem__DropdownList'
+            }"
+            title="Site/Veículo"
+          />
+
+          <multi-dropdown-list
+            :default-query="customFilterQuery"
+            filter-label="Palavras-chave"
+            component-id="KeywordSensor"
+            data-field="keywords.name"
+            nested-field="keywords"
+            :show-search="true"
+            :size="100"
+            class-name="FilterList__FilterItem"
+            :show-count="false"
+            placeholder="Todas"
+            :show-filter="true"
+            :inner-class="{
+              title: 'microtext',
+              select: 'FilterItem__DropdownToggle',
+              list: 'FilterItem__DropdownList'
+            }"
+            title="Palavras-chave"
+            :react="{and: ['search','newspaper', 'pub_year']}"
+            :default-selected="keywords"
+          />
+          <DynamicRangeSlider
+            data-field="published_year"
+            component-id="pub_year"
+            class-name="FilterList__FilterItem"
+            title="Anos de publicação"
+            filter-label="Intervalo (anos)"
+            :inner-class="{
+              title: 'microtext',
+              slider: 'FilterList__Slider',
+            }"
+          />
+        </div>
+        <div class="FilterList__ToggleFilters">
+          <a
+            v-if="filterListOpened"
+            class="microtext"
+            href="#moreFilters"
+            @click.prevent="toggleFilters"
+          >
+            <i class="material-icons">close</i>
+            Fechar
+          </a>
+          <a v-else class="microtext" href="#moreFilters" @click.prevent="toggleFilters">
+            <i class="material-icons">filter_list</i>
+            Filtros
+          </a>
+        </div>
       </div>
     </aside>
     <main>
       <ReactiveList
-        :react="{and: ['SearchSensor','NewspaperSensor', 'KeywordsSensor','PublishedYearSensor']}"
+        :react="{and: ['search','newspaper', 'KeywordSensor','pub_year']}"
         component-id="SearchResults"
         :pagination="false"
         data-field="title.raw"
@@ -109,25 +112,31 @@
         :from="0"
         :size="5"
       >
-        <a
-          slot="renderData"
-          slot-scope="{ item }"
-          class="SearchResults__Result"
-          :href="`/news/${item.id}`"
-        >
-          <NewsCard :news-item="item"/>
-        </a>
+        <NewsCardList slot="renderAllData" slot-scope="{ results }" :items="results"/>
       </ReactiveList>
     </main>
   </div>
 </template>
 
 <script>
-import NewsCard from '~/components/news/NewsCard'
+import NewsCardList from '~/components/news/NewsCardList'
+import Logo from '~/components/common/Logo'
+import { innerInputFocus } from '~/utils'
 export default {
   name: 'SearchPage',
   components: {
-    NewsCard
+    NewsCardList,
+    Logo
+  },
+  directives: {
+    'inner-input-focus': innerInputFocus
+  },
+  head: {
+    bodyAttrs: {
+      class: 'fixed-sidebar'
+    },
+    title: 'Pesquisa',
+    titleTemplate: 'xraM-Memory - %s'
   },
   data() {
     return {
@@ -141,6 +150,13 @@ export default {
       } catch {
         return ''
       }
+    },
+    keywords() {
+      try {
+        return JSON.parse(this.$route.query.keywords)
+      } catch {
+        return []
+      }
     }
   },
   methods: {
@@ -150,33 +166,40 @@ export default {
     toggleFilters() {
       this.filterListOpened = !this.filterListOpened
     },
+    toggleOverflow(e) {
+      console.log('a')
+    },
     /**
      * Aparentemente a query montada pelo ReactiveSearch não funciona, então usemos esta.
      */
-    customFilterQuery(_, { nestedField, dataField, size }) {
-      return {
-        query: {
-          match_all: {}
-        },
-        size: 0,
-        aggs: {
-          reactivesearch_nested: {
-            nested: {
-              path: nestedField
-            },
-            aggs: {
-              [dataField]: {
-                terms: {
-                  field: dataField,
-                  size,
-                  order: {
-                    _count: 'desc'
+    customFilterQuery(value, props) {
+      try {
+        return {
+          query: {
+            match_all: {}
+          },
+          size: 0,
+          aggs: {
+            reactivesearch_nested: {
+              nested: {
+                path: props.nestedField
+              },
+              aggs: {
+                [props.dataField]: {
+                  terms: {
+                    field: props.dataField,
+                    size: props.size,
+                    order: {
+                      _count: 'desc'
+                    }
                   }
                 }
               }
             }
           }
         }
+      } catch {
+        return {}
       }
     }
   }
@@ -184,19 +207,23 @@ export default {
 </script>
 
 <style>
+.SearchOptions__Logo {
+  display: none;
+}
 .SearchOptions {
+  background: #f3f1f1;
+}
+
+.SearchOptions__inside {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: #f3f1f1;
 }
 
-.SearchOptions > * {
-  width: 100%;
-}
 .FilterList {
   background: #f3f1f1;
+  width: 100%;
 }
 
 .FilterList .FilterList__FilterItem {
@@ -243,7 +270,6 @@ export default {
 
 .FilterList--open {
   max-height: 500px;
-  overflow: visible;
 }
 
 .FilterList__ToggleFilters > a {
@@ -271,18 +297,17 @@ export default {
 }
 
 @media only screen and (min-width: 768px) {
-  .FilterList {
-    max-height: 500px;
-    overflow: visible;
-    flex-direction: row;
-    justify-content: space-around;
-    max-width: 66rem;
+  .SearchOptions__Logo {
+    display: block;
   }
-  .FilterList .FilterList__FilterItem {
-    width: 100%;
+  .SearchOptions {
+    flex-basis: 350px;
+    flex-shrink: 0;
   }
-  .FilterList__ToggleFilters {
-    display: none;
+  .SearchOptions__inside {
+    position: fixed;
+    width: 350px;
+    top: 100px;
   }
   .SelectedFilters {
     order: 9;

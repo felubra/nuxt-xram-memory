@@ -1,7 +1,9 @@
 <template>
   <section class="Page">
     <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
+    <Logo :big="true"/>
     <DataSearch
+      v-inner-input-focus
       component-id="SearchSensor"
       :field-weights="[10,7]"
       :data-field="['title', 'teaser']"
@@ -11,6 +13,7 @@
       placeholder="Pesquisar no acervo"
       :show-clear="false"
       @keyPress="search"
+      :innerRef="innerRef"
     />
     <no-ssr>
       <ReactiveComponent
@@ -29,13 +32,25 @@
 <script>
 import ReactiveD3TagCloud from '~/components/tag-cloud/ReactiveD3TagCloud'
 import TeaserBlock from '~/components/common/TeaserBlock'
+import Logo from '~/components/common/Logo'
 import { mapGetters } from 'vuex'
+import { innerInputFocus } from '~/utils'
 
 import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {
   components: {
     ReactiveD3TagCloud,
-    TeaserBlock
+    TeaserBlock,
+    Logo
+  },
+  directives: {
+    'inner-input-focus': innerInputFocus
+  },
+  head: {
+    title: 'xraM-Memory',
+    bodyAttrs: {
+      class: 'Navbar--no-logo'
+    }
   },
   computed: {
     tagCloudQuery() {
@@ -62,8 +77,13 @@ export default {
 </script>
 
 <style scoped>
-.SearchBar--home {
-  margin: 10vh 0 15vh;
+.Logo {
+  margin-top: 10vh;
+  padding: 0.5rem;
+}
+
+.Logo + .SearchBar {
+  margin: 0;
 }
 
 .SearchBar .SearchBar__Input {
@@ -72,23 +92,22 @@ export default {
 
 .ReactiveD3TagCloud--home {
   order: 2;
-  margin-top: 15vh;
+  margin-top: 35vh;
 }
 .FeaturedPage {
   order: 0;
-  margin: 10vh;
+  margin-top: 10vh;
 }
 
 @media only screen and (min-width: 768px) {
-  .SearchBar--home {
-    margin: 15rem 0 2rem;
+  .Logo {
+    margin-top: 25vh;
   }
   .FeaturedPage {
     order: 1;
-    margin: 0;
   }
   .ReactiveD3TagCloud--home {
-    margin-top: 35vh;
+    margin-top: 25vh;
   }
 }
 </style>

@@ -1,13 +1,19 @@
 <template>
-  <section class="Page">
-    <StaticPage :page-item="staticPage"/>
-  </section>
+  <AbstractPage class="ql-editor pageBody" :title="staticPage.title" :body="staticPage.body"></AbstractPage>
 </template>
 <script>
-import StaticPage from '~/components/common/StaticPage'
+import AbstractPage from '~/components/common/AbstractPage'
+// Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
+import 'quill/assets/core.styl'
 export default {
   components: {
-    StaticPage
+    AbstractPage
+  },
+  head() {
+    return {
+      title: this.staticPage.title,
+      titleTemplate: 'xraM-Memory - %s'
+    }
   },
   data() {
     return { staticPage: {} }
@@ -20,3 +26,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.pageBody {
+  padding: 0;
+}
+</style>

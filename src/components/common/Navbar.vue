@@ -56,14 +56,28 @@ export default {
   text-decoration: none;
 }
 
+.Navbar__Logo,
+.Navbar__MenuToggle {
+  margin-right: auto;
+}
+
+body.Navbar--no-logo .NavBar--fixed .Navbar__Logo {
+  display: block;
+}
+
+body.Navbar--no-logo .Navbar__Logo {
+  display: none;
+}
+
 @media only screen and (min-width: 768px) {
   .Navbar {
-    width: auto;
+    width: 350px;
   }
-  .Navbar__Logo,
+
   .Navbar__Search {
     display: none;
   }
+
   .NavBar--fixed {
     width: auto;
     padding: 0;
@@ -71,9 +85,31 @@ export default {
     color: #fff;
     min-height: 0;
   }
+
+  body.fixed-sidebar .NavBar--fixed {
+    background: transparent;
+    color: inherit;
+    width: 350px;
+    padding: 0.35rem 0.5rem;
+  }
+
+  body.Navbar--no-logo .NavBar--fixed .Navbar__Logo,
+  .NavBar--fixed .Navbar__Logo {
+    display: none;
+  }
+
+  body.fixed-sidebar .NavBar--fixed .Navbar__Logo {
+    display: inherit;
+  }
+
   .NavBar--fixed .Navbar__MenuToggle {
     padding: 0 0.5rem;
     min-height: 3.098rem;
+  }
+
+  body.fixed-sidebar .NavBar--fixed .Navbar__MenuToggle {
+    padding: 0;
+    min-height: inherit;
   }
 }
 </style>

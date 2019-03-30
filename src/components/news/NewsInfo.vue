@@ -50,7 +50,7 @@
         <nuxt-link
           v-for="subject in subjects"
           :key="subject.slug"
-          :to="{name:'subject-slug', params:{ slug: subject.slug}, query:  {title:subject.name } }"
+          :to="{name:'search-query', query:{ subjects: JSON.stringify([subject.name])} }"
         >{{subject.name}}</nuxt-link>
       </dd>
     </div>
@@ -58,7 +58,7 @@
       <dt>Palavras-chave</dt>
       <dd v-for="keyword in keywords" :key="keyword.slug">
         <nuxt-link
-          :to="{name:'keyword-slug', params:{ slug: keyword.slug}, query:  {title:keyword.name } }"
+          :to="{name:'search-query', query:{ keywords: JSON.stringify([keyword.name])} }"
         >{{keyword.name}}</nuxt-link>
       </dd>
     </div>
@@ -164,7 +164,7 @@ export default {
       }
 
       try {
-        const size = humanSize(parseInt(capture.pdf_document.file_size, 10))
+        const size = humanSize(parseInt(capture.pdf_document.size, 10))
         title['size'] = size
       } catch {
         // não adicione
@@ -258,11 +258,27 @@ dd {
 .NewsInfo__PDFCapture {
   display: inline-block;
   text-align: center;
+  margin: 0 0.5rem;
+}
+
+.NewsInfo__PDFCapture:first-of-type {
+  margin-left: 0;
 }
 
 .NewsInfo__PDFCapture > span {
   text-align: center;
   display: block;
+  margin-top: 0.5rem;
+}
+.NewsInfo__PDFCapture > img {
+  border: solid 1px #efefef;
+  padding: 1rem;
+}
+
+.NewsInfo__PDFCapture:hover > img {
+  border: solid 1px #ccc;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
 }
 
 @media only screen and (min-width: 768px) {
@@ -272,15 +288,17 @@ dd {
   }
   .NewsInfo__Field--stacked {
     flex-direction: column;
+    overflow: auto;
   }
   .NewsInfo__Field > dd {
     margin: 0 0 0 1.5rem;
   }
-  .NewsInfo__Field--stacked > dd {
+  .NewsInfo__Field--stacked dd {
     margin: 0.5rem;
+    border-collapse: separate;
   }
 
-  .NewsInfo__Field--stacked > dd::first-child {
+  .NewsInfo__Field--stacked dd:first-of-type {
     margin-left: 0;
   }
 

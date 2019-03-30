@@ -1,5 +1,9 @@
 const xss = require('xss')
 export const getMediaUrl = function(path) {
+  const mediaUrl = process.env.mediaUrl
+  if (path.includes(mediaUrl)) {
+    return path // já é uma url formada
+  }
   try {
     return `${process.env.mediaUrl}${path}`
   } catch {
@@ -67,3 +71,10 @@ const allowQuillClasses = classes =>
   classes.filter(klass => klass.startsWith('ql-'))
 
 export const appClassesXSSFilter = xssFilterFactory(allowQuillClasses)
+
+
+export const innerInputFocus = {
+  inserted: function(el) {
+    el.querySelector('input').focus()
+  }
+}

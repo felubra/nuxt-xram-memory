@@ -13,19 +13,19 @@ export default {
   computed: {
     file_url() {
       /** TODO: adicionar prefixo */
-      return getMediaUrl(this.docItem.file)
+      return getMediaUrl(this.docItem.canonical_url)
     },
     title() {
       /** TODO: sanitizar */
-      return this.docItem.title
+      return this.docItem.name
     },
     description() {
       /** TODO: sanitizar */
-      return this.docItem.teaser
+      return this.docItem.description
     },
     size() {
       try {
-        return humanSize(this.docItem.file_size)
+        return humanSize(this.docItem.size)
       } catch {
         return '0KB'
       }

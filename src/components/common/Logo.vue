@@ -1,5 +1,5 @@
 <template>
-  <div class="Logo">
+  <div :class="{'Logo': true, 'Logo--big': big}">
     <nuxt-link class="Logo__Link" to="/">
       <img :src="src" alt>
     </nuxt-link>
@@ -18,6 +18,10 @@ export default {
         }
         return ['original', 'claro', 'pb', 'pb--branco'].includes(value)
       }
+    },
+    big: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -35,6 +39,11 @@ export default {
 .Logo img {
   height: 2.4rem;
 }
+
+.Logo.Logo--big img {
+  height: 3rem;
+}
+
 .Logo__Link {
   display: flex;
   align-items: center;

@@ -126,7 +126,7 @@ a.microtext {
   display: block;
 }
 .SearchBar {
-  margin: 2rem 0;
+  margin: 1rem 0 1rem;
   padding: 0 0.5rem;
   max-width: 40.5rem;
   align-self: center;
@@ -169,6 +169,10 @@ a.microtext {
 @media only screen and (min-width: 768px) {
   html {
     font-size: 18px;
+  }
+  .Page--Search {
+    flex-direction: row;
+    padding-top: 0;
   }
   .SearchResults .SearchResults__Result {
     margin: 0.5rem;

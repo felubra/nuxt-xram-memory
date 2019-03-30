@@ -22,6 +22,12 @@ export default {
   data() {
     return { document: {} }
   },
+  head() {
+    return {
+      title: this.document.name,
+      titleTemplate: 'xraM-Memory - Documento: %s'
+    }
+  },
   computed: {
     previewComponentType() {
       try {
