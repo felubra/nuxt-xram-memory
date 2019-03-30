@@ -259,7 +259,6 @@ export default {
 
 .FilterList--open {
   max-height: 500px;
-  overflow: visible;
 }
 
 .FilterList__ToggleFilters > a {
@@ -298,15 +297,6 @@ export default {
     position: fixed;
     width: 350px;
     top: 100px;
-  }
-  .FilterList {
-    max-height: 500px;
-    overflow: visible;
-    justify-content: space-around;
-    max-width: 66rem;
-  }
-  .FilterList__ToggleFilters {
-    display: none;
   }
   .SelectedFilters {
     order: 9;
