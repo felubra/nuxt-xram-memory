@@ -61,6 +61,14 @@ export default {
   margin-right: auto;
 }
 
+body.home .NavBar--fixed .Navbar__Logo {
+  display: block;
+}
+
+body.home .Navbar__Logo {
+  display: none;
+}
+
 @media only screen and (min-width: 768px) {
   .Navbar {
     width: 350px;
@@ -85,6 +93,7 @@ export default {
     padding: 0.35rem 0.5rem;
   }
 
+  body.home .NavBar--fixed .Navbar__Logo,
   .NavBar--fixed .Navbar__Logo {
     display: none;
   }
