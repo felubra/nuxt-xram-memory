@@ -38,6 +38,7 @@ import {
   TAGCLOUD_KEYWORD_LOWKEY_COLOR,
   TAGCLOUD_KEYWORD_HIGHKEY_COLOR
 } from '@/config/constants'
+const debounce = require('debounce')
 const d3Cloud = require('d3-cloud')
 const chromaJS = require('chroma-js')
 const d3 = require('d3')
@@ -83,7 +84,15 @@ export default {
         this.makeCloud()
       })
     },
-    makeCloud() {
+    makeCloud: debounce(function() {
+      /**
+       * faça um clone da prop de palavras-chave para não poluí-la com mais atributos abaixo
+       * isso evita que as palavras fiquem embaralhadas, pois, ao se redimensionar, atributos
+       * antigos de um item dessa array não são atualizados, o que faz com que posições antigas
+       * sejam reutilizadas.
+       */
+      const words = JSON.parse(JSON.stringify(this.keywords))
+
       const dimensions = [this.width, this.height]
       const [width, height] = dimensions
       if (!width || !height) {
@@ -91,7 +100,7 @@ export default {
       }
       this.layout = d3Cloud()
         .size(dimensions)
-        .words(this.keywords)
+        .words(words)
         .padding(2)
         .font('Vollkorn')
         .fontSize(function(d) {
@@ -99,7 +108,7 @@ export default {
         })
         .on('end', this.setWords)
       this.layout.start()
-    },
+    }, 300),
     setWords(words) {
       this.words = words
     }
