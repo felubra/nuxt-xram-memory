@@ -61,6 +61,6 @@ export default {
   font-size: 0.75rem;
 }
 .TeaserBlock__Body {
-  font-size: 1rem;
+  font-size: 1.2 rem;
 }
 </style>
