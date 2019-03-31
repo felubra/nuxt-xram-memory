@@ -103,6 +103,7 @@ main {
   max-width: 55rem;
   margin: 0 auto;
   padding: 0.5rem;
+  width: 100%;
 }
 
 .microtext {
