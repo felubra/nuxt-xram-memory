@@ -83,11 +83,13 @@ header {
   justify-content: center;
   flex-shrink: 0;
   align-items: center;
+  min-height: 15vh;
 }
 
 main {
   flex-grow: 1;
   background: #ffffff;
+  font-weight: 1rem;
 }
 
 @media only screen and (min-width: 768px) {
