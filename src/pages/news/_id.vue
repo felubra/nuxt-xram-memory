@@ -1,5 +1,5 @@
 <template>
-  <AbstractPage :title="newsItem.title" :body="newsItem.body" :image="newsItem.thumbnail">
+  <AbstractPage :title="newsItem.title" :body="newsItem.body" :image="newsItem.image_capture">
     <h2>Detalhes da notícia</h2>
     <NewsInfo :news-item="newsItem"></NewsInfo>
   </AbstractPage>
