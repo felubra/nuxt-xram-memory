@@ -44,7 +44,8 @@ module.exports = {
     '@/plugins/reactive-search',
     '@/plugins/v-viewer',
     '@/plugins/axios',
-    '@/plugins/essential-content.js'
+    '@/plugins/essential-content.js',
+    {src:'@/plugins/resize-sensor.js', ssr: false}
   ],
 
   /*

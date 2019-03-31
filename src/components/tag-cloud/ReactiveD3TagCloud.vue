@@ -1,7 +1,7 @@
 <template>
-  <div >
-    <D3TagCloud v-if="!error" :keywords="keywords" />
-  </div>
+  <no-ssr>
+    <D3TagCloud v-if="!error" :keywords="keywords"/>
+  </no-ssr>
 </template>
 
 <script>
@@ -39,7 +39,7 @@ export default {
 
         const squareDiffs = values.map(function(value) {
           const diff = value - avg
-          const sqrDiff = diff * diff
+          const sqrDiff = Math.sqrt((diff * diff) ^ 2)
           return sqrDiff
         })
 

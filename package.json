@@ -30,6 +30,7 @@
     "vue-dragscroll": "^1.8.3",
     "vue-fixed-header": "^2.0.2",
     "vue-pdf": "^4.0.6",
+    "vue-resize-sensor": "^2.0.0",
     "vue-template-compiler": "2.6.10",
     "worker-loader": "^2.0.0",
     "xss": "^1.0.3"
