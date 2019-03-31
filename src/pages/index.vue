@@ -13,7 +13,6 @@
       placeholder="Pesquisar no acervo"
       :show-clear="false"
       @keyPress="search"
-      :innerRef="innerRef"
     />
     <no-ssr>
       <ReactiveComponent
