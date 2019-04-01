@@ -1,6 +1,11 @@
 <template>
   <nav class="Navbar">
-    <a class="Navbar__Item Navbar__MenuToggle" href="#main-menu" @click.prevent="menuToggle">
+    <a
+      v-click-outside="hideMenu"
+      class="Navbar__Item Navbar__MenuToggle"
+      href="#main-menu"
+      @click.prevent="menuToggle"
+    >
       <i class="material-icons">menu</i>
     </a>
     <Logo class="Navbar__Item Navbar__Logo"/>
@@ -12,16 +17,20 @@
 <script>
 import { mapActions } from 'vuex'
 import Logo from './Logo'
+import ClickOutside from 'vue-click-outside'
 export default {
   name: 'Navbar',
   components: {
     Logo
   },
+  directives: {
+    ClickOutside
+  },
   methods: {
     menuToggle() {
       this.toggleMenu()
     },
-    ...mapActions(['toggleMenu'])
+    ...mapActions(['toggleMenu', 'hideMenu'])
   }
 }
 </script>
