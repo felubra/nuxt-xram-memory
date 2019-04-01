@@ -2,22 +2,27 @@
   <div class="D3TagCloud">
     <resize-sensor @resize="resize"></resize-sensor>
     <svg
-      xmlns="http://www.w3.org/2000/svg"
       ref="Cloud"
+      xmlns="http://www.w3.org/2000/svg"
       class="Cloud"
       :width="width"
       :height="height"
     >
       <g
-        :style="`transform: translate(${width/2}px, ${height/2}px);`"
         v-for="d in words"
         :key="d.text"
+        :style="`transform: translate(${width/2}px, ${height/2}px);`"
       >
-        <a
+        <nuxt-link
           :title="d.text"
           :alt="d.text"
           class="Cloud__Word"
-          :href="`/search?keywords=${JSON.stringify([d.text])}`"
+          :to="{
+            name: 'search-query',
+            query: {
+              keywords: JSON.stringify([d.text])
+            }
+          }"
         >
           <text
             :style="`
@@ -27,7 +32,7 @@
               text-anchor: middle; transform: translate(${d.x}px, ${d.y}px) rotate(${d.rotate}deg);
             `"
           >{{d.text}}</text>
-        </a>
+        </nuxt-link>
       </g>
     </svg>
   </div>
@@ -51,6 +56,14 @@ export default {
       type: Array
     }
   },
+  data() {
+    return {
+      words: [],
+      layout: {},
+      width: 0,
+      height: 0
+    }
+  },
   watch: {
     keywords: {
       immediate: true,
@@ -60,14 +73,6 @@ export default {
           this.makeCloud()
         }
       }
-    }
-  },
-  data() {
-    return {
-      words: [],
-      layout: {},
-      width: 0,
-      height: 0
     }
   },
   methods: {
