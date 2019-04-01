@@ -50,6 +50,7 @@ a {
   transition: color 0.25 ease;
 }
 
+a.active,
 a:active,
 a:focus,
 a:hover {

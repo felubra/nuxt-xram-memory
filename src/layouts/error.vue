@@ -1,9 +1,8 @@
 <template>
-  <section class="Page Page--bare">
+  <section class="Page">
     <div class="centered">
-      <Logo :big="true"/>
       <h1>{{title}}</h1>
-      <nuxt-link to="/">Voltar à página inicial</nuxt-link>
+      <nuxt-link class="active" to="/">Voltar à página inicial</nuxt-link>
       <D3TagCloud hi-color="#999" class="TagCloud" :keywords="errorKeywords"/>
     </div>
   </section>
@@ -24,7 +23,7 @@ export default {
     title() {
       return this.error.statusCode === 404
         ? 'Página não encontrada'
-        : 'Um erro aconteceu'
+        : 'Opps, infelizmente um erro aconteceu.'
     },
     errorKeywords() {
       try {
@@ -38,6 +37,14 @@ export default {
             }
           })
         }
+        keywords.push({
+          text: this.error.statusCode || 'erro',
+          size: 220,
+          color: '#333',
+          link: {
+            name: 'index'
+          }
+        })
         return keywords
       } catch {
         return []
@@ -63,5 +70,12 @@ div.centered {
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+h1 {
+  font-size: 2rem;
+}
+a {
+  font-size: 1.2rem;
+  text-decoration: none;
 }
 </style>
