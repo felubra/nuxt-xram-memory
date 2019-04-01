@@ -1,22 +1,20 @@
 <template>
-  <nuxt-link :to="{name:'news-id', params:{id:newsItem.id}}">
-    <div class="NewsCard">
-      <div class="NewsCard__Body">
-        <div class="NewCard__Image">
-          <img v-if="image" :src="image" alt @error="removeImage">
-        </div>
-        <div class="news-text">
-          <p v-if="label" class="label">Notícia</p>
-          <h3>{{ newsItem.title }}</h3>
-          <p class="teaser">{{teaser}}</p>
-        </div>
+  <nuxt-link class="NewsCard" :to="{name:'news-id', params:{id:newsItem.id}}">
+    <div class="NewsCard__Body">
+      <div class="NewCard__Image">
+        <img v-if="image" :src="image" alt @error="removeImage">
       </div>
-      <div v-if="footer" class="NewsCard__Footer">
-        <p>
-          <strong>{{newspaper.title}}</strong>
-          {{published_date}}
-        </p>
+      <div class="news-text">
+        <p v-if="label" class="label">Notícia</p>
+        <h3>{{ newsItem.title }}</h3>
+        <p class="teaser">{{teaser}}</p>
       </div>
+    </div>
+    <div v-if="footer" class="NewsCard__Footer">
+      <p>
+        <strong>{{newspaper.title}}</strong>
+        {{published_date}}
+      </p>
     </div>
   </nuxt-link>
 </template>
@@ -102,11 +100,6 @@ export default {
 </script>
 
 <style>
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 p.label {
   color: #aa0000;
   text-transform: uppercase;
@@ -115,13 +108,23 @@ p.label {
   font-size: 0.75rem;
   font-family: 'Cabin', sans-serif;
 }
-div.NewsCard {
+a.NewsCard {
   background: #f3f1f1;
   padding: 1rem 1rem 0.6rem 1rem;
   display: flex;
   flex-direction: column;
   text-align: center;
   width: 100%;
+  transition: color 0.25s ease, background-color 0.25s ease;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.NewsCard:focus,
+a.NewsCard:hover,
+a.NewsCard:active {
+  background-color: #ce5454;
+  color: #fff;
 }
 
 div.NewsCard__Body {
@@ -163,7 +166,7 @@ div.NewsCard__Footer p {
   padding: 0;
 }
 @media only screen and (min-width: 1080px) {
-  div.NewsCard {
+  a.NewsCard {
     text-align: left;
   }
   div.NewsCard__Body {

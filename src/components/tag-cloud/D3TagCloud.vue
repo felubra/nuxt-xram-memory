@@ -1,16 +1,49 @@
 <template>
-  <div ref="Cloud" class="Cloud"/>
+  <div class="D3TagCloud">
+    <resize-sensor @resize="resize"></resize-sensor>
+    <svg
+      ref="Cloud"
+      xmlns="http://www.w3.org/2000/svg"
+      class="Cloud"
+      :width="width"
+      :height="height"
+    >
+      <g
+        v-for="d in words"
+        :key="d.text"
+        :style="`transform: translate(${width/2}px, ${height/2}px);`"
+      >
+        <nuxt-link
+          :title="d.text"
+          :alt="d.text"
+          class="Cloud__Word"
+          :to="d.link || {
+            name: 'search-query',
+            query: {
+              keywords: JSON.stringify([d.text])
+            }
+          }"
+        >
+          <text
+            :style="`
+              font-size:${d.size + 'px'};
+              fill: ${colorForWord(d.size)};
+              font-family: 'Vollkorn';
+              text-anchor: middle; transform: translate(${d.x}px, ${d.y}px) rotate(${d.rotate}deg);
+            `"
+          >{{d.text}}</text>
+        </nuxt-link>
+      </g>
+    </svg>
+  </div>
 </template>
 
 <script>
-/**
- * TODO: tentar a abordagem de https://travishorn.com/vue-svg-2310f1b151d4
- */
 import {
   TAGCLOUD_KEYWORD_LOWKEY_COLOR,
   TAGCLOUD_KEYWORD_HIGHKEY_COLOR
 } from '@/config/constants'
-
+const debounce = require('debounce')
 const d3Cloud = require('d3-cloud')
 const chromaJS = require('chroma-js')
 const d3 = require('d3')
@@ -21,6 +54,22 @@ export default {
     keywords: {
       required: true,
       type: Array
+    },
+    lowColor: {
+      type: String,
+      default: TAGCLOUD_KEYWORD_LOWKEY_COLOR
+    },
+    hiColor: {
+      type: String,
+      default: TAGCLOUD_KEYWORD_HIGHKEY_COLOR
+    }
+  },
+  data() {
+    return {
+      words: [],
+      layout: {},
+      width: 0,
+      height: 0
     }
   },
   watch: {
@@ -34,98 +83,53 @@ export default {
       }
     }
   },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.makeCloud)
-  },
-  created() {
-    this.layout = {}
-  },
-  mounted() {
-    this.makeCloud(this.$refs.Cloud)
-    window.addEventListener('resize', this.makeCloud)
-  },
   methods: {
-    makeCloud() {
-      const el = this.$refs.Cloud
-      const dimensions = [Math.min(el.clientWidth, 1200), el.clientHeight]
+    colorForWord(size) {
+      return chromaJS.scale([this.lowColor, this.hiColor])(
+        (size - 1) / (100 - 1)
+      )
+    },
+    resize({ width, height }) {
+      this.width = width
+      this.height = height > 450 ? height : 450
+      this.$nextTick(() => {
+        this.makeCloud()
+      })
+    },
+    makeCloud: debounce(function() {
+      /**
+       * faça um clone da prop de palavras-chave para não poluí-la com mais atributos abaixo
+       * isso evita que as palavras fiquem embaralhadas, pois, ao se redimensionar, atributos
+       * antigos de um item dessa array não são atualizados, o que faz com que posições antigas
+       * sejam reutilizadas.
+       */
+      const words = JSON.parse(JSON.stringify(this.keywords))
+
+      const dimensions = [this.width, this.height]
+      const [width, height] = dimensions
+      if (!width || !height) {
+        return
+      }
       this.layout = d3Cloud()
         .size(dimensions)
-        .words(this.keywords)
+        .words(words)
         .padding(2)
-        .rotate(function() {
-          const avaliableAngles = [15, 45, 60, 90]
-          const angle =
-            avaliableAngles[Math.floor(Math.random() * avaliableAngles.length)]
-          const avNums = [2, 3, 5, 9]
-          const numSteps = avNums[Math.floor(Math.random() * avNums.length)]
-          const step = (angle * 2) / numSteps
-          const angles = Array.apply(undefined, Array(numSteps + 1)).map(
-            (n, i) => {
-              return i * step - angle
-            }
-          )
-          return angles[Math.floor(Math.random() * angles.length)]
-        })
         .font('Vollkorn')
         .fontSize(function(d) {
           return d.size
         })
-        .on('end', this.drawCloud)
+        .on('end', this.setWords)
       this.layout.start()
-    },
-    drawCloud(words) {
-      const svgEl = this.$refs.Cloud.querySelector('svg')
-      if (svgEl) {
-        this.$refs.Cloud.removeChild(svgEl)
-      }
-      d3.select(this.$refs.Cloud)
-        .append('svg')
-        .attr('xmlns', 'http://www.w3.org/2000/svg')
-        .attr('width', this.layout.size()[0])
-        .attr('height', this.layout.size()[1])
-        .append('g')
-        .attr(
-          'transform',
-          'translate(' +
-            this.layout.size()[0] / 2 +
-            ',' +
-            this.layout.size()[1] / 2 +
-            ')'
-        )
-        .selectAll('text')
-        .data(words)
-        .enter()
-        .append('a')
-        .attr('href', function(d) {
-          return `/search?keywords=${JSON.stringify([d.text])}`
-        })
-        .attr('class', 'Cloud__Word')
-        .append('text')
-        .style('font-size', function(d) {
-          return d.size + 'px'
-        })
-        .style('fill', function(d) {
-          const color = chromaJS.scale([
-            TAGCLOUD_KEYWORD_HIGHKEY_COLOR,
-            TAGCLOUD_KEYWORD_LOWKEY_COLOR
-          ])((d.size - 1) / (100 - 1))
-          return color
-        })
-        .style('font-family', 'Vollkorn')
-        .attr('text-anchor', 'middle')
-        .attr('transform', function(d) {
-          return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')'
-        })
-        .text(function(d) {
-          return d.text
-        })
+    }, 300),
+    setWords(words) {
+      this.words = words
     }
   }
 }
 </script>
 
 <style>
-div.Cloud {
+.D3TagCloud {
   position: relative;
   width: 100%;
   min-height: 600px;
@@ -133,5 +137,14 @@ div.Cloud {
 svg {
   display: block;
   margin: 0 auto;
+}
+a.Cloud__Word > text {
+  transition: fill 0.25s ease;
+}
+
+a.Cloud__Word:focus > text,
+a.Cloud__Word:active > text,
+a.Cloud__Word:hover > text {
+  fill: #ce5454 !important;
 }
 </style>

@@ -26,8 +26,8 @@
         />
         <div
           class="FilterList"
-          v-on:animationend="toggleOverflow"
           :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
+          @animationend="toggleOverflow"
         >
           <single-dropdown-list
             :default-query="customFilterQuery"
@@ -294,6 +294,13 @@ export default {
   margin: 0.1rem;
   font-family: 'Cabin', sans-serif !important;
   font-size: 0.775rem;
+}
+
+.SelectedFilters__Filter:active,
+.SelectedFilters__Filter:focus,
+.SelectedFilters__Filter:hover {
+  background-color: #ce5454 !important;
+  color: #fff;
 }
 
 @media only screen and (min-width: 768px) {

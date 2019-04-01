@@ -13,7 +13,6 @@
       placeholder="Pesquisar no acervo"
       :show-clear="false"
       @keyPress="search"
-      :innerRef="innerRef"
     />
     <no-ssr>
       <ReactiveComponent
@@ -22,7 +21,7 @@
         :default-query="tagCloudQuery"
       >
         <div slot-scope="{ aggregations, error }">
-          <ReactiveD3TagCloud :aggregations="aggregations" :error="error"/>
+          <D3TagCloud v-if="!error" :keywords="keywords(aggregations)"/>
         </div>
       </ReactiveComponent>
     </no-ssr>
@@ -30,16 +29,17 @@
 </template>
 
 <script>
-import ReactiveD3TagCloud from '~/components/tag-cloud/ReactiveD3TagCloud'
+import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
 import TeaserBlock from '~/components/common/TeaserBlock'
 import Logo from '~/components/common/Logo'
 import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
+const FONT_SIZE_DELTA = 16
 
 import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {
   components: {
-    ReactiveD3TagCloud,
+    D3TagCloud,
     TeaserBlock,
     Logo
   },
@@ -70,6 +70,52 @@ export default {
           name: 'search-query',
           params: { query: e.target.value }
         })
+      }
+    },
+    keywords(aggregations) {
+      const keywordsStdDeviation = this.keywordsStdDeviation(aggregations)
+      try {
+        return aggregations.keywords.names.buckets.map(keyword => {
+          return {
+            text: keyword.key,
+            slug: keyword.slug.buckets[0].key,
+            size: (keyword.doc_count / keywordsStdDeviation) * FONT_SIZE_DELTA
+          }
+        })
+      } catch {
+        return []
+      }
+    },
+    keywordsStdDeviation(aggregations) {
+      function standardDeviation(values) {
+        const avg = average(values)
+
+        const squareDiffs = values.map(function(value) {
+          const diff = value - avg
+          const sqrDiff = Math.sqrt((diff * diff) ^ 2)
+          return sqrDiff
+        })
+
+        const avgSquareDiff = average(squareDiffs)
+
+        const stdDev = Math.sqrt(avgSquareDiff)
+        return stdDev
+      }
+
+      function average(data) {
+        const sum = data.reduce(function(sum, value) {
+          return sum + value
+        }, 0)
+
+        const avg = sum / data.length
+        return avg
+      }
+      try {
+        return standardDeviation(
+          aggregations.keywords.names.buckets.map(keyword => keyword.doc_count)
+        )
+      } catch {
+        return 1
       }
     }
   }
