@@ -1,5 +1,5 @@
-export const TAGCLOUD_KEYWORD_LOWKEY_COLOR = '#963a3a'
-export const TAGCLOUD_KEYWORD_HIGHKEY_COLOR = '#f00'
+export const TAGCLOUD_KEYWORD_LOWKEY_COLOR = '#ddd'
+export const TAGCLOUD_KEYWORD_HIGHKEY_COLOR = '#caafaf'
 export const TAGCLOUD_NUM_KEYWORDS = 100
 export const TAGCLOUD_QUERY = {
   size: 0,

@@ -17,7 +17,7 @@
           :title="d.text"
           :alt="d.text"
           class="Cloud__Word"
-          :to="{
+          :to="d.link || {
             name: 'search-query',
             query: {
               keywords: JSON.stringify([d.text])
@@ -54,6 +54,14 @@ export default {
     keywords: {
       required: true,
       type: Array
+    },
+    lowColor: {
+      type: String,
+      default: TAGCLOUD_KEYWORD_LOWKEY_COLOR
+    },
+    hiColor: {
+      type: String,
+      default: TAGCLOUD_KEYWORD_HIGHKEY_COLOR
     }
   },
   data() {
@@ -77,10 +85,9 @@ export default {
   },
   methods: {
     colorForWord(size) {
-      return chromaJS.scale([
-        TAGCLOUD_KEYWORD_LOWKEY_COLOR,
-        TAGCLOUD_KEYWORD_HIGHKEY_COLOR
-      ])((size - 1) / (100 - 1))
+      return chromaJS.scale([this.lowColor, this.hiColor])(
+        (size - 1) / (100 - 1)
+      )
     },
     resize({ width, height }) {
       this.width = width
@@ -138,6 +145,6 @@ a.Cloud__Word > text {
 a.Cloud__Word:focus > text,
 a.Cloud__Word:active > text,
 a.Cloud__Word:hover > text {
-  fill: #333 !important;
+  fill: #ce5454 !important;
 }
 </style>
