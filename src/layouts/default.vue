@@ -45,6 +45,17 @@ export default {
 
 
 <style>
+a {
+  color: rgb(202, 175, 175);
+  transition: color 0.25 ease;
+}
+
+a:active,
+a:focus,
+a:hover {
+  color: #ce5454;
+}
+
 html,
 body {
   box-sizing: border-box;
