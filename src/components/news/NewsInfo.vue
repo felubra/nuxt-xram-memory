@@ -24,9 +24,9 @@
       <dt>Capturas de página</dt>
       <dd>
         <nuxt-link
-          class="NewsInfo__PDFCapture"
           v-for="capture in pdf_captures"
           :key="capture.url"
+          class="NewsInfo__PDFCapture"
           :to="{
             name: 'document-id',
             params: {
@@ -150,6 +150,14 @@ export default {
       }
     }
   },
+  watch: {
+    pdf_captures: {
+      immediate: true,
+      handler() {
+        this.getDocumentsInfo()
+      }
+    }
+  },
   methods: {
     captureNameAndSize(capture) {
       let title = {}
@@ -193,14 +201,6 @@ export default {
         )
       } catch {
         return false
-      }
-    }
-  },
-  watch: {
-    pdf_captures: {
-      immediate: true,
-      handler() {
-        this.getDocumentsInfo()
       }
     }
   }
@@ -273,11 +273,11 @@ dd {
 .NewsInfo__PDFCapture > img {
   border: solid 1px #efefef;
   padding: 1rem;
+  transition: border 0.25s ease;
 }
 
 .NewsInfo__PDFCapture:hover > img {
   border: solid 1px #ccc;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   padding: 1rem;
 }
 
