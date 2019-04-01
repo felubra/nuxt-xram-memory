@@ -6,11 +6,13 @@
       class="FilePreview__Preview FilePreview__Preview--pdf_file"
     >
       <pdf
+        v-for="i in numPages"
+        :key="i"
         ref="pdfComponent"
         class="PDFFilePreview__PDFComponent"
-        :src="file_url"
-        :page="currentPage"
-        style="display: none"
+        :src="loadingTask()"
+        style="width: calc(100% - 1rem);"
+        :page="i"
       >
         <template slot="loading">
           <p class="FilePreview__Message microtext">Carregando...</p>
@@ -22,46 +24,18 @@
           </div>
         </template>
       </pdf>
-      <ul class="PDFFilePreview__PageControls">
-        <li>
-          <a href="#" title="Página anterior" @click.prevent="pageBefore">
-            <i class="material-icons">navigate_before</i>
-          </a>
-        </li>
-        <!--
-          <li>
-            <a href="#" title="Tela Inteira" @click.prevent="fullScreen">
-              <i class="material-icons">fullscreen</i>
-            </a>
-        </li>-->
-        <li>
-          <a href="#" title="Próxima página" @click.prevent="nextPage">
-            <i class="material-icons">navigate_next</i>
-          </a>
-        </li>
-      </ul>
     </div>
     <div class="FilePreview__Actions FilePreview__Actions--toolbar">
       <a href="#document-info" class="FilePreview__Action FilePreview__Action--toolbar">
         <i class="material-icons">info</i>Mais informações
       </a>
       <ul class="PDFFilePreview__PageControls PDFFilePreview__PageControls--toolbar">
-        <li>
-          <a href="#" title="Página anterior" @click.prevent="pageBefore">
-            <i class="material-icons">navigate_before</i>
-          </a>
-        </li>
         <!--
           <li>
             <a href="#" title="Tela Inteira" @click.prevent="fullScreen">
               <i class="material-icons">fullscreen</i>
             </a>
         </li>-->
-        <li>
-          <a href="#" title="Próxima página" @click.prevent="nextPage">
-            <i class="material-icons">navigate_next</i>
-          </a>
-        </li>
       </ul>
       <a :href="file_url" download class="FilePreview__Action FilePreview__Action--toolbar">
         <i class="material-icons">get_app</i> Baixar
@@ -105,39 +79,15 @@ export default {
   extends: DocumentPreview,
   data() {
     return {
-      currentPage: 1,
       numPages: 0
     }
   },
   mounted() {
     this.loadingTask().then(pdf => {
       this.numPages = pdf.numPages
-
-      pdf.getPage(1).then(page => {
-        const { width, height } = page.getViewport(1)
-        const container = this.$refs.pdfContainer
-
-        const heightScale = ((container.clientHeight - 32) / height) * 1
-        const widthScale = (container.clientWidth / width) * 1
-        const newWidth = width * widthScale
-
-        this.$refs.pdfComponent.$el.setAttribute(
-          'style',
-          `width: ${newWidth}px;`
-        )
-      })
     })
   },
   methods: {
-    pageBefore() {
-      this.currentPage = this.currentPage - 1 >= 1 ? this.currentPage - 1 : 1
-    },
-    nextPage() {
-      this.currentPage =
-        this.currentPage === this.numPages
-          ? this.numPages
-          : this.currentPage + 1
-    },
     fullScreen() {
       /** TODO: */
     },
@@ -172,6 +122,16 @@ export default {
 
 .PDFFilePreview__PDFComponent {
   position: relative;
+  display: inline-block;
+  padding: 0.5rem;
+}
+
+.PDFFilePreview__PDFComponent:first-of-type {
+  padding-top: 3.098rem;
+}
+
+.PDFFilePreview__PDFComponent:last-of-type {
+  padding-bottom: 1rem;
 }
 
 .FilePreview__Footer--pdf-file {
@@ -201,14 +161,16 @@ export default {
   display: block;
 }
 
+.PDFFilePreview__PDFComponent > canvas {
+  border: solid 1px #ccc;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
 @media only screen and (min-width: 768px) {
   .PDFFilePreview {
     flex-direction: row;
   }
-  .PDFFilePreview__PDFComponent {
-    display: inline-block;
-    padding: 1rem;
-  }
+
   .FilePreview__Preview--pdf_file {
     overflow-x: hidden;
     height: auto;
@@ -221,10 +183,7 @@ export default {
     flex-grow: 0;
     background: #f3f1f1;
   }
-  .PDFFilePreview__PDFComponent > canvas {
-    border: solid 1px #ccc;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
-  }
+
   .PDFFilePreview__PageControls {
     display: block;
   }
