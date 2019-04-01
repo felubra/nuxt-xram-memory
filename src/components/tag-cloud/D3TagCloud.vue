@@ -27,7 +27,7 @@
           <text
             :style="`
               font-size:${d.size + 'px'};
-              fill: ${colorForWord(d.size)};
+              fill: ${d.color || colorForSize(d.size)};
               font-family: 'Vollkorn';
               text-anchor: middle; transform: translate(${d.x}px, ${d.y}px) rotate(${d.rotate}deg);
             `"
@@ -84,7 +84,7 @@ export default {
     }
   },
   methods: {
-    colorForWord(size) {
+    colorForSize(size) {
       return chromaJS.scale([this.lowColor, this.hiColor])(
         (size - 1) / (100 - 1)
       )
