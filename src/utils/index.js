@@ -22,6 +22,13 @@ const defaultWhiteList = {
   h5: [],
   h6: [],
 
+  dl: [],
+  ul: [],
+  ol: [],
+  li: [],
+
+  blockquote: [],
+
   img: ['src'],
   small: [],
 
@@ -57,8 +64,12 @@ const xssFilterFactory = (allowedClasses = null, whiteList = null) => {
       }
       // Adicione o endereço da api em atributos src relativos de tags img
       if (tag === 'img' && name === 'src') {
-        if (!value.match(/^https?:\/\//)) {
-          return `src=${xss.escapeAttrValue(process.env.API_URL + value)}`
+        if (!value.match(/^https?:\/\//)  ) {
+          if(value.startsWith("data:image/")) {
+            return `src=${value}`
+          } else {
+            return `src=${xss.escapeAttrValue(process.env.API_URL + value)}`
+          }
         }
       }
       return xss.onTagAttr(tag, name, value, isWhiteAttr)
