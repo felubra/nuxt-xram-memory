@@ -1,55 +1,24 @@
 <template>
   <section class="Page">
-    <header v-if="!!theTitle || !!theImage || hasSlot(['header', 'image'])">
-      <slot name="image">
-        <img v-if="theImage" :src="theImage" alt>
-      </slot>
+    <header v-if="hasSlot(['header', 'image'])">
+      <slot name="image"></slot>
       <div class="content-container">
-        <slot name="header">
-          <h1 v-if="theTitle">{{theTitle}}</h1>
-        </slot>
+        <slot name="header"></slot>
       </div>
     </header>
     <aside v-if="hasSlot('aside')">
       <slot name="aside"></slot>
     </aside>
     <main>
-      
-        <slot name="subtitle">
-          <h2 v-if="theSubtitle" class="Page__Subtitle">{{theSubtitle}}</h2>
-        </slot>
-        <slot>
-          <div v-html="theBody"></div>
-        </slot>
-      
+      <slot name="subtitle"></slot>
+      <slot></slot>
     </main>
   </section>
 </template>
 
 <script>
-import xss from 'xss'
-import { appClassesXSSFilter, getMediaUrl } from '@/utils/'
-
 export default {
   name: 'AbstractPage',
-  props: {
-    image: {
-      type: String,
-      default: () => ''
-    },
-    subtitle: {
-      type: String,
-      default: () => ''
-    },
-    title: {
-      type: String,
-      default: () => ''
-    },
-    body: {
-      type: String,
-      default: () => ''
-    }
-  },
   methods: {
     hasSlot(name = 'aside') {
       if (Array.isArray(name)) {
@@ -59,21 +28,6 @@ export default {
       } else {
         return !!this.$slots[name] || !!this.$scopedSlots[name]
       }
-    }
-  },
-  computed: {
-    theTitle() {
-      return xss(this.title, appClassesXSSFilter)
-    },
-    theSubtitle() {
-      return xss(this.subtitle, appClassesXSSFilter)
-    },
-    theBody() {
-      return xss(this.body, appClassesXSSFilter)
-    },
-    theImage() {
-      const urlVal = xss(this.image, appClassesXSSFilter)
-      return urlVal ? getMediaUrl(urlVal) : ''
     }
   }
 }
