@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import xss from 'xss'
-import { appClassesXSSFilter, getMediaUrl } from '@/utils/'
+import { sanitize, getMediaUrl } from '@/utils/'
 import NewsInfo from '~/components/news/NewsInfo'
 import AbstractPage from '~/components/common/AbstractPage'
 
@@ -37,10 +36,10 @@ export default {
   },
   computed: {
     theTitle() {
-      return xss(this.newsItem.title, appClassesXSSFilter)
+      return sanitize(this.newsItem.title)
     },
     theImage() {
-      const urlVal = xss(this.newsItem.image_capture, appClassesXSSFilter)
+      const urlVal = sanitize(this.newsItem.image_capture)
       return urlVal ? getMediaUrl(urlVal) : ''
     }
   },

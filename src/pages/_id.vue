@@ -9,8 +9,7 @@
   </AbstractPage>
 </template>
 <script>
-import xss from 'xss'
-import { appClassesXSSFilter, getMediaUrl } from '@/utils/'
+import { sanitize } from '@/utils/'
 import AbstractPage from '~/components/common/AbstractPage'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
@@ -26,7 +25,7 @@ export default {
   },
   computed: {
     theBody() {
-      return xss(this.staticPage.body, appClassesXSSFilter)
+      return sanitize(this.staticPage.body)
     }
   },
   data() {

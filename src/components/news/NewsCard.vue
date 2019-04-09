@@ -21,10 +21,9 @@
 
 <script>
 /**TODO: adicionar prop centered */
-import xss from 'xss'
 const smartTruncate = require('smart-truncate')
 const dayJs = require('dayjs')
-const { appClassesXSSFilter, getMediaUrl } = require('~/utils')
+const { getMediaUrl, sanitize } = require('~/utils')
 export default {
   name: 'NewsCard',
   props: {
@@ -49,10 +48,10 @@ export default {
   },
   computed: {
     title() {
-      return xss(this.newsItem.title, appClassesXSSFilter)
+      return sanitize(this.newsItem.title)
     },
     teaser() {
-      return xss(this.newsItem.teaser, appClassesXSSFilter)
+      return sanitize(this.newsItem.teaser)
     },
     image() {
       try {

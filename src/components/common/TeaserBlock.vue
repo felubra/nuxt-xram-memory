@@ -11,8 +11,7 @@
 
 
 <script>
-import xss from 'xss'
-import { appClassesXSSFilter } from '@/utils/'
+import { sanitize } from '@/utils/'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
 
@@ -33,15 +32,14 @@ export default {
   computed: {
     teaser() {
       return (
-        this.pageItem.teaser !== undefined &&
-        xss(this.pageItem.teaser, appClassesXSSFilter)
+        this.pageItem.teaser !== undefined && sanitize(this.pageItem.teaser)
       )
     },
     pageId() {
       return this.pageItem.id
     },
     slug() {
-      return this.pageItem.url !== undefined && xss(this.pageItem.url)
+      return this.pageItem.url !== undefined && sanitize(this.pageItem.url)
     }
   }
 }

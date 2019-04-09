@@ -89,3 +89,5 @@ export const innerInputFocus = {
     el.querySelector('input').focus()
   }
 }
+
+export const sanitize = (str, classes = appClassesXSSFilter) => xss(str, classes)
