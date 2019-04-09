@@ -37,6 +37,10 @@ export default {
 aside {
   background: #f3f1f1;
 }
+
+.Page.Page--document aside {
+  order: 2;
+}
 h2 {
   font-weight: 500;
 }
@@ -71,6 +75,10 @@ main {
   aside {
     flex-basis: 350px;
     flex-shrink: 0;
+    margin-top: 100px;
+  }
+  .Page.Page--document aside {
+    order: 0;
   }
 }
 </style>
