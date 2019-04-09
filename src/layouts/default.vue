@@ -111,6 +111,10 @@ main {
   padding-top: 0;
 }
 
+.Page.Page--home > main {
+  background: transparent;
+}
+
 .content-container {
   max-width: 55rem;
   margin: 0 auto;

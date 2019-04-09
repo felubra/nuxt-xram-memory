@@ -1,5 +1,5 @@
 <template>
-  <section class="Page">
+  <AbstractPage class="Page Page--home">
     <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
     <Logo :big="true"/>
     <DataSearch
@@ -25,12 +25,13 @@
         </div>
       </ReactiveComponent>
     </no-ssr>
-  </section>
+  </AbstractPage>
 </template>
 
 <script>
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
 import TeaserBlock from '~/components/common/TeaserBlock'
+import AbstractPage from '~/components/common/AbstractPage'
 import Logo from '~/components/common/Logo'
 import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
@@ -41,7 +42,8 @@ export default {
   components: {
     D3TagCloud,
     TeaserBlock,
-    Logo
+    Logo,
+    AbstractPage
   },
   directives: {
     'inner-input-focus': innerInputFocus

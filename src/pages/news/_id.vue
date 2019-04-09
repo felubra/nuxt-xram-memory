@@ -1,7 +1,9 @@
 <template>
   <AbstractPage :title="newsItem.title" :body="newsItem.body" :image="newsItem.image_capture">
-    <h2>Detalhes da notícia</h2>
-    <NewsInfo :news-item="newsItem"></NewsInfo>
+    <div class="content-container">
+      <h2>Detalhes da notícia</h2>
+      <NewsInfo :news-item="newsItem"></NewsInfo>
+    </div>
   </AbstractPage>
 </template>
 

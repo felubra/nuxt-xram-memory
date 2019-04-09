@@ -1,12 +1,13 @@
 <template>
-  <section class="Page Page--bare">
+  <AbstractPage class="Page Page--bare">
     <no-ssr>
       <component :is="previewComponentType" :doc-item="document"></component>
     </no-ssr>
-  </section>
+  </AbstractPage>
 </template>
 <script>
 import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
+import AbstractPage from '~/components/common/AbstractPage'
 export default {
   components: {
     UnknownFilePreview,
