@@ -187,7 +187,7 @@ a.microtext {
   html {
     font-size: 18px;
   }
-  .Page--Search {
+  .Page--sidebar {
     flex-direction: row;
     padding-top: 0;
   }

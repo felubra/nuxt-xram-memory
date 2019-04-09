@@ -1,5 +1,5 @@
 <template>
-  <AbstractPage class="Page Page--Search">
+  <AbstractPage class="Page--sidebar">
     <template v-slot:aside>
       <div class="SearchOptions">
         <div class="SearchOptions__inside">
