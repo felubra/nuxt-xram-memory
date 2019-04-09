@@ -9,8 +9,8 @@
       :height="height"
     >
       <g
-        v-for="d in words"
-        :key="d.text"
+        v-for="d, i in words"
+        :key="i"
         :style="`transform: translate(${width/2}px, ${height/2}px);`"
       >
         <nuxt-link
