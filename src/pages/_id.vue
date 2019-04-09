@@ -1,7 +1,16 @@
 <template>
-  <AbstractPage class="ql-editor pageBody" :title="staticPage.title" :body="staticPage.body"></AbstractPage>
+  <AbstractPage class="ql-editor pageBody">
+    <template v-slot:header>
+      <div class="content-container">
+        <h1>{{staticPage.title}}</h1>
+      </div>
+    </template>
+    <div class="content-container" v-html="theBody"></div>
+  </AbstractPage>
 </template>
 <script>
+import xss from 'xss'
+import { appClassesXSSFilter, getMediaUrl } from '@/utils/'
 import AbstractPage from '~/components/common/AbstractPage'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
@@ -13,6 +22,11 @@ export default {
     return {
       title: this.staticPage.title,
       titleTemplate: 'xraM-Memory - %s'
+    }
+  },
+  computed: {
+    theBody() {
+      return xss(this.staticPage.body, appClassesXSSFilter)
     }
   },
   data() {
