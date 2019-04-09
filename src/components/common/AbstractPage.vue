@@ -1,6 +1,6 @@
 <template>
   <section class="Page">
-    <header>
+    <header v-if="!!theTitle || !!theImage || hasSlot(['header', 'image'])">
       <slot name="image">
         <img v-if="theImage" :src="theImage" alt>
       </slot>
@@ -10,15 +10,18 @@
         </slot>
       </div>
     </header>
+    <aside v-if="hasSlot('aside')">
+      <slot name="aside"></slot>
+    </aside>
     <main>
-      <div class="content-container">
+      
         <slot name="subtitle">
           <h2 v-if="theSubtitle" class="Page__Subtitle">{{theSubtitle}}</h2>
         </slot>
         <slot>
           <div v-html="theBody"></div>
         </slot>
-      </div>
+      
     </main>
   </section>
 </template>
@@ -47,6 +50,17 @@ export default {
       default: () => ''
     }
   },
+  methods: {
+    hasSlot(name = 'aside') {
+      if (Array.isArray(name)) {
+        return name.some(
+          slotName => !!this.$slots[slotName] || !!this.$scopedSlots[slotName]
+        )
+      } else {
+        return !!this.$slots[name] || !!this.$scopedSlots[name]
+      }
+    }
+  },
   computed: {
     theTitle() {
       return xss(this.title, appClassesXSSFilter)
@@ -66,6 +80,9 @@ export default {
 </script>
 
 <style scoped>
+aside {
+  background: #f3f1f1;
+}
 h2 {
   font-weight: 500;
 }
@@ -96,6 +113,10 @@ main {
   .Page__Subtitle {
     display: block;
     margin: 0 0 1rem;
+  }
+  aside {
+    flex-basis: 350px;
+    flex-shrink: 0;
   }
 }
 </style>
