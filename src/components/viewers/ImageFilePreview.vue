@@ -1,36 +1,14 @@
 <template>
   <div class="ImageFilePreview">
-    <div class="FilePreview__Preview">
-      <viewer :options="viewerOptions" :images="[file_url]">
-        <template slot-scope="scope">
-          <figure class="images">
-            <div v-for="image in scope.images" :key="image" class="image-wrapper">
-              <img
-                :title="description"
-                :alt="description"
-                class="ImageFilePreview__OriginalImage"
-                :src="image"
-              >
-            </div>
-          </figure>
-        </template>
-      </viewer>
-    </div>
-    <div class="FilePreview__Footer FilePreview__Footer--blue">
-      <div class="FilePreview__DocumentInfo">
-        <p class="FilePreview__Label microtext">Imagem</p>
-        <h1 class="FilePreview__Title">{{title}}</h1>
-        <p class="FilePreview__Description">{{description}}</p>
-        <p class="FilePreview__Size">{{size}}</p>
-        <p class="FilePreview__SendDate">{{sendDate}}</p>
-      </div>
-      <div class="FilePreview__Actions FilePreview__Actions">
-        <a :href="file_url" download class="FilePreview__Action FilePreview__Action--stacked">
-          <i class="material-icons">get_app</i>
-        </a>
-        <!-- TODO: compartilhar... -->
-      </div>
-    </div>
+    <viewer :options="viewerOptions" :images="[fileURL]">
+      <template slot-scope="scope">
+        <figure class="images">
+          <div v-for="image in scope.images" :key="image" class="image-wrapper">
+            <img class="ImageFilePreview__OriginalImage" :src="image">
+          </div>
+        </figure>
+      </template>
+    </viewer>
   </div>
 </template>
 
@@ -71,13 +49,13 @@ export default {
 }
 
 .ImageFilePreview {
-  background: #fefefe;
+  background: #e3e1e1;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 .ImageFilePreview .viewer-canvas {
-  background: #f3f1f1;
+  background: #e3e1e1;
 }
 
 .FilePreview__Preview {

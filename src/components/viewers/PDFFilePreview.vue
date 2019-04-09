@@ -17,49 +17,13 @@
         <template slot="loading">
           <p class="FilePreview__Message microtext">Carregando...</p>
           <div class="FilePreview__Actions FilePreview__Actions--big">
-            <a :href="file_url" class="FilePreview__Action">
+            <a :href="fileURL" class="FilePreview__Action">
               <i class="material-icons">get_app</i>
             </a>
             <!-- TODO: compartilhar... -->
           </div>
         </template>
       </pdf>
-    </div>
-    <div class="FilePreview__Actions FilePreview__Actions--toolbar">
-      <a href="#document-info" class="FilePreview__Action FilePreview__Action--toolbar">
-        <i class="material-icons">info</i>Mais informações
-      </a>
-      <ul class="PDFFilePreview__PageControls PDFFilePreview__PageControls--toolbar">
-        <!--
-          <li>
-            <a href="#" title="Tela Inteira" @click.prevent="fullScreen">
-              <i class="material-icons">fullscreen</i>
-            </a>
-        </li>-->
-      </ul>
-      <a :href="file_url" download class="FilePreview__Action FilePreview__Action--toolbar">
-        <i class="material-icons">get_app</i> Baixar
-      </a>
-      <!-- TODO: compartilhar
-      <a :href="file_url" download class="FilePreview__Action FilePreview__Action--toolbar">
-        <i class="material-icons">share</i> Compartilhar
-      </a>
-      -->
-    </div>
-    <div class="FilePreview__Footer FilePreview__Footer--blue FilePreview__Footer--pdf-file">
-      <div id="document-info" class="FilePreview__DocumentInfo">
-        <p class="FilePreview__Label microtext">Documento</p>
-        <h1 class="FilePreview__Title">{{title}}</h1>
-        <p class="FilePreview__Description">{{description}}</p>
-        <p class="FilePreview__Size">{{size}}</p>
-        <p class="FilePreview__SendDate">{{sendDate}}</p>
-      </div>
-      <div class="FilePreview__Actions FilePreview__Actions--stacked">
-        <a :href="file_url" class="FilePreview__Action FilePreview__Action--stacked" download>
-          <i class="material-icons">get_app</i>
-        </a>
-        <!-- TODO: compartilhar... -->
-      </div>
     </div>
   </div>
 </template>
@@ -92,7 +56,7 @@ export default {
       /** TODO: */
     },
     loadingTask() {
-      return pdf.createLoadingTask(this.file_url)
+      return pdf.createLoadingTask(this.fileURL)
     }
   }
 }
@@ -114,6 +78,7 @@ export default {
   overflow: hidden;
   overflow-y: scroll;
   cursor: grab;
+  background: #e3e1e1;
 }
 
 .FilePreview__Preview--pdf_file:active {
@@ -124,14 +89,6 @@ export default {
   position: relative;
   display: inline-block;
   padding: 0.5rem;
-}
-
-.PDFFilePreview__PDFComponent:first-of-type {
-  padding-top: 3.098rem;
-}
-
-.PDFFilePreview__PDFComponent:last-of-type {
-  padding-bottom: 1rem;
 }
 
 .FilePreview__Footer--pdf-file {
@@ -176,7 +133,6 @@ export default {
     height: auto;
     min-height: 75vh;
     max-height: 100vh;
-    background: #e3e1e1;
   }
   .FilePreview__Footer--pdf-file {
     background: transparent;
