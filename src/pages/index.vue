@@ -1,30 +1,37 @@
 <template>
   <section class="Page">
-    <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
-    <Logo :big="true"/>
-    <DataSearch
-      v-inner-input-focus
-      component-id="SearchSensor"
-      :field-weights="[10,7]"
-      :data-field="['title', 'teaser']"
-      icon-position="right"
-      :autosuggest="false"
-      class-name="SearchBar SearchBar--home"
-      placeholder="Pesquisar no acervo"
-      :show-clear="false"
-      @keyPress="search"
-    />
-    <no-ssr>
-      <ReactiveComponent
-        class="ReactiveD3TagCloud--home"
-        component-id="ReactiveD3TagCloud"
-        :default-query="tagCloudQuery"
-      >
-        <div slot-scope="{ aggregations, error }">
-          <D3TagCloud v-if="!error" :keywords="keywords(aggregations)"/>
-        </div>
-      </ReactiveComponent>
-    </no-ssr>
+    <ReactiveBase
+      class-name="ReactiveBase"
+      app="artifact_news"
+      :url="reactiveServerURL"
+      :theme="reactiveDefaultTheme"
+    >
+      <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
+      <Logo :big="true"/>
+      <DataSearch
+        v-inner-input-focus
+        component-id="SearchSensor"
+        :field-weights="[10,7]"
+        :data-field="['title', 'teaser']"
+        icon-position="right"
+        :autosuggest="false"
+        class-name="SearchBar SearchBar--home"
+        placeholder="Pesquisar no acervo"
+        :show-clear="false"
+        @keyPress="search"
+      />
+      <no-ssr>
+        <ReactiveComponent
+          class="ReactiveD3TagCloud--home"
+          component-id="ReactiveD3TagCloud"
+          :default-query="tagCloudQuery"
+        >
+          <div slot-scope="{ aggregations, error }">
+            <D3TagCloud v-if="!error" :keywords="keywords(aggregations)"/>
+          </div>
+        </ReactiveComponent>
+      </no-ssr>
+    </ReactiveBase>
   </section>
 </template>
 
@@ -32,12 +39,14 @@
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
 import TeaserBlock from '~/components/common/TeaserBlock'
 import Logo from '~/components/common/Logo'
+import reactiveMixin from '~/utils/reactiveMixin'
 import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
 const FONT_SIZE_DELTA = 16
 
 import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {
+  mixins: [reactiveMixin],
   components: {
     D3TagCloud,
     TeaserBlock,

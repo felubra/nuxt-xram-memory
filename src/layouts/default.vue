@@ -6,14 +6,7 @@
         <Navbar :class="{ 'NavBar--fixed': navBarFixed }"/>
       </fixed-header>
     </header>
-    <ReactiveBase
-      class-name="ReactiveBase"
-      app="artifact_news"
-      url="http://localhost:9200"
-      :theme="defaultTheme"
-    >
-      <nuxt/>
-    </ReactiveBase>
+    <nuxt/>
   </div>
 </template>
 
@@ -21,7 +14,6 @@
 import Navbar from '~/components/common/Navbar'
 import Menu from '~/components/common/Menu'
 import FixedHeader from 'vue-fixed-header'
-import { defaultTheme } from '~/config/constants'
 
 export default {
   name: 'DefaultLayout',
@@ -35,11 +27,7 @@ export default {
       navBarFixed: false
     }
   },
-  computed: {
-    defaultTheme() {
-      return defaultTheme
-    }
-  }
+  computed: {}
 }
 </script>
 
