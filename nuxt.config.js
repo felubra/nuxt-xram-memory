@@ -41,7 +41,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/reactive-search',
+    {src:'@/plugins/reactive-search', ssr: false},
     '@/plugins/v-viewer',
     '@/plugins/axios',
     '@/plugins/essential-content.js',
