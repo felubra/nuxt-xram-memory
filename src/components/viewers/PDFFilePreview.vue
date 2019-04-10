@@ -1,5 +1,5 @@
 <template>
-  <div class="PDFFilePreview">
+  <div class="FilePreview PDFFilePreview">
     <div
       ref="pdfContainer"
       v-dragscroll.y="true"
@@ -63,18 +63,8 @@ export default {
 </script>
 
 <style>
-.PDFFilePreview__OriginalImage {
-  display: none;
-}
-
-.PDFFilePreview {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
 .FilePreview__Preview--pdf_file {
-  height: 75vh;
+  height: 80vh;
   overflow: hidden;
   overflow-y: scroll;
   cursor: grab;

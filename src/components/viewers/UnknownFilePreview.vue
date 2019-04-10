@@ -1,5 +1,5 @@
 <template>
-  <div class="UnknownFilePreview">
+  <div class="FilePreview UnknownFilePreview">
     <div class="FilePreview__Preview FilePreview__Preview--unknown">
       <p class="FilePreview__Message microtext">Visualização não disponível.</p>
       <div class="FilePreview__Actions FilePreview__Actions--big">
@@ -21,18 +21,11 @@ export default {
 </script>
 
 <style scoped>
-.UnknownFilePreview {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #fefefe;
-}
 .FilePreview__Preview--unknown {
   display: flex;
   align-content: center;
   justify-content: center;
   flex-direction: column;
-  background: #f3f1f1;
 }
 
 @media only screen and (min-width: 768px) {
@@ -42,7 +35,7 @@ export default {
   }
   .FilePreview__Preview--unknown {
     padding-top: 0;
-    min-height: 75vh;
+    min-height: 100vh;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="ImageFilePreview">
+  <div class="FilePreview ImageFilePreview">
     <viewer :options="viewerOptions" :images="[fileURL]">
       <template slot-scope="scope">
         <figure class="images">
