@@ -18,16 +18,19 @@
             <dd>{{sendDate}}</dd>
           </div>
         </dl>
-        <a class="FileInfo_Button" download :href="fileURL">
-          <i class="material-icons">get_app</i> Download
-        </a>
+        <div class="FileActions">
+          <a class="FileInfo_Button" download :href="fileURL">
+            <i class="material-icons">get_app</i> Download
+          </a>
+        </div>
       </div>
     </template>
-    <component :is="previewComponentType" :fileURL="fileURL"></component>
+    <component :is="componentType" :fileURL="fileURL"></component>
   </AbstractPage>
 </template>
 <script>
 import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
+import ImageFilePreview from '~/components/viewers/ImageFilePreview'
 import AbstractPage from '~/components/common/AbstractPage'
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
@@ -36,17 +39,10 @@ export default {
   components: {
     AbstractPage,
     UnknownFilePreview,
-    PDFFilePreview: () => {
-      if (typeof window !== 'undefined') {
-        return import(/* webpackChunkName: "PDFFilePreview" */ '~/components/viewers/PDFFilePreview')
-      }
-      return {} // não carregue este componente server-side
-    },
-    ImageFilePreview: () =>
-      import(/* webpackChunkName: "ImageFilePreview" */ '~/components/viewers/ImageFilePreview')
+    ImageFilePreview
   },
   data() {
-    return { document: {} }
+    return { document: {}, componentType: '' }
   },
   head() {
     return {
@@ -56,23 +52,6 @@ export default {
   },
   computed: {
     previewComponentType() {
-      try {
-        if (this.document && this.document.mime_type) {
-          if (this.document.mime_type === 'application/pdf') {
-            if (typeof window !== 'undefined') {
-              return 'PDFFilePreview'
-            } else {
-              return 'UnknownFilePreview'
-            }
-          } else if (this.document.mime_type.includes('image/')) {
-            return 'ImageFilePreview'
-          } else {
-            return 'UnknownFilePreview'
-          }
-        }
-      } catch {
-        return 'UnknownFilePreview'
-      }
       return 'UnknownFilePreview'
     },
     type() {
@@ -113,7 +92,29 @@ export default {
   async asyncData({ $axios, route }) {
     const documentId = parseInt(route.params.id) || null
     return $axios.$get(`/api/v1/document/${documentId}`).then(document => {
-      return { document }
+      let componentType
+      try {
+        if (document && document.mime_type) {
+          console.log(document)
+          if (document.mime_type === 'application/pdf') {
+            if (process.client) {
+              componentType = () => ({
+                component: import('../../components/viewers/PDFFilePreview'),
+                error: require('../../components/viewers/UnknownFilePreview')
+              })
+            } else {
+              componentType = 'UnknownFilePreview'
+            }
+          } else if (document.mime_type.includes('image/')) {
+            componentType = 'ImageFilePreview'
+          } else {
+            componentType = 'UnknownFilePreview'
+          }
+        }
+      } catch {
+        componentType = 'UnknownFilePreview'
+      }
+      return { document, componentType }
     })
   }
 }
@@ -122,7 +123,7 @@ export default {
 <style scoped>
 h1 {
   font-weight: normal;
-  font-size: 1.375rem;
+  font-size: 1rem;
   word-break: break-all;
   margin: 0;
 }
@@ -141,9 +142,13 @@ h1 {
     sans-serif;
   padding: 1rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 dl {
+  margin: 0;
   display: flex;
   justify-content: center;
 }
@@ -159,18 +164,23 @@ dd {
   margin: 0;
 }
 
-.FileInfo_Button {
+.FileActions {
+  display: flex;
+  margin: auto 0.5rem;
+  padding: 2rem 0 0;
+  justify-content: center;
+}
+
+.FileActions > a {
   display: inline-block;
   text-decoration: none;
   text-align: center;
-}
-.FileInfo_Button {
   color: #333;
 }
 
-.FileInfo_Button:hover,
-.FileInfo_Button:focus,
-.FileInfo_Button:active {
+.FileActions > a:hover,
+.FileActions > a:focus,
+.FileActions > a:active {
   color: #ce5454;
 }
 
@@ -184,6 +194,10 @@ dd {
   }
   dl {
     justify-content: flex-start;
+  }
+
+  dl > div:first-of-type {
+    margin-left: 0;
   }
 }
 </style>
