@@ -1,9 +1,21 @@
 const pkg = require('./package')
+import axios from 'axios'
 
 module.exports = {
   mode: 'universal',
   srcDir: 'src/',
-
+  generate: {
+    routes: function() {
+      const baseURL = process.env.API_URL || 'http://localhost:8000'
+      const axiosInstance = axios.create({
+        baseURL
+      })
+      return Promise.all([axiosInstance.get('api/v1/pages/in_menu'), axiosInstance.get('api/v1/pages/featured')])
+      .then(responses => responses.map(response => response.data))
+      .then(pages => pages.reduce((acc, val) => acc.concat(val), []))
+      .then(pages => pages.map(page => `/${page.id}`))
+    }
+  },
   /*
   ** Headers of the page
   */
@@ -41,7 +53,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/reactive-search',
+    {src:'@/plugins/reactive-search', ssr: false},
     '@/plugins/v-viewer',
     '@/plugins/axios',
     '@/plugins/essential-content.js',
