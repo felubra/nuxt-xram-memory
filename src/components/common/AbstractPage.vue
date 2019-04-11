@@ -56,7 +56,7 @@ header {
   justify-content: center;
   flex-shrink: 0;
   align-items: center;
-  min-height: 15vh;
+  min-height: 35vh;
 }
 
 main {
