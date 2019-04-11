@@ -73,7 +73,7 @@ main {
   aside {
     flex-basis: 350px;
     flex-shrink: 0;
-    margin-top: 100px;
+    margin-top: 70px;
   }
   .Page.Page--document aside {
     order: 0;
