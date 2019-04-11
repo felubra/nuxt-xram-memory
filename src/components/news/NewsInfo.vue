@@ -1,26 +1,26 @@
 <template>
   <dl class="NewsInfo">
-    <div v-if="teaser" class="NewsInfo__Field NewsInfo__Field--summary">
+    <template v-if="teaser" class="NewsInfo__Field NewsInfo__Field--summary">
       <dt>Resumo</dt>
       <dd>{{teaser}}</dd>
-    </div>
-    <div v-if="url" class="NewsInfo__Field">
-      <dt>Endereço original da notícia</dt>
+    </template>
+    <template v-if="url">
+      <dt>Endereço original</dt>
       <dd>
         <a :href="url.url" target="_blank">{{url.url}}</a>
       </dd>
-    </div>
-    <div v-if="newspaper" class="NewsInfo__Field">
+    </template>
+    <template v-if="newspaper">
       <dt>Site / veículo</dt>
       <dd>
         <a :href="newspaper.url" target="_blank">{{newspaper.title}}</a>
       </dd>
-    </div>
-    <div v-if="published_date" class="NewsInfo__Field">
+    </template>
+    <template v-if="published_date">
       <dt>Data de publicação</dt>
       <dd>{{published_date}}</dd>
-    </div>
-    <div v-if="pdf_captures" class="NewsInfo__Field NewsInfo__Field--stacked">
+    </template>
+    <template v-if="pdf_captures" class="NewsInfo__Field NewsInfo__Field--stacked">
       <dt>Capturas de página</dt>
       <dd>
         <nuxt-link
@@ -43,8 +43,8 @@
           <span>{{capture.title}}</span>
         </nuxt-link>
       </dd>
-    </div>
-    <div v-if="subjects" class="NewsInfo__Field">
+    </template>
+    <template v-if="subjects">
       <dt>Assuntos</dt>
       <dd>
         <nuxt-link
@@ -53,15 +53,15 @@
           :to="{name:'search-query', query:{ subjects: JSON.stringify([subject.name])} }"
         >{{subject.name}}</nuxt-link>
       </dd>
-    </div>
-    <div v-if="keywords" class="NewsInfo__Field NewsInfo__Field--multicol">
+    </template>
+    <template v-if="keywords" class="NewsInfo__Field NewsInfo__Field--multicol">
       <dt>Palavras-chave</dt>
       <dd v-for="keyword in keywords" :key="keyword.slug">
         <nuxt-link
           :to="{name:'search-query', query:{ keywords: JSON.stringify([keyword.name])} }"
         >{{keyword.name}}</nuxt-link>
       </dd>
-    </div>
+    </template>
   </dl>
 </template>
 
@@ -210,6 +210,7 @@ export default {
 <style scoped>
 .NewsInfo {
   font-family: 'Cabin', sans-serif;
+  word-break: break-word;
 }
 
 .NewsInfo a {
@@ -218,19 +219,26 @@ export default {
 }
 
 dt {
-  color: #555555;
+  display: block;
+  font-weight: normal;
+  color: #333;
   text-transform: uppercase;
-  font-weight: bold;
-  font-family: 'Cabin', sans-serif;
+  margin: 1rem 0 0.1rem;
 }
-dl {
-  position: relative;
-  height: 100%;
+
+dt:first-of-type {
+  margin-top: 0;
+}
+
+dd {
+  margin: 0;
+  padding: 0 0 0.5em 0;
+}
+
+dd + dd {
   margin: 0;
 }
-dd {
-  margin: 0.5rem 0;
-}
+
 .NewsInfo__Field:first-child {
   margin-top: 0;
 }
@@ -282,28 +290,31 @@ dd {
 }
 
 @media only screen and (min-width: 768px) {
-  .NewsInfo__Field {
-    flex-direction: row;
-    align-items: baseline;
-  }
-  .NewsInfo__Field--stacked {
-    flex-direction: column;
-    overflow: auto;
-  }
-  .NewsInfo__Field > dd {
-    margin: 0 0 0 1.5rem;
-  }
-  .NewsInfo__Field--stacked dd {
-    margin: 0.5rem;
-    border-collapse: separate;
+  dt {
+    float: left;
+    clear: left;
+    width: 7rem;
+    margin: 1rem 0 0 0;
+    text-align: right;
+    font-weight: bold;
+    color: #333;
+    text-transform: none;
+    font-weight: bold;
   }
 
-  .NewsInfo__Field--stacked dd:first-of-type {
-    margin-left: 0;
+  dt:first-of-type {
+    margin-top: 0;
   }
 
-  .NewsInfo__Field > dt {
-    display: inline-block;
+  dt::after {
+    content: ':';
+  }
+  dd {
+    margin: 1rem 0 0 8rem;
+    padding: 0 0 0.5em 0;
+  }
+  dd + dd {
+    margin: 0 0 0 8rem;
   }
 }
 </style>

@@ -93,6 +93,7 @@ main {
   align-self: center;
   width: 100%;
   padding-top: 3.098rem;
+  box-sizing: border-box;
 }
 
 .Page--bare {
@@ -108,6 +109,7 @@ main {
   margin: 0 auto;
   padding: 0.5rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .microtext {

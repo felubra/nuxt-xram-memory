@@ -2,9 +2,7 @@
   <AbstractPage>
     <template v-slot:header>
       <img :src="theImage">
-      <div class="content-container">
-        <h1>{{theTitle}}</h1>
-      </div>
+      <h1>{{theTitle}}</h1>
     </template>
     <div class="content-container">
       <h2>Detalhes da notícia</h2>
@@ -51,3 +49,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+h2 {
+  font-family: 'Cabin', serif;
+  font-size: 1.2rem;
+}
+</style>

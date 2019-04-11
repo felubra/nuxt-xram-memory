@@ -2,9 +2,7 @@
   <section class="Page">
     <header v-if="hasSlot(['header', 'image'])">
       <slot name="image"></slot>
-      <div class="content-container">
-        <slot name="header"></slot>
-      </div>
+      <slot name="header"></slot>
     </header>
     <aside v-if="hasSlot('aside')">
       <slot name="aside"></slot>
