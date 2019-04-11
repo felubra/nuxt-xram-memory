@@ -29,6 +29,6 @@ ul {
 }
 
 li {
-  margin: 1rem;
+  margin: 1rem 0;
 }
 </style>
