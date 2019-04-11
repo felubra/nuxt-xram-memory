@@ -2,8 +2,13 @@
   <AbstractPage class="Page--sidebar Page--document">
     <template v-slot:aside>
       <div class="FileInfo">
-        <p class="FilePreview__Label microtext">{{fileType}}</p>
+        <p class="microtext">{{fileType}}</p>
         <h1>{{document.name}}</h1>
+        <div class="FileActions">
+          <a class="FileInfo_Button microtext" download :href="fileURL">
+            <i class="material-icons">get_app</i> Baixar
+          </a>
+        </div>
         <dl>
           <div v-if="document.description">
             <dt class="microtext">Descrição</dt>
@@ -18,11 +23,6 @@
             <dd>{{sendDate}}</dd>
           </div>
         </dl>
-        <div class="FileActions">
-          <a class="FileInfo_Button" download :href="fileURL">
-            <i class="material-icons">get_app</i> Download
-          </a>
-        </div>
       </div>
     </template>
     <no-ssr>
@@ -144,7 +144,7 @@ h1 {
   flex-basis: 350px;
   font-family: 'Cabin', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
     sans-serif;
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -155,10 +155,12 @@ dl {
   margin: 0;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 dl > div {
-  margin: 0.5rem;
+  margin: 0.5rem 1rem;
+  margin-left: 0;
 }
 
 dt {
@@ -171,7 +173,7 @@ dd {
 .FileActions {
   display: flex;
   margin: auto 0.5rem;
-  padding: 2rem 0 0;
+  padding: 1rem 0;
   justify-content: center;
 }
 
@@ -200,6 +202,32 @@ dd {
     justify-content: flex-start;
   }
 
+  .FileActions {
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    position: fixed;
+    backface-visibility: hidden;
+    z-index: 100;
+    bottom: 1rem;
+    right: 2.5rem;
+  }
+
+  .FileActions a {
+    opacity: 0.8;
+    margin: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .FileActions a:hover,
+  .FileActions a:focus,
+  .FileActions a:active {
+    opacity: 1;
+  }
+
+  dl {
+    margin-top: auto;
+  }
   dl > div:first-of-type {
     margin-left: 0;
   }
