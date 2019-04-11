@@ -25,23 +25,48 @@
         </div>
       </div>
     </template>
-    <component :is="componentType" :fileURL="fileURL"></component>
+    <no-ssr>
+      <component :is="componentType" :fileURL="fileURL"></component>
+    </no-ssr>
   </AbstractPage>
 </template>
 <script>
 import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
-
 import AbstractPage from '~/components/common/AbstractPage'
+
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
+
 const { getMediaUrl, sanitize } = require('~/utils')
 export default {
   components: {
     AbstractPage,
-    UnknownFilePreview
+    UnknownFilePreview,
+    PDFFilePreview: () => {
+      if (!process.client) {
+        return {
+          component: UnknownFilePreview
+        }
+      } else {
+        return {
+          component: import('../../components/viewers/PDFFilePreview')
+        }
+      }
+    },
+    ImageFilePreview: () => {
+      if (!process.client) {
+        return {
+          component: UnknownFilePreview
+        }
+      } else {
+        return {
+          component: import('../../components/viewers/ImageFilePreview')
+        }
+      }
+    }
   },
   data() {
-    return { document: {}, componentType: {}, fileType: '' }
+    return { document: {}, componentType: '', fileType: '' }
   },
   head() {
     return {
@@ -81,21 +106,12 @@ export default {
       return $axios.$get(`/api/v1/document/${documentId}`).then(document => {
         let componentType = 'UnknownFilePreview'
         let fileType = 'Arquivo'
-        if (!process.client) {
-          redirect(getMediaUrl(document.canonical_url))
-        }
         try {
           if (document.mime_type === 'application/pdf') {
-            componentType = () => ({
-              component: import('../../components/viewers/PDFFilePreview'),
-              error: UnknownFilePreview
-            })
+            componentType = 'PDFFilePreview'
             fileType = 'Documento PDF'
           } else if (document.mime_type.includes('image/')) {
-            componentType = () => ({
-              component: import('~/components/viewers/ImageFilePreview'),
-              error: UnknownFilePreview
-            })
+            componentType = 'ImageFilePreview'
             fileType = 'Imagem'
           }
         } catch {}
