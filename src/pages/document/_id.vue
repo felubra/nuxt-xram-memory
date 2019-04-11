@@ -2,7 +2,7 @@
   <AbstractPage class="Page--sidebar Page--document">
     <template v-slot:aside>
       <div class="FileInfo">
-        <p class="FilePreview__Label microtext">{{type}}</p>
+        <p class="FilePreview__Label microtext">{{fileType}}</p>
         <h1>{{document.name}}</h1>
         <dl>
           <div v-if="document.description">
@@ -30,7 +30,7 @@
 </template>
 <script>
 import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
-import ImageFilePreview from '~/components/viewers/ImageFilePreview'
+
 import AbstractPage from '~/components/common/AbstractPage'
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
@@ -38,11 +38,10 @@ const { getMediaUrl, sanitize } = require('~/utils')
 export default {
   components: {
     AbstractPage,
-    UnknownFilePreview,
-    ImageFilePreview
+    UnknownFilePreview
   },
   data() {
-    return { document: {}, componentType: '' }
+    return { document: {}, componentType: {}, fileType: '' }
   },
   head() {
     return {
@@ -51,19 +50,6 @@ export default {
     }
   },
   computed: {
-    previewComponentType() {
-      return 'UnknownFilePreview'
-    },
-    type() {
-      switch (this.previewComponentType) {
-        case 'PDFFilePreview':
-          return 'Documento PDF'
-        case 'ImageFilePreview':
-          return 'Imagem'
-        default:
-          return 'Arquivo'
-      }
-    },
     size() {
       try {
         return humanSize(this.document.size)
@@ -89,33 +75,35 @@ export default {
       return this.previewComponentType === 'UnknownFilePreview'
     }
   },
-  async asyncData({ $axios, route }) {
-    const documentId = parseInt(route.params.id) || null
-    return $axios.$get(`/api/v1/document/${documentId}`).then(document => {
-      let componentType
-      try {
-        if (document && document.mime_type) {
-          console.log(document)
-          if (document.mime_type === 'application/pdf') {
-            if (process.client) {
-              componentType = () => ({
-                component: import('../../components/viewers/PDFFilePreview'),
-                error: require('../../components/viewers/UnknownFilePreview')
-              })
-            } else {
-              componentType = 'UnknownFilePreview'
-            }
-          } else if (document.mime_type.includes('image/')) {
-            componentType = 'ImageFilePreview'
-          } else {
-            componentType = 'UnknownFilePreview'
-          }
+  async asyncData({ $axios, route, redirect, error }) {
+    const documentId = parseInt(route.params.id, 10) || null
+    if (!!documentId) {
+      return $axios.$get(`/api/v1/document/${documentId}`).then(document => {
+        let componentType = 'UnknownFilePreview'
+        let fileType = 'Arquivo'
+        if (!process.client) {
+          redirect(getMediaUrl(document.canonical_url))
         }
-      } catch {
-        componentType = 'UnknownFilePreview'
-      }
-      return { document, componentType }
-    })
+        try {
+          if (document.mime_type === 'application/pdf') {
+            componentType = () => ({
+              component: import('../../components/viewers/PDFFilePreview'),
+              error: UnknownFilePreview
+            })
+            fileType = 'Documento PDF'
+          } else if (document.mime_type.includes('image/')) {
+            componentType = () => ({
+              component: import('~/components/viewers/ImageFilePreview'),
+              error: UnknownFilePreview
+            })
+            fileType = 'Imagem'
+          }
+        } catch {}
+        return { document, componentType, fileType }
+      })
+    } else {
+      error({ statusCode: 404, message: 'Documento não encontrado' })
+    }
   }
 }
 </script>
