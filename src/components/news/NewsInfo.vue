@@ -46,7 +46,7 @@
     </template>
     <template v-if="subjects">
       <dt>Assuntos</dt>
-      <dd>
+      <dd class="inline">
         <nuxt-link
           v-for="subject in subjects"
           :key="subject.slug"
@@ -56,8 +56,10 @@
     </template>
     <template v-if="keywords" class="NewsInfo__Field NewsInfo__Field--multicol">
       <dt>Palavras-chave</dt>
-      <dd v-for="keyword in keywords" :key="keyword.slug">
+      <dd class="inline">
         <nuxt-link
+          v-for="keyword in keywords"
+          :key="keyword.slug"
           :to="{name:'search-query', query:{ keywords: JSON.stringify([keyword.name])} }"
         >{{keyword.name}}</nuxt-link>
       </dd>
@@ -213,11 +215,6 @@ export default {
   word-break: break-word;
 }
 
-.NewsInfo a {
-  color: #aa0000;
-  text-decoration: none;
-}
-
 dt {
   display: block;
   font-weight: normal;
@@ -237,6 +234,11 @@ dd {
 
 dd + dd {
   margin: 0;
+}
+
+dd.inline > a {
+  display: inline-block;
+  margin: 0 1rem 0.5rem 0;
 }
 
 .NewsInfo__Field:first-child {
@@ -285,7 +287,7 @@ dd + dd {
 }
 
 .NewsInfo__PDFCapture:hover > img {
-  border: solid 1px #ccc;
+  border: solid 1px #ff0000;
   padding: 1rem;
 }
 
