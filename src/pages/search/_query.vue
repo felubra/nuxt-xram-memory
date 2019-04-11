@@ -113,10 +113,11 @@
           :pagination="false"
           data-field="title.raw"
           class-name="SearchResults"
+          :renderResultStats="resultStats"
           :inner-class="{
-          resultsInfo: 'SearchResults__ResultsInfo',
-          list: 'SearchResults__List'
-        }"
+            resultsInfo: 'SearchResults__ResultsInfo',
+            list: 'SearchResults__List'
+          }"
           :from="0"
           :size="5"
         >
@@ -180,6 +181,9 @@ export default {
     toggleFilters() {
       this.filterListOpened = !this.filterListOpened
     },
+    resultStats({ totalResults, time }) {
+      return `${totalResults} resultados em ${time}ms`
+    },
     toggleOverflow(e) {
       console.log('a')
     },
@@ -225,7 +229,7 @@ export default {
   display: none;
 }
 .SearchOptions {
-  background: #f3f1f1;
+  background: #faf8f8;
 }
 
 .SearchOptions__inside {
@@ -236,7 +240,7 @@ export default {
 }
 
 .FilterList {
-  background: #f3f1f1;
+  background: #faf8f8;
   width: 100%;
 }
 
@@ -263,7 +267,7 @@ export default {
 }
 
 .FilterList .FilterList__FilterItem .FilterItem__DropdownList {
-  background: #f3f1f1;
+  background: #faf8f8;
 }
 
 .FilterList__FilterItem {
