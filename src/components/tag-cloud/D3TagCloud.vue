@@ -142,6 +142,12 @@ a.Cloud__Word > text {
   transition: fill 0.25s ease;
 }
 
+a.Cloud__Word:focus,
+a.Cloud__Word:active,
+a.Cloud__Word:hover {
+  text-decoration: none;
+}
+
 a.Cloud__Word:focus > text,
 a.Cloud__Word:active > text,
 a.Cloud__Word:hover > text {

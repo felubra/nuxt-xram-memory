@@ -319,6 +319,7 @@ export default {
 .SelectedFilters__Filter:hover {
   background-color: #ce5454 !important;
   color: #fff;
+  text-decoration: none;
 }
 
 @media only screen and (min-width: 768px) {

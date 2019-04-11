@@ -37,15 +37,17 @@ export default {
   box-sizing: border-box;
 }
 a {
-  color: rgb(202, 175, 175);
+  color: #ce5454;
   transition: color 0.25 ease;
+  text-decoration: none;
 }
 
 a.active,
 a:active,
 a:focus,
 a:hover {
-  color: #ce5454;
+  color: #ff0000;
+  text-decoration: underline;
 }
 
 html,
