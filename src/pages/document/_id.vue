@@ -4,16 +4,13 @@
       <div class="FileInfo">
         <p class="microtext">{{fileType}}</p>
         <h1>{{document.name}}</h1>
+        <p class="FileInfo__Description" v-if="document.description">{{document.description}}</p>
         <div class="FileActions">
           <a class="FileInfo_Button microtext" download :href="fileURL">
             <i class="material-icons">get_app</i> Baixar
           </a>
         </div>
         <dl>
-          <div v-if="document.description">
-            <dt class="microtext">Descrição</dt>
-            <dd>{{document.description}}</dd>
-          </div>
           <div v-if="size">
             <dt class="microtext">Tamanho</dt>
             <dd>{{size}}</dd>
@@ -131,6 +128,11 @@ h1 {
   word-break: break-all;
   margin: 0;
 }
+
+p.microtext + h1 {
+  margin: 0;
+}
+
 .FilePreview__Label {
   color: inherit;
   font-size: 0.75rem;
@@ -151,6 +153,13 @@ h1 {
   height: 100%;
 }
 
+.FileInfo__Description {
+  max-height: 60vh;
+  overflow-y: auto;
+  color: #333;
+  text-align: justify;
+}
+
 dl {
   margin: 0;
   display: flex;
@@ -168,6 +177,7 @@ dt {
 }
 dd {
   margin: 0;
+  color: #333;
 }
 
 .FileActions {
