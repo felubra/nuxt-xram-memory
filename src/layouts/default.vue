@@ -33,6 +33,9 @@ export default {
 
 
 <style>
+* {
+  box-sizing: border-box;
+}
 a {
   color: rgb(202, 175, 175);
   transition: color 0.25 ease;
