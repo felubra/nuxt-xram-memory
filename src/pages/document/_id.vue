@@ -1,7 +1,7 @@
 <template>
-  <AbstractPage class="Page--sidebar Page--document">
+  <AbstractPage class="Page--sidebar Page--aside-after">
     <template v-slot:aside>
-      <div class="FileInfo">
+      <div class="PageAside FileInfo">
         <p class="microtext">{{fileType}}</p>
         <h1>{{document.name}}</h1>
         <p class="FileInfo__Description" v-if="document.description">{{document.description}}</p>
@@ -142,17 +142,6 @@ p.microtext + h1 {
   margin: 0;
   font-size: 1rem;
 }
-.FileInfo {
-  flex-basis: 350px;
-  font-family: 'Cabin', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
-    sans-serif;
-  padding: 0.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .FileInfo__Description {
   max-height: 60vh;
   overflow-y: auto;
@@ -205,9 +194,6 @@ dd {
   font-size: 48px;
 }
 @media only screen and (min-width: 768px) {
-  .FileInfo {
-    text-align: left;
-  }
   dl {
     justify-content: flex-start;
   }

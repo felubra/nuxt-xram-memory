@@ -36,7 +36,7 @@ aside {
   background: #f3f1f1;
 }
 
-.Page.Page--document aside {
+.Page.Page--aside-after aside {
   order: 2;
 }
 h2 {
@@ -75,7 +75,7 @@ main {
     flex-shrink: 0;
     margin-top: 70px;
   }
-  .Page.Page--document aside {
+  .Page.Page--aside-after aside {
     order: 0;
   }
 }

@@ -109,6 +109,17 @@ main {
   background: transparent;
 }
 
+.PageAside {
+  flex-basis: 350px;
+  font-family: 'Cabin', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+    sans-serif;
+  padding: 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .content-container {
   max-width: 55rem;
   margin: 0 auto;
@@ -185,6 +196,9 @@ a.microtext {
   .Page--sidebar {
     flex-direction: row;
     padding-top: 0;
+  }
+  .PageAside {
+    text-align: left;
   }
   .SearchResults .SearchResults__Result {
     margin: 0.5rem;
