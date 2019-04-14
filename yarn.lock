@@ -2,21 +2,21 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@^8.1.0":
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-8.1.1.tgz#934779dff21befe08d5a4620fd2e84e4c333fc33"
-  integrity sha512-cVutwlr9Y1IlnaGQNolvg7TQbymOlLFAwtgNhoR7U1AO+RfAVe3vME2ZjCCGWWhGQkGjVI2aO9RQpKd8T6HC0A==
+"@appbaseio/reactivecore@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-8.1.2.tgz#73d9a3d68b1c4d25e141c983f9fc6a7d9a0d8aa3"
+  integrity sha512-1ythcpE5Ldvx2oYYdjyvyvtAyiFHxvVZarV3Ty/fDez10o2VVUsP7098AXA/fFsfW1IRXeC0GWg9Wc7qOf/+9A==
   dependencies:
     prop-types "^15.6.0"
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivesearch-vue@^1.0.0-beta.9":
-  version "1.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.10.tgz#9e33373f0bd08e7237332551234483e267f55913"
-  integrity sha512-MGHtyLsHpPbgsvThFsBE23FoqhWKY1roz6yknmd5aqk2ILq4iAegMDNg43uHkZQKru2/h4/RWAh8sdD52VkZbw==
+"@appbaseio/reactivesearch-vue@^1.0.0-beta.11":
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.11.tgz#db3e55740779147ec9dfc92421b61619aa0ecd85"
+  integrity sha512-YN06y67Ql1FnMV6DhhxgXQ6bjqHe5q3PTZ5B0wz+AEF2SBjBB7/FMOSZ9tPV8ToJbSthi4YYNW33EmqATZOeYA==
   dependencies:
-    "@appbaseio/reactivecore" "^8.1.0"
+    "@appbaseio/reactivecore" "^8.1.2"
     appbase-js "^4.0.2-beta.2"
     babel-helper-vue-jsx-merge-props "^2.0.3"
     compute-scroll-into-view "^1.0.11"
