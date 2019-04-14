@@ -11,21 +11,29 @@
         </div>
       </div>
     </template>
-    <ImageFilePreview :file-u-r-l="fileURL"></ImageFilePreview>
+    <viewer class="Album__Viewer" :options="viewerOptions" :images="photos" @inited="inited">
+      <template slot-scope="scope">
+        <img
+          v-for="image in scope.images"
+          :key="image.id"
+          class="ImageFilePreview__OriginalImage"
+          :src="getMediaURL(image.thumbnail)"
+          :originalURL="getMediaURL(image.canonical_url)"
+        >
+      </template>
+    </viewer>
     <no-ssr>
       <resize-sensor @resize="selectImageSize"></resize-sensor>
     </no-ssr>
   </AbstractPage>
 </template>
 <script>
-import ImageFilePreview from '~/components/viewers/ImageFilePreview'
 import AbstractPage from '~/components/common/AbstractPage'
 
 const { getMediaUrl, sanitize } = require('~/utils')
 export default {
   components: {
-    AbstractPage,
-    ImageFilePreview
+    AbstractPage
   },
   data() {
     return {
@@ -51,13 +59,40 @@ export default {
     },
     fileURL() {
       const selectedImageSize = this.selectedImageSize || this.failbackSize
-      return getMediaUrl(this.selectedPhoto.thumbnails[selectedImageSize])
+      return this.getMediaURL(this.selectedPhoto.thumbnails[selectedImageSize])
     },
     photos() {
       return this.album.photos
     },
     selectedPhoto() {
       return this.photos[this.selectedPhotoIndex]
+    },
+    photosForTheViewer() {
+      return this.photos.map(photo =>
+        getMediaUrl(photo.thumbnails[this.selectedImageSize])
+      )
+    },
+    viewerOptions() {
+      return {
+        inline: true,
+        button: false,
+        navbar: true,
+        title: false,
+        toolbar: {
+          zoomIn: { show: true },
+          oneToOne: { show: true, size: 'large' },
+          zoomOut: { show: true }
+        },
+        tooltip: true,
+        movable: true,
+        zoomable: true,
+        rotatable: false,
+        scalable: false,
+        transition: true,
+        fullscreen: false,
+        keyboard: false,
+        url: 'originalURL'
+      }
     }
   },
   async asyncData({ $axios, route, redirect, error }) {
@@ -79,12 +114,35 @@ export default {
       this.selectedImageSize = candidateSizes.length
         ? Math.max(...candidateSizes)
         : this.failbackSize
+    },
+    inited(viewer) {
+      // Escute o evento 'view' no elemento criado pelo componente para determinar qual foto está sendo vista
+      viewer.element.addEventListener('view', ({ detail }) => {
+        this.selectedPhotoIndex = detail.index
+      })
+    },
+    getMediaURL(photoPath) {
+      return getMediaUrl(photoPath)
     }
   }
 }
 </script>
 
+<style>
+.viewer-canvas {
+  background: #e3e1e1;
+}
+.viewer-navbar {
+  background: transparent;
+}
+</style>
+
+
 <style scoped>
+.Album__Viewer {
+  /** Este elemento não precisa ficar visível, pois conterá apenas as imagens */
+  display: none;
+}
 h1 {
   font-weight: normal;
   font-size: 1rem;
@@ -94,6 +152,18 @@ h1 {
 
 p.microtext + h1 {
   margin: 0;
+}
+
+.Album__Grid {
+  overflow-y: auto;
+}
+
+.Album__Grid img {
+  width: 65px;
+}
+
+.AlbumInfo {
+  max-height: 100vh;
 }
 
 .FilePreview__Label {
