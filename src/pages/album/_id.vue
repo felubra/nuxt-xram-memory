@@ -4,6 +4,11 @@
       <div class="PageAside AlbumInfo">
         <p class="microtext">Album de fotos</p>
         <h1>{{album.name}}</h1>
+        <div class="FileActions">
+          <a class="FileInfo_Button microtext" download :href="fileURL">
+            <i class="material-icons">get_app</i> Baixar
+          </a>
+        </div>
       </div>
     </template>
     <ImageFilePreview :file-u-r-l="fileURL"></ImageFilePreview>
