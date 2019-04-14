@@ -6,7 +6,7 @@
         <h1>{{album.name}}</h1>
       </div>
     </template>
-    <!--<ImageFilePreview :fileURL="selectedFileURL"></ImageFilePreview>-->
+    <ImageFilePreview :file-u-r-l="fileURL"></ImageFilePreview>
     <no-ssr>
       <resize-sensor @resize="selectImageSize"></resize-sensor>
     </no-ssr>
@@ -23,7 +23,11 @@ export default {
     ImageFilePreview
   },
   data() {
-    return { album: {}, selectedPhoto: {}, selectedImageSize: null }
+    return {
+      album: {},
+      selectedPhotoIndex: 0,
+      selectedImageSize: null
+    }
   },
   head() {
     return {
@@ -39,25 +43,37 @@ export default {
     },
     failbackSize() {
       return Math.min(...this.availableSizes)
+    },
+    fileURL() {
+      const selectedImageSize = this.selectedImageSize || this.failbackSize
+      return getMediaUrl(this.selectedPhoto.thumbnails[selectedImageSize])
+    },
+    photos() {
+      return this.album.photos
+    },
+    selectedPhoto() {
+      return this.photos[this.selectedPhotoIndex]
+    }
+  },
+  async asyncData({ $axios, route, redirect, error }) {
+    const albumId = parseInt(route.params.id, 10) || null
+    if (albumId) {
+      return $axios.$get(`/api/v1/album/${albumId}`).then(album => {
+        return { album }
+      })
+    } else {
+      error({ statusCode: 404, message: 'Álbum não encontrado' })
     }
   },
   methods: {
     selectImageSize({ width, height }) {
       const largestSide = Math.max(width, height)
-      /**
-       * com base nas dimensões calculadas, escolha o maior tamanho disponível que caberá nessas dimensões
-       */
-    }
-  },
-  async asyncData({ $axios, route, redirect, error }) {
-    const albumId = parseInt(route.params.id, 10) || null
-    if (!!albumId) {
-      return $axios.$get(`/api/v1/album/${albumId}`).then(album => {
-        const selectedPhoto = album.photos[0]
-        return { album, selectedPhoto }
-      })
-    } else {
-      error({ statusCode: 404, message: 'Álbum não encontrado' })
+      const candidateSizes = this.availableSizes.filter(
+        availableSize => largestSide >= availableSize
+      )
+      this.selectedImageSize = candidateSizes.length
+        ? Math.max(...candidateSizes)
+        : this.failbackSize
     }
   }
 }
@@ -172,4 +188,3 @@ dd {
   }
 }
 </style>
-
