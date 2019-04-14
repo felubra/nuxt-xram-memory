@@ -1,10 +1,10 @@
 const xss = require('xss')
 export const getMediaUrl = function(path) {
   const mediaUrl = process.env.mediaUrl
-  if (path.includes(mediaUrl)) {
-    return path // já é uma url formada
-  }
   try {
+    if (path.includes(mediaUrl)) {
+      return path // já é uma url formada
+    }
     return `${process.env.mediaUrl}${path}`
   } catch {
     return path
@@ -64,8 +64,8 @@ const xssFilterFactory = (allowedClasses = null, whiteList = null) => {
       }
       // Adicione o endereço da api em atributos src relativos de tags img
       if (tag === 'img' && name === 'src') {
-        if (!value.match(/^https?:\/\//)  ) {
-          if(value.startsWith("data:image/")) {
+        if (!value.match(/^https?:\/\//)) {
+          if (value.startsWith('data:image/')) {
             return `src=${value}`
           } else {
             return `src=${xss.escapeAttrValue(process.env.API_URL + value)}`
@@ -83,11 +83,11 @@ const allowQuillClasses = classes =>
 
 export const appClassesXSSFilter = xssFilterFactory(allowQuillClasses)
 
-
 export const innerInputFocus = {
   inserted: function(el) {
     el.querySelector('input').focus()
   }
 }
 
-export const sanitize = (str, classes = appClassesXSSFilter) => xss(str, classes)
+export const sanitize = (str, classes = appClassesXSSFilter) =>
+  xss(str, classes)
