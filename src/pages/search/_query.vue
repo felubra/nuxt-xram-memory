@@ -113,7 +113,9 @@
           :pagination="false"
           data-field="title.raw"
           class-name="SearchResults"
-          :renderResultStats="resultStats"
+          loader="Carregando..."
+          :render-result-stats="resultStats"
+          render-error="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
           :inner-class="{
             resultsInfo: 'SearchResults__ResultsInfo',
             list: 'SearchResults__List'
@@ -137,7 +139,6 @@ import { innerInputFocus } from '~/utils'
 import reactiveMixin from '~/utils/reactiveMixin'
 export default {
   name: 'SearchPage',
-  mixins: [reactiveMixin],
   components: {
     NewsCardList,
     Logo,
@@ -146,6 +147,7 @@ export default {
   directives: {
     'inner-input-focus': innerInputFocus
   },
+  mixins: [reactiveMixin],
   head: {
     bodyAttrs: {
       class: 'fixed-sidebar'
