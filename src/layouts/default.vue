@@ -135,6 +135,11 @@ main {
   font-size: 0.625rem;
 }
 
+p.microtext + h1,
+p.microtext + p {
+  margin-top: 0;
+}
+
 a.microtext {
   text-decoration: none;
 }

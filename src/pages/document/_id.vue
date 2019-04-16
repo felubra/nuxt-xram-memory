@@ -129,10 +129,6 @@ h1 {
   margin: 0;
 }
 
-p.microtext + h1 {
-  margin: 0;
-}
-
 .FilePreview__Label {
   color: inherit;
   font-size: 0.75rem;

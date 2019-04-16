@@ -2,15 +2,31 @@
   <AbstractPage class="Page--sidebar Page--aside-after">
     <template v-slot:aside>
       <div class="PageAside AlbumInfo">
-        <p class="microtext">Album de fotos</p>
-        <h1>{{album.name}}</h1>
         <div class="FileActions">
           <a class="FileInfo_Button microtext" download :href="fileURL">
             <i class="material-icons">get_app</i> Baixar
           </a>
         </div>
+        <p>{{fileName}}</p>
+        <p class="FileInfo__Description">{{fileDescription}}</p>
+        <dl>
+          <div v-if="fileSize">
+            <dt class="microtext">Tamanho</dt>
+            <dd>{{fileSize}}</dd>
+          </div>
+        </dl>
       </div>
     </template>
+    <a :class="{disabled: !hasPrev}" class="PhotoBrowser" @click.prevent="navigatePrev">
+      <i class="material-icons">keyboard_arrow_left</i>
+    </a>
+    <a
+      :class="{disabled: !hasNext}"
+      class="PhotoBrowser PhotoBrowser--right"
+      @click.prevent="navigateNext"
+    >
+      <i class="material-icons">keyboard_arrow_right</i>
+    </a>
     <viewer class="Album__Viewer" :options="viewerOptions" :images="photos" @inited="inited">
       <template slot-scope="scope">
         <img
@@ -29,6 +45,7 @@
 </template>
 <script>
 import AbstractPage from '~/components/common/AbstractPage'
+const humanSize = require('human-size')
 
 const { getMediaUrl, sanitize } = require('~/utils')
 export default {
@@ -63,6 +80,28 @@ export default {
     },
     photos() {
       return this.album.photos
+    },
+    fileCount() {
+      return this.album.file_count
+    },
+    fileName() {
+      return this.selectedPhoto.name
+    },
+    fileDescription() {
+      return this.selectedPhoto.description
+    },
+    fileSize() {
+      try {
+        return humanSize(this.selectedPhoto.size)
+      } catch {
+        return '0KB'
+      }
+    },
+    hasNext() {
+      return this.selectedPhotoIndex + 1 < this.fileCount
+    },
+    hasPrev() {
+      return this.selectedPhotoIndex > 0
     },
     selectedPhoto() {
       return this.photos[this.selectedPhotoIndex]
@@ -117,9 +156,16 @@ export default {
     },
     inited(viewer) {
       // Escute o evento 'view' no elemento criado pelo componente para determinar qual foto está sendo vista
-      viewer.element.addEventListener('view', ({ detail }) => {
+      this.viewer = viewer
+      this.viewer.element.addEventListener('view', ({ detail }) => {
         this.selectedPhotoIndex = detail.index
       })
+    },
+    navigatePrev() {
+      this.viewer.prev()
+    },
+    navigateNext() {
+      this.viewer.next()
     },
     getMediaURL(photoPath) {
       return getMediaUrl(photoPath)
@@ -143,14 +189,51 @@ export default {
   /** Este elemento não precisa ficar visível, pois conterá apenas as imagens */
   display: none;
 }
+
+a.PhotoBrowser {
+  position: fixed;
+  height: 100vh;
+  width: 56px;
+  display: flex;
+  z-index: 999;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+a.PhotoBrowser > i {
+  font-size: 36px;
+}
+
+a.PhotoBrowser:hover,
+a.PhotoBrowser:active,
+a.PhotoBrowser:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.PhotoBrowser.PhotoBrowser--right {
+  right: 0;
+}
+
+main:hover a.PhotoBrowser {
+  opacity: 1;
+}
+
+main:hover a.PhotoBrowser.disabled {
+  opacity: 0.3;
+}
+
 h1 {
   font-weight: normal;
   font-size: 1rem;
   word-break: break-all;
-  margin: 0;
-}
-
-p.microtext + h1 {
   margin: 0;
 }
 
