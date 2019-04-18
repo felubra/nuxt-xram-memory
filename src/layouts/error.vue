@@ -23,7 +23,7 @@ export default {
     title() {
       return this.error.statusCode === 404
         ? 'Página não encontrada'
-        : 'Opps, infelizmente um erro aconteceu.'
+        : 'Oops, infelizmente um erro aconteceu.'
     },
     errorKeywords() {
       try {
