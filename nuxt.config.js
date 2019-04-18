@@ -10,10 +10,13 @@ module.exports = {
       const axiosInstance = axios.create({
         baseURL
       })
-      return Promise.all([axiosInstance.get('api/v1/pages/in_menu'), axiosInstance.get('api/v1/pages/featured')])
-      .then(responses => responses.map(response => response.data))
-      .then(pages => pages.reduce((acc, val) => acc.concat(val), []))
-      .then(pages => pages.map(page => `/${page.id}`))
+      return Promise.all([
+        axiosInstance.get('api/v1/pages/in_menu'),
+        axiosInstance.get('api/v1/pages/featured')
+      ])
+        .then(responses => responses.map(response => response.data))
+        .then(pages => pages.reduce((acc, val) => acc.concat(val), []))
+        .then(pages => pages.map(page => `/${page.id}`))
     }
   },
   /*
@@ -49,15 +52,17 @@ module.exports = {
   */
   css: ['element-ui/lib/theme-chalk/index.css', '~/css/main.css'],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
+  /**
+   * Plugins to load before mounting the App
+   * TODO: remover o element-ui e o reactive-search e usá-los de forma fracionada, por componente
+   */
   plugins: [
-    {src:'@/plugins/reactive-search', ssr: false},
+    { src: '@/plugins/element-ui', ssr: false },
+    { src: '@/plugins/reactive-search', ssr: false },
     '@/plugins/v-viewer',
     '@/plugins/axios',
     '@/plugins/essential-content.js',
-    {src:'@/plugins/resize-sensor.js', ssr: false}
+    { src: '@/plugins/resize-sensor.js', ssr: false }
   ],
 
   /*
@@ -75,7 +80,8 @@ module.exports = {
     debug: !(process.env.NODE_ENV && process.env.NODE_ENV === 'production')
   },
   env: {
-    mediaUrl: process.env.MEDIA_SERVER_URL || 'http://localhost:8000'
+    mediaUrl: process.env.MEDIA_SERVER_URL || 'http://localhost:8000',
+    recaptchaKey: process.env.RECAPTCHA_KEY || ''
   },
   router: {
     middleware: 'collapseMenu'
