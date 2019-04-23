@@ -9,13 +9,11 @@
 </template>
 
 <script>
-import Logo from '~/components/common/Logo'
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
 import { TAGCLOUD_NUM_KEYWORDS } from '@/config/constants'
 const FONT_SIZE_DELTA = 16
 export default {
   components: {
-    Logo,
     D3TagCloud
   },
   props: ['error'],

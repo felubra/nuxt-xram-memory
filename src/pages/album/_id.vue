@@ -47,7 +47,7 @@
 import AbstractPage from '~/components/common/AbstractPage'
 const humanSize = require('human-size')
 
-const { getMediaUrl, sanitize } = require('~/utils')
+const { getMediaUrl } = require('~/utils')
 export default {
   components: {
     AbstractPage
@@ -134,7 +134,7 @@ export default {
       }
     }
   },
-  async asyncData({ $axios, route, redirect, error }) {
+  async asyncData({ $axios, route, error }) {
     const albumId = parseInt(route.params.id, 10) || null
     if (albumId) {
       return $axios.$get(`/api/v1/album/${albumId}`).then(album => {

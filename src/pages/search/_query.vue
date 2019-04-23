@@ -35,7 +35,6 @@
             <div
               class="FilterList"
               :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
-              @animationend="toggleOverflow"
             >
               <single-dropdown-list
                 :default-query="customFilterQuery"
@@ -133,7 +132,6 @@
 
 <script>
 import NewsCardList from '~/components/news/NewsCardList'
-import Logo from '~/components/common/Logo'
 import AbstractPage from '~/components/common/AbstractPage'
 
 import { innerInputFocus } from '~/utils'
@@ -142,7 +140,6 @@ export default {
   name: 'SearchPage',
   components: {
     NewsCardList,
-    Logo,
     AbstractPage
   },
   directives: {
@@ -186,9 +183,6 @@ export default {
     },
     resultStats({ totalResults, time }) {
       return `${totalResults} resultados em ${time}ms`
-    },
-    toggleOverflow(e) {
-      console.log('a')
     },
     /**
      * Aparentemente a query montada pelo ReactiveSearch não funciona, então usemos esta.

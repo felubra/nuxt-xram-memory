@@ -140,7 +140,7 @@ export default {
       ]
     }
   },
-  async asyncData({ $axios, route, context, error }) {
+  async asyncData() {
     /**
      * TODO: pingue o backend em caso de falha, exiba um erro ou um e-mail para o qual o usuário poderá enviar a mensagem
      */
@@ -195,7 +195,6 @@ export default {
           this.resetForm()
         })
         .catch(e => {
-          console.log(e.response)
           if (e.response && e.response.status === 400) {
             this.alert(
               'A validação do ReCaptcha falhou, atualize a página e tente novamente.',
