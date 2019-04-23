@@ -4,11 +4,19 @@ WORKDIR /src
 
 COPY . .
 
+ARG ELASTIC_SEARCH_SERVER
+ARG CONTACT_MESSAGE_RELAY_URL
+ARG RECAPTCHA_KEY
+ARG MEDIA_URL
+ARG API_URL
+
 RUN yarn install \
   --prefer-offline \
   --frozen-lockfile \
   --non-interactive \
   --production=false
+
+ENV NODE_ENV=production
 
 RUN yarn build
 
@@ -26,6 +34,7 @@ WORKDIR /src
 COPY --from=builder /src  .
 
 ENV HOST 0.0.0.0
+
 EXPOSE 3000
 
 CMD [ "yarn", "start" ]
