@@ -19,6 +19,7 @@
         class-name="SearchBar SearchBar--home"
         placeholder="Pesquisar no acervo"
         :show-clear="false"
+        :debounce="250"
         @keyPress="search"
       />
       <no-ssr>

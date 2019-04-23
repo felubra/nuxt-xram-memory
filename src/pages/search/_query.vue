@@ -20,6 +20,7 @@
               class-name="SearchBar"
               placeholder="Pesquisar no acervo"
               filter-label="Pesquisa"
+              :debounce="250"
               :show-clear="false"
               :show-filter="false"
               :default-selected="query"
