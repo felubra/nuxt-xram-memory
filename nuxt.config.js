@@ -1,3 +1,4 @@
+const { resolve } = require('path')
 const pkg = require('./package')
 import axios from 'axios'
 
@@ -70,6 +71,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    ['@nuxtjs/dotenv', { path: resolve(__dirname) }],
     '@nuxtjs/axios'
   ],
   /*
@@ -78,10 +80,6 @@ module.exports = {
   axios: {
     baseURL: process.env.API_URL || 'http://localhost:8000',
     debug: !(process.env.NODE_ENV && process.env.NODE_ENV === 'production')
-  },
-  env: {
-    mediaUrl: process.env.MEDIA_SERVER_URL || 'http://localhost:8000',
-    recaptchaKey: process.env.RECAPTCHA_KEY || ''
   },
   router: {
     middleware: 'collapseMenu'

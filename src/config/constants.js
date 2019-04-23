@@ -1,4 +1,5 @@
-export const ELASTIC_SEARCH_SERVER = process.env.ELASTIC_SEARCH_SERVER || 'http://localhost:9200'
+export const ELASTIC_SEARCH_SERVER =
+  process.env.ELASTIC_SEARCH_SERVER || 'http://localhost:9200'
 export const TAGCLOUD_KEYWORD_LOWKEY_COLOR = '#ddd'
 export const TAGCLOUD_KEYWORD_HIGHKEY_COLOR = '#caafaf'
 export const TAGCLOUD_NUM_KEYWORDS = 100
