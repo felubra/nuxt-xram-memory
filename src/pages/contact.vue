@@ -7,36 +7,41 @@
         </div>
       </no-ssr>
     </template>
-    <no-ssr>
-      <div class="content-container">
-        <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
-        <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
-        <el-form
-          ref="form"
-          :rules="formRules"
-          class="Contact__Form"
-          :model="form"
-          label-width="200px"
-        >
-          <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <el-form-item class="Contact__FormItem" label="Seu e-mail de contato" prop="email">
-            <el-input v-model="form.email" type="email"></el-input>
-          </el-form-item>
-          <el-form-item class="Contact__FormItem" label="Sua mensagem" prop="message">
-            <el-input v-model="form.message" rows="5" type="textarea"></el-input>
-          </el-form-item>
-          <el-form-item class="Contact__FormItem">
-            <vue-recaptcha ref="recaptcha" size="invisible" :sitekey="recaptchaKey"></vue-recaptcha>
-          </el-form-item>
-          <el-form-item class="Contact__FormItem">
-            <el-button type="primary" @click="onSubmit">Enviar</el-button>
-            <el-button @click="resetForm('ruleForm')">Limpar</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </no-ssr>
+    <div class="content-container">
+      <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
+      <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
+      <el-form
+        ref="form"
+        :disabled="!isAvailable"
+        :rules="formRules"
+        class="Contact__Form"
+        :model="form"
+        label-width="200px"
+      >
+        <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item class="Contact__FormItem" label="Seu e-mail de contato" prop="email">
+          <el-input v-model="form.email" type="email"></el-input>
+        </el-form-item>
+        <el-form-item class="Contact__FormItem" label="Sua mensagem" prop="message">
+          <el-input v-model="form.message" rows="5" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item class="Contact__FormItem">
+          <vue-recaptcha
+            ref="recaptcha"
+            size="invisible"
+            :sitekey="recaptchaKey"
+            @expired="onExpired"
+            @verify="onCaptchaVerify"
+          ></vue-recaptcha>
+        </el-form-item>
+        <el-form-item class="Contact__FormItem">
+          <el-button type="primary" @click="onSubmit">Enviar</el-button>
+          <el-button @click="resetForm()">Limpar</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </AbstractPage>
 </template>
 <script>
@@ -59,10 +64,12 @@ export default {
       }
     }
     return {
+      isAvailable: false,
       form: {
         name: '',
         email: '',
-        message: ''
+        message: '',
+        recaptcha_response: ''
       },
       alertType: 'success',
       alertTitle: '',
@@ -102,7 +109,19 @@ export default {
   },
   computed: {
     recaptchaKey() {
-      return process.env.recaptchaKey
+      return process.env.RECAPTCHA_KEY
+    }
+  },
+  watch: {
+    isAvailable: {
+      immediate: true,
+      handler(value) {
+        if (!value) {
+          this.alertType = 'error'
+          this.alertTitle =
+            'Formulário indisponível no momento, tente mais tarde.'
+        }
+      }
     }
   },
   head() {
@@ -126,9 +145,12 @@ export default {
      * TODO: pingue o backend em caso de falha, exiba um erro ou um e-mail para o qual o usuário poderá enviar a mensagem
      */
     // Esta página estará disponível somente se houver uma chave para o recaptcha
-    const isAvailable = process.env && process.env.recaptchaKey.length > 0
-    if (!isAvailable) {
-      error({ statusCode: 500, message: 'Formulário de contato indisponível' })
+    const isAvailable =
+      process.env &&
+      process.env.RECAPTCHA_KEY &&
+      process.env.CONTACT_MESSAGE_RELAY_URL
+    return {
+      isAvailable
     }
   },
   methods: {
@@ -138,24 +160,12 @@ export default {
     onSubmit() {
       this.cleanFields()
       this.clearAlert()
-      this.$refs.recaptcha.reset()
       const form = this.$refs['form']
       form
         .validate()
-        .then(valid => {
-          if (valid) {
-            try {
-              this.$refs.recaptcha.execute()
-              this.alert('Mensagem enviada com sucesso!', 'success')
-              this.resetForm()
-            } catch {
-              this.alert(
-                'A validação do captcha falhou, tente novamente.',
-                'error'
-              )
-            } finally {
-              this.$refs.recaptcha.reset()
-            }
+        .then(isValid => {
+          if (isValid) {
+            this.$refs.recaptcha.execute()
           }
         })
         .catch(() => {
@@ -170,10 +180,38 @@ export default {
       Object.entries(this.form).forEach(
         ([key, value]) =>
           (this.form[key] = xss(value, {
+            whiteList: [],
             stripIgnoreTag: true,
-            stripIgnoreTagBody: true
+            stripIgnoreTagBody: ['script']
           }))
       )
+    },
+    onCaptchaVerify(response) {
+      this.form.recaptcha_response = response
+      this.$axios
+        .post(process.env.CONTACT_MESSAGE_RELAY_URL, this.form)
+        .then(() => {
+          this.alert('Mensagem enviada com sucesso!', 'success')
+          this.resetForm()
+        })
+        .catch(e => {
+          console.log(e.response)
+          if (e.response && e.response.status === 400) {
+            this.alert(
+              'A validação do ReCaptcha falhou, atualize a página e tente novamente.',
+              'error'
+            )
+          } else {
+            this.alert(
+              'Formulário indisponível no momento, tente mais tarde.',
+              'error'
+            )
+          }
+        })
+      this.$refs.recaptcha.reset()
+    },
+    onExpired() {
+      this.$refs.recaptcha.reset()
     },
     resetForm(formName = 'form') {
       this.$refs[formName].resetFields()
