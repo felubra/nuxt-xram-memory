@@ -16,6 +16,7 @@
               :data-field="['title', 'teaser']"
               icon-position="right"
               :autosuggest="false"
+              class="SearchBar"
               class-name="SearchBar"
               placeholder="Pesquisar no acervo"
               filter-label="Pesquisa"

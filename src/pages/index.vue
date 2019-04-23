@@ -10,6 +10,7 @@
       <Logo :big="true"/>
       <DataSearch
         v-inner-input-focus
+        class="SearchBar SearchBar--home"
         component-id="SearchSensor"
         :field-weights="[10,7]"
         :data-field="['title', 'teaser']"
@@ -47,7 +48,6 @@ const FONT_SIZE_DELTA = 16
 
 import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {
-  mixins: [reactiveMixin],
   components: {
     D3TagCloud,
     TeaserBlock,
@@ -57,6 +57,7 @@ export default {
   directives: {
     'inner-input-focus': innerInputFocus
   },
+  mixins: [reactiveMixin],
   head: {
     title: 'xraM-Memory',
     bodyAttrs: {
