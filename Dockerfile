@@ -9,7 +9,9 @@ RUN yarn install \
   --frozen-lockfile \
   --non-interactive \
   --production=false
+
 ARG ELASTIC_SEARCH_SERVER
+ARG ELASTIC_SEARCH_CREDENTIALS
 ARG CONTACT_MESSAGE_RELAY_URL
 ARG RECAPTCHA_KEY
 ARG MEDIA_URL

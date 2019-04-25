@@ -5,6 +5,7 @@
       app="artifact_news"
       :url="reactiveServerURL"
       :theme="reactiveDefaultTheme"
+      :credentials="reactiveCredentials"
     >
       <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
       <Logo :big="true"/>

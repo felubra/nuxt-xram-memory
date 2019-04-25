@@ -86,7 +86,8 @@ module.exports = {
     RECAPTCHA_KEY: process.env.RECAPTCHA_KEY,
     MEDIA_URL: process.env.MEDIA_URL,
     API_URL: process.env.API_URL,
-    ELASTIC_SEARCH_SERVER: process.env.ELASTIC_SEARCH_SERVER
+    ELASTIC_SEARCH_SERVER: process.env.ELASTIC_SEARCH_SERVER,
+    ELASTIC_SEARCH_CREDENTIALS: process.env.ELASTIC_SEARCH_CREDENTIALS
   },
   router: {
     middleware: 'collapseMenu'

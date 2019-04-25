@@ -4,6 +4,7 @@
     app="artifact_news"
     :url="reactiveServerURL"
     :theme="reactiveDefaultTheme"
+    :credentials="reactiveCredentials"
   >
     <AbstractPage class="Page--sidebar">
       <template v-slot:aside>
