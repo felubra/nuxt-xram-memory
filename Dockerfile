@@ -2,21 +2,22 @@ FROM node:latest as builder
 
 WORKDIR /src
 
-COPY . .
-
-ARG ELASTIC_SEARCH_SERVER
-ARG CONTACT_MESSAGE_RELAY_URL
-ARG RECAPTCHA_KEY
-ARG MEDIA_URL
-ARG API_URL
+COPY package.json yarn.lock ./
 
 RUN yarn install \
   --prefer-offline \
   --frozen-lockfile \
   --non-interactive \
   --production=false
+ARG ELASTIC_SEARCH_SERVER
+ARG CONTACT_MESSAGE_RELAY_URL
+ARG RECAPTCHA_KEY
+ARG MEDIA_URL
+ARG API_URL
 
 ENV NODE_ENV=production
+
+COPY . .
 
 RUN yarn build
 
