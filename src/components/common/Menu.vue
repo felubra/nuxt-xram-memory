@@ -28,7 +28,7 @@
         </nuxt-link>
       </li>
       <li class="Menu__Item Menu__Item--big">
-        <nuxt-link to="contact">
+        <nuxt-link :to="{ name: 'contact' }">
           <i class="material-icons">feedback</i>Contato
         </nuxt-link>
       </li>
