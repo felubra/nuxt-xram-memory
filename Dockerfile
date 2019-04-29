@@ -40,6 +40,6 @@ ENV HOST 0.0.0.0
 
 EXPOSE 3000
 
-USER www-data
+USER 33
 
 CMD [ "yarn", "start" ]
