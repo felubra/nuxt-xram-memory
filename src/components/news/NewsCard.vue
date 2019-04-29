@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="NewsCard" :to="{name:'news-id', params:{id:newsItem.id}}">
+  <nuxt-link class="NewsCard" :to="{ name:'news-slug', params: { slug: newsItem.slug } }">
     <div class="NewsCard__Body">
       <div class="NewCard__Image">
         <img v-if="image" :src="image" alt @error="removeImage">

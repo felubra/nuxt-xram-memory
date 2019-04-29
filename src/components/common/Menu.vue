@@ -14,14 +14,14 @@
       </li>
       <li v-for="page in menuPageLinks" :key="page.id" class="Menu__Item Menu__Item--big">
         <nuxt-link
-          :title="page.teaser"
+          :title="page.title"
           :alt="`Clique para visitar a página '${page.title}'`"
           :to="{
-          name: 'id',
-          params: {
-            id: page.id
-          }
-        }"
+            name: 'slug',
+            params: {
+              slug: page.url
+            }
+          }"
         >
           <i class="material-icons">info</i>
           {{page.title}}
@@ -37,10 +37,12 @@
       <p class="center">Copyright © 2019 xraM-Memory</p>
       <ul class="Menu__Items Menu__Items--inline">
         <li class="Menu__Item Menu__Item--inline">
-          <nuxt-link :to="{name: 'page', params:{slug: 'terms'}}">Termos de uso</nuxt-link>
+          <nuxt-link :to="{name: 'slug', params:{slug: 'termos_de_uso'}}">Termos de uso</nuxt-link>
         </li>
         <li class="Menu__Item Menu__Item--inline">
-          <nuxt-link :to="{name: 'page', params:{slug: 'privacy_terms'}}">Política de Privacidade</nuxt-link>
+          <nuxt-link
+            :to="{name: 'slug', params:{slug: 'politica_de_privacidade'}}"
+          >Política de Privacidade</nuxt-link>
         </li>
       </ul>
     </footer>
@@ -48,6 +50,7 @@
 </template>
 
 <script>
+import { sanitize } from '@/utils/'
 import Logo from './Logo'
 import { mapState, mapActions, mapGetters } from 'vuex'
 export default {

@@ -3,8 +3,8 @@
     <template v-slot:aside>
       <div class="PageAside FileInfo">
         <p class="microtext">{{fileType}}</p>
-        <h1>{{document.name}}</h1>
-        <p class="FileInfo__Description" v-if="document.description">{{document.description}}</p>
+        <h1>{{document.document_id || document.name}}</h1>
+        <p v-if="document.description" class="FileInfo__Description">{{document.description}}</p>
         <div class="FileActions">
           <a class="FileInfo_Button microtext" download :href="fileURL">
             <i class="material-icons">get_app</i> Baixar
@@ -23,7 +23,7 @@
       </div>
     </template>
     <no-ssr>
-      <component :is="componentType" :fileURL="fileURL"></component>
+      <component :is="componentType" :file-u-r-l="fileURL"></component>
     </no-ssr>
   </AbstractPage>
 </template>
@@ -98,22 +98,28 @@ export default {
     }
   },
   async asyncData({ $axios, route, redirect, error }) {
-    const documentId = parseInt(route.params.id, 10) || null
-    if (!!documentId) {
-      return $axios.$get(`/api/v1/document/${documentId}`).then(document => {
-        let componentType = 'UnknownFilePreview'
-        let fileType = 'Arquivo'
-        try {
-          if (document.mime_type === 'application/pdf') {
-            componentType = 'PDFFilePreview'
-            fileType = 'Documento PDF'
-          } else if (document.mime_type.includes('image/')) {
-            componentType = 'ImageFilePreview'
-            fileType = 'Imagem'
-          }
-        } catch {}
-        return { document, componentType, fileType }
-      })
+    const documentId = route.params.document_id
+    if (documentId) {
+      return $axios
+        .$get(`/api/v1/document/${documentId}`)
+        .then(document => {
+          let componentType = 'UnknownFilePreview'
+          let fileType = 'Arquivo'
+          try {
+            if (document.mime_type === 'application/pdf') {
+              componentType = 'PDFFilePreview'
+              fileType = 'Documento PDF'
+            } else if (document.mime_type.includes('image/')) {
+              componentType = 'ImageFilePreview'
+              fileType = 'Imagem'
+            }
+          } catch {}
+          return { document, componentType, fileType }
+        })
+        .catch(e => {
+          const statusCode = (e.response && e.response.status) || 500
+          error({ statusCode })
+        })
     } else {
       error({ statusCode: 404, message: 'Documento não encontrado' })
     }
@@ -225,4 +231,3 @@ dd {
   }
 }
 </style>
-

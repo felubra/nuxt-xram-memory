@@ -7,7 +7,6 @@
             <i class="material-icons">get_app</i> Baixar
           </a>
         </div>
-        <p>{{fileName}}</p>
         <p class="FileInfo__Description">{{fileDescription}}</p>
         <dl>
           <div v-if="fileSize">
@@ -75,8 +74,7 @@ export default {
       return Math.min(...this.availableSizes)
     },
     fileURL() {
-      const selectedImageSize = this.selectedImageSize || this.failbackSize
-      return this.getMediaURL(this.selectedPhoto.thumbnails[selectedImageSize])
+      return this.getMediaURL(this.selectedPhoto.canonical_url)
     },
     photos() {
       return this.album.photos
@@ -135,11 +133,17 @@ export default {
     }
   },
   async asyncData({ $axios, route, error }) {
-    const albumId = parseInt(route.params.id, 10) || null
+    const albumId = route.params.album_id
     if (albumId) {
-      return $axios.$get(`/api/v1/album/${albumId}`).then(album => {
-        return { album }
-      })
+      return $axios
+        .$get(`/api/v1/album/${albumId}`)
+        .then(album => {
+          return { album }
+        })
+        .catch(e => {
+          const statusCode = (e.response && e.response.status) || 500
+          error({ statusCode })
+        })
     } else {
       error({ statusCode: 404, message: 'Álbum não encontrado' })
     }

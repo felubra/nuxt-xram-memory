@@ -23,19 +23,25 @@ export default {
       titleTemplate: 'xraM-Memory - %s'
     }
   },
+  data() {
+    return { staticPage: {} }
+  },
   computed: {
     theBody() {
       return sanitize(this.staticPage.body)
     }
   },
-  data() {
-    return { staticPage: {} }
-  },
-  async asyncData({ $axios, route }) {
-    const id = parseInt(route.params.id) || null
-    return $axios.$get(`/api/v1/pages/${id}`).then(staticPage => {
-      return { staticPage }
-    })
+  async asyncData({ $axios, route, error }) {
+    const slug = route.params.slug
+    return $axios
+      .$get(`/api/v1/pages/${slug}`)
+      .then(staticPage => {
+        return { staticPage }
+      })
+      .catch(e => {
+        const statusCode = (e.response && e.response.status) || 500
+        error({ statusCode })
+      })
   }
 }
 </script>

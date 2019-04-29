@@ -41,11 +41,17 @@ export default {
       return urlVal ? getMediaUrl(urlVal) : ''
     }
   },
-  async asyncData({ $axios, route }) {
-    const newsId = parseInt(route.params.id) || null
-    return $axios.$get(`/api/v1/news/${newsId}`).then(newsItem => {
-      return { newsItem }
-    })
+  async asyncData({ $axios, route, error }) {
+    const newsSlug = route.params.slug
+    return $axios
+      .$get(`/api/v1/news/${newsSlug}`)
+      .then(newsItem => {
+        return { newsItem }
+      })
+      .catch(e => {
+        const statusCode = (e.response && e.response.status) || 500
+        error({ statusCode })
+      })
   }
 }
 </script>

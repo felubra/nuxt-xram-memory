@@ -28,9 +28,9 @@
           :key="capture.url"
           class="NewsInfo__PDFCapture"
           :to="{
-            name: 'document-id',
+            name: 'document-document_id',
             params: {
-              id: capture.document_id
+              document_id: capture.document_id
             },
           }"
         >
@@ -111,7 +111,7 @@ export default {
           this.newsItem.pdf_captures &&
           this.newsItem.pdf_captures.map(capture => {
             return {
-              document_id: capture.pdf_document.id,
+              document_id: capture.pdf_document.document_id,
               title: this.captureNameAndSize(capture)
             }
           })
@@ -196,10 +196,11 @@ export default {
         this.documents = documents
       })
     },
-    thumbnailForDocument(id) {
+    thumbnailForDocument(document_id) {
       try {
         return getMediaUrl(
-          this.documents.find(document => document.id === id).thumbnail
+          this.documents.find(document => document.document_id === document_id)
+            .thumbnail
         )
       } catch {
         return false
