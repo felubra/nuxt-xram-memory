@@ -117,13 +117,42 @@ a.NewsCard {
   transition: color 0.25s ease, background-color 0.25s ease;
   color: inherit;
   text-decoration: none;
+  border: solid 1px #efefef;
+  transition: border 0.25s ease, background-color 0.25s ease;
+}
+
+a.NewsCard h3,
+a.NewsCard p {
+  transition: color 0.25s ease;
+}
+a.NewsCard p {
+  color: #555;
+}
+
+a.NewsCard:hover {
+  border-color: #ce5454;
+}
+
+a.NewsCard:hover h3 {
+  color: #ce5454;
+}
+
+a.NewsCard:hover p {
+  color: #8c1010;
 }
 
 a.NewsCard:focus,
-a.NewsCard:hover,
 a.NewsCard:active {
-  background-color: #ce5454;
+  background: #ce5454;
   color: #fff;
+}
+
+a.NewsCard:focus h3,
+a.NewsCard:focus h3,
+a.NewsCard:active p,
+a.NewsCard:focus p {
+  color: #fff;
+  outline-color: #fff;
 }
 
 div.NewsCard__Body {
@@ -177,11 +206,11 @@ div.NewsCard__Footer p {
   }
 
   div.NewsCard__Body p.teaser {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   div.NewsCard__Body h3 {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 1.3rem;
   }
 
