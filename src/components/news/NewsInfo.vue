@@ -13,7 +13,10 @@
     <template v-if="newspaper">
       <dt>Site / veículo</dt>
       <dd>
-        <a :href="newspaper.url" target="_blank">{{newspaper.title}}</a>
+        <a class="NewsInfo__Newspaper" :href="newspaper.url" target="_blank">
+          <img v-if="newspaperIcon" :src="newspaperIcon" alt>
+          {{newspaper.title}}
+        </a>
       </dd>
     </template>
     <template v-if="published_date">
@@ -142,6 +145,13 @@ export default {
           }
         )
       } catch {
+        return ''
+      }
+    },
+    newspaperIcon() {
+      try {
+        return getMediaUrl(this.newsItem.newspaper.favicon_logo)
+      } catch (e) {
         return ''
       }
     },
@@ -290,6 +300,15 @@ dd.inline > a {
 .NewsInfo__PDFCapture:hover > img {
   border: solid 1px #ff0000;
   padding: 1rem;
+}
+
+a.NewsInfo__Newspaper {
+  display: flex;
+  align-items: center;
+}
+
+a.NewsInfo__Newspaper > img {
+  margin-right: 0.27rem;
 }
 
 @media only screen and (min-width: 768px) {
