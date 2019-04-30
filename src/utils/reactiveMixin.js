@@ -10,6 +10,6 @@ export default {
     },
     reactiveCredentials() {
       return process.env.ELASTIC_SEARCH_CREDENTIALS
-    },
+    }
   }
 }

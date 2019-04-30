@@ -3,7 +3,9 @@
     <div class="centered">
       <h1>{{title}}</h1>
       <nuxt-link class="active" to="/">Voltar à página inicial</nuxt-link>
-      <D3TagCloud hi-color="#999" class="TagCloud" :keywords="errorKeywords"/>
+      <no-ssr>
+        <D3TagCloud hi-color="#999" class="TagCloud" :keywords="errorKeywords"/>
+      </no-ssr>
     </div>
   </section>
 </template>

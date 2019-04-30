@@ -11,7 +11,8 @@
       </div>
     </div>
     <div v-if="footer" class="NewsCard__Footer">
-      <p>
+      <p class="NewsCard__Newspaper">
+        <img v-if="newspaperIcon" :src="newspaperIcon" alt>
         <strong>{{newspaper.title}}</strong>
         {{published_date}}
       </p>
@@ -21,7 +22,6 @@
 
 <script>
 /**TODO: adicionar prop centered */
-const smartTruncate = require('smart-truncate')
 const dayJs = require('dayjs')
 const { getMediaUrl, sanitize } = require('~/utils')
 export default {
@@ -62,6 +62,13 @@ export default {
         )
       } catch {
         /** TODO: retorne um ícone padrão se não houver imagem */
+        return ''
+      }
+    },
+    newspaperIcon() {
+      try {
+        return getMediaUrl(this.newsItem.newspaper.favicon_logo)
+      } catch (e) {
         return ''
       }
     },
@@ -187,12 +194,19 @@ div.NewsCard__Footer a.newspaper:visited {
   color: #333333;
 }
 
-div.NewsCard__Footer p {
+p.NewsCard__Newspaper {
   font-family: Cabin, sans-serif;
   font-size: 0.75rem;
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: center;
 }
+
+p.NewsCard__Newspaper > img {
+  margin-right: 0.27rem;
+}
+
 @media only screen and (min-width: 1080px) {
   a.NewsCard {
     text-align: left;
