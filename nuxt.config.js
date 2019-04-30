@@ -1,4 +1,3 @@
-const { resolve } = require('path')
 const pkg = require('./package')
 import axios from 'axios'
 
@@ -92,7 +91,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    ['@nuxtjs/dotenv', { path: resolve(__dirname) }],
+    '@nuxtjs/dotenv',
     '@nuxtjs/axios'
   ],
   /*
@@ -103,11 +102,13 @@ module.exports = {
     debug: !(process.env.NODE_ENV && process.env.NODE_ENV === 'production')
   },
   env: {
-    CONTACT_MESSAGE_RELAY_URL: process.env.CONTACT_MESSAGE_RELAY_URL,
+    CONTACT_MESSAGE_RELAY_URL:
+      process.env.CONTACT_MESSAGE_RELAY_URL || 'http://localhost:3001',
     RECAPTCHA_KEY: process.env.RECAPTCHA_KEY,
-    MEDIA_URL: process.env.MEDIA_URL,
-    API_URL: process.env.API_URL,
-    ELASTIC_SEARCH_SERVER: process.env.ELASTIC_SEARCH_SERVER,
+    MEDIA_URL: process.env.MEDIA_URL || 'http://localhost:8000',
+    API_URL: process.env.API_URL || 'http://localhost:8000',
+    ELASTIC_SEARCH_SERVER:
+      process.env.ELASTIC_SEARCH_SERVER || 'http://localhost:9200',
     ELASTIC_SEARCH_CREDENTIALS: process.env.ELASTIC_SEARCH_CREDENTIALS
   },
   router: {
