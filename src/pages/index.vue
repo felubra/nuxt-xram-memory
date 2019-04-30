@@ -7,7 +7,6 @@
       :theme="reactiveDefaultTheme"
       :credentials="reactiveCredentials"
     >
-      <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
       <Logo :big="true"/>
       <DataSearch
         v-inner-input-focus
@@ -23,6 +22,7 @@
         :debounce="250"
         @keyPress="search"
       />
+      <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
       <no-ssr>
         <ReactiveComponent
           class="ReactiveD3TagCloud--home"
@@ -156,15 +156,12 @@ export default {
 }
 .FeaturedPage {
   order: 0;
-  margin-top: 10vh;
+  margin-top: 2vh;
 }
 
 @media only screen and (min-width: 768px) {
   .Logo {
     margin-top: 25vh;
-  }
-  .FeaturedPage {
-    order: 1;
   }
   .ReactiveD3TagCloud--home {
     margin-top: 25vh;
