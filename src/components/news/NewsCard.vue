@@ -22,7 +22,6 @@
 
 <script>
 /**TODO: adicionar prop centered */
-const smartTruncate = require('smart-truncate')
 const dayJs = require('dayjs')
 const { getMediaUrl, sanitize } = require('~/utils')
 export default {

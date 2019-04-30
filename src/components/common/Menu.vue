@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import { sanitize } from '@/utils/'
 import Logo from './Logo'
 import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
@@ -58,12 +57,12 @@ export default {
   components: {
     Logo
   },
-  methods: {
-    ...mapActions(['toggleMenu'])
-  },
   computed: {
     ...mapState(['menuVisible']),
     ...mapGetters(['menuPageLinks'])
+  },
+  methods: {
+    ...mapActions(['toggleMenu'])
   }
 }
 </script>

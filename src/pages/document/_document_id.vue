@@ -34,7 +34,7 @@ import AbstractPage from '~/components/common/AbstractPage'
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
 
-const { getMediaUrl, sanitize } = require('~/utils')
+const { getMediaUrl } = require('~/utils')
 export default {
   components: {
     AbstractPage,
@@ -97,7 +97,7 @@ export default {
       return this.previewComponentType === 'UnknownFilePreview'
     }
   },
-  async asyncData({ $axios, route, redirect, error }) {
+  async asyncData({ $axios, route, error }) {
     const documentId = route.params.document_id
     if (documentId) {
       return $axios

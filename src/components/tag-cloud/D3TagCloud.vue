@@ -9,7 +9,7 @@
       :height="height"
     >
       <g
-        v-for="d, i in words"
+        v-for="(d, i) in words"
         :key="i"
         :style="`transform: translate(${width/2}px, ${height/2}px);`"
       >
@@ -46,7 +46,6 @@ import {
 const debounce = require('debounce')
 const d3Cloud = require('d3-cloud')
 const chromaJS = require('chroma-js')
-const d3 = require('d3')
 
 export default {
   name: 'D3TagCloud',

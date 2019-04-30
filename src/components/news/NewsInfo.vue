@@ -265,9 +265,6 @@ dd.inline > a {
   font-family: 'Cabin', sans-serif;
 }
 
-.NewsInfo__Field--multicol {
-}
-
 .NewsInfo__Field--multicol > dt {
   column-span: all;
 }
