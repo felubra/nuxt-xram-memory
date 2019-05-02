@@ -32,12 +32,30 @@
             <selected-filters
               class-name="SelectedFilters"
               clear-all-label="Limpar filtros"
-              :inner-class="{button:'SelectedFilters__Filter'}"
+              :inner-class="{
+                button:'SelectedFilters__Filter'
+              }"
             />
             <div
               class="FilterList"
               :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
             >
+              <single-dropdown-list
+                filter-label="Tipo de objeto"
+                component-id="object_type"
+                data-field="_type"
+                class-name="FilterList__FilterItem"
+                :size="25"
+                placeholder="Todos"
+                :show-filter="true"
+                :inner-class="{
+                  title: 'microtext',
+                  select: 'FilterItem__DropdownToggle',
+                  list: 'FilterItem__DropdownList'
+                }"
+                title="Tipo de objeto"
+              />
+
               <single-dropdown-list
                 :default-query="customFilterQuery"
                 filter-label="Site/Veículo"
@@ -54,6 +72,7 @@
                 select: 'FilterItem__DropdownToggle',
                 list: 'FilterItem__DropdownList'
               }"
+                :react="{and: ['object_type']}"
                 title="Site/Veículo"
               />
 
@@ -110,7 +129,7 @@
       </template>
       <main>
         <ReactiveList
-          :react="{and: ['search','newspaper', 'KeywordSensor','pub_year']}"
+          :react="{and: ['object_type','search','newspaper', 'KeywordSensor','pub_year']}"
           component-id="SearchResults"
           :pagination="false"
           data-field="title.raw"
