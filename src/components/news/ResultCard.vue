@@ -1,20 +1,22 @@
 <template>
-  <nuxt-link class="NewsCard" :to="{ name:'news-slug', params: { slug: newsItem.slug } }">
-    <div class="NewsCard__Body">
+  <nuxt-link class="ResultCard" :to="itemLink">
+    <div class="ResultCard__Body">
       <div class="NewCard__Image">
         <img v-if="image" :src="image" alt @error="removeImage">
       </div>
       <div class="news-text">
-        <p v-if="label" class="label">Notícia</p>
-        <h3>{{ newsItem.title }}</h3>
+        <p class="label">
+          <span v-if="label">{{type}} •</span>
+          {{published_date}}
+        </p>
+        <h3>{{ resultItem.title }}</h3>
         <p class="teaser">{{teaser}}</p>
       </div>
     </div>
-    <div v-if="footer" class="NewsCard__Footer">
-      <p class="NewsCard__Newspaper">
+    <div v-if="footer" class="ResultCard__Footer">
+      <p class="ResultCard__Newspaper">
         <img v-if="newspaperIcon" :src="newspaperIcon" alt>
         <strong>{{newspaper.title}}</strong>
-        {{published_date}}
       </p>
     </div>
   </nuxt-link>
@@ -25,9 +27,9 @@
 const dayJs = require('dayjs')
 const { getMediaUrl, sanitize } = require('~/utils')
 export default {
-  name: 'NewsCard',
+  name: 'ResultCard',
   props: {
-    newsItem: {
+    resultItem: {
       type: Object,
       default: function() {
         return {}
@@ -35,7 +37,7 @@ export default {
     },
     label: {
       type: Boolean,
-      default: false
+      default: true
     },
     footer: {
       type: Boolean,
@@ -48,46 +50,65 @@ export default {
   },
   computed: {
     title() {
-      return sanitize(this.newsItem.title)
+      return sanitize(this.resultItem.title)
     },
     teaser() {
-      return sanitize(this.newsItem.teaser)
+      return sanitize(this.resultItem.teaser)
     },
     image() {
       try {
         return (
-          (this.newsItem.image_capture &&
-            getMediaUrl(this.newsItem.image_capture)) ||
-          (this.newsItem.thumbnail && getMediaUrl(this.newsItem.thumbnail))
+          (this.resultItem.image_capture &&
+            getMediaUrl(this.resultItem.image_capture)) ||
+          (this.resultItem.thumbnail && getMediaUrl(this.resultItem.thumbnail))
         )
       } catch {
         /** TODO: retorne um ícone padrão se não houver imagem */
         return ''
       }
     },
+    itemLink() {
+      switch (this.type) {
+        case 'Documento': {
+          return {
+            name: 'document-document_id',
+            params: { document_id: this.resultItem.document_id }
+          }
+        }
+        case 'Notícia': {
+          return { name: 'news-slug', params: { slug: this.resultItem.slug } }
+        }
+        default: {
+          return { name: 'search' }
+        }
+      }
+    },
+    type() {
+      return this.resultItem._type
+    },
     newspaperIcon() {
       try {
-        return getMediaUrl(this.newsItem.newspaper.favicon_logo)
+        return getMediaUrl(this.resultItem.newspaper.favicon_logo)
       } catch (e) {
         return ''
       }
     },
     newspaper() {
       if (
-        this.newsItem.newspaper &&
-        this.newsItem.newspaper.url &&
-        this.newsItem.newspaper.title
+        this.resultItem.newspaper &&
+        this.resultItem.newspaper.url &&
+        this.resultItem.newspaper.title
       ) {
         return {
-          url: this.newsItem.newspaper.url,
-          title: this.newsItem.newspaper.title
+          url: this.resultItem.newspaper.url,
+          title: this.resultItem.newspaper.title
         }
       }
       return false
     },
     published_date() {
       try {
-        const dateTime = dayJs(this.newsItem.published_date)
+        const dateTime = dayJs(this.resultItem.published_date)
         if (!dateTime.isValid()) {
           throw new Error()
         }
@@ -114,7 +135,7 @@ p.label {
   font-size: 0.75rem;
   font-family: 'Cabin', sans-serif;
 }
-a.NewsCard {
+a.ResultCard {
   background: #f3f1f1;
   padding: 1rem 1rem 0.6rem 1rem;
   display: flex;
@@ -128,45 +149,45 @@ a.NewsCard {
   transition: border 0.25s ease, background-color 0.25s ease;
 }
 
-a.NewsCard h3,
-a.NewsCard p {
+a.ResultCard h3,
+a.ResultCard p {
   transition: color 0.25s ease;
 }
-a.NewsCard p {
+a.ResultCard p {
   color: #555;
 }
 
-a.NewsCard:hover {
+a.ResultCard:hover {
   border-color: #ce5454;
 }
 
-a.NewsCard:hover h3 {
+a.ResultCard:hover h3 {
   color: #ce5454;
 }
 
-a.NewsCard:hover p {
+a.ResultCard:hover p {
   color: #8c1010;
 }
 
-a.NewsCard:focus,
-a.NewsCard:active {
+a.ResultCard:focus,
+a.ResultCard:active {
   background: #ce5454;
   color: #fff;
 }
 
-a.NewsCard:focus h3,
-a.NewsCard:focus h3,
-a.NewsCard:active p,
-a.NewsCard:focus p {
+a.ResultCard:focus h3,
+a.ResultCard:focus h3,
+a.ResultCard:active p,
+a.ResultCard:focus p {
   color: #fff;
   outline-color: #fff;
 }
 
-div.NewsCard__Body {
+div.ResultCard__Body {
   justify-content: flex-start;
 }
 
-div.NewsCard__Body p.teaser {
+div.ResultCard__Body p.teaser {
   display: none;
 }
 
@@ -174,44 +195,46 @@ div.NewCard__Image {
   min-width: 15.625rem;
 }
 
-div.NewsCard__Body h3 {
+div.ResultCard__Body h3 {
   font-weight: 500;
   margin: 0 0 1rem;
   font-size: 1.25rem;
   line-height: 1.2;
 }
 
-div.NewsCard__Footer {
+div.ResultCard__Footer {
   justify-content: flex-end;
 }
-div.NewsCard__Footer a.newspaper {
+div.ResultCard__Footer a.newspaper {
   text-transform: uppercase;
   text-decoration: none;
   color: #333333;
 }
 
-div.NewsCard__Footer a.newspaper:visited {
+div.ResultCard__Footer a.newspaper:visited {
   color: #333333;
 }
 
-p.NewsCard__Newspaper {
+p.ResultCard__Newspaper {
   font-family: Cabin, sans-serif;
   font-size: 0.75rem;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: center;
+  text-align: center;
+  justify-content: center;
 }
 
-p.NewsCard__Newspaper > img {
+p.ResultCard__Newspaper > img {
   margin-right: 0.27rem;
 }
 
 @media only screen and (min-width: 1080px) {
-  a.NewsCard {
+  a.ResultCard {
     text-align: left;
   }
-  div.NewsCard__Body {
+  div.ResultCard__Body {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -219,29 +242,35 @@ p.NewsCard__Newspaper > img {
     text-align: left;
   }
 
-  div.NewsCard__Body p.teaser {
+  div.ResultCard__Body p.teaser {
     font-size: 0.9rem;
   }
 
-  div.NewsCard__Body h3 {
+  div.ResultCard__Body h3 {
     font-weight: 700;
     font-size: 1.3rem;
   }
 
-  div.NewsCard__Body img {
+  div.ResultCard__Body img {
     align-self: baseline;
     margin: 0 0.5rem 0 0rem;
   }
 
-  div.NewsCard__Footer p {
+  div.ResultCard__Footer p {
     font-size: 0.8rem;
     margin: 0.5rem 0 0 0;
   }
 
-  div.NewsCard__Body p.teaser {
+  div.ResultCard__Body p.teaser {
     display: block;
     text-align: justify;
     margin: 0;
+  }
+  p.label {
+    text-align: left;
+  }
+  p.ResultCard__Newspaper {
+    justify-content: flex-start;
   }
 }
 </style>

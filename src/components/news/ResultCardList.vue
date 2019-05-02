@@ -1,16 +1,16 @@
 <template>
   <ul>
     <li v-for="item in items" :key="item.id">
-      <NewsCard :news-item="item"></NewsCard>
+      <ResultCard :result-item="item"></ResultCard>
     </li>
   </ul>
 </template>
 <script>
-import NewsCard from './NewsCard'
+import ResultCard from './ResultCard'
 export default {
-  name: 'NewsCardList',
+  name: 'ResultCardList',
   components: {
-    NewsCard
+    ResultCard
   },
   props: {
     items: {

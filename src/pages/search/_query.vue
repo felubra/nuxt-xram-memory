@@ -27,7 +27,7 @@
               :default-selected="query"
               :inner-class="{
                 input: 'SearchBar__Input'
-            }"
+              }"
             />
             <selected-filters
               class-name="SelectedFilters"
@@ -68,10 +68,10 @@
                 placeholder="Todos"
                 :show-filter="true"
                 :inner-class="{
-                title: 'microtext',
-                select: 'FilterItem__DropdownToggle',
-                list: 'FilterItem__DropdownList'
-              }"
+                  title: 'microtext',
+                  select: 'FilterItem__DropdownToggle',
+                  list: 'FilterItem__DropdownList'
+                }"
                 :react="{and: ['object_type']}"
                 title="Site/Veículo"
               />
@@ -89,10 +89,10 @@
                 placeholder="Todas"
                 :show-filter="true"
                 :inner-class="{
-                title: 'microtext',
-                select: 'FilterItem__DropdownToggle',
-                list: 'FilterItem__DropdownList'
-              }"
+                  title: 'microtext',
+                  select: 'FilterItem__DropdownToggle',
+                  list: 'FilterItem__DropdownList'
+                }"
                 title="Palavras-chave"
                 :react="{and: ['search','newspaper', 'pub_year']}"
                 :default-selected="keywords"
@@ -104,9 +104,9 @@
                 title="Anos de publicação"
                 filter-label="Intervalo (anos)"
                 :inner-class="{
-                title: 'microtext',
-                slider: 'FilterList__Slider',
-              }"
+                  title: 'microtext',
+                  slider: 'FilterList__Slider',
+                }"
               />
             </div>
             <div class="FilterList__ToggleFilters">
@@ -144,7 +144,7 @@
           :from="0"
           :size="5"
         >
-          <NewsCardList slot="renderAllData" slot-scope="{ results }" :items="results"/>
+          <ResultCardList slot="renderAllData" slot-scope="{ results }" :items="results"/>
         </ReactiveList>
       </main>
     </AbstractPage>
@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import NewsCardList from '~/components/news/NewsCardList'
+import ResultCardList from '~/components/news/ResultCardList'
 import AbstractPage from '~/components/common/AbstractPage'
 
 import { innerInputFocus } from '~/utils'
@@ -160,7 +160,7 @@ import reactiveMixin from '~/utils/reactiveMixin'
 export default {
   name: 'SearchPage',
   components: {
-    NewsCardList,
+    ResultCardList,
     AbstractPage
   },
   directives: {
