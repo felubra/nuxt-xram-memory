@@ -6,10 +6,7 @@
           <img v-if="image" :src="image" alt @error="removeImage">
         </div>
         <div class="news-text">
-          <p class="label">
-            <span v-if="label">{{type}} •</span>
-            {{published_date}}
-          </p>
+          <p class="label">{{label}}</p>
           <h3>{{ resultItem.title }}</h3>
           <p class="teaser">{{teaser}}</p>
         </div>
@@ -39,7 +36,7 @@ export default {
         return {}
       }
     },
-    label: {
+    showLabel: {
       type: Boolean,
       default: true
     },
@@ -88,7 +85,7 @@ export default {
       }
     },
     type() {
-      return this.resultItem._type
+      return this.resultItem._type || ''
     },
     newspaperIcon() {
       try {
@@ -120,6 +117,10 @@ export default {
       } catch {
         return ''
       }
+    },
+    label() {
+      const values = [this.type, this.published_date]
+      return values.filter(value => value).join(' em ')
     }
   },
   methods: {
