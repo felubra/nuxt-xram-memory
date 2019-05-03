@@ -2,7 +2,7 @@
   <AbstractPage class="Page Page--home">
     <ReactiveBase
       class-name="ReactiveBase"
-      app="artifact_news"
+      app="artifact_document,artifact_news"
       :url="reactiveServerURL"
       :theme="reactiveDefaultTheme"
       :credentials="reactiveCredentials"

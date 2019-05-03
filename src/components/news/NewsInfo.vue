@@ -202,9 +202,11 @@ export default {
               return document
             })
         })
-      ).then(documents => {
-        this.documents = documents
-      })
+      )
+        .then(documents => {
+          this.documents = documents
+        })
+        .catch(() => (this.documents = []))
     },
     thumbnailForDocument(document_id) {
       try {

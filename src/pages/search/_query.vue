@@ -1,7 +1,7 @@
 <template>
   <ReactiveBase
     class-name="ReactiveBase"
-    app="artifact_news"
+    app="artifact_document,artifact_news"
     :url="reactiveServerURL"
     :theme="reactiveDefaultTheme"
     :credentials="reactiveCredentials"
@@ -27,17 +27,35 @@
               :default-selected="query"
               :inner-class="{
                 input: 'SearchBar__Input'
-            }"
+              }"
             />
             <selected-filters
               class-name="SelectedFilters"
               clear-all-label="Limpar filtros"
-              :inner-class="{button:'SelectedFilters__Filter'}"
+              :inner-class="{
+                button:'SelectedFilters__Filter'
+              }"
             />
             <div
               class="FilterList"
               :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
             >
+              <single-dropdown-list
+                filter-label="Tipo"
+                component-id="object_type"
+                data-field="_type"
+                class-name="FilterList__FilterItem"
+                :size="25"
+                placeholder="Todos"
+                :show-filter="true"
+                :inner-class="{
+                  title: 'microtext',
+                  select: 'FilterItem__DropdownToggle',
+                  list: 'FilterItem__DropdownList'
+                }"
+                title="Tipo"
+              />
+
               <single-dropdown-list
                 :default-query="customFilterQuery"
                 filter-label="Site/Veículo"
@@ -50,10 +68,11 @@
                 placeholder="Todos"
                 :show-filter="true"
                 :inner-class="{
-                title: 'microtext',
-                select: 'FilterItem__DropdownToggle',
-                list: 'FilterItem__DropdownList'
-              }"
+                  title: 'microtext',
+                  select: 'FilterItem__DropdownToggle',
+                  list: 'FilterItem__DropdownList'
+                }"
+                :react="{and: ['object_type']}"
                 title="Site/Veículo"
               />
 
@@ -70,10 +89,10 @@
                 placeholder="Todas"
                 :show-filter="true"
                 :inner-class="{
-                title: 'microtext',
-                select: 'FilterItem__DropdownToggle',
-                list: 'FilterItem__DropdownList'
-              }"
+                  title: 'microtext',
+                  select: 'FilterItem__DropdownToggle',
+                  list: 'FilterItem__DropdownList'
+                }"
                 title="Palavras-chave"
                 :react="{and: ['search','newspaper', 'pub_year']}"
                 :default-selected="keywords"
@@ -82,12 +101,13 @@
                 data-field="published_year"
                 component-id="pub_year"
                 class-name="FilterList__FilterItem"
-                title="Anos de publicação"
-                filter-label="Intervalo (anos)"
+                title="Publicado entre"
+                filter-label="Publicado entre"
+                :react="{and: ['search']}"
                 :inner-class="{
-                title: 'microtext',
-                slider: 'FilterList__Slider',
-              }"
+                  title: 'microtext',
+                  slider: 'FilterList__Slider',
+                }"
               />
             </div>
             <div class="FilterList__ToggleFilters">
@@ -110,7 +130,7 @@
       </template>
       <main>
         <ReactiveList
-          :react="{and: ['search','newspaper', 'KeywordSensor','pub_year']}"
+          :react="{and: ['object_type','search','newspaper', 'KeywordSensor','pub_year']}"
           component-id="SearchResults"
           :pagination="false"
           data-field="title.raw"
@@ -125,7 +145,7 @@
           :from="0"
           :size="5"
         >
-          <NewsCardList slot="renderAllData" slot-scope="{ results }" :items="results"/>
+          <ResultCardList slot="renderAllData" slot-scope="{ results }" :items="results"/>
         </ReactiveList>
       </main>
     </AbstractPage>
@@ -133,7 +153,7 @@
 </template>
 
 <script>
-import NewsCardList from '~/components/news/NewsCardList'
+import ResultCardList from '~/components/news/ResultCardList'
 import AbstractPage from '~/components/common/AbstractPage'
 
 import { innerInputFocus } from '~/utils'
@@ -141,7 +161,7 @@ import reactiveMixin from '~/utils/reactiveMixin'
 export default {
   name: 'SearchPage',
   components: {
-    NewsCardList,
+    ResultCardList,
     AbstractPage
   },
   directives: {
