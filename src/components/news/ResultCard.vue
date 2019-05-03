@@ -1,25 +1,29 @@
 <template>
-  <nuxt-link class="ResultCard" :to="itemLink">
-    <div class="ResultCard__Body">
-      <div class="NewCard__Image">
-        <img v-if="image" :src="image" alt @error="removeImage">
+  <div class="ResultCard">
+    <nuxt-link :to="itemLink">
+      <div class="ResultCard__Body">
+        <div class="NewCard__Image">
+          <img v-if="image" :src="image" alt @error="removeImage">
+        </div>
+        <div class="news-text">
+          <p class="label">
+            <span v-if="label">{{type}} •</span>
+            {{published_date}}
+          </p>
+          <h3>{{ resultItem.title }}</h3>
+          <p class="teaser">{{teaser}}</p>
+        </div>
       </div>
-      <div class="news-text">
-        <p class="label">
-          <span v-if="label">{{type}} •</span>
-          {{published_date}}
-        </p>
-        <h3>{{ resultItem.title }}</h3>
-        <p class="teaser">{{teaser}}</p>
-      </div>
-    </div>
+    </nuxt-link>
     <div v-if="footer" class="ResultCard__Footer">
       <p class="ResultCard__Newspaper">
-        <img v-if="newspaperIcon" :src="newspaperIcon" alt>
-        <strong>{{newspaper.title}}</strong>
+        <a :href="newspaper.url">
+          <img v-if="newspaperIcon" :src="newspaperIcon" alt>
+          <strong>{{newspaper.title}}</strong>
+        </a>
       </p>
     </div>
-  </nuxt-link>
+  </div>
 </template>
 
 <script>
@@ -135,7 +139,13 @@ p.label {
   font-size: 0.75rem;
   font-family: 'Cabin', sans-serif;
 }
-a.ResultCard {
+
+.ResultCard a:hover,
+.ResultCard a:focus {
+  text-decoration: none;
+}
+
+.ResultCard {
   background: #f3f1f1;
   padding: 1rem 1rem 0.6rem 1rem;
   display: flex;
@@ -149,36 +159,38 @@ a.ResultCard {
   transition: border 0.25s ease, background-color 0.25s ease;
 }
 
-a.ResultCard h3,
-a.ResultCard p {
+.ResultCard h3,
+.ResultCard p {
   transition: color 0.25s ease;
 }
-a.ResultCard p {
+.ResultCard p {
   color: #555;
 }
 
-a.ResultCard:hover {
+.ResultCard:hover {
   border-color: #ce5454;
 }
 
-a.ResultCard:hover h3 {
+.ResultCard:hover h3 {
   color: #ce5454;
 }
 
-a.ResultCard:hover p {
+.ResultCard:hover p {
   color: #8c1010;
 }
 
-a.ResultCard:focus,
-a.ResultCard:active {
+.ResultCard:focus,
+.ResultCard:active {
   background: #ce5454;
   color: #fff;
 }
 
-a.ResultCard:focus h3,
-a.ResultCard:focus h3,
-a.ResultCard:active p,
-a.ResultCard:focus p {
+.ResultCard:focus a,
+.ResultCard:active h3,
+.ResultCard:focus h3,
+.ResultCard:focus h3,
+.ResultCard:active p,
+.ResultCard:focus p {
   color: #fff;
   outline-color: #fff;
 }
@@ -220,18 +232,21 @@ p.ResultCard__Newspaper {
   font-size: 0.75rem;
   margin: 0;
   padding: 0;
+}
+
+p.ResultCard__Newspaper a {
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
 }
 
-p.ResultCard__Newspaper > img {
+p.ResultCard__Newspaper img {
   margin-right: 0.27rem;
 }
 
 @media only screen and (min-width: 1080px) {
-  a.ResultCard {
+  .ResultCard {
     text-align: left;
   }
   div.ResultCard__Body {
@@ -270,6 +285,12 @@ p.ResultCard__Newspaper > img {
     text-align: left;
   }
   p.ResultCard__Newspaper {
+    justify-content: flex-start;
+  }
+  p.ResultCard__Newspaper a {
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
     justify-content: flex-start;
   }
 }
