@@ -41,7 +41,7 @@
               :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
             >
               <single-dropdown-list
-                filter-label="Tipo de objeto"
+                filter-label="Tipo"
                 component-id="object_type"
                 data-field="_type"
                 class-name="FilterList__FilterItem"
@@ -53,7 +53,7 @@
                   select: 'FilterItem__DropdownToggle',
                   list: 'FilterItem__DropdownList'
                 }"
-                title="Tipo de objeto"
+                title="Tipo"
               />
 
               <single-dropdown-list
@@ -101,8 +101,9 @@
                 data-field="published_year"
                 component-id="pub_year"
                 class-name="FilterList__FilterItem"
-                title="Anos de publicação"
-                filter-label="Intervalo (anos)"
+                title="Publicado entre"
+                filter-label="Publicado entre"
+                :react="{and: ['search']}"
                 :inner-class="{
                   title: 'microtext',
                   slider: 'FilterList__Slider',
