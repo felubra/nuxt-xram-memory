@@ -164,7 +164,7 @@ export default {
     margin-top: 25vh;
   }
   .ReactiveD3TagCloud--home {
-    margin-top: 25vh;
+    margin-top: 15vh;
   }
 }
 </style>
