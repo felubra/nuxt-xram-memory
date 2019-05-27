@@ -10,6 +10,12 @@
         <a :href="url.url" target="_blank">{{url.url}}</a>
       </dd>
     </template>
+    <template v-if="archivedUrl">
+      <dt>Versão arquivada</dt>
+      <dd>
+        <a :href="archivedUrl.url" target="_blank">{{archivedUrl.url}}</a>
+      </dd>
+    </template>
     <template v-if="newspaper">
       <dt>Site / veículo</dt>
       <dd>
@@ -160,6 +166,17 @@ export default {
         url: this.newsItem.url,
         title: smartTruncate(this.newsItem.url, 120, { position: 20 })
       }
+    },
+    archivedUrl() {
+      if (this.newsItem.archived_news_url) {
+        return {
+          url: this.newsItem.archived_news_url,
+          title: smartTruncate(this.newsItem.archived_news_url, 120, {
+            position: 20
+          })
+        }
+      }
+      return ''
     }
   },
   watch: {
