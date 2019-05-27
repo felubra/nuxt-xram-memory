@@ -16,6 +16,7 @@
         :rules="formRules"
         class="Contact__Form"
         :model="form"
+        label-position="top"
         label-width="200px"
       >
         <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
