@@ -92,7 +92,8 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/dotenv',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-device-detect'
   ],
   /*
   ** Axios module configuration

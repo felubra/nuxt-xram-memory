@@ -177,7 +177,7 @@ export default {
   },
   data() {
     return {
-      filterListOpened: false
+      filterListOpened: this.$device.isDesktop || false
     }
   },
   computed: {

@@ -16,7 +16,7 @@
         :rules="formRules"
         class="Contact__Form"
         :model="form"
-        label-position="top"
+        :label-position="labelPosition"
         label-width="200px"
       >
         <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
@@ -111,6 +111,9 @@ export default {
   computed: {
     recaptchaKey() {
       return process.env.RECAPTCHA_KEY
+    },
+    labelPosition() {
+      return this.$device.isDesktop || false ? 'left' : 'top'
     }
   },
   watch: {
