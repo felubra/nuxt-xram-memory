@@ -6,7 +6,7 @@
           <img v-if="image" :src="image" alt @error="removeImage">
         </div>
         <div class="news-text">
-          <p class="label">{{label}}</p>
+          <p v-if="showLabel" class="label">{{label}}</p>
           <h3>{{ resultItem.title }}</h3>
           <p class="teaser">{{teaser}}</p>
         </div>
