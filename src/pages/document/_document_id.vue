@@ -5,6 +5,19 @@
         <p class="microtext">{{fileType}}</p>
         <h1>{{document.document_id || document.name}}</h1>
         <p v-if="document.description" class="FileInfo__Description">{{document.description}}</p>
+        <div v-if="newsRelated" class="FileInfo__NewsRelated">
+          <p class="microtext">Notícias associadas</p>
+          <nuxt-link
+            v-for="news in newsRelated"
+            :key="news.slug"
+            :to="{
+            name:'news-slug',
+            params: {
+              slug: news.slug
+            }
+          }"
+          >{{news.title}}</nuxt-link>
+        </div>
         <div class="FileActions">
           <a class="FileInfo_Button microtext" download :href="fileURL">
             <i class="material-icons">get_app</i> Baixar
@@ -63,7 +76,7 @@ export default {
     }
   },
   data() {
-    return { document: {}, componentType: '', fileType: '' }
+    return { document: {}, componentType: '' }
   },
   head() {
     return {
@@ -93,6 +106,21 @@ export default {
         return ''
       }
     },
+    fileType() {
+      if (this.document.mime_type === 'application/pdf') {
+        return this.isCapture ? 'Captura de notícia em PDF' : 'Documento PDF'
+      } else if (this.document.mime_type.includes('image/')) {
+        return this.isCapture ? 'Imagem de notícia' : 'Imagem'
+      } else {
+        return 'Documento'
+      }
+    },
+    isCapture() {
+      return this.document.news_items.length > 0 || false
+    },
+    newsRelated() {
+      return this.document.news_items.length && this.document.news_items
+    },
     isUnknown() {
       return this.previewComponentType === 'UnknownFilePreview'
     }
@@ -104,17 +132,16 @@ export default {
         .$get(`/api/v1/document/${documentId}`)
         .then(document => {
           let componentType = 'UnknownFilePreview'
-          let fileType = 'Arquivo'
           try {
             if (document.mime_type === 'application/pdf') {
               componentType = 'PDFFilePreview'
-              fileType = 'Documento PDF'
             } else if (document.mime_type.includes('image/')) {
               componentType = 'ImageFilePreview'
-              fileType = 'Imagem'
             }
-          } catch {}
-          return { document, componentType, fileType }
+          } catch (e) {
+            //use o padrão acima
+          }
+          return { document, componentType }
         })
         .catch(e => {
           const statusCode = (e.response && e.response.status) || 500
@@ -196,6 +223,9 @@ dd {
   font-size: 48px;
 }
 @media only screen and (min-width: 768px) {
+  .FileInfo__NewsRelated {
+    margin-top: auto;
+  }
   dl {
     justify-content: flex-start;
   }
