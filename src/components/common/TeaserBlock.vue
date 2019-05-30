@@ -5,7 +5,7 @@
       v-if="slug"
       :to="{name: 'slug', params: {slug: slug} }"
       class="TeaserBlock__Link microtext"
-    >Saiba mais</nuxt-link>
+    >{{teaserText}}</nuxt-link>
   </section>
 </template>
 
@@ -37,6 +37,9 @@ export default {
     },
     slug() {
       return this.pageItem.url !== undefined && sanitize(this.pageItem.url)
+    },
+    teaserText() {
+      return sanitize(this.pageItem.teaser_text) || 'Saiba mais'
     }
   }
 }
