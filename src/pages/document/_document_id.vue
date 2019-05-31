@@ -97,7 +97,7 @@ export default {
     },
     sendDate() {
       try {
-        const dateTime = dayJs(this.document.modified_at)
+        const dateTime = dayJs(this.document.uploaded_at)
         if (!dateTime.isValid()) {
           throw new Error()
         }
