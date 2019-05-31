@@ -7,42 +7,34 @@
       <Logo class="Menu__Logo" variant="pb--branco"/>
     </header>
     <ul class="Menu__Items Menu__Items--big">
-      <li class="Menu__Item Menu__Item--big">
-        <nuxt-link :to="{name: 'search-query'}">
-          <i class="material-icons">search</i>Pesquisar
-        </nuxt-link>
-      </li>
-      <li v-for="page in menuPageLinks" :key="page.id" class="Menu__Item Menu__Item--big">
+      <li
+        v-for="(page, index) in menuLinks()"
+        :key="`menu--${index}`"
+        class="Menu__Item Menu__Item--big"
+      >
         <nuxt-link
           :title="page.title"
           :alt="`Clique para visitar a página '${page.title}'`"
-          :to="{
-            name: 'slug',
-            params: {
-              slug: page.url
-            }
-          }"
+          :to="urlOrRoute(page)"
         >
-          <i class="material-icons">info</i>
+          <i class="material-icons">{{page.icon || 'info'}}</i>
           {{page.title}}
-        </nuxt-link>
-      </li>
-      <li class="Menu__Item Menu__Item--big">
-        <nuxt-link :to="{ name: 'contact' }">
-          <i class="material-icons">feedback</i>Contato
         </nuxt-link>
       </li>
     </ul>
     <footer class="Menu__Footer">
       <p class="center">Copyright © 2019 xraM-Memory</p>
       <ul class="Menu__Items Menu__Items--inline">
-        <li class="Menu__Item Menu__Item--inline">
-          <nuxt-link :to="{name: 'slug', params:{slug: 'termos_de_uso'}}">Termos de uso</nuxt-link>
-        </li>
-        <li class="Menu__Item Menu__Item--inline">
+        <li
+          v-for="(page, index) in menuLinks('menu-footer')"
+          :key="`menu--footer${index}`"
+          class="Menu__Item Menu__Item--inline"
+        >
           <nuxt-link
-            :to="{name: 'slug', params:{slug: 'politica_de_privacidade'}}"
-          >Política de Privacidade</nuxt-link>
+            :title="page.title"
+            :alt="`Clique para visitar a página '${page.title}'`"
+            :to="urlOrRoute(page)"
+          >{{page.title}}</nuxt-link>
         </li>
       </ul>
     </footer>
@@ -52,6 +44,8 @@
 <script>
 import Logo from './Logo'
 import { mapState, mapActions, mapGetters } from 'vuex'
+import { sanitize } from '@/utils/'
+
 export default {
   name: 'Menu',
   components: {
@@ -59,10 +53,23 @@ export default {
   },
   computed: {
     ...mapState(['menuVisible']),
-    ...mapGetters(['menuPageLinks'])
+    ...mapGetters(['menuLinks'])
   },
   methods: {
-    ...mapActions(['toggleMenu'])
+    ...mapActions(['toggleMenu']),
+    urlOrRoute(item) {
+      return typeof item.url === 'object'
+        ? item.url
+        : {
+            name: 'slug',
+            params: {
+              slug: sanitize(item.url)
+            }
+          }
+    },
+    keyForLink(item) {
+      return typeof item.url === 'object' ? item.url.name : item.url
+    }
   }
 }
 </script>

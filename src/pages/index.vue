@@ -72,7 +72,7 @@ export default {
         return TAGCLOUD_QUERY
       }
     },
-    ...mapGetters(['featuredPages']),
+    ...mapGetters(['featuredPages', 'menuLinks']),
     featuredPage() {
       return this.featuredPages.length > 0 && this.featuredPages[0]
     }
