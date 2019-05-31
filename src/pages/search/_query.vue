@@ -1,155 +1,157 @@
 <template>
-  <ReactiveBase
-    class-name="ReactiveBase"
-    app="artifact_document,artifact_news"
-    :url="reactiveServerURL"
-    :theme="reactiveDefaultTheme"
-    :credentials="reactiveCredentials"
-  >
-    <AbstractPage class="Page--sidebar">
-      <template v-slot:aside>
-        <div class="SearchOptions">
-          <div class="SearchOptions__inside">
-            <DataSearch
-              v-inner-input-focus
-              component-id="search"
-              :field-weights="[10,7]"
-              :data-field="['title', 'teaser']"
-              icon-position="right"
-              :autosuggest="false"
-              class="SearchBar"
-              class-name="SearchBar"
-              placeholder="Pesquisar no acervo"
-              filter-label="Pesquisa"
-              :debounce="250"
-              :show-clear="false"
-              :show-filter="false"
-              :default-selected="query"
-              :inner-class="{
+  <no-ssr>
+    <ReactiveBase
+      class-name="ReactiveBase"
+      app="artifact_document,artifact_news"
+      :url="reactiveServerURL"
+      :theme="reactiveDefaultTheme"
+      :credentials="reactiveCredentials"
+    >
+      <AbstractPage class="Page--sidebar">
+        <template v-slot:aside>
+          <div class="SearchOptions">
+            <div class="SearchOptions__inside">
+              <DataSearch
+                v-inner-input-focus
+                component-id="search"
+                :field-weights="[10,7]"
+                :data-field="['title', 'teaser']"
+                icon-position="right"
+                :autosuggest="false"
+                class="SearchBar"
+                class-name="SearchBar"
+                placeholder="Pesquisar no acervo"
+                filter-label="Pesquisa"
+                :debounce="250"
+                :show-clear="false"
+                :show-filter="false"
+                :default-selected="query"
+                :inner-class="{
                 input: 'SearchBar__Input'
               }"
-            />
-            <selected-filters
-              class-name="SelectedFilters"
-              clear-all-label="Limpar filtros"
-              :inner-class="{
+              />
+              <selected-filters
+                class-name="SelectedFilters"
+                clear-all-label="Limpar filtros"
+                :inner-class="{
                 button:'SelectedFilters__Filter'
               }"
-            />
-            <div
-              class="FilterList"
-              :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
-            >
-              <single-dropdown-list
-                filter-label="Tipo"
-                component-id="object_type"
-                data-field="_type"
-                class-name="FilterList__FilterItem"
-                :size="25"
-                placeholder="Todos"
-                :show-filter="true"
-                :inner-class="{
+              />
+              <div
+                class="FilterList"
+                :class="filterListOpened ?  'FilterList FilterList--open' : 'FilterList'"
+              >
+                <single-dropdown-list
+                  filter-label="Tipo"
+                  component-id="object_type"
+                  data-field="_type"
+                  class-name="FilterList__FilterItem"
+                  :size="25"
+                  placeholder="Todos"
+                  :show-filter="true"
+                  :inner-class="{
                   title: 'microtext',
                   select: 'FilterItem__DropdownToggle',
                   list: 'FilterItem__DropdownList'
                 }"
-                title="Tipo"
-              />
+                  title="Tipo"
+                />
 
-              <single-dropdown-list
-                :default-query="customFilterQuery"
-                filter-label="Site/Veículo"
-                component-id="newspaper"
-                data-field="newspaper.title"
-                nested-field="newspaper"
-                class-name="FilterList__FilterItem"
-                :show-count="false"
-                :size="25"
-                placeholder="Todos"
-                :show-filter="true"
-                :inner-class="{
+                <single-dropdown-list
+                  :default-query="customFilterQuery"
+                  filter-label="Site/Veículo"
+                  component-id="newspaper"
+                  data-field="newspaper.title"
+                  nested-field="newspaper"
+                  class-name="FilterList__FilterItem"
+                  :show-count="false"
+                  :size="25"
+                  placeholder="Todos"
+                  :show-filter="true"
+                  :inner-class="{
                   title: 'microtext',
                   select: 'FilterItem__DropdownToggle',
                   list: 'FilterItem__DropdownList'
                 }"
-                :react="{and: ['object_type']}"
-                title="Site/Veículo"
-              />
+                  :react="{and: ['object_type']}"
+                  title="Site/Veículo"
+                />
 
-              <multi-dropdown-list
-                :default-query="customFilterQuery"
-                filter-label="Palavras-chave"
-                component-id="KeywordSensor"
-                data-field="keywords.name"
-                nested-field="keywords"
-                :show-search="true"
-                :size="100"
-                class-name="FilterList__FilterItem"
-                :show-count="false"
-                placeholder="Todas"
-                :show-filter="true"
-                :inner-class="{
+                <multi-dropdown-list
+                  :default-query="customFilterQuery"
+                  filter-label="Palavras-chave"
+                  component-id="KeywordSensor"
+                  data-field="keywords.name"
+                  nested-field="keywords"
+                  :show-search="true"
+                  :size="100"
+                  class-name="FilterList__FilterItem"
+                  :show-count="false"
+                  placeholder="Todas"
+                  :show-filter="true"
+                  :inner-class="{
                   title: 'microtext',
                   select: 'FilterItem__DropdownToggle',
                   list: 'FilterItem__DropdownList'
                 }"
-                title="Palavras-chave"
-                :react="{and: ['search','newspaper', 'pub_year']}"
-                :default-selected="keywords"
-              />
-              <DynamicRangeSlider
-                data-field="published_year"
-                component-id="pub_year"
-                class-name="FilterList__FilterItem"
-                title="Publicado entre"
-                filter-label="Publicado entre"
-                :react="{and: ['search']}"
-                :inner-class="{
+                  title="Palavras-chave"
+                  :react="{and: ['search','newspaper', 'pub_year']}"
+                  :default-selected="keywords"
+                />
+                <DynamicRangeSlider
+                  data-field="published_year"
+                  component-id="pub_year"
+                  class-name="FilterList__FilterItem"
+                  title="Publicado entre"
+                  filter-label="Publicado entre"
+                  :react="{and: ['search']}"
+                  :inner-class="{
                   title: 'microtext',
                   slider: 'FilterList__Slider',
                 }"
-              />
-            </div>
-            <div class="FilterList__ToggleFilters">
-              <a
-                v-if="filterListOpened"
-                class="microtext"
-                href="#moreFilters"
-                @click.prevent="toggleFilters"
-              >
-                <i class="material-icons">close</i>
-                Fechar
-              </a>
-              <a v-else class="microtext" href="#moreFilters" @click.prevent="toggleFilters">
-                <i class="material-icons">filter_list</i>
-                Filtros
-              </a>
+                />
+              </div>
+              <div class="FilterList__ToggleFilters">
+                <a
+                  v-if="filterListOpened"
+                  class="microtext"
+                  href="#moreFilters"
+                  @click.prevent="toggleFilters"
+                >
+                  <i class="material-icons">close</i>
+                  Fechar
+                </a>
+                <a v-else class="microtext" href="#moreFilters" @click.prevent="toggleFilters">
+                  <i class="material-icons">filter_list</i>
+                  Filtros
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </template>
-      <main>
-        <ReactiveList
-          :react="{and: ['object_type','search','newspaper', 'KeywordSensor','pub_year']}"
-          component-id="SearchResults"
-          :pagination="false"
-          data-field="title.raw"
-          class-name="SearchResults"
-          loader="Carregando..."
-          :render-result-stats="resultStats"
-          render-error="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
-          :inner-class="{
+        </template>
+        <main>
+          <ReactiveList
+            :react="{and: ['object_type','search','newspaper', 'KeywordSensor','pub_year']}"
+            component-id="SearchResults"
+            :pagination="false"
+            data-field="title.raw"
+            class-name="SearchResults"
+            loader="Carregando..."
+            :render-result-stats="resultStats"
+            render-error="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
+            :inner-class="{
             resultsInfo: 'SearchResults__ResultsInfo',
             list: 'SearchResults__List'
           }"
-          :from="0"
-          :size="5"
-        >
-          <ResultCardList slot="renderAllData" slot-scope="{ results }" :items="results"/>
-        </ReactiveList>
-      </main>
-    </AbstractPage>
-  </ReactiveBase>
+            :from="0"
+            :size="5"
+          >
+            <ResultCardList slot="renderAllData" slot-scope="{ results }" :items="results"/>
+          </ReactiveList>
+        </main>
+      </AbstractPage>
+    </ReactiveBase>
+  </no-ssr>
 </template>
 
 <script>

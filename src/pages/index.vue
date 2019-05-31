@@ -1,29 +1,44 @@
 <template>
   <AbstractPage class="Page Page--home">
-    <ReactiveBase
-      class-name="ReactiveBase"
-      app="artifact_document,artifact_news"
-      :url="reactiveServerURL"
-      :theme="reactiveDefaultTheme"
-      :credentials="reactiveCredentials"
-    >
-      <Logo :big="true"/>
-      <DataSearch
-        v-inner-input-focus
-        class="SearchBar SearchBar--home"
-        component-id="SearchSensor"
-        :field-weights="[10,7]"
-        :data-field="['title', 'teaser']"
-        icon-position="right"
-        :autosuggest="false"
-        class-name="SearchBar SearchBar--home"
-        placeholder="Pesquisar no acervo"
-        :show-clear="false"
-        :debounce="250"
-        @keyPress="search"
-      />
-      <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
-      <no-ssr>
+    <ul class="Home__Links">
+      <li v-for="page in menuLinks" :key="page.id" class="Menu__Item Menu__Item--big">
+        <nuxt-link
+          :title="page.title"
+          :alt="`Clique para visitar a página '${page.title}'`"
+          :to="{
+            name: 'slug',
+            params: {
+              slug: page.url
+            }
+          }"
+        >{{page.title}}</nuxt-link>
+      </li>
+    </ul>
+    <Logo :big="true"/>
+    <no-ssr>
+      <ReactiveBase
+        class-name="ReactiveBase"
+        app="artifact_document,artifact_news"
+        :url="reactiveServerURL"
+        :theme="reactiveDefaultTheme"
+        :credentials="reactiveCredentials"
+      >
+        <DataSearch
+          v-inner-input-focus
+          class="SearchBar SearchBar--home"
+          component-id="SearchSensor"
+          :field-weights="[10,7]"
+          :data-field="['title', 'teaser']"
+          icon-position="right"
+          :autosuggest="false"
+          class-name="SearchBar SearchBar--home"
+          placeholder="Pesquisar no acervo"
+          :show-clear="false"
+          :debounce="250"
+          @keyPress="search"
+        />
+        <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
+
         <ReactiveComponent
           class="ReactiveD3TagCloud--home"
           component-id="ReactiveD3TagCloud"
@@ -33,8 +48,8 @@
             <D3TagCloud v-if="!error" :keywords="keywords(aggregations)"/>
           </div>
         </ReactiveComponent>
-      </no-ssr>
-    </ReactiveBase>
+      </ReactiveBase>
+    </no-ssr>
   </AbstractPage>
 </template>
 
@@ -157,6 +172,22 @@ export default {
 .FeaturedPage {
   order: 0;
   margin-top: 2vh;
+}
+
+.Home__Links {
+  position: absolute;
+  top: 1rem;
+  left: 36px;
+  margin: 0;
+  padding: 0;
+  z-index: 9;
+}
+
+ul.Home__Links > li {
+  display: inline;
+  list-style: none;
+  margin: 0.5rem;
+  font-size: 1rem;
 }
 
 @media only screen and (min-width: 768px) {
