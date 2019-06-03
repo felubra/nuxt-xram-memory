@@ -97,7 +97,11 @@
                   title="Palavras-chave"
                   :react="{and: ['search','newspaper', 'pub_year']}"
                   :default-selected="keywords"
-                />
+                >
+                  <template slot="renderItem" slot-scope="{ label }">
+                    <div>{{lowerSlugify(label)}}</div>
+                  </template>
+                </multi-dropdown-list>
                 <DynamicRangeSlider
                   data-field="published_year"
                   component-id="pub_year"
@@ -160,6 +164,7 @@ import AbstractPage from '~/components/common/AbstractPage'
 
 import { innerInputFocus } from '~/utils'
 import reactiveMixin from '~/utils/reactiveMixin'
+import slugify from 'slugify'
 export default {
   name: 'SearchPage',
   components: {
@@ -207,6 +212,9 @@ export default {
     },
     resultStats({ totalResults, time }) {
       return `${totalResults} resultados em ${time}ms`
+    },
+    lowerSlugify(keyword) {
+      return slugify(keyword.toLowerCase())
     },
     /**
      * Aparentemente a query montada pelo ReactiveSearch não funciona, então usemos esta.
