@@ -1,17 +1,14 @@
 <template>
   <AbstractPage class="Page Page--home">
     <ul class="Home__Links">
-      <li v-for="page in menuLinks" :key="page.id" class="Menu__Item Menu__Item--big">
+      <li v-for="page in menuLinks()" :key="page.id" class="Menu__Item Menu__Item--big">
         <nuxt-link
           :title="page.title"
           :alt="`Clique para visitar a página '${page.title}'`"
-          :to="{
-            name: 'slug',
-            params: {
-              slug: page.url
-            }
-          }"
-        >{{page.title}}</nuxt-link>
+          :to="urlOrRoute(page)"
+        >
+          <span>{{page.title}}</span>
+        </nuxt-link>
       </li>
     </ul>
     <Logo :big="true"/>
@@ -61,6 +58,7 @@ import Logo from '~/components/common/Logo'
 import reactiveMixin from '~/utils/reactiveMixin'
 import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
+import { sanitize } from '@/utils/'
 const FONT_SIZE_DELTA = 16
 
 import { TAGCLOUD_QUERY } from '~/config/constants'
@@ -114,6 +112,16 @@ export default {
       } catch {
         return []
       }
+    },
+    urlOrRoute(item) {
+      return typeof item.url === 'object'
+        ? item.url
+        : {
+            name: 'slug',
+            params: {
+              slug: sanitize(item.url)
+            }
+          }
     },
     keywordsStdDeviation(aggregations) {
       function standardDeviation(values) {
@@ -190,12 +198,43 @@ ul.Home__Links > li {
   font-size: 1rem;
 }
 
+ul.Home__Links {
+  display: none;
+}
+
 @media only screen and (min-width: 768px) {
   .Logo {
     margin-top: 25vh;
   }
   .ReactiveD3TagCloud--home {
     margin-top: 15vh;
+  }
+  ul.Home__Links {
+    display: inline;
+  }
+
+  ul.Home__Links > li a {
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  ul.Home__Links i.material-icons-outlined {
+    margin-right: 0.1rem;
+  }
+
+  ul.Home__Links > li a:hover,
+  ul.Home__Links > li a:focus,
+  ul.Home__Links > li a:active {
+    text-decoration: none;
+    color: #ff0000;
+  }
+
+  ul.Home__Links i.material-icons-outlined {
+    display: none;
+  }
+  ul.Home__Links > li a > span {
+    display: inline;
   }
 }
 </style>

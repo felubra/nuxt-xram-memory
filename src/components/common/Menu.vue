@@ -17,7 +17,7 @@
           :alt="`Clique para visitar a página '${page.title}'`"
           :to="urlOrRoute(page)"
         >
-          <i class="material-icons">{{page.icon || 'info'}}</i>
+          <i class="material-icons-outlined">{{page.icon || 'info'}}</i>
           {{page.title}}
         </nuxt-link>
       </li>

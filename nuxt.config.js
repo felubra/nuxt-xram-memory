@@ -54,7 +54,8 @@ module.exports = {
       { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#5bbad5' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/icon?family=Material+Icons'
+        href:
+          'https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined'
       },
       {
         rel: 'stylesheet',
