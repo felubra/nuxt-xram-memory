@@ -59,6 +59,9 @@ export default {
   font-size: 0.75rem;
 }
 .TeaserBlock__Body {
-  font-size: 1.2 rem;
+  font-size: 1.2 rem !important;
+}
+.TeaserBlock__Body.ql-editor {
+  padding: 0.75rem 0 0;
 }
 </style>
