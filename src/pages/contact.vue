@@ -8,42 +8,43 @@
       </no-ssr>
     </template>
     <no-ssr>
-    <div class="content-container">
-      <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
-      <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
-      <el-form
-        ref="form"
-        :disabled="!isAvailable"
-        :rules="formRules"
-        class="Contact__Form"
-        :model="form"
-        :label-position="labelPosition"
-        label-width="200px"
-      >
-        <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item class="Contact__FormItem" label="Seu e-mail de contato" prop="email">
-          <el-input v-model="form.email" type="email"></el-input>
-        </el-form-item>
-        <el-form-item class="Contact__FormItem" label="Sua mensagem" prop="message">
-          <el-input v-model="form.message" rows="5" type="textarea"></el-input>
-        </el-form-item>
-        <el-form-item class="Contact__FormItem">
-          <vue-recaptcha
-            ref="recaptcha"
-            size="invisible"
-            :sitekey="recaptchaKey"
-            @expired="onExpired"
-            @verify="onCaptchaVerify"
-          ></vue-recaptcha>
-        </el-form-item>
-        <el-form-item class="Contact__FormItem">
-          <el-button type="primary" @click="onSubmit">Enviar</el-button>
-          <el-button @click="resetForm()">Limpar</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+      <div class="content-container">
+        <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
+        <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
+        <el-form
+          ref="form"
+          :disabled="!isAvailable"
+          :rules="formRules"
+          class="Contact__Form"
+          :model="form"
+          :label-position="labelPosition"
+          label-width="200px"
+        >
+          <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item class="Contact__FormItem" label="Seu e-mail de contato" prop="email">
+            <el-input v-model="form.email" type="email"></el-input>
+          </el-form-item>
+          <el-form-item class="Contact__FormItem" label="Sua mensagem" prop="message">
+            <el-input v-model="form.message" rows="5" type="textarea"></el-input>
+          </el-form-item>
+          <el-form-item class="Contact__FormItem">
+            <vue-recaptcha
+              v-if="isAvailable"
+              ref="recaptcha"
+              size="invisible"
+              :sitekey="recaptchaKey"
+              @expired="onExpired"
+              @verify="onCaptchaVerify"
+            ></vue-recaptcha>
+          </el-form-item>
+          <el-form-item class="Contact__FormItem">
+            <el-button type="primary" @click="onSubmit">Enviar</el-button>
+            <el-button @click="resetForm()">Limpar</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </no-ssr>
   </AbstractPage>
 </template>
