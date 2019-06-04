@@ -7,6 +7,7 @@
         </div>
       </no-ssr>
     </template>
+    <no-ssr>
     <div class="content-container">
       <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
       <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
@@ -43,6 +44,7 @@
         </el-form-item>
       </el-form>
     </div>
+    </no-ssr>
   </AbstractPage>
 </template>
 <script>
