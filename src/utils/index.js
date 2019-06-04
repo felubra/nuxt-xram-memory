@@ -30,6 +30,7 @@ const defaultWhiteList = {
   ul: [],
   ol: [],
   li: [],
+  br: [],
 
   blockquote: [],
 
