@@ -1,6 +1,7 @@
 <template>
   <nav class="Navbar">
     <a
+      v-if="showMenu"
       v-click-outside="hideMenu"
       class="Navbar__Item Navbar__MenuToggle"
       href="#main-menu"
@@ -25,6 +26,12 @@ export default {
   },
   directives: {
     ClickOutside
+  },
+  props: {
+    showMenu: {
+      default: true,
+      type: Boolean
+    }
   },
   methods: {
     menuToggle() {
