@@ -88,9 +88,11 @@ section_regexps = [
     ('Corrigido', [
         r'^[fF]ix\s?(?:\(.*\)|\#\d+)?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$',
     ]),
+    ('Refatorado', [
+        r'^[rR]efat\s?(?:\(.*\)|\#\d+)?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$',
+    ]),
     ('Outros', None  # Match all lines
      ),
-
 ]
 
 
