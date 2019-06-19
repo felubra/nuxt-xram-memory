@@ -178,7 +178,7 @@ ul.Home__Links {
 }
 
 .Home__Mode_Switcher a {
-  color: #ceb4ca;
+  color: #b1a299;
 }
 
 .Home__Mode_Switcher a:focus,
