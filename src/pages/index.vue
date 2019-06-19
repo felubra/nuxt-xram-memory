@@ -20,6 +20,14 @@
         :theme="reactiveDefaultTheme"
         :credentials="reactiveCredentials"
       >
+        <ul class="Home__Mode_Switcher">
+          <li class="ModeSwitch">
+            <a href="#all" :class="{'active': activeMode === 'all' }">Tudo</a>
+          </li>
+          <li class="ModeSwitch">
+            <a href="#images" :class="{'active': activeMode === 'images' }">Imagens</a>
+          </li>
+        </ul>
         <DataSearch
           v-inner-input-focus
           class="SearchBar SearchBar--home"
@@ -35,7 +43,7 @@
           @keyPress="search"
         />
         <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
-        <HomeTagCloud/>
+        <component :is="getActiveModeComponent()"></component>
       </ReactiveBase>
     </no-ssr>
   </AbstractPage>
@@ -61,6 +69,11 @@ export default {
     'inner-input-focus': innerInputFocus
   },
   mixins: [reactiveMixin],
+  data() {
+    return {
+      activeMode: 'all'
+    }
+  },
   head: {
     title: 'xraM-Memory',
     bodyAttrs: {
@@ -91,6 +104,16 @@ export default {
               slug: sanitize(item.url)
             }
           }
+    },
+    getActiveModeComponent() {
+      switch (this.activeMode) {
+        case 'all': {
+          return 'HomeTagCloud'
+        }
+        default: {
+          return 'HomeTagCloud'
+        }
+      }
     }
   }
 }
@@ -133,6 +156,55 @@ ul.Home__Links > li {
 
 ul.Home__Links {
   display: none;
+}
+
+.SearchBar,
+.Home__Mode_Switcher {
+  align-self: center;
+  width: 100%;
+  max-width: 40.5rem;
+  margin: 1rem 0 1rem;
+  padding: 0 0.5rem;
+}
+
+.Home__Mode_Switcher {
+  text-align: left;
+  margin: 0;
+  list-style: none;
+  padding: 0.4rem 1.2rem;
+  font-family: 'Cabin', sans-serif;
+  font-size: 0.77rem;
+  text-transform: uppercase;
+}
+
+.Home__Mode_Switcher a {
+  color: #ceb4ca;
+}
+
+.Home__Mode_Switcher a:focus,
+.Home__Mode_Switcher a:hover,
+.Home__Mode_Switcher a:active,
+.Home__Mode_Switcher a.active {
+  font-weight: bold;
+  text-decoration: none;
+  color: #927474;
+}
+
+.Home__Mode_Switcher > li {
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+.Home__Mode_Switcher > li:first-child {
+  margin-left: 0;
+}
+
+.Home__Mode_Switcher + .SearchBar {
+  margin-top: 0;
+}
+
+.SearchBar .SearchBar__Input {
+  background-color: #fff;
 }
 
 @media only screen and (min-width: 768px) {
