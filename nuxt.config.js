@@ -84,7 +84,8 @@ module.exports = {
     '@/plugins/v-viewer',
     '@/plugins/axios',
     '@/plugins/essential-content.js',
-    { src: '@/plugins/resize-sensor.js', ssr: false }
+    { src: '@/plugins/resize-sensor.js', ssr: false },
+    { src: '~/plugins/vue-masonry', ssr: false }
   ],
 
   /*

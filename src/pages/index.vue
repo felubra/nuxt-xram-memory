@@ -22,10 +22,18 @@
       >
         <ul class="Home__Mode_Switcher">
           <li class="ModeSwitch">
-            <a href="#all" :class="{'active': activeMode === 'all' }">Tudo</a>
+            <a
+              href="#all"
+              :class="{'active': activeMode === 'all' }"
+              @click.prevent="switchMode('all')"
+            >Tudo</a>
           </li>
           <li class="ModeSwitch">
-            <a href="#images" :class="{'active': activeMode === 'images' }">Imagens</a>
+            <a
+              href="#images"
+              :class="{'active': activeMode === 'images' }"
+              @click.prevent="switchMode('images')"
+            >Imagens</a>
           </li>
         </ul>
         <DataSearch
@@ -63,7 +71,8 @@ export default {
     HomeTagCloud,
     TeaserBlock,
     Logo,
-    AbstractPage
+    AbstractPage,
+    HomeImageGrid: () => import('~/components/image-grid/HomeImageGrid')
   },
   directives: {
     'inner-input-focus': innerInputFocus
@@ -78,7 +87,10 @@ export default {
     title: 'xraM-Memory',
     bodyAttrs: {
       class: 'Navbar--no-logo'
-    }
+    },
+    script: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js' }
+    ],
   },
   computed: {
     ...mapGetters(['featuredPages', 'menuLinks']),
@@ -110,10 +122,16 @@ export default {
         case 'all': {
           return 'HomeTagCloud'
         }
+        case 'images': {
+          return 'HomeImageGrid'
+        }
         default: {
           return 'HomeTagCloud'
         }
       }
+    },
+    switchMode(mode) {
+      this.activeMode = mode
     }
   }
 }
