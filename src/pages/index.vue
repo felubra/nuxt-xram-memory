@@ -35,23 +35,14 @@
           @keyPress="search"
         />
         <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
-
-        <ReactiveComponent
-          class="ReactiveD3TagCloud--home"
-          component-id="ReactiveD3TagCloud"
-          :default-query="tagCloudQuery"
-        >
-          <div slot-scope="{ aggregations, error }">
-            <D3TagCloud v-if="!error" :keywords="keywords(aggregations)"/>
-          </div>
-        </ReactiveComponent>
+        <HomeTagCloud/>
       </ReactiveBase>
     </no-ssr>
   </AbstractPage>
 </template>
 
 <script>
-import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
+import HomeTagCloud from '~/components/tag-cloud/HomeTagCloud'
 import TeaserBlock from '~/components/common/TeaserBlock'
 import AbstractPage from '~/components/common/AbstractPage'
 import Logo from '~/components/common/Logo'
@@ -59,12 +50,9 @@ import reactiveMixin from '~/utils/reactiveMixin'
 import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
 import { sanitize } from '@/utils/'
-const FONT_SIZE_DELTA = 16
-
-import { TAGCLOUD_QUERY } from '~/config/constants'
 export default {
   components: {
-    D3TagCloud,
+    HomeTagCloud,
     TeaserBlock,
     Logo,
     AbstractPage
@@ -80,11 +68,6 @@ export default {
     }
   },
   computed: {
-    tagCloudQuery() {
-      return function() {
-        return TAGCLOUD_QUERY
-      }
-    },
     ...mapGetters(['featuredPages', 'menuLinks']),
     featuredPage() {
       return this.featuredPages.length > 0 && this.featuredPages[0]
@@ -99,20 +82,6 @@ export default {
         })
       }
     },
-    keywords(aggregations) {
-      const keywordsStdDeviation = this.keywordsStdDeviation(aggregations)
-      try {
-        return aggregations.keywords.names.buckets.map(keyword => {
-          return {
-            text: keyword.key,
-            slug: keyword.slug.buckets[0].key,
-            size: (keyword.doc_count / keywordsStdDeviation) * FONT_SIZE_DELTA
-          }
-        })
-      } catch {
-        return []
-      }
-    },
     urlOrRoute(item) {
       return typeof item.url === 'object'
         ? item.url
@@ -122,38 +91,6 @@ export default {
               slug: sanitize(item.url)
             }
           }
-    },
-    keywordsStdDeviation(aggregations) {
-      function standardDeviation(values) {
-        const avg = average(values)
-
-        const squareDiffs = values.map(function(value) {
-          const diff = value - avg
-          const sqrDiff = Math.sqrt((diff * diff) ^ 2)
-          return sqrDiff
-        })
-
-        const avgSquareDiff = average(squareDiffs)
-
-        const stdDev = Math.sqrt(avgSquareDiff)
-        return stdDev
-      }
-
-      function average(data) {
-        const sum = data.reduce(function(sum, value) {
-          return sum + value
-        }, 0)
-
-        const avg = sum / data.length
-        return avg
-      }
-      try {
-        return standardDeviation(
-          aggregations.keywords.names.buckets.map(keyword => keyword.doc_count)
-        )
-      } catch {
-        return 1
-      }
     }
   }
 }
@@ -173,10 +110,6 @@ export default {
   background-color: #fff;
 }
 
-.ReactiveD3TagCloud--home {
-  order: 2;
-  margin-top: 35vh;
-}
 .FeaturedPage {
   order: 0;
   margin-top: 2vh;
@@ -206,9 +139,7 @@ ul.Home__Links {
   .Logo {
     margin-top: 25vh;
   }
-  .ReactiveD3TagCloud--home {
-    margin-top: 15vh;
-  }
+
   ul.Home__Links {
     display: inline;
   }
