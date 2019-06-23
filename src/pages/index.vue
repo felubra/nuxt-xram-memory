@@ -32,6 +32,20 @@
             <a
               href="#images"
               :class="{'active': activeMode === 'images' }"
+              @click.prevent="switchMode('news')"
+            >Notícias</a>
+          </li>
+          <li class="ModeSwitch">
+            <a
+              href="#images"
+              :class="{'active': activeMode === 'images' }"
+              @click.prevent="switchMode('documents')"
+            >Documentos</a>
+          </li>
+          <li class="ModeSwitch">
+            <a
+              href="#images"
+              :class="{'active': activeMode === 'images' }"
               @click.prevent="switchMode('images')"
             >Imagens</a>
           </li>
@@ -89,8 +103,11 @@ export default {
       class: 'Navbar--no-logo'
     },
     script: [
-      { src: 'https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js' }
-    ],
+      {
+        src:
+          'https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js'
+      }
+    ]
   },
   computed: {
     ...mapGetters(['featuredPages', 'menuLinks']),
