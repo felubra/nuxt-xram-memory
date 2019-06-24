@@ -1,16 +1,5 @@
 <template>
   <AbstractPage class="Page Page--home">
-    <ul class="Home__Links">
-      <li v-for="page in menuLinks()" :key="page.id" class="Menu__Item Menu__Item--big">
-        <nuxt-link
-          :title="page.title"
-          :alt="`Clique para visitar a página '${page.title}'`"
-          :to="urlOrRoute(page)"
-        >
-          <span>{{page.title}}</span>
-        </nuxt-link>
-      </li>
-    </ul>
     <Logo :big="true"/>
     <no-ssr>
       <ReactiveBase
@@ -34,7 +23,24 @@
           :debounce="250"
           @keyPress="search"
         />
-        <TeaserBlock v-if="featuredPage" class="FeaturedPage" :page-item="featuredPage"></TeaserBlock>
+
+        <TeaserBlock
+          v-if="featuredPage"
+          link-position="center"
+          class="FeaturedPage"
+          :page-item="featuredPage"
+        ></TeaserBlock>
+        <ul class="Home__Links">
+          <li v-for="page in homeLinks" :key="page.id" class="Menu__Item Menu__Item--big">
+            <nuxt-link
+              :title="page.title"
+              :alt="`Clique para visitar a página '${page.title}'`"
+              :to="urlOrRoute(page)"
+            >
+              <span>{{page.title}}</span>
+            </nuxt-link>
+          </li>
+        </ul>
         <HomeTagCloud/>
       </ReactiveBase>
     </no-ssr>
@@ -68,7 +74,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['featuredPages', 'menuLinks']),
+    ...mapGetters(['menuLinks', 'featuredPages', 'homeLinks']),
     featuredPage() {
       return this.featuredPages.length > 0 && this.featuredPages[0]
     }
@@ -116,56 +122,34 @@ export default {
 }
 
 .Home__Links {
-  position: absolute;
-  top: 1rem;
-  left: 36px;
-  margin: 0;
-  padding: 0;
   z-index: 9;
 }
 
-ul.Home__Links > li {
-  display: inline;
-  list-style: none;
-  margin: 0.5rem;
-  font-size: 1rem;
+ul.Home__Links {
+  display: inline-block;
+  margin: 3rem auto 0.5rem;
+  padding: 0.45rem;
 }
 
-ul.Home__Links {
-  display: none;
+ul.Home__Links > li {
+  display: inline-block;
+  list-style: none;
+  font-size: 1.1rem;
+  border-left: solid 1px #aa0000;
+  padding: 0 0.5rem;
+}
+
+ul.Home__Links > li:first-child {
+  border-left: none;
+}
+
+ul.Home__Links > li > a {
+  color: #333;
 }
 
 @media only screen and (min-width: 768px) {
   .Logo {
     margin-top: 25vh;
-  }
-
-  ul.Home__Links {
-    display: inline;
-  }
-
-  ul.Home__Links > li a {
-    color: #333;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  ul.Home__Links i.material-icons-outlined {
-    margin-right: 0.1rem;
-  }
-
-  ul.Home__Links > li a:hover,
-  ul.Home__Links > li a:focus,
-  ul.Home__Links > li a:active {
-    text-decoration: none;
-    color: #ff0000;
-  }
-
-  ul.Home__Links i.material-icons-outlined {
-    display: none;
-  }
-  ul.Home__Links > li a > span {
-    display: inline;
   }
 }
 </style>
