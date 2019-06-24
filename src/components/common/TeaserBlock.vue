@@ -2,9 +2,9 @@
   <section v-if="teaser" :class="{'TeaserBlock': true, 'TeaserBlock--home': home}">
     <div class="ql-editor TeaserBlock__Body" v-html="teaser"></div>
     <nuxt-link
-      v-if="slug"
+      v-if="slug && showLink"
       :to="{name: 'slug', params: {slug: slug} }"
-      class="TeaserBlock__Link microtext"
+      :class="`TeaserBlock__Link microtext TeaserBlock__Link--${linkPosition}`"
     >{{teaserText}}</nuxt-link>
   </section>
 </template>
@@ -27,6 +27,17 @@ export default {
     home: {
       type: Boolean,
       default: true
+    },
+    showLink: {
+      type: Boolean,
+      default: true
+    },
+    linkPosition: {
+      type: String,
+      default: 'right',
+      validator(value) {
+        return value in ['left', 'center', 'right']
+      }
     }
   },
   computed: {
@@ -58,6 +69,15 @@ export default {
   text-align: right;
   font-size: 0.75rem;
 }
+
+.TeaserBlock__Link--left {
+  text-align: left;
+}
+
+.TeaserBlock__Link--center {
+  text-align: center;
+}
+
 .TeaserBlock__Body {
   font-size: 1rem;
 }
