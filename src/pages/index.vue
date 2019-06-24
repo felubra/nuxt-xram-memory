@@ -70,6 +70,7 @@ import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
 import { sanitize } from '@/utils/'
 export default {
+  layout: 'index',
   components: {
     HomeTagCloud,
     TeaserBlock,
@@ -83,7 +84,8 @@ export default {
   mixins: [reactiveMixin],
   data() {
     return {
-      activeMode: 'all'
+      activeMode: 'all',
+      searchTerms: ''
     }
   },
   head: {
@@ -102,6 +104,9 @@ export default {
     ...mapGetters(['featuredPages', 'menuLinks']),
     featuredPage() {
       return this.featuredPages.length > 0 && this.featuredPages[0]
+    },
+    isImmersive() {
+      return this.activeMode !== 'all' || this.searchTerms !== ''
     }
   },
   methods: {
@@ -147,6 +152,11 @@ export default {
 .Logo {
   margin-top: 10vh;
   padding: 0.5rem;
+  transition: margin-top 0.25s;
+}
+
+.Page.immersive .Logo {
+  margin-top: 0;
 }
 
 .Logo + .SearchBar {
@@ -162,13 +172,23 @@ export default {
   margin-top: 2vh;
 }
 
+.Page.immersive .FeaturedPage,
+.Page.immersive .FeaturedPage {
+  overflow: hidden;
+  height: 0;
+}
+
 .Home__Links {
-  position: absolute;
-  top: 1rem;
-  left: 36px;
   margin: 0;
   padding: 0;
   z-index: 9;
+  margin: 0 auto;
+  padding: 0.45rem;
+  background: #ce5454;
+}
+
+.Home__Links a {
+  color: #fff;
 }
 
 ul.Home__Links > li {
@@ -192,7 +212,7 @@ ul.Home__Links {
 }
 
 .Home__Mode_Switcher {
-  text-align: left;
+  text-align: center;
   margin: 0;
   list-style: none;
   padding: 0.4rem 1.2rem;
@@ -236,12 +256,16 @@ ul.Home__Links {
     margin-top: 25vh;
   }
 
+  .Page.immersive .Logo {
+    margin-top: 0;
+  }
+
   ul.Home__Links {
     display: inline;
   }
 
   ul.Home__Links > li a {
-    color: #333;
+    color: #fff;
     display: inline-flex;
     align-items: center;
   }
@@ -254,7 +278,7 @@ ul.Home__Links {
   ul.Home__Links > li a:focus,
   ul.Home__Links > li a:active {
     text-decoration: none;
-    color: #ff0000;
+    color: #b1a299;
   }
 
   ul.Home__Links i.material-icons-outlined {
