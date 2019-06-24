@@ -25,6 +25,7 @@ export default {
       bind(el, binding, vnode) {
         const [width, height] = vnode.context.getBlockSize().split('x')
         el.setAttribute('style', `width: 250px; height: ${height}px;`)
+        el.innerHTML = `<img src="https://picsum.photos/250/${height}?${Math.random()}" />`
       }
     }
   },
