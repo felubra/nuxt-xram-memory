@@ -1,16 +1,5 @@
 <template>
-  <AbstractPage class="Page Page--home">
-    <ul class="Home__Links">
-      <li v-for="page in menuLinks()" :key="page.id" class="Menu__Item Menu__Item--big">
-        <nuxt-link
-          :title="page.title"
-          :alt="`Clique para visitar a página '${page.title}'`"
-          :to="urlOrRoute(page)"
-        >
-          <span>{{page.title}}</span>
-        </nuxt-link>
-      </li>
-    </ul>
+  <AbstractPage :class="{'Page Page--home Page--bare': true, 'immersive': isImmersive}">
     <Logo :big="true"/>
     <no-ssr>
       <ReactiveBase
