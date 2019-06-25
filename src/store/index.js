@@ -2,25 +2,35 @@ export const state = () => ({
   menuVisible: false,
   pages: [
     {
-      position: 'menu',
+      position: ['menu'],
       icon: 'search',
-      title: 'Pesquisar',
+      title: 'Notícias',
       featured: false,
       published: true,
-      show_in_menu: true,
       teaser: '',
       url: {
         name: 'search-query'
       },
-      weight: -10
+      weight: 0
     },
     {
-      position: 'menu',
+      position: ['menu'],
+      icon: 'search',
+      title: 'Imagens',
+      featured: false,
+      published: true,
+      teaser: '',
+      url: {
+        name: 'images'
+      },
+      weight: 0
+    },
+    {
+      position: ['menu'],
       icon: 'feedback',
       title: 'Contato',
       featured: false,
       published: true,
-      show_in_menu: true,
       teaser: '',
       url: {
         name: 'contact'
@@ -28,22 +38,20 @@ export const state = () => ({
       weight: 10
     },
     {
-      position: 'menu-footer',
+      position: ['menu-footer'],
       icon: '',
       title: 'Termos de Uso',
       featured: false,
       published: true,
-      show_in_menu: true,
       teaser: '',
       url: 'termos_de_uso'
     },
     {
-      position: 'menu-footer',
+      position: ['menu-footer'],
       icon: '',
       title: 'Política de privacidade',
       featured: false,
       published: true,
-      show_in_menu: true,
       teaser: '',
       url: 'politica_privacidade'
     }
@@ -73,15 +81,25 @@ export const mutations = {
 }
 
 export const getters = {
-  menuLinks({ pages }) {
+  pageLinks({ pages }) {
     return function(position = 'menu') {
       return pages
-        .filter(
-          page =>
-            page.show_in_menu === true && position === 'menu'
-              ? !page.position || page.position === 'menu'
-              : page.position === position
-        )
+        .filter(page => {
+          switch (position) {
+            case 'menu':
+              return (
+                page.show_in_menu ||
+                (page.position && page.position.includes(position))
+              )
+            case 'home':
+              return (
+                page.show_in_home ||
+                (page.position && page.position.includes(position))
+              )
+            default:
+              return page.position && page.position.includes(position)
+          }
+        })
         .sort((a, b) => a.weight || 0 - b.weight || 0)
     }
   },

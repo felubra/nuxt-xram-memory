@@ -8,7 +8,7 @@
     </header>
     <ul class="Menu__Items Menu__Items--big">
       <li
-        v-for="(page, index) in menuLinks()"
+        v-for="(page, index) in pageLinks()"
         :key="`menu--${index}`"
         class="Menu__Item Menu__Item--big"
       >
@@ -26,7 +26,7 @@
       <p class="center">Copyright © 2019 xraM-Memory</p>
       <ul class="Menu__Items Menu__Items--inline">
         <li
-          v-for="(page, index) in menuLinks('menu-footer')"
+          v-for="(page, index) in pageLinks('menu-footer')"
           :key="`menu--footer${index}`"
           class="Menu__Item Menu__Item--inline"
         >
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     ...mapState(['menuVisible']),
-    ...mapGetters(['menuLinks'])
+    ...mapGetters(['pageLinks'])
   },
   methods: {
     ...mapActions(['toggleMenu']),

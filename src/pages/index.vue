@@ -31,7 +31,7 @@
           :page-item="featuredPage"
         ></TeaserBlock>
         <ul class="Home__Links">
-          <li v-for="page in homeLinks" :key="page.id" class="Menu__Item Menu__Item--big">
+          <li v-for="page in pageLinks()" :key="page.id" class="Menu__Item Menu__Item--big">
             <nuxt-link
               :title="page.title"
               :alt="`Clique para visitar a página '${page.title}'`"
@@ -74,7 +74,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['menuLinks', 'featuredPages', 'homeLinks']),
+    ...mapGetters(['pageLinks', 'featuredPages', 'homeLinks']),
     featuredPage() {
       return this.featuredPages.length > 0 && this.featuredPages[0]
     }
