@@ -1,5 +1,6 @@
 export const state = () => ({
   menuVisible: false,
+  isNavBarSearching: false,
   pages: [
     {
       position: ['menu'],
@@ -54,6 +55,15 @@ export const state = () => ({
       published: true,
       teaser: '',
       url: 'politica_privacidade'
+    },
+    {
+      position: ['menu-footer'],
+      icon: '',
+      title: 'Licenças de código aberto',
+      featured: false,
+      published: true,
+      teaser: '',
+      url: 'licencas'
     }
   ]
 })
@@ -68,6 +78,16 @@ export const mutations = {
   },
   toggleMenu(state) {
     state.menuVisible = !state.menuVisible
+  },
+  /** Modo de busca na barra de navegação */
+  showSearch(state) {
+    state.isNavBarSearching = true
+  },
+  hideSearch(state) {
+    state.isNavBarSearching = false
+  },
+  toggleSearch(state) {
+    state.isNavBarSearching = !state.isNavBarSearching
   },
   /** Páginas */
   addPages(state, pages) {
@@ -114,6 +134,12 @@ export const actions = {
   },
   hideMenu({ commit }) {
     commit('hideMenu')
+  },
+  toggleSearch({ commit }) {
+    commit('toggleSearch')
+  },
+  hideSearch({ commit }) {
+    commit('hideSearch')
   },
   async fetchPagesInMenu({ commit }) {
     const pagesInMenu = await this.$axios.$get('api/v1/pages/in_menu')
