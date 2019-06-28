@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const { resolve } = require('path')
 import axios from 'axios'
 
 module.exports = {
@@ -98,8 +99,12 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/dotenv',
     '@nuxtjs/axios',
-    'nuxt-device-detect'
+    'nuxt-device-detect',
+    '@nuxtjs/style-resources'
   ],
+  styleResources: {
+    stylus: './assets/styles/*.styl'
+  },
   /*
   ** Axios module configuration
   */
