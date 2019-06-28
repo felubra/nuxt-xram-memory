@@ -44,7 +44,7 @@
 <script>
 import Logo from './Logo'
 import { mapState, mapActions, mapGetters } from 'vuex'
-import { sanitize } from '@/utils/'
+import { urlOrRoute } from '@/utils/'
 
 export default {
   name: 'Menu',
@@ -57,16 +57,7 @@ export default {
   },
   methods: {
     ...mapActions(['toggleMenu']),
-    urlOrRoute(item) {
-      return typeof item.url === 'object'
-        ? item.url
-        : {
-            name: 'slug',
-            params: {
-              slug: sanitize(item.url)
-            }
-          }
-    },
+    urlOrRoute,
     keyForLink(item) {
       return typeof item.url === 'object' ? item.url.name : item.url
     }

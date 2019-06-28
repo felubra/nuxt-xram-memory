@@ -96,3 +96,14 @@ export const innerInputFocus = {
 
 export const sanitize = (str, classes = appClassesXSSFilter) =>
   xss(str, classes)
+
+export const urlOrRoute = item => {
+  return typeof item.url === 'object'
+    ? item.url
+    : {
+        name: 'slug',
+        params: {
+          slug: sanitize(item.url)
+        }
+      }
+}
