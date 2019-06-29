@@ -5,12 +5,24 @@ export const state = () => ({
     {
       position: ['menu'],
       icon: 'search',
-      title: 'Notícias',
+      title: 'Início',
       featured: false,
       published: true,
       teaser: '',
       url: {
         name: 'search-query'
+      },
+      weight: 0
+    },
+    {
+      position: ['menu'],
+      icon: 'search',
+      title: 'Assuntos',
+      featured: false,
+      published: true,
+      teaser: '',
+      url: {
+        name: 'subjects'
       },
       weight: 0
     },
@@ -29,12 +41,36 @@ export const state = () => ({
     {
       position: ['menu'],
       icon: 'feedback',
+      title: 'Sobre o Projeto',
+      featured: false,
+      published: true,
+      teaser: '',
+      url: {
+        name: 'about'
+      },
+      weight: 10
+    },
+    {
+      position: ['menu-controls'],
+      icon: 'email',
       title: 'Contato',
       featured: false,
       published: true,
       teaser: '',
       url: {
         name: 'contact'
+      },
+      weight: 10
+    },
+    {
+      position: ['menu-controls'],
+      icon: 'search',
+      title: 'Pesquisa',
+      featured: false,
+      published: true,
+      teaser: '',
+      url: {
+        name: 'search'
       },
       weight: 10
     },

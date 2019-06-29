@@ -24,14 +24,14 @@
           >
             <i class="material-icons">more_horiz</i>
           </a>
-          <a
+          <nuxt-link
+            v-for="(page, index) in pageLinks('menu-controls')"
+            :key="index"
             class="NewNavBar__Item"
-            href="#search"
-            :class="{isNavBarSearching: 'active'}"
-            @click.prevent="showSearch"
+            :to="urlOrRoute(page)"
           >
-            <i class="material-icons">search</i>
-          </a>
+            <i class="material-icons">{{page.icon}}</i>
+          </nuxt-link>
         </div>
       </nav>
       <div v-else class="search-box">
@@ -43,7 +43,7 @@
           @keydown.esc="hideSearch"
           @keydown.backspace="hideSearchIfEmpty"
           @keydown.enter="doSearch"
-        >
+        />
         <a
           class="NewNavBar__Item"
           href="#search"
@@ -137,7 +137,7 @@ export default {
 
 <style lang="stylus" scoped>
 .NewNavBar {
-  font-family: $header-font;
+  font-family: $menu-font;
   font-size: $text-size;
   border-bottom: solid 1px #F1EAEA;
 }
@@ -148,13 +148,12 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 10px 16px 0;
 }
 
 nav {
   width: 100%;
   position: relative;
-  justify-content: space-evenly;
+  justify-content: flex-end;
 }
 
 nav, .main-itens, .controls {
@@ -168,8 +167,8 @@ nav, .main-itens, .controls {
 }
 
 .main-itens {
-  max-width: calc(80% - 48px);
   overflow: hidden;
+  margin: 0 auto;
 }
 
 input {
@@ -186,16 +185,19 @@ input {
 
 .controls {
   min-width: 48px;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .NewNavBar__Item {
   display: inline-block;
-  margin: 0 20px;
+  margin: 0 10px;
   padding: 20px 0;
   color: $text-color-inactive;
+  text-align: center;
 }
 
-.NewNavBar__Item:hover, .NewNavBar__Item:focus, .NewNavBar__Item:active, .NewNavBar__Item.active {
+.NewNavBar__Item:hover, .NewNavBar__Item:focus, .NewNavBar__Item:active, .NewNavBar__Item.active, .nuxt-link-exact-active {
   color: $text-color;
   border-bottom: solid 2px #D84848;
 }
@@ -237,14 +239,6 @@ nav a.NewNavBar__Item:first-of-type {
 
   .NewNavBar__Item {
     margin-top: 28px;
-  }
-
-  .NewNavBar__Logo {
-    margin-right: 56px;
-  }
-
-  .main-itens {
-    max-width: calc(100% - 48px);
   }
 }
 </style>
