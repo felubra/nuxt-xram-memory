@@ -181,6 +181,7 @@ input {
   margin: 20px 6px 20px 0;
   width: 100%;
   line-height: 20px;
+  background: transparent;
 }
 
 .controls {
