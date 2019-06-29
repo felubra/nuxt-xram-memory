@@ -143,7 +143,7 @@ export default {
 nav {
   width: 100%;
   position: relative;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 nav, .main-itens, .controls {
