@@ -1,12 +1,10 @@
 <template>
-  <section class="Page">
-    <div class="centered">
-      <h1>{{title}}</h1>
-      <nuxt-link class="active" to="/">Voltar à página inicial</nuxt-link>
-      <no-ssr>
-        <D3TagCloud hi-color="#999" class="TagCloud" :keywords="errorKeywords"/>
-      </no-ssr>
-    </div>
+  <section>
+    <h1>{{title}}</h1>
+    <nuxt-link class="active" to="/">Voltar à página inicial</nuxt-link>
+    <no-ssr>
+      <D3TagCloud hi-color="#999" class="TagCloud" :keywords="errorKeywords" />
+    </no-ssr>
   </section>
 </template>
 
@@ -63,19 +61,21 @@ export default {
 }
 </script>
 
-<style scoped>
-div.centered {
-  margin-top: auto;
+<style lang="stylus" scoped>
+section {
+  flex-grow: 1;
   text-align: center;
-  width: 100%;
   display: flex;
   flex-direction: column;
 }
+
 h1 {
-  font-size: 2rem;
+  margin-top: auto;
+  margin-bottom: 0;
+  font-weight: bold;
 }
-a {
-  font-size: 1.2rem;
-  text-decoration: none;
+
+.TagCloud {
+  margin: auto 0;
 }
 </style>
