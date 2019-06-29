@@ -6,7 +6,7 @@
         :class="`NewNavBar__Logo NewNavBar__Logo--display-${showLogo} NewNavBar__Logo--search-status--${isNavBarSearching}`"
       />
       <nav v-if="!isNavBarSearching">
-        <div class="main-itens">
+        <div v-dragscroll.x="true" class="main-itens">
           <nuxt-link
             v-for="(page, index) in pageLinks()"
             :key="index"
@@ -62,13 +62,15 @@ import Logo from './Logo'
 import { mapActions, mapState, mapGetters } from 'vuex'
 import { urlOrRoute } from '@/utils/'
 import ClickOutside from 'vue-click-outside'
+import { dragscroll } from 'vue-dragscroll'
 export default {
   name: 'NewNavBar',
   components: {
     Logo
   },
   directives: {
-    ClickOutside
+    ClickOutside,
+    dragscroll
   },
   props: {
     showLogo: {
