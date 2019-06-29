@@ -31,7 +31,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+.Page {
+  max-width: $max-width;
+  margin: auto auto;
+  width: 100%;
+}
+
 aside {
   background: #f3f1f1;
 }

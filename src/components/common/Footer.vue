@@ -29,7 +29,7 @@ export default {
 .MainFooter {
   color: #333333;
   width: 100%;
-  margin-top: solid 1px #f1eaea;
+  max-width: $max-width;
 }
 
 .MainFooter > a {

@@ -143,7 +143,7 @@ export default {
 }
 
 .NewNavBar > div.inner {
-  max-width: 1120px;
+  max-width: $max-width;
   width: 100%;
   margin: 0 auto;
   display: flex;
