@@ -1,7 +1,7 @@
 <template>
   <div :class="{'Logo': true, 'Logo--big': big}">
     <nuxt-link class="Logo__Link" to="/">
-      <img :src="src" alt>
+      <img :src="src" alt />
     </nuxt-link>
   </div>
 </template>
@@ -42,11 +42,5 @@ export default {
 
 .Logo.Logo--big img {
   height: 3rem;
-}
-
-.Logo__Link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>
