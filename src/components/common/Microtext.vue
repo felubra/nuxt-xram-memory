@@ -23,12 +23,12 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="stylus" scoped>
 p {
   font-family: 'Cabin', sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 0.875;
+  font-size: $microtext;
   line-height: 1.06rem;
   text-transform: uppercase;
   color: #d84848;
