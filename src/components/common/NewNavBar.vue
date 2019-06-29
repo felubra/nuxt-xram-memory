@@ -13,9 +13,11 @@
             class="NewNavBar__Item"
             :to="urlOrRoute(page)"
           >{{page.title}}</nuxt-link>
+          <resize-sensor @resize="determineObfuscation"></resize-sensor>
         </div>
         <div class="controls">
           <a
+            v-if="isMenuItensObfuscated"
             class="NewNavBar__Item NewNavBar__Item--menu-toggle"
             href="#main-menu"
             @click.prevent="menuToggle"
@@ -85,7 +87,8 @@ export default {
   },
   data() {
     return {
-      searchInput: ''
+      searchInput: '',
+      isMenuItensObfuscated: false
     }
   },
   computed: {
@@ -118,6 +121,12 @@ export default {
         this.$refs.searchBox.focus()
       })
     },
+    determineObfuscation({ width }) {
+      const container = document.querySelector('div.main-itens')
+      this.isMenuItensObfuscated =
+        width < ((container && container.scrollWidth) || 0)
+    },
+
     urlOrRoute,
     ...mapActions(['toggleMenu', 'hideMenu', 'hideSearch', 'toggleSearch'])
   }
