@@ -41,6 +41,6 @@ export default {
 }
 
 .Logo.Logo--big img {
-  height: 3rem;
+  height: 3.5rem;
 }
 </style>
