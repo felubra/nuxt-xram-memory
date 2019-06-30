@@ -41,8 +41,7 @@ export default {
   color: #333333;
   width: 100%;
   border-top: solid 1px #f1eaea;
-  margin-top: auto;
-  margin: 0 auto;
+  margin: auto auto 0;
   padding: 1rem 0;
   text-align: center;
   font-size: 14px;
