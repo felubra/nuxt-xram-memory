@@ -55,9 +55,11 @@ aside {
 .Page.Page--aside-after aside {
   order: 2;
 }
+
 h2 {
   font-weight: 500;
 }
+
 .Page__Subtitle {
   display: none;
 }
@@ -65,19 +67,18 @@ h2 {
 section.Page {
   align-content: center;
 }
+
 header {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  align-items: center;
-  min-height: 35vh;
+  font-family: $header-font;
 }
 
 main {
   flex-grow: 1;
-  background: #ffffff;
   font-weight: 1rem;
 }
 
@@ -86,11 +87,13 @@ main {
     display: block;
     margin: 0 0 1rem;
   }
+
   aside {
     flex-basis: 350px;
     flex-shrink: 0;
     margin-top: 70px;
   }
+
   .Page.Page--aside-after aside {
     order: 0;
   }
