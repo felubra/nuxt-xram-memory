@@ -1,6 +1,6 @@
 <template>
-  <AbstractPage class="Page Page--home">
-    <Logo :big="true"/>
+  <AbstractPage :full-width="true">
+    <Logo :big="true" />
     <no-ssr>
       <ReactiveBase
         class-name="ReactiveBase"
@@ -30,18 +30,8 @@
           class="FeaturedPage"
           :page-item="featuredPage"
         ></TeaserBlock>
-        <ul class="Home__Links">
-          <li v-for="page in pageLinks()" :key="page.id" class="Menu__Item Menu__Item--big">
-            <nuxt-link
-              :title="page.title"
-              :alt="`Clique para visitar a página '${page.title}'`"
-              :to="urlOrRoute(page)"
-            >
-              <span>{{page.title}}</span>
-            </nuxt-link>
-          </li>
-        </ul>
-        <HomeTagCloud/>
+
+        <HomeTagCloud />
       </ReactiveBase>
     </no-ssr>
   </AbstractPage>
@@ -57,6 +47,7 @@ import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
 import { sanitize } from '@/utils/'
 export default {
+  layout: 'index',
   components: {
     HomeTagCloud,
     TeaserBlock,
@@ -102,14 +93,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 .Logo {
   margin-top: 10vh;
   padding: 0.5rem;
+  text-align: center;
 }
 
 .Logo + .SearchBar {
   margin: 0;
+}
+
+.SearchBar, .FeaturedPage {
+  max-width: 40.5rem;
+  margin: 0 auto;
 }
 
 .SearchBar .SearchBar__Input {
