@@ -1,5 +1,5 @@
 <template>
-  <section class="Page">
+  <section :class="{'Page': true, 'Page--full-width': fullWidth}">
     <header v-if="hasSlot(['header', 'image'])">
       <slot name="image"></slot>
       <slot name="header"></slot>
@@ -17,6 +17,12 @@
 <script>
 export default {
   name: 'AbstractPage',
+  props: {
+    fullWidth: {
+      type: Boolean,
+      default: false
+    }
+  },
   methods: {
     hasSlot(name = 'aside') {
       if (Array.isArray(name)) {
@@ -36,6 +42,10 @@ export default {
   max-width: $max-width;
   margin: auto auto;
   width: 100%;
+}
+
+.Page.Page--full-width {
+  max-width: none;
 }
 
 aside {
