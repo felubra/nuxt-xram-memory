@@ -66,11 +66,14 @@ export default {
 
 .TeaserBlock__Link {
   display: block;
-  text-align: right;
-  font-size: 0.75rem;
+  text-align: center;
 }
 
 .TeaserBlock__Link--left {
+  text-align: right;
+}
+
+.TeaserBlock__Link--right {
   text-align: left;
 }
 
