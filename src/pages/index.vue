@@ -1,40 +1,51 @@
 <template>
-  <AbstractPage :full-width="true">
-    <Logo :big="true" />
-    <no-ssr>
-      <ReactiveBase
-        class-name="ReactiveBase"
-        app="artifact_document,artifact_news"
-        :url="reactiveServerURL"
-        :theme="reactiveDefaultTheme"
-        :credentials="reactiveCredentials"
+  <no-ssr>
+    <ReactiveBase
+      :class-name="{'PageIndex': true, 'PageIndex--searching': inSearchMode}"
+      app="artifact_document,artifact_news"
+      :url="reactiveServerURL"
+      :theme="reactiveDefaultTheme"
+      :credentials="reactiveCredentials"
+    >
+      <div
+        :class="{'PageIndex__SearchArea': true, 'PageIndex__SearchArea--searching': inSearchMode}"
       >
+        <transition name="fade" appear mode="in-out" :duration="100">
+          <Logo v-if="!inSearchMode" class="Home__Logo" :big="true" />
+        </transition>
         <DataSearch
           v-inner-input-focus
-          class="SearchBar SearchBar--home"
+          class="SearchBar"
           component-id="SearchSensor"
           :field-weights="[10,7]"
           :data-field="['title', 'teaser']"
           icon-position="right"
           :autosuggest="false"
-          class-name="SearchBar SearchBar--home"
           placeholder="Pesquisar no acervo"
           :show-clear="false"
           :debounce="250"
-          @keyPress="search"
+          :inner-class="{
+            input: 'SearchBar__Input'
+          }"
+          @keyDown.esc="exitSearchMode"
+          @keyDown.backspace="exitSearchMode"
+          @keyDown.enter="enterSearchMode"
         />
+      </div>
 
+      <transition name="fade">
         <TeaserBlock
-          v-if="featuredPage"
+          v-if="!inSearchMode && featuredPage"
           link-position="center"
           class="FeaturedPage"
           :page-item="featuredPage"
         ></TeaserBlock>
-
-        <HomeTagCloud />
-      </ReactiveBase>
-    </no-ssr>
-  </AbstractPage>
+      </transition>
+      <transition name="fade">
+        <HomeTagCloud v-if="!inSearchMode" class="HomeTagCloud" />
+      </transition>
+    </ReactiveBase>
+  </no-ssr>
 </template>
 
 <script>
@@ -58,6 +69,11 @@ export default {
     'inner-input-focus': innerInputFocus
   },
   mixins: [reactiveMixin],
+  data() {
+    return {
+      inSearchMode: false
+    }
+  },
   head: {
     title: 'xraM-Memory',
     bodyAttrs: {
@@ -71,12 +87,18 @@ export default {
     }
   },
   methods: {
-    search(e) {
-      if (event.which == 13 || event.keyCode == 13) {
-        this.$router.push({
-          name: 'search-query',
-          params: { query: e.target.value }
-        })
+    exitSearchMode({ target, keyCode }) {
+      if (keyCode === 27) {
+        this.inSearchMode = false
+      } else {
+        if (!target.value || !target.value.trim()) {
+          this.inSearchMode = false
+        }
+      }
+    },
+    enterSearchMode({ target }) {
+      if (target.value && target.value.trim()) {
+        this.inSearchMode = true
       }
     },
     urlOrRoute(item) {
@@ -94,59 +116,55 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.Logo {
-  margin-top: 10vh;
-  padding: 0.5rem;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.25s;
+}
+
+.fade-enter, .fade-leave-to { /* .fade-leave-active below version 2.1.8 */
+  opacity: 0;
+}
+
+.PageIndex--searching {
+}
+
+.PageIndex__SearchArea, .FeaturedPage, .SearchBar {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.PageIndex__SearchArea, .HomeTagCloud {
+  transition: margin-top 0.35s ease;
+}
+
+.PageIndex__SearchArea {
+  max-width: 960px;
+  margin-top: 20vh;
+}
+
+.PageIndex__SearchArea--searching {
+  margin-top: 1rem;
+}
+
+.Home__Logo {
   text-align: center;
 }
 
-.Logo + .SearchBar {
-  margin: 0;
+.HomeTagCloud {
+  order: 2;
+  margin-top: 35vh;
 }
 
-.SearchBar, .FeaturedPage {
-  max-width: 40.5rem;
-  margin: 0 auto;
+.SearchBar {
+  max-width: 730px;
 }
 
-.SearchBar .SearchBar__Input {
-  background-color: #fff;
-}
-
-.FeaturedPage {
-  order: 0;
-  margin-top: 2vh;
-}
-
-.Home__Links {
-  z-index: 9;
-}
-
-ul.Home__Links {
-  display: inline-block;
-  margin: 3rem auto 0.5rem;
-  padding: 0.45rem;
-}
-
-ul.Home__Links > li {
-  display: inline-block;
-  list-style: none;
-  font-size: 1.1rem;
-  border-left: solid 1px #aa0000;
-  padding: 0 0.5rem;
-}
-
-ul.Home__Links > li:first-child {
-  border-left: none;
-}
-
-ul.Home__Links > li > a {
-  color: #333;
+.SearchBar__Input {
+  background: #fff !important; /* #TODO: este estilo não está pegando */
 }
 
 @media only screen and (min-width: 768px) {
-  .Logo {
-    margin-top: 25vh;
+  .HomeTagCloud {
+    margin-top: 15vh;
   }
 }
 </style>
