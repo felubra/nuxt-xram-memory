@@ -1,12 +1,9 @@
 <template>
-  <NewNavBar></NewNavBar>
+  <div>asdasdsa</div>
 </template>
 
 <script>
-import NewNavBar from '~/components/common/NewNavBar'
 export default {
-  components: {
-    NewNavBar
-  }
+  layout: 'alt'
 }
 </script>

@@ -14,6 +14,7 @@ import AbstractPage from '~/components/common/AbstractPage'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
 export default {
+  layout: 'alt',
   components: {
     AbstractPage
   },

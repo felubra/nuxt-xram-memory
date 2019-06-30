@@ -1,6 +1,7 @@
 export const state = () => ({
   menuVisible: false,
   isNavBarSearching: false,
+  isHomeSearching: false,
   pages: [
     {
       position: ['menu'],
@@ -10,7 +11,7 @@ export const state = () => ({
       published: true,
       teaser: '',
       url: {
-        name: 'search-query'
+        name: 'index'
       },
       weight: 0
     },
