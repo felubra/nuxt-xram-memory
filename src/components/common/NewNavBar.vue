@@ -142,6 +142,13 @@ export default {
   border-bottom: solid 1px #F1EAEA;
 }
 
+.NewNavBar[fixed] {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: $bg-color;
+}
+
 .NewNavBar > div.inner {
   max-width: $max-width;
   width: 100%;
