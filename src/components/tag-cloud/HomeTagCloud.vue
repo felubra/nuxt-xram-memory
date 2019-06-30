@@ -5,7 +5,7 @@
     :default-query="tagCloudQuery"
   >
     <div slot-scope="{ aggregations, error }">
-      <D3TagCloud v-if="!error" :keywords="keywords(aggregations)"/>
+      <D3TagCloud v-if="!error" :keywords="keywords(aggregations)" />
     </div>
   </ReactiveComponent>
 </template>
@@ -80,13 +80,4 @@ export default {
 
 
 <style scoped>
-.ReactiveD3TagCloud--home {
-  order: 2;
-  margin-top: 35vh;
-}
-@media only screen and (min-width: 768px) {
-  .ReactiveD3TagCloud--home {
-    margin-top: 15vh;
-  }
-}
 </style>
