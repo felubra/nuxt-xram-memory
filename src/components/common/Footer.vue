@@ -1,15 +1,18 @@
 <template>
   <footer class="MainFooter">
-    <Logo variant="claro" />
-    <p>
-      &copy; 2019 xraM-Memory.
-      <br />Todos os direitos reservados.
-    </p>
-    <nuxt-link
-      v-for="(page, index) in footerLinks"
-      :key="index"
-      :to="urlOrRoute(page)"
-    >{{page.title}}</nuxt-link>
+    <div class="innner">
+      <Logo variant="claro" />
+      <p>
+        &copy; 2019
+        <strong>xraM-Memory</strong>.
+        <br />Todos os direitos reservados.
+      </p>
+      <nuxt-link
+        v-for="(page, index) in footerLinks"
+        :key="index"
+        :to="urlOrRoute(page)"
+      >{{page.title}}</nuxt-link>
+    </div>
   </footer>
 </template>
 
@@ -39,16 +42,19 @@ export default {
   width: 100%;
   border-top: solid 1px #f1eaea;
   margin-top: auto;
-  max-width: $max-width;
   margin: 0 auto;
   padding: 1rem 0;
   text-align: center;
   font-size: 14px;
 }
 
-.MainFooter > a {
+.MainFooter > .inner {
+  max-width: $max-width;
+}
+
+.MainFooter a {
   font-family: 'Cabin', sans-serif;
-  font-size: $microtext;
+  font-size: 12px;
   line-height: 0.93rem;
   text-transform: uppercase;
   color: #666666;
@@ -56,14 +62,17 @@ export default {
   margin: 6px 0;
 }
 
+.MainFooter a:focus, .MainFooter a:active, .MainFooter a:hover {
+  color: $link-color;
+}
+
 .MainFooter > a:first-child {
   margin-top: 1rem;
 }
 
 @media only screen and (min-width: 768px) {
-  .MainFooter > a {
+  .MainFooter a {
     font-family: 'Cabin', sans-serif;
-    font-size: $microtext;
     line-height: 0.93rem;
     text-transform: uppercase;
     color: #666666;
