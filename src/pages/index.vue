@@ -1,7 +1,7 @@
 <template>
   <no-ssr>
     <ReactiveBase
-      :class-name="{'PageIndex': true, 'PageIndex--searching': inSearchMode}"
+      class-name="PageIndex"
       app="artifact_document,artifact_news"
       :url="reactiveServerURL"
       :theme="reactiveDefaultTheme"
@@ -137,9 +137,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.PageIndex--searching {
-}
-
 .PageIndex__SearchArea, .FeaturedPage, .SearchBar {
   margin-left: auto;
   margin-right: auto;
