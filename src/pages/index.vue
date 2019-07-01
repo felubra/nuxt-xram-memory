@@ -44,6 +44,26 @@
       <transition name="fade">
         <HomeTagCloud v-if="!inSearchMode" class="HomeTagCloud" />
       </transition>
+      <transition v-if="inSearchMode" :duration="500" name="fade">
+        <ReactiveList
+          :react="{and: ['SearchSensor']}"
+          component-id="SearchResults"
+          :pagination="false"
+          data-field="title.raw"
+          class-name="SearchResults"
+          loader="Carregando..."
+          :render-result-stats="resultStats"
+          render-error="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
+          :inner-class="{
+            resultsInfo: 'microtext',
+            list: 'SearchResults__List'
+          }"
+          :from="0"
+          :size="20"
+        >
+          <NewsGrid slot="renderAllData" slot-scope="{ results }" :items="results" />
+        </ReactiveList>
+      </transition>
     </ReactiveBase>
   </no-ssr>
 </template>
@@ -51,8 +71,9 @@
 <script>
 import HomeTagCloud from '~/components/tag-cloud/HomeTagCloud'
 import TeaserBlock from '~/components/common/TeaserBlock'
-import AbstractPage from '~/components/common/AbstractPage'
 import Logo from '~/components/common/Logo'
+import NewsGrid from '~/components/news/NewsGrid'
+
 import reactiveMixin from '~/utils/reactiveMixin'
 import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
@@ -63,7 +84,7 @@ export default {
     HomeTagCloud,
     TeaserBlock,
     Logo,
-    AbstractPage
+    NewsGrid
   },
   directives: {
     'inner-input-focus': innerInputFocus
@@ -116,14 +137,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.25s;
-}
-
-.fade-enter, .fade-leave-to { /* .fade-leave-active below version 2.1.8 */
-  opacity: 0;
-}
-
 .PageIndex--searching {
 }
 
