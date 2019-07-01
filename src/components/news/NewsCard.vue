@@ -5,7 +5,7 @@
         <div class="NewCard__Image">
           <img v-if="image" :src="image" alt @error="removeImage" />
         </div>
-        <div class="news-text">
+        <div class="NewsCard__Text">
           <p v-if="showLabel" class="label">{{label}}</p>
           <h3>{{ resultItem.title }}</h3>
           <p class="teaser">{{teaser}}</p>
@@ -27,6 +27,7 @@
 /**TODO: adicionar prop centered */
 const dayJs = require('dayjs')
 const { getMediaUrl, sanitize } = require('~/utils')
+const smartTruncate = require('smart-truncate')
 export default {
   name: 'NewsCard',
   props: {
@@ -54,7 +55,7 @@ export default {
       return sanitize(this.resultItem.title)
     },
     teaser() {
-      return sanitize(this.resultItem.teaser)
+      return sanitize(smartTruncate(this.resultItem.teaser, 180))
     },
     image() {
       try {
@@ -70,6 +71,7 @@ export default {
     },
     itemLink() {
       switch (this.type) {
+        case 'Imagem':
         case 'Documento': {
           return {
             name: 'document-document_id',
@@ -85,7 +87,15 @@ export default {
       }
     },
     type() {
-      return this.resultItem._type || ''
+      let value = this.resultItem._type || ''
+      if (
+        value === 'Documento' &&
+        this.resultItem.mime_type &&
+        this.resultItem.mime_type.includes('image/')
+      ) {
+        value = 'Imagem'
+      }
+      return value
     },
     newspaperIcon() {
       try {
@@ -196,10 +206,6 @@ div.NewsCard__Body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-}
-
-div.NewsCard__Body p.teaser {
-  display: none;
 }
 
 div.NewCard__Image {
