@@ -36,7 +36,7 @@ export default {
       type: String,
       default: 'right',
       validator(value) {
-        return value in ['left', 'center', 'right']
+        return ['left', 'center', 'right'].includes(value)
       }
     }
   },
