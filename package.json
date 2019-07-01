@@ -36,6 +36,7 @@
     "vue-click-outside": "^1.0.7",
     "vue-dragscroll": "^1.8.3",
     "vue-fixed-header": "^2.0.2",
+    "vue-masonry": "^0.11.7",
     "vue-pdf": "^4.0.6",
     "vue-recaptcha": "^1.1.1",
     "vue-resize-sensor": "^2.0.0",

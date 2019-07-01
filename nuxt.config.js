@@ -84,12 +84,13 @@ module.exports = {
    * TODO: remover o element-ui e o reactive-search e usá-los de forma fracionada, por componente
    */
   plugins: [
-    { src: '@/plugins/element-ui', ssr: false },
+    { src: '@/plugins/resize-sensor.js', ssr: false },
     { src: '@/plugins/reactive-search', ssr: false },
+    { src: '@/plugins/element-ui', ssr: false },
     '@/plugins/v-viewer',
     '@/plugins/axios',
     '@/plugins/essential-content.js',
-    { src: '@/plugins/resize-sensor.js', ssr: false }
+    { src: '@/plugins/vue-masonry.js', ssr: false }
   ],
 
   /*
