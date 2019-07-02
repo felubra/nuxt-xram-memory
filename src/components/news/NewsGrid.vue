@@ -9,23 +9,38 @@
     fit-width="true"
   >
     <div v-for="(item, index) in items" :key="index" v-masonry-tile class="item">
-      <NewsCard class="item" :result-item="item" />
+      <component :is="componentType(item)" class="item" :item="item" />
     </div>
   </div>
 </template>
 
 <script>
 import NewsCard from './NewsCard'
+import ImageCard from './ImageCard'
+import DocumentCard from './DocumentCard'
 
 export default {
   name: 'NewsGrid',
   components: {
-    NewsCard
+    NewsCard,
+    ImageCard,
+    DocumentCard
   },
   props: {
     items: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    componentType(item) {
+      if (item._type && item._type === 'Documento') {
+        return item.mime_type && item.mime_type.includes('image/')
+          ? 'ImageCard'
+          : 'DocumentCard'
+      } else {
+        return 'NewsCard'
+      }
     }
   }
 }

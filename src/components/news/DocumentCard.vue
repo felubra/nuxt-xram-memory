@@ -1,30 +1,30 @@
 <template>
-  <div class="Card Card--news">
+  <div class="Card Card--document">
     <nuxt-link :to="itemLink">
-      <img v-if="image" :src="image" />
+      <img v-if="teaser" :src="image" />
       <p class="label">{{label}}</p>
       <h3>{{title}}</h3>
       <p v-if="teaser">{{teaser}}</p>
     </nuxt-link>
-    <p>
-      <a :href="newspaper.url">
-        <img v-if="newspaperIcon" :src="newspaperIcon" alt />
-        {{newspaper.title}}
-      </a>
-    </p>
   </div>
 </template>
 
 <script>
 import Card from './Card'
 export default {
-  name: 'NewsCard',
+  name: 'ImageCard',
   extends: Card
 }
 </script>
 
 <style lang="stylus" scoped>
-.Card--news {
-  background: #FAF6F6;
+.Card--document {
+  background: #F6F8FA;
+}
+
+.Card--document img {
+  width: 90%;
+  margin: 0.5rem auto;
+  border: solid 1px #C7C9C9;
 }
 </style>
