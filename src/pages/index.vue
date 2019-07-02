@@ -8,7 +8,9 @@
       :credentials="reactiveCredentials"
     >
       <div
-        :class="{'PageIndex__SearchArea': true, 'PageIndex__SearchArea--searching': inSearchMode}"
+        :class="{
+          'PageIndex__SearchArea': true, 
+          'PageIndex__SearchArea--searching': inSearchMode}"
       >
         <transition name="fade" appear mode="in-out" :duration="100">
           <Logo v-if="!inSearchMode" class="Home__Logo" :big="true" />
@@ -31,7 +33,75 @@
           @keyDown.backspace="exitSearchMode"
           @keyDown.enter="enterSearchMode"
         />
+        <div v-if="inSearchMode" class="FilterList">
+          <single-dropdown-list
+            :inner-class="{title: 'microtext',         select: 'FilterItem__DropdownToggle',           list: 'FilterItem__DropdownList'          }"
+            :react="{and: ['SearchSensor', 'NewspaperSensor', 'KeywordSensor', 'PublishedYearSensor']}"
+            :show-filter="true"
+            :size="25"
+            class-name="FilterList__FilterItem"
+            component-id="TypeSensor"
+            data-field="_type"
+            filter-label="Tipo"
+            placeholder="Todos"
+            title="Tipo"
+          />
+          <single-dropdown-list
+            :default-query="customFilterQuery"
+            :inner-class="{              title: 'microtext',              select: 'FilterItem__DropdownToggle',              list: 'FilterItem__DropdownList'            }"
+            :react="{and: ['SearchSensor', 'TypeSensor', 'KeywordSensor', 'PublishedYearSensor']}"
+            :show-count="false"
+            :show-filter="true"
+            :size="25"
+            class-name="FilterList__FilterItem"
+            component-id="NewspaperSensor"
+            data-field="newspaper.title"
+            filter-label="Site/Veículo"
+            nested-field="newspaper"
+            placeholder="Todos"
+            title="Site/Veículo"
+          />
+          <multi-dropdown-list
+            :default-query="customFilterQuery"
+            :default-selected="keywords"
+            :inner-class="{                  title: 'microtext',                  select: 'FilterItem__DropdownToggle',                  list: 'FilterItem__DropdownList'                }"
+            :react="{and: ['SearchSensor', 'TypeSensor', 'NewspaperSensor',  'PublishedYearSensor']}"
+            :show-count="false"
+            :show-filter="true"
+            :show-search="true"
+            :size="100"
+            class-name="FilterList__FilterItem"
+            component-id="KeywordSensor"
+            data-field="keywords.name"
+            filter-label="Palavras-chave"
+            nested-field="keywords"
+            placeholder="Todas"
+            title="Palavras-chave"
+          >
+            <template slot="renderItem" slot-scope="{ label }">
+              <div>{{lowerSlugify(label)}}</div>
+            </template>
+          </multi-dropdown-list>
+          <!--
+          <DynamicRangeSlider
+            :inner-class="{              title: 'microtext',              slider: 'FilterList__Slider',            }"
+            :react="{and: ['SearchSensor', 'TypeSensor', 'NewspaperSensor', 'KeywordSensor']}"
+            class-name="FilterList__FilterItem"
+            component-id="PublishedYearSensor"
+            data-field="published_year"
+            filter-label="Publicado entre"
+            title="Publicado entre"
+          />-->
+        </div>
       </div>
+      <selected-filters
+        v-if="inSearchMode"
+        class-name="SelectedFilters"
+        clear-all-label="Limpar filtros"
+        :inner-class="{
+          button:'SelectedFilters__Filter'
+        }"
+      />
 
       <transition name="fade">
         <TeaserBlock
@@ -41,18 +111,19 @@
           :page-item="featuredPage"
         ></TeaserBlock>
       </transition>
+
       <transition name="fade">
-        <HomeTagCloud v-if="!inSearchMode" class="HomeTagCloud" />
+        <HomeTagCloud v-if="!inSearchMode" :use-links="false" class="HomeTagCloud" />
       </transition>
+
       <transition v-if="inSearchMode" :duration="500" name="fade">
         <ReactiveList
-          :react="{and: ['SearchSensor']}"
+          :react="{and: ['SearchSensor', 'TypeSensor', 'NewspaperSensor', 'KeywordSensor', 'PublishedYearSensor']}"
           component-id="SearchResults"
           :pagination="false"
           data-field="title.raw"
           class-name="SearchResults"
           loader="Carregando..."
-          :render-result-stats="resultStats"
           render-error="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
           :inner-class="{
             resultsInfo: 'microtext',
@@ -61,7 +132,11 @@
           :from="0"
           :size="20"
         >
-          <NewsGrid slot="renderAllData" slot-scope="{ results }" :items="results" />
+          <div
+            slot="renderResultStats"
+            slot-scope="{ totalResults, time }"
+          >{{totalResults}} resultados em {{time}}ms</div>
+          <NewsGrid slot="renderAllData" slot-scope="{ results }" :items="results"></NewsGrid>
         </ReactiveList>
       </transition>
     </ReactiveBase>
@@ -69,6 +144,8 @@
 </template>
 
 <script>
+import slugify from 'slugify'
+
 import HomeTagCloud from '~/components/tag-cloud/HomeTagCloud'
 import TeaserBlock from '~/components/common/TeaserBlock'
 import Logo from '~/components/common/Logo'
@@ -107,7 +184,45 @@ export default {
       return this.featuredPages.length > 0 && this.featuredPages[0]
     }
   },
+  watch: {
+    $route: function(route) {
+      console.log(route)
+    }
+  },
   methods: {
+    lowerSlugify(keyword) {
+      return slugify(keyword.toLowerCase())
+    },
+    customFilterQuery(value, props) {
+      try {
+        return {
+          query: {
+            match_all: {}
+          },
+          size: 0,
+          aggs: {
+            reactivesearch_nested: {
+              nested: {
+                path: props.nestedField
+              },
+              aggs: {
+                [props.dataField]: {
+                  terms: {
+                    field: props.dataField,
+                    size: props.size,
+                    order: {
+                      _count: 'desc'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      } catch {
+        return {}
+      }
+    },
     exitSearchMode({ target, keyCode }) {
       if (keyCode === 27) {
         this.inSearchMode = false
@@ -147,7 +262,6 @@ export default {
 }
 
 .PageIndex__SearchArea {
-  max-width: 960px;
   margin-top: 20vh;
 }
 
@@ -172,9 +286,36 @@ export default {
   background: #fff !important; /* #TODO: este estilo não está pegando */
 }
 
+.FilterList {
+  display: flex;
+  flex-direction: column;
+}
+
+.FilterList__FilterItem {
+  width: 100%;
+}
+
+.SelectedFilters, .FilterList {
+  margin-top: 2rem;
+}
+
+.SelectedFilters {
+  margin: 2rem 1rem;
+}
+
 @media only screen and (min-width: 768px) {
   .HomeTagCloud {
     margin-top: 15vh;
+  }
+
+  .FilterList {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .FilterList__FilterItem {
+    width: 33%;
+    margin: 0 1rem;
   }
 }
 </style>
