@@ -9,16 +9,17 @@
     >
       <div
         :class="{
-          'PageIndex__SearchArea': true, 
+          'PageIndex__SearchArea': true,
           'PageIndex__SearchArea--searching': inSearchMode}"
       >
         <transition name="fade" appear mode="in-out" :duration="100">
           <Logo v-if="!inSearchMode" class="Home__Logo" :big="true" />
         </transition>
+        <!-- eslint-disable -->
         <DataSearch
           v-inner-input-focus
           class="SearchBar"
-          component-id="SearchSensor"
+          component-id="search"
           :field-weights="[10,7]"
           :data-field="['title', 'teaser']"
           icon-position="right"
@@ -32,51 +33,65 @@
           @keyDown.esc="exitSearchMode"
           @keyDown.backspace="exitSearchMode"
           @keyDown.enter="enterSearchMode"
+          :URLParams="true"
+          filter-label="Texto"
         />
         <div v-if="inSearchMode" class="FilterList">
           <single-dropdown-list
-            :inner-class="{title: 'microtext',         select: 'FilterItem__DropdownToggle',           list: 'FilterItem__DropdownList'          }"
-            :react="{and: ['SearchSensor', 'NewspaperSensor', 'KeywordSensor', 'PublishedYearSensor']}"
+            :inner-class="{
+              title: 'microtext',
+              select: 'FilterItem__DropdownToggle',
+              list: 'FilterItem__DropdownList'          }"
+            :react="{and: ['search', 'newspaper', 'keywords', 'published_year']}"
             :show-filter="true"
             :size="25"
             class-name="FilterList__FilterItem"
-            component-id="TypeSensor"
+            component-id="type"
             data-field="_type"
             filter-label="Tipo"
             placeholder="Todos"
             title="Tipo"
+            :URLParams="true"
           />
           <single-dropdown-list
             :default-query="customFilterQuery"
-            :inner-class="{              title: 'microtext',              select: 'FilterItem__DropdownToggle',              list: 'FilterItem__DropdownList'            }"
-            :react="{and: ['SearchSensor', 'TypeSensor', 'KeywordSensor', 'PublishedYearSensor']}"
+            :inner-class="{
+              title: 'microtext',
+              select: 'FilterItem__DropdownToggle',
+              list: 'FilterItem__DropdownList'            }"
+            :react="{and: ['search', 'type', 'keywords', 'published_year']}"
             :show-count="false"
             :show-filter="true"
             :size="25"
             class-name="FilterList__FilterItem"
-            component-id="NewspaperSensor"
+            component-id="newspaper"
             data-field="newspaper.title"
             filter-label="Site/Veículo"
             nested-field="newspaper"
             placeholder="Todos"
             title="Site/Veículo"
+            :URLParams="true"
           />
           <multi-dropdown-list
             :default-query="customFilterQuery"
             :default-selected="keywords"
-            :inner-class="{                  title: 'microtext',                  select: 'FilterItem__DropdownToggle',                  list: 'FilterItem__DropdownList'                }"
-            :react="{and: ['SearchSensor', 'TypeSensor', 'NewspaperSensor',  'PublishedYearSensor']}"
+            :inner-class="{
+              title: 'microtext',
+              select: 'FilterItem__DropdownToggle',
+              list: 'FilterItem__DropdownList'                }"
+            :react="{and: ['search', 'type', 'newspaper',  'published_year']}"
             :show-count="false"
             :show-filter="true"
             :show-search="true"
             :size="100"
             class-name="FilterList__FilterItem"
-            component-id="KeywordSensor"
+            component-id="keywords"
             data-field="keywords.name"
             filter-label="Palavras-chave"
             nested-field="keywords"
             placeholder="Todas"
             title="Palavras-chave"
+            :URLParams="true"
           >
             <template slot="renderItem" slot-scope="{ label }">
               <div>{{lowerSlugify(label)}}</div>
@@ -85,23 +100,16 @@
           <!--
           <DynamicRangeSlider
             :inner-class="{              title: 'microtext',              slider: 'FilterList__Slider',            }"
-            :react="{and: ['SearchSensor', 'TypeSensor', 'NewspaperSensor', 'KeywordSensor']}"
+            :react="{and: ['search', 'type', 'newspaper', 'keywords']}"
             class-name="FilterList__FilterItem"
-            component-id="PublishedYearSensor"
+            component-id="published_year"
             data-field="published_year"
             filter-label="Publicado entre"
             title="Publicado entre"
           />-->
         </div>
+        <!-- eslint-enable -->
       </div>
-      <selected-filters
-        v-if="inSearchMode"
-        class-name="SelectedFilters"
-        clear-all-label="Limpar filtros"
-        :inner-class="{
-          button:'SelectedFilters__Filter'
-        }"
-      />
 
       <transition name="fade">
         <TeaserBlock
@@ -113,12 +121,12 @@
       </transition>
 
       <transition name="fade">
-        <HomeTagCloud v-if="!inSearchMode" :use-links="false" class="HomeTagCloud" />
+        <HomeTagCloud v-if="!inSearchMode" class="HomeTagCloud" />
       </transition>
 
       <transition v-if="inSearchMode" :duration="500" name="fade">
         <ReactiveList
-          :react="{and: ['SearchSensor', 'TypeSensor', 'NewspaperSensor', 'KeywordSensor', 'PublishedYearSensor']}"
+          :react="{and: ['search', 'type', 'newspaper', 'keywords', 'published_year']}"
           component-id="SearchResults"
           :pagination="false"
           data-field="title.raw"
@@ -132,10 +140,17 @@
           :from="0"
           :size="20"
         >
-          <div
-            slot="renderResultStats"
-            slot-scope="{ totalResults, time }"
-          >{{totalResults}} resultados em {{time}}ms</div>
+          <div slot="renderResultStats" slot-scope="{ totalResults, time }" class="ResultStats">
+            <selected-filters
+              v-if="inSearchMode"
+              class-name="SelectedFilters"
+              clear-all-label="Limpar filtros"
+              :inner-class="{
+          button:'SelectedFilters__Filter'
+        }"
+            />
+            <div class="ResultCount">{{totalResults}} resultados em {{time}}ms</div>
+          </div>
           <NewsGrid slot="renderAllData" slot-scope="{ results }" :items="results"></NewsGrid>
         </ReactiveList>
       </transition>
@@ -185,8 +200,12 @@ export default {
     }
   },
   watch: {
-    $route: function(route) {
-      console.log(route)
+    $route: {
+      immediate: true,
+      deep: true,
+      handler({ query }) {
+        this.inSearchMode = Object.keys(query).length > 0
+      }
     }
   },
   methods: {
@@ -251,7 +270,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .PageIndex__SearchArea, .FeaturedPage, .SearchBar {
   margin-left: auto;
   margin-right: auto;
@@ -289,10 +308,20 @@ export default {
 .FilterList {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  flex-wrap: 1;
 }
 
 .FilterList__FilterItem {
   width: 100%;
+}
+
+.FilterList__FilterItem > h2 {
+  color: #A1A1A1;
+}
+
+.FilterList__FilterItem:focus-within > h2, .FilterList__FilterItem:focus > h2 {
+  color: $link-color;
 }
 
 .SelectedFilters, .FilterList {
@@ -301,6 +330,59 @@ export default {
 
 .SelectedFilters {
   margin: 2rem 1rem;
+}
+
+.ResultStats {
+  margin: 0.5rem 22px;
+  display: flex;
+  flex-direction: column;
+  margin: 3rem 0 0;
+  text-align: center;
+}
+
+button.FilterItem__DropdownToggle {
+  border: none;
+  background: transparent;
+  border-bottom: solid 1px #E1DADA;
+}
+
+button.FilterItem__DropdownToggle:focus {
+  background: transparent;
+  border-color: #333;
+}
+
+.ResultStats {
+  width: 100%;
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.SelectedFilters {
+  margin: 0;
+  /* margin-left: auto; */
+  align-content: center;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  /* margin-left: 20px; */
+}
+
+.SelectedFilters__Filter {
+  background: #e4e7ed !important;
+  color: #909399;
+  /* text-transform: none; */
+}
+
+.SelectedFilters__Filter:hover {
+  background: $link-color !important;
+  color: #fff !important;
+  /* text-transform: none; */
+}
+
+.ResultCount {
+  display: block;
+  text-align: center;
 }
 
 @media only screen and (min-width: 768px) {
@@ -314,8 +396,20 @@ export default {
   }
 
   .FilterList__FilterItem {
-    width: 33%;
-    margin: 0 1rem;
+    width: auto;
+    min-width: 20%;
+    margin: 0 4rem;
+  }
+
+  .ResultStats {
+    flex-direction: row;
+    margin: 3rem 4rem 0;
+  }
+
+  .ResultCount {
+    display: flex;
+    font-weight: bold;
+    align-items: center;
   }
 }
 </style>
