@@ -97,7 +97,7 @@
               <div>{{lowerSlugify(label)}}</div>
             </template>
           </multi-dropdown-list>
-
+          <!--
           <DynamicRangeSlider
             :inner-class="{              title: 'microtext',              slider: 'FilterList__Slider',            }"
             :react="{or: ['search']}"
@@ -108,6 +108,7 @@
             title="Publicado entre"
             :URLParams="true"
           />
+          -->
         </div>
         <!-- eslint-enable -->
       </div>
