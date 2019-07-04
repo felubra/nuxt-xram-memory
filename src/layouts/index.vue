@@ -1,7 +1,7 @@
 <template>
   <div id="main-wrapper">
     <header>
-      <NewNavBar :show-logo="false" />
+      <NewNavBar />
     </header>
     <nuxt />
     <Footer />
