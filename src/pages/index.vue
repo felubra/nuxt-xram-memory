@@ -161,8 +161,8 @@
 <script>
 import slugify from 'slugify'
 
-import HomeTagCloud from '~/components/tag-cloud/HomeTagCloud'
-import TeaserBlock from '~/components/common/TeaserBlock'
+import HomeTagCloud from '~/components/home/HomeTagCloud'
+import TeaserBlock from '~/components/home/TeaserBlock'
 import Logo from '~/components/common/Logo'
 import NewsGrid from '~/components/news/NewsGrid'
 
