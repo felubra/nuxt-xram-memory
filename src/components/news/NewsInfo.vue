@@ -1,79 +1,82 @@
 <template>
-  <dl class="NewsInfo">
-    <template v-if="teaser" class="NewsInfo__Field NewsInfo__Field--summary">
-      <dt>Resumo</dt>
-      <dd>{{teaser}}</dd>
-    </template>
-    <template v-if="url">
-      <dt>Endereço original</dt>
-      <dd>
+  <div class="NewsInfo">
+    <div v-if="teaser" class="NewsInfo__Field NewsInfo__Field--summary">
+      <h2 class="microtext">Resumo</h2>
+      <p>{{teaser}}</p>
+    </div>
+    <div v-if="url">
+      <h2 class="microtext">Endereço original</h2>
+      <p>
         <a :href="url.url" target="_blank">{{url.url}}</a>
-      </dd>
-    </template>
-    <template v-if="archivedUrl">
-      <dt>Versão arquivada</dt>
-      <dd>
+      </p>
+    </div>
+    <div v-if="archivedUrl">
+      <h2 class="microtext">Versão arquivada</h2>
+      <p>
         <a :href="archivedUrl.url" target="_blank">{{archivedUrl.url}}</a>
-      </dd>
-    </template>
-    <template v-if="newspaper">
-      <dt>Site / veículo</dt>
-      <dd>
+      </p>
+    </div>
+    <div v-if="newspaper">
+      <h2 class="microtext">Site / veículo</h2>
+      <p>
         <a class="NewsInfo__Newspaper" :href="newspaper.url" target="_blank">
-          <img v-if="newspaperIcon" :src="newspaperIcon" alt>
+          <img v-if="newspaperIcon" :src="newspaperIcon" alt />
           {{newspaper.title}}
         </a>
-      </dd>
-    </template>
-    <template v-if="published_date">
-      <dt>Data de publicação</dt>
-      <dd>{{published_date}}</dd>
-    </template>
-    <template v-if="pdf_captures" class="NewsInfo__Field NewsInfo__Field--stacked">
-      <dt>Capturas de página</dt>
-      <dd>
-        <nuxt-link
-          v-for="capture in pdf_captures"
-          :key="capture.url"
-          class="NewsInfo__PDFCapture"
-          :to="{
+      </p>
+    </div>
+    <div v-if="published_date">
+      <h2 class="microtext">Data de publicação</h2>
+      <p>{{published_date}}</p>
+    </div>
+    <div
+      v-if="pdf_captures"
+      class="NewsInfo__Field NewsInfo__Field--centered NewsInfo__Field--pdf-captures"
+    >
+      <h2 class="microtext">Capturas de página</h2>
+      <nuxt-link
+        v-for="capture in pdf_captures"
+        :key="capture.url"
+        class="NewsInfo__PDFCapture"
+        :to="{
             name: 'document-document_id',
             params: {
               document_id: capture.document_id
             },
           }"
-        >
+      >
+        <figure>
           <img
             v-if="thumbnailForDocument(capture.document_id)"
             :src="thumbnailForDocument(capture.document_id)"
             :alt="capture.title"
             :title="capture.title"
-          >
-          <span>{{capture.title}}</span>
-        </nuxt-link>
-      </dd>
-    </template>
-    <template v-if="subjects">
-      <dt>Assuntos</dt>
-      <dd class="inline">
+          />
+          <figcaption>{{capture.title}}</figcaption>
+        </figure>
+      </nuxt-link>
+    </div>
+    <div v-if="subjects">
+      <h2 class="microtext">Assuntos</h2>
+      <p class="inline">
         <nuxt-link
           v-for="subject in subjects"
           :key="subject.slug"
           :to="{name:'search-query', query:{ subjects: JSON.stringify([subject.name])} }"
         >{{subject.name}}</nuxt-link>
-      </dd>
-    </template>
-    <template v-if="keywords" class="NewsInfo__Field NewsInfo__Field--multicol">
-      <dt>Palavras-chave</dt>
-      <dd class="inline">
-        <nuxt-link
-          v-for="keyword in keywords"
-          :key="keyword.slug"
-          :to="{name:'search-query', query:{ keywords: JSON.stringify([keyword.name])} }"
-        >{{keyword.name}}</nuxt-link>
-      </dd>
-    </template>
-  </dl>
+      </p>
+    </div>
+    <div v-if="keywords" class="NewsInfo__Field NewsInfo__Field--multicol">
+      <h2 class="microtext">Palavras-chave</h2>
+      <ul class="tag-list">
+        <li v-for="keyword in keywords" :key="keyword.slug">
+          <nuxt-link
+            :to="{name:'index', query:{ keywords: JSON.stringify([keyword.name])} }"
+          >{{keyword.name}}</nuxt-link>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -239,120 +242,68 @@ export default {
 }
 </script>
 
-<style scoped>
-.NewsInfo {
-  font-family: 'Cabin', sans-serif;
-  word-break: break-word;
-}
-
-dt {
-  display: block;
-  font-weight: normal;
-  color: #333;
-  text-transform: uppercase;
-  margin: 1rem 0 0.1rem;
-}
-
-dt:first-of-type {
-  margin-top: 0;
-}
-
-dd {
-  margin: 0;
-  padding: 0 0 0.5em 0;
-}
-
-dd + dd {
-  margin: 0;
-}
-
-dd.inline > a {
-  display: inline-block;
-  margin: 0 1rem 0.5rem 0;
-}
-
-.NewsInfo__Field:first-child {
-  margin-top: 0;
-}
-.NewsInfo__Field {
+<style lang="stylus" scoped>
+.NewsInfo > div {
   display: flex;
   flex-direction: column;
-  margin: 2.5rem 0;
-  align-items: flex-start;
-}
-.NewsInfo__Field--summary {
-  font-family: 'Cabin', sans-serif;
 }
 
-.NewsInfo__Field--multicol > dt {
-  column-span: all;
+.NewsInfo > div > h2, .NewsInfo > div > p {
+  margin: 0 1rem 1rem;
 }
 
-.NewsInfo__Field--multicol > dd {
-  margin: 0.5rem;
+.NewsInfo > div > * {
+  width: 85%;
 }
 
-.NewsInfo__PDFCapture {
+.NewsInfo > div > h2 {
+  width: 15%;
   display: inline-block;
-  text-align: center;
-  margin: 0 0.5rem;
-}
-
-.NewsInfo__PDFCapture:first-of-type {
-  margin-left: 0;
-}
-
-.NewsInfo__PDFCapture > span {
-  text-align: center;
-  display: block;
-  margin-top: 0.5rem;
-}
-.NewsInfo__PDFCapture > img {
-  border: solid 1px #efefef;
-  padding: 1rem;
-  transition: border 0.25s ease;
-}
-
-.NewsInfo__PDFCapture:hover > img {
-  border: solid 1px #ff0000;
-  padding: 1rem;
-}
-
-a.NewsInfo__Newspaper {
+  color: #555;
+  font-weight: bold;
+  text-align: left;
   display: flex;
-  align-items: center;
 }
 
-a.NewsInfo__Newspaper > img {
-  margin-right: 0.27rem;
+.NewsInfo figure {
+  text-align: center;
+  margin: 0.1rem;
 }
 
-@media only screen and (min-width: 768px) {
-  dt {
-    float: left;
-    clear: left;
-    width: 7rem;
-    margin: 1rem 0 0 0;
-    text-align: right;
-    font-weight: bold;
-    color: #333;
-    text-transform: none;
-    font-weight: bold;
+.NewsInfo, .NewsInfo h2 {
+  font-family: $sans-serif;
+}
+
+.NewsInfo__Field--pdf-captures a {
+  border: solid 1px #ccc;
+  margin: 6px;
+  width: auto;
+}
+
+.NewsInfo__Field--pdf-captures a:active, .NewsInfo__Field--pdf-captures a:focus, .NewsInfo__Field--pdf-captures a:hover {
+  border-color: $link-color;
+}
+
+ul.tag-list > li {
+  display: inline-block;
+  margin: 0.5rem;
+  border: 1px solid transparent;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  color: #333333;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+@media only screen and (min-width: $tablet) {
+  .NewsInfo > div {
+    flex-direction: row;
+    align-items: baseline;
   }
 
-  dt:first-of-type {
-    margin-top: 0;
-  }
-
-  dt::after {
-    content: ':';
-  }
-  dd {
-    margin: 1rem 0 0 8rem;
-    padding: 0 0 0.5em 0;
-  }
-  dd + dd {
-    margin: 0 0 0 8rem;
+  .NewsInfo > .NewsInfo__Field--centered {
+    align-items: center;
   }
 }
 </style>

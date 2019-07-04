@@ -1,25 +1,40 @@
 <template>
-  <AbstractPage>
-    <template v-slot:header>
-      <img :src="theImage">
-      <h1>{{theTitle}}</h1>
-    </template>
-    <div class="content-container">
-      <h2>Detalhes da notícia</h2>
-      <NewsInfo :news-item="newsItem"></NewsInfo>
+  <div class="NewsPage">
+    <div class="NewsPage__Info">
+      <header>
+        <img :src="theImage" />
+        <p class="microtext">Notícia</p>
+        <h1>{{theTitle}}</h1>
+      </header>
+      <main>
+        <NewsInfo class="NewsPage__NewsInfo" :news-item="newsItem"></NewsInfo>
+      </main>
     </div>
-  </AbstractPage>
+    <div v-if="false" class="NewsPage__Capture"></div>
+  </div>
 </template>
 
 <script>
+import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
 import { sanitize, getMediaUrl } from '@/utils/'
 import NewsInfo from '~/components/news/NewsInfo'
 import AbstractPage from '~/components/common/AbstractPage'
 
 export default {
+  layout: 'alt',
   components: {
     NewsInfo,
-    AbstractPage
+    PDFFilePreview: () => {
+      if (!process.client) {
+        return {
+          component: UnknownFilePreview
+        }
+      } else {
+        return {
+          component: import('../../components/viewers/PDFFilePreview')
+        }
+      }
+    }
   },
   head() {
     return {
@@ -39,6 +54,21 @@ export default {
     theImage() {
       const urlVal = sanitize(this.newsItem.image_capture)
       return urlVal ? getMediaUrl(urlVal) : ''
+    },
+    pdfUrl() {
+      try {
+        return (
+          this.newsItem.pdf_captures &&
+          this.newsItem.pdf_captures.map(capture => {
+            return {
+              document_id: capture.pdf_document.document_id,
+              title: this.captureNameAndSize(capture)
+            }
+          })[0]
+        )
+      } catch {
+        return ''
+      }
     }
   },
   async asyncData({ $axios, route, error }) {
@@ -55,9 +85,33 @@ export default {
   }
 }
 </script>
-<style scoped>
-h2 {
-  font-family: 'Cabin', serif;
-  font-size: 1.2rem;
+<style lang="stylus" scoped>
+header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.NewsPage {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.NewsPage__Info {
+  flex-grow: 1;
+  max-width: 960px;
+  text-align: center;
+}
+
+.NewsPage__NewsInfo {
+  text-align: justify;
+}
+
+@media only screen and (min-width: 960px) {
+  .NewsPage {
+    flex-direction: row;
+    justify-content: center;
+  }
 }
 </style>
