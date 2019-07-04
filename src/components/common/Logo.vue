@@ -37,10 +37,10 @@ export default {
 </script>
 <style scoped>
 .Logo img {
-  height: 2.4rem;
+  height: 38px;
 }
 
 .Logo.Logo--big img {
-  height: 3.5rem;
+  height: 56px;
 }
 </style>
