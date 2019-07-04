@@ -97,16 +97,16 @@
               <div>{{lowerSlugify(label)}}</div>
             </template>
           </multi-dropdown-list>
-          <!--
+
           <DynamicRangeSlider
             :inner-class="{              title: 'microtext',              slider: 'FilterList__Slider',            }"
-            :react="{and: ['search', 'type', 'newspaper', 'keywords']}"
+            :react="{and: ['search', 'type', 'newspaper', 'keywords',]}"
             class-name="FilterList__FilterItem"
             component-id="published_year"
             data-field="published_year"
             filter-label="Publicado entre"
             title="Publicado entre"
-          />-->
+          />
         </div>
         <!-- eslint-enable -->
       </div>
@@ -309,10 +309,11 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-wrap: 1;
+  flex-wrap: wrap;
 }
 
 .FilterList__FilterItem {
+  margin: 1rem 0;
   width: 100%;
 }
 
@@ -369,7 +370,7 @@ button.FilterItem__DropdownToggle:focus {
 }
 
 .SelectedFilters__Filter {
-  background: #e4e7ed !important;
+  background: #dcdbdb !important;
   color: #909399;
   /* text-transform: none; */
 }
@@ -385,6 +386,17 @@ button.FilterItem__DropdownToggle:focus {
   text-align: center;
 }
 
+.FilterList__Slider .vue-slider-process {
+  background-color: #ce5454 !important;
+}
+
+.FilterList__Slider .vue-slider-tooltip {
+  background: #e4e4e4 !important;
+  border-color: #dcdbdb !important;
+  padding: 4px 6px !important;
+  color: #000 !important;
+}
+
 @media only screen and (min-width: 768px) {
   .HomeTagCloud {
     margin-top: 15vh;
@@ -398,7 +410,7 @@ button.FilterItem__DropdownToggle:focus {
   .FilterList__FilterItem {
     width: auto;
     min-width: 20%;
-    margin: 0 4rem;
+    margin: 1rem 4rem;
   }
 
   .ResultStats {
