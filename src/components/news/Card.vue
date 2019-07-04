@@ -153,7 +153,7 @@ export default {
 }
 
 .Card img {
-  opacity: 0.75;
+  filter: grayscale(60%);
   transition: opacity 0.25s ease;
 }
 
@@ -162,7 +162,7 @@ export default {
 }
 
 .Card:focus-within img, .Card:active img, .Card:focus img, .Card:hover img {
-  opacity: 1;
+  filter: none;
 }
 
 .Card:focus-within, .Card:active, .Card:focus, .Card:hover {
