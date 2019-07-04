@@ -42,7 +42,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'          }"
-            :react="{and: ['search', 'newspaper', 'keywords', 'published_year']}"
+            :react="{or: ['search', 'newspaper', 'keywords', 'published_year']}"
             :show-filter="true"
             :size="25"
             class-name="FilterList__FilterItem"
@@ -59,7 +59,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'            }"
-            :react="{and: ['search', 'type', 'keywords', 'published_year']}"
+            :react="{or: ['search', 'type', 'keywords', 'published_year']}"
             :show-count="false"
             :show-filter="true"
             :size="25"
@@ -79,7 +79,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'                }"
-            :react="{and: ['search', 'type', 'newspaper',  'published_year']}"
+            :react="{or: ['search', 'type', 'newspaper',  'published_year']}"
             :show-count="false"
             :show-filter="true"
             :show-search="true"
@@ -100,12 +100,13 @@
 
           <DynamicRangeSlider
             :inner-class="{              title: 'microtext',              slider: 'FilterList__Slider',            }"
-            :react="{and: ['search', 'type', 'newspaper', 'keywords',]}"
+            :react="{or: ['search']}"
             class-name="FilterList__FilterItem"
             component-id="published_year"
             data-field="published_year"
             filter-label="Publicado entre"
             title="Publicado entre"
+            :URLParams="true"
           />
         </div>
         <!-- eslint-enable -->
@@ -179,7 +180,12 @@ export default {
     NewsGrid
   },
   directives: {
-    'inner-input-focus': innerInputFocus
+    'inner-input-focus': innerInputFocus,
+    'active-filter-from-url': {
+      update() {
+        console.log('el updated')
+      }
+    }
   },
   mixins: [reactiveMixin],
   data() {
@@ -211,6 +217,9 @@ export default {
   methods: {
     lowerSlugify(keyword) {
       return slugify(keyword.toLowerCase())
+    },
+    rangeChange(vale) {
+      console.log(vale)
     },
     customFilterQuery(value, props) {
       try {
