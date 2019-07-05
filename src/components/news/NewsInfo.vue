@@ -280,6 +280,10 @@ export default {
   width: auto;
 }
 
+.NewsInfo__Field--pdf-captures {
+  align-items: flex-start;
+}
+
 .NewsInfo__Field--pdf-captures a:active, .NewsInfo__Field--pdf-captures a:focus, .NewsInfo__Field--pdf-captures a:hover {
   border-color: $link-color;
 }
@@ -294,6 +298,11 @@ ul.tag-list > li {
   cursor: pointer;
   user-select: none;
   transition: all 0.3s ease;
+}
+
+.NewsInfo a {
+  word-break: break-all;
+  display: inline-block;
 }
 
 @media only screen and (min-width: $tablet) {
