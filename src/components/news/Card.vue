@@ -6,6 +6,22 @@ const smartTruncate = require('smart-truncate')
 const ELEMENTS = ['label', 'title', 'description', 'footer']
 export default {
   name: 'Card',
+  directives: {
+    'card-image-dimensions': {
+      inserted: function(imgNode) {
+        const src = imgNode.getAttribute('src')
+        try {
+          let [_, width, height] = src.match(/__(\d+)x(\d+)_/)
+
+          width = parseInt(width)
+          height = parseInt(height)
+
+          imgNode.setAttribute('width', width)
+          imgNode.setAttribute('height', height)
+        } catch {}
+      }
+    }
+  },
   props: {
     item: {
       type: Object,
