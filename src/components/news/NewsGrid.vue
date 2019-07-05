@@ -7,6 +7,7 @@
     column-width="270"
     gutter="32"
     fit-width="true"
+    stagger="0.03s"
   >
     <div v-for="(item, index) in items" :key="index" v-masonry-tile class="item">
       <component :is="componentType(item)" class="item" :item="item" />
