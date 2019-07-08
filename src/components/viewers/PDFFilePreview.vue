@@ -1,5 +1,11 @@
 <template>
-  <div class="FilePreview PDFFilePreview">
+  <div
+    v-if="preview && previewURL"
+    class="FilePreview PDFFilePreview PDFFilePreview--image_preview"
+  >
+    <img :src="previewURL" />
+  </div>
+  <div v-else class="FilePreview PDFFilePreview">
     <div
       ref="pdfContainer"
       v-dragscroll.y="true"
@@ -41,6 +47,12 @@ export default {
     dragscroll
   },
   extends: DocumentPreview,
+  props: {
+    preview: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       numPages: 0
@@ -111,6 +123,21 @@ export default {
 .PDFFilePreview__PDFComponent > canvas {
   border: solid 1px #ccc;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.PDFFilePreview--image_preview {
+  display: block;
+  height: auto;
+  height: auto;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.PDFFilePreview--image_preview img {
+  height: 75vh;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 1px 1px 10px #ccc;
 }
 
 @media only screen and (min-width: 768px) {

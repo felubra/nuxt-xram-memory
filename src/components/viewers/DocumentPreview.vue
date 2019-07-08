@@ -5,6 +5,10 @@ export default {
     fileURL: {
       type: String,
       required: true
+    },
+    previewURL: {
+      type: String,
+      default: ''
     }
   }
 }
