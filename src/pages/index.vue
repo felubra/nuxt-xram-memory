@@ -35,6 +35,7 @@
           @keyDown.enter="enterSearchMode"
           :URLParams="true"
           filter-label="Texto"
+          v-active-filter-animation="search"
         />
         <div v-if="inSearchMode" class="FilterList">
           <single-dropdown-list
@@ -52,6 +53,7 @@
             placeholder="Todos"
             title="Tipo"
             :URLParams="true"
+            v-active-filter-animation="type"
           />
           <single-dropdown-list
             :default-query="customFilterQuery"
@@ -71,6 +73,7 @@
             placeholder="Todos"
             title="Site/Veículo"
             :URLParams="true"
+            v-active-filter-animation="newspaper"
           />
           <multi-dropdown-list
             :default-query="customFilterQuery"
@@ -92,6 +95,7 @@
             placeholder="Todas"
             title="Palavras-chave"
             :URLParams="true"
+            v-active-filter-animation="keywords"
           >
             <template slot="renderItem" slot-scope="{ label }">
               <div>{{lowerSlugify(label)}}</div>
@@ -173,7 +177,7 @@ import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
 import { sanitize } from '@/utils/'
 export default {
-  layout: 'index',
+  layout: 'alt',
   components: {
     HomeTagCloud,
     TeaserBlock,
@@ -182,9 +186,14 @@ export default {
   },
   directives: {
     'inner-input-focus': innerInputFocus,
-    'active-filter-from-url': {
-      update() {
-        console.log('el updated')
+    'active-filter-animation': {
+      inserted(el, { expression }, { context }) {
+        if (
+          context.$route &&
+          Object.keys(context.$route.query).includes(expression)
+        ) {
+          el.classList.add('FilterList__FilterItem--ActiveFromURL')
+        }
       }
     }
   },
@@ -281,6 +290,20 @@ export default {
 </script>
 
 <style lang="stylus">
+@keyframes filterActive {
+  0% {
+    border-color: #E1DADA;
+  }
+
+  20% {
+    border-color: #d84848;
+  }
+
+  100% {
+    border-color: #E1DADA;
+  }
+}
+
 .PageIndex__SearchArea, .FeaturedPage, .SearchBar {
   margin-left: auto;
   margin-right: auto;
@@ -331,8 +354,24 @@ export default {
   color: #A1A1A1;
 }
 
+button.FilterItem__DropdownToggle {
+  border: none;
+  background: transparent;
+  border-bottom: solid 1px #E1DADA;
+  border-width: 3px;
+}
+
+button.FilterItem__DropdownToggle:focus {
+  background: transparent;
+  border-color: #d84848;
+}
+
 .FilterList__FilterItem:focus-within > h2, .FilterList__FilterItem:focus > h2 {
   color: $link-color;
+}
+
+.FilterList__FilterItem--ActiveFromURL button.FilterItem__DropdownToggle, .FilterList__FilterItem--ActiveFromURL input.SearchBar__Input {
+  animation: filterActive 2s;
 }
 
 .SelectedFilters, .FilterList {
@@ -349,17 +388,6 @@ export default {
   flex-direction: column;
   margin: 3rem 0 0;
   text-align: center;
-}
-
-button.FilterItem__DropdownToggle {
-  border: none;
-  background: transparent;
-  border-bottom: solid 1px #E1DADA;
-}
-
-button.FilterItem__DropdownToggle:focus {
-  background: transparent;
-  border-color: #333;
 }
 
 .ResultStats {
