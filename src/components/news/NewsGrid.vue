@@ -53,8 +53,4 @@ export default {
   min-height: 420px;
   margin: 6px 0;
 }
-
-.masonry-container {
-  margin: 0 auto;
-}
 </style>

@@ -140,7 +140,7 @@
           loader="Carregando..."
           render-error="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
           :inner-class="{
-            resultsInfo: 'microtext',
+            resultsInfo: 'SearchResults__ResultsInfo microtext',
             list: 'SearchResults__List'
           }"
           :from="0"
@@ -152,8 +152,8 @@
               class-name="SelectedFilters"
               clear-all-label="Limpar filtros"
               :inner-class="{
-          button:'SelectedFilters__Filter'
-        }"
+                button:'SelectedFilters__Filter'
+              }"
             />
             <div class="ResultCount">{{totalResults}} resultados em {{time}}ms</div>
           </div>
@@ -376,6 +376,16 @@ button.FilterItem__DropdownToggle:focus {
 
 .SelectedFilters, .FilterList {
   margin-top: 2rem;
+}
+
+.SearchResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.SearchResults__ResultsInfo {
+  align-self: stretch;
 }
 
 .SelectedFilters {
