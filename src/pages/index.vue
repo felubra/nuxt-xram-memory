@@ -35,7 +35,7 @@
           @keyDown.enter="enterSearchMode"
           :URLParams="true"
           filter-label="Texto"
-          v-active-filter-animation="search"
+          v-active-filter-animation="'search'"
         />
         <div v-if="inSearchMode" class="FilterList">
           <single-dropdown-list
@@ -53,7 +53,7 @@
             placeholder="Todos"
             title="Tipo"
             :URLParams="true"
-            v-active-filter-animation="type"
+            v-active-filter-animation="'type'"
           />
           <single-dropdown-list
             :default-query="customFilterQuery"
@@ -73,7 +73,7 @@
             placeholder="Todos"
             title="Site/Veículo"
             :URLParams="true"
-            v-active-filter-animation="newspaper"
+            v-active-filter-animation="'newspaper'"
           />
           <multi-dropdown-list
             :default-query="customFilterQuery"
@@ -95,7 +95,7 @@
             placeholder="Todas"
             title="Palavras-chave"
             :URLParams="true"
-            v-active-filter-animation="keywords"
+            v-active-filter-animation="'keywords'"
           >
             <template slot="renderItem" slot-scope="{ label }">
               <div>{{lowerSlugify(label)}}</div>
@@ -187,10 +187,10 @@ export default {
   directives: {
     'inner-input-focus': innerInputFocus,
     'active-filter-animation': {
-      inserted(el, { expression }, { context }) {
+      inserted(el, { value }, { context }) {
         if (
           context.$route &&
-          Object.keys(context.$route.query).includes(expression)
+          Object.keys(context.$route.query).includes(value)
         ) {
           el.classList.add('FilterList__FilterItem--ActiveFromURL')
         }
