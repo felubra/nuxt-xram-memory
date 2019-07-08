@@ -1,44 +1,47 @@
 <template>
-  <AbstractPage class="Page--sidebar Page--aside-after">
-    <template v-slot:aside>
-      <div class="PageAside FileInfo">
-        <p class="microtext">{{fileType}}</p>
-        <h1>{{document.document_id || document.name}}</h1>
-        <p v-if="document.description" class="FileInfo__Description">{{document.description}}</p>
-        <div v-if="newsRelated" class="FileInfo__NewsRelated">
-          <p class="microtext">Notícias associadas</p>
-          <nuxt-link
-            v-for="news in newsRelated"
-            :key="news.slug"
-            :to="{
+  <div class="DocumentPage">
+    <no-ssr>
+      <main>
+        <!-- eslint-disable -->
+        <component :is="componentType" :preview="true" :previewURL="previewURL" :fileURL="fileURL"></component>
+        <!-- eslint-enable -->
+      </main>
+    </no-ssr>
+
+    <aside>
+      <p class="microtext">{{fileType}}</p>
+      <h1>{{document.document_id || document.name}}</h1>
+      <p v-if="document.description" class="FileInfo__Description">{{document.description}}</p>
+      <div v-if="newsRelated" class="FileInfo__NewsRelated">
+        <p class="microtext">Notícias associadas</p>
+        <nuxt-link
+          v-for="news in newsRelated"
+          :key="news.slug"
+          :to="{
             name:'news-slug',
             params: {
               slug: news.slug
             }
           }"
-          >{{news.title}}</nuxt-link>
-        </div>
-        <div class="FileActions">
-          <a class="FileInfo_Button microtext" download :href="fileURL">
-            <i class="material-icons">get_app</i> Baixar
-          </a>
-        </div>
-        <dl>
-          <div v-if="size">
-            <dt class="microtext">Tamanho</dt>
-            <dd>{{size}}</dd>
-          </div>
-          <div v-if="sendDate">
-            <dt class="microtext">Data de envio</dt>
-            <dd>{{sendDate}}</dd>
-          </div>
-        </dl>
+        >{{news.title}}</nuxt-link>
       </div>
-    </template>
-    <no-ssr>
-      <component :is="componentType" :file-u-r-l="fileURL"></component>
-    </no-ssr>
-  </AbstractPage>
+      <div class="FileActions">
+        <a class="FileInfo_Button microtext" download :href="fileURL">
+          <i class="material-icons">get_app</i> Baixar
+        </a>
+      </div>
+      <dl>
+        <div v-if="size">
+          <dt class="microtext">Tamanho</dt>
+          <dd>{{size}}</dd>
+        </div>
+        <div v-if="sendDate">
+          <dt class="microtext">Data de envio</dt>
+          <dd>{{sendDate}}</dd>
+        </div>
+      </dl>
+    </aside>
+  </div>
 </template>
 <script>
 import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
@@ -49,6 +52,7 @@ const dayJs = require('dayjs')
 
 const { getMediaUrl } = require('~/utils')
 export default {
+  layout: 'alt',
   components: {
     AbstractPage,
     UnknownFilePreview,
@@ -85,6 +89,12 @@ export default {
     }
   },
   computed: {
+    previewURL() {
+      if (this.document.mime_type === 'application/pdf') {
+        return getMediaUrl(this.document.thumbnails.document_preview)
+      }
+      return ''
+    },
     size() {
       try {
         return humanSize(this.document.size)
@@ -155,6 +165,11 @@ export default {
 </script>
 
 <style scoped>
+main {
+  min-height: 75vh;
+  padding: 1rem;
+}
+
 h1 {
   font-weight: normal;
   font-size: 1rem;
