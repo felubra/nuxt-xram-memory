@@ -4,7 +4,7 @@
       <template slot-scope="scope">
         <figure class="images">
           <div v-for="image in scope.images" :key="image" class="image-wrapper">
-            <img class="ImageFilePreview__OriginalImage" :src="image">
+            <img class="ImageFilePreview__OriginalImage" :src="image" />
           </div>
         </figure>
       </template>
@@ -43,24 +43,22 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
 .ImageFilePreview__OriginalImage {
   display: none;
 }
 
 .ImageFilePreview {
-  background: #e3e1e1;
-  flex: 1;
+  background: transparent;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
 }
-.ImageFilePreview .viewer-canvas {
-  background: #e3e1e1;
+
+.ImageFilePreview .viewer-canvas, .ImageFilePreview .viewer-backdrop {
+  background: transparent;
 }
 
-.FilePreview__Preview {
-  min-height: 75vh;
-}
 @media only screen and (min-width: 768px) {
   .ImageFilePreview {
     flex: 1;

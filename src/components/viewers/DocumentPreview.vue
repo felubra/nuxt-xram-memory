@@ -14,9 +14,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
 .FilePreview {
-  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .FilePreview__Preview {

@@ -126,15 +126,16 @@ export default {
 }
 
 .PDFFilePreview--image_preview {
-  display: block;
   height: auto;
   height: auto;
   margin: 0 auto;
   text-align: center;
+  justify-content: center;
 }
 
 .PDFFilePreview--image_preview img {
-  height: 75vh;
+  max-height: 75vh;
+  max-width: 100%;
   padding: 1rem;
   background: #fff;
   box-shadow: 1px 1px 10px #ccc;
