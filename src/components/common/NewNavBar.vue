@@ -140,6 +140,7 @@ export default {
   font-family: $menu-font;
   font-size: $text-size;
   border-bottom: solid 1px #F1EAEA;
+  z-index: 900;
 }
 
 .NewNavBar[fixed] {
