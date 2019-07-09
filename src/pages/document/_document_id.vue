@@ -8,38 +8,43 @@
       </main>
     </no-ssr>
 
-    <aside>
-      <p class="microtext">{{fileType}}</p>
+    <aside class="FieldList">
       <h1>{{document.document_id || document.name}}</h1>
-      <p v-if="document.description" class="FileInfo__Description">{{document.description}}</p>
-      <div v-if="newsRelated" class="FileInfo__NewsRelated">
-        <p class="microtext">Notícias associadas</p>
-        <nuxt-link
-          v-for="news in newsRelated"
-          :key="news.slug"
-          :to="{
+      <a class="FileInfo_Button" download :href="fileURL">
+        <i class="material-icons">get_app</i>
+      </a>
+
+      <div v-if="fileType" class="FieldList__Field">
+        <h2 class="microtext">Tipo</h2>
+        <p>{{fileType}}</p>
+      </div>
+      <div v-if="size" class="FieldList__Field">
+        <h2 class="microtext">Tamanho</h2>
+        <p>{{size}}</p>
+      </div>
+      <div v-if="senpate" class="FieldList__Field">
+        <h2 class="microtext">Data de envio</h2>
+        <p>{{senpate}}</p>
+      </div>
+
+      <div v-if="document.description" class="FieldList__Field">
+        <h2 class="microtext">Descrição</h2>
+        <p>{{document.description}}</p>
+      </div>
+
+      <div v-if="newsRelated" class="FieldList__Field FileInfo__NewsRelated">
+        <h2>Notícias associadas</h2>
+        <p v-for="news in newsRelated" :key="news.slug">
+          <nuxt-link
+            :to="{
             name:'news-slug',
             params: {
               slug: news.slug
             }
           }"
-        >{{news.title}}</nuxt-link>
+          >{{news.title}}</nuxt-link>
+        </p>
       </div>
-      <div class="FileActions">
-        <a class="FileInfo_Button microtext" download :href="fileURL">
-          <i class="material-icons">get_app</i> Baixar
-        </a>
-      </div>
-      <dl>
-        <div v-if="size">
-          <dt class="microtext">Tamanho</dt>
-          <dd>{{size}}</dd>
-        </div>
-        <div v-if="sendDate">
-          <dt class="microtext">Data de envio</dt>
-          <dd>{{sendDate}}</dd>
-        </div>
-      </dl>
     </aside>
   </div>
 </template>
@@ -164,115 +169,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 main {
   min-height: 75vh;
   padding: 1rem;
 }
 
-h1 {
-  font-weight: normal;
-  font-size: 1rem;
-  word-break: break-all;
-  margin: 0;
+aside {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
 }
 
-.FilePreview__Label {
-  color: inherit;
-  font-size: 0.75rem;
-  margin-top: 0;
-}
-.FilePreview__Description {
-  margin: 0;
-  font-size: 1rem;
-}
-.FileInfo__Description {
-  max-height: 60vh;
-  overflow-y: auto;
-  color: #333;
-  text-align: justify;
-}
-
-dl {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-dl > div {
-  margin: 0.5rem 1rem;
-  margin-left: 0;
-}
-
-dt {
-  margin: 0.5rem 0 0 0;
-}
-dd {
-  margin: 0;
-  color: #333;
-}
-
-.FileActions {
-  display: flex;
-  margin: auto 0.5rem;
-  padding: 1rem 0;
-  justify-content: center;
-}
-
-.FileActions > a {
-  display: inline-block;
-  text-decoration: none;
-  text-align: center;
-  color: #333;
-}
-
-.FileActions > a:hover,
-.FileActions > a:focus,
-.FileActions > a:active {
-  color: #ce5454;
-}
-
-.FileInfo_Button > i {
-  display: block;
-  font-size: 48px;
-}
-@media only screen and (min-width: 768px) {
-  .FileInfo__NewsRelated {
-    margin-top: auto;
-  }
-  dl {
-    justify-content: flex-start;
-  }
-
-  .FileActions {
-    display: flex;
-    padding: 0;
-    justify-content: center;
-    position: fixed;
-    backface-visibility: hidden;
-    z-index: 100;
-    bottom: 1rem;
-    right: 2.5rem;
-  }
-
-  .FileActions a {
-    opacity: 0.8;
-    margin: 0.5rem;
-    text-transform: uppercase;
-  }
-
-  .FileActions a:hover,
-  .FileActions a:focus,
-  .FileActions a:active {
-    opacity: 1;
-  }
-
-  dl {
-    margin-top: auto;
-  }
-  dl > div:first-of-type {
-    margin-left: 0;
-  }
+.FileInfo_Button {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>

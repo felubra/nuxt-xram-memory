@@ -1,23 +1,23 @@
 <template>
-  <div class="NewsInfo">
-    <div v-if="teaser" class="NewsInfo__Field NewsInfo__Field--summary">
-      <h2 class="microtext">Resumo</h2>
+  <div class="NewsInfo FieldList">
+    <div v-if="teaser" class="FieldList__Field">
+      <h2>Resumo</h2>
       <p>{{teaser}}</p>
     </div>
-    <div v-if="url">
-      <h2 class="microtext">Endereço original</h2>
+    <div v-if="url" class="FieldList__Field">
+      <h2>Endereço original</h2>
       <p>
         <a :href="url.url" target="_blank">{{url.url}}</a>
       </p>
     </div>
-    <div v-if="archivedUrl">
-      <h2 class="microtext">Versão arquivada</h2>
+    <div v-if="archivedUrl" class="FieldList__Field">
+      <h2>Versão arquivada</h2>
       <p>
         <a :href="archivedUrl.url" target="_blank">{{archivedUrl.url}}</a>
       </p>
     </div>
-    <div v-if="newspaper">
-      <h2 class="microtext">Site / veículo</h2>
+    <div v-if="newspaper" class="FieldList__Field">
+      <h2>Site / veículo</h2>
       <p>
         <a class="NewsInfo__Newspaper" :href="newspaper.url" target="_blank">
           <img v-if="newspaperIcon" :src="newspaperIcon" alt />
@@ -25,15 +25,15 @@
         </a>
       </p>
     </div>
-    <div v-if="published_date">
-      <h2 class="microtext">Data de publicação</h2>
+    <div v-if="published_date" class="FieldList__Field">
+      <h2>Data de publicação</h2>
       <p>{{published_date}}</p>
     </div>
     <div
       v-if="pdf_captures"
-      class="NewsInfo__Field NewsInfo__Field--centered NewsInfo__Field--pdf-captures"
+      class="FieldList__Field FieldList__Field--centered NewsInfo--pdf-captures"
     >
-      <h2 class="microtext">Capturas de página</h2>
+      <h2>Capturas de página</h2>
       <nuxt-link
         v-for="capture in pdf_captures"
         :key="capture.url"
@@ -56,8 +56,8 @@
         </figure>
       </nuxt-link>
     </div>
-    <div v-if="subjects">
-      <h2 class="microtext">Assuntos</h2>
+    <div v-if="subjects" class="FieldList__Field">
+      <h2>Assuntos</h2>
       <p class="inline">
         <nuxt-link
           v-for="subject in subjects"
@@ -66,8 +66,8 @@
         >{{subject.name}}</nuxt-link>
       </p>
     </div>
-    <div v-if="keywords" class="NewsInfo__Field NewsInfo__Field--multicol">
-      <h2 class="microtext">Palavras-chave</h2>
+    <div v-if="keywords" class="FieldList__Field">
+      <h2>Palavras-chave</h2>
       <ul class="tag-list">
         <li v-for="keyword in keywords" :key="keyword.slug">
           <nuxt-link
@@ -243,48 +243,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.NewsInfo > div {
-  display: flex;
-  flex-direction: column;
-}
-
-.NewsInfo > div > h2, .NewsInfo > div > p {
-  margin: 0 1rem 1rem;
-}
-
-.NewsInfo > div > * {
-  width: 85%;
-}
-
-.NewsInfo > div > h2 {
-  width: 15%;
-  display: inline-block;
-  color: #555;
-  font-weight: bold;
-  text-align: left;
-  display: flex;
-}
-
-.NewsInfo figure {
-  text-align: center;
-  margin: 0.1rem;
-}
-
-.NewsInfo, .NewsInfo h2 {
-  font-family: $sans-serif;
-}
-
-.NewsInfo__Field--pdf-captures a {
+.NewsInfo--pdf-captures a {
   border: solid 1px #ccc;
   margin: 6px;
   width: auto;
 }
 
-.NewsInfo__Field--pdf-captures {
-  align-items: flex-start;
-}
-
-.NewsInfo__Field--pdf-captures a:active, .NewsInfo__Field--pdf-captures a:focus, .NewsInfo__Field--pdf-captures a:hover {
+.NewsInfo--pdf-captures a:active, .NewsInfo--pdf-captures a:focus, .NewsInfo--pdf-captures a:hover {
   border-color: $link-color;
 }
 
@@ -300,19 +265,9 @@ ul.tag-list > li {
   transition: all 0.3s ease;
 }
 
-.NewsInfo a {
-  word-break: break-all;
-  display: inline-block;
-}
-
 @media only screen and (min-width: $tablet) {
-  .NewsInfo > div {
-    flex-direction: row;
-    align-items: baseline;
-  }
-
-  .NewsInfo > .NewsInfo__Field--centered {
-    align-items: center;
+  ul.tag-list > li {
+    margin: 0.5rem;
   }
 }
 </style>
