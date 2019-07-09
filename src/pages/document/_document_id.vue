@@ -1,12 +1,12 @@
 <template>
   <div class="DocumentPage">
-    <no-ssr>
-      <main>
+    <main>
+      <no-ssr>
         <!-- eslint-disable -->
         <component :is="componentType" :preview="true" :previewURL="previewURL" :fileURL="fileURL"></component>
         <!-- eslint-enable -->
-      </main>
-    </no-ssr>
+      </no-ssr>
+    </main>
 
     <aside class="FieldList">
       <h1>{{document.document_id || document.name}}</h1>
@@ -173,6 +173,7 @@ export default {
 main {
   min-height: 75vh;
   padding: 1rem;
+  display: flex;
 }
 
 aside {
