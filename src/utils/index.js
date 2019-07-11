@@ -93,6 +93,20 @@ export const innerInputFocus = {
     el.querySelector('input').focus()
   }
 }
+export const cardImageDimensions = {
+  inserted: function(imgNode) {
+    const src = imgNode.getAttribute('src')
+    try {
+      let [_, width, height] = src.match(/__(\d+)x(\d+)_/)
+
+      width = parseInt(width)
+      height = parseInt(height)
+
+      imgNode.setAttribute('width', width)
+      imgNode.setAttribute('height', height)
+    } catch {}
+  }
+}
 
 export const sanitize = (str, classes = appClassesXSSFilter) =>
   xss(str, classes)
