@@ -109,6 +109,12 @@ export const cardImageDimensions = {
 export const sanitize = (str, classes = appClassesXSSFilter) =>
   xss(str, classes)
 
+export const sanitizeOnlyText = str =>
+  sanitize(str, {
+    whiteList: [],
+    stripIgnoreTag: true
+  })
+
 export const urlOrRoute = item => {
   return typeof item.url === 'object'
     ? item.url
