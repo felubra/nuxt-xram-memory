@@ -70,6 +70,7 @@ export default {
   background-image: linear-gradient(rgba(250, 249, 246, 1) 0%, rgba(255, 255, 255, 1) 25%);
   display: flex;
   align-items: center;
+  width: 270px;
   min-width: 270px;
   overflow: hidden;
   height: 650px;
@@ -89,7 +90,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 250px;
+  width: 250px;
   justify-content: flex-start;
   position: relative;
   height: 100%;
@@ -98,6 +99,7 @@ export default {
 .SubjectCard.SubjectCard--big {
   align-items: flex-end;
   text-align: center;
+  width: auto;
 }
 
 .SubjectCard.SubjectCard--big > a {
@@ -118,6 +120,11 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-right: 1rem;
+}
+
+.SubjectCard__Images img {
+  opacity: 0.75;
 }
 
 .SubjectCard__Cover::before {
