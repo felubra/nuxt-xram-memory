@@ -5,7 +5,7 @@
       <h2>{{title}}</h2>
       <div class="SubjectCard__Description" v-html="description" />
       <div v-if="!big" class="SubjectCard__Cover">
-        <img v-card-image-dimensions :src="cover" :alt="description" />
+        <img width="250" height="250" :src="cover" :alt="description" />
       </div>
     </nuxt-link>
 
@@ -18,14 +18,12 @@
 </template>
 
 <script>
-import { sanitize, getMediaUrl, cardImageDimensions } from '@/utils'
+import { sanitize, sanitizeOnlyText, getMediaUrl } from '@/utils'
 import Card from '@/components/news/Card'
 
 export default {
   name: 'SubjectCard',
-  directives: {
-    cardImageDimensions
-  },
+
   props: {
     subject: {
       type: Object,

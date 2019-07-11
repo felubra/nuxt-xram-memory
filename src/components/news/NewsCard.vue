@@ -1,7 +1,7 @@
 <template>
   <div class="Card Card--news">
     <nuxt-link :to="itemLink">
-      <img v-if="image" v-card-image-dimensions :src="image" />
+      <img v-if="image" width="250" height="250" :src="image" />
       <p class="label">{{label}}</p>
       <h3>{{title}}</h3>
       <p v-if="teaser">{{teaser}}</p>
