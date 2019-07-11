@@ -100,10 +100,8 @@ export const cardImageDimensions = {
       let [_, width, height] = src.match(/__(\d+)x(\d+)_/)
 
       width = parseInt(width)
-      height = parseInt(height)
 
       imgNode.setAttribute('width', width)
-      imgNode.setAttribute('height', height)
     } catch {}
   }
 }
