@@ -1,18 +1,26 @@
 <template>
-  <article class="SubjectCard">
+  <article :class="{'SubjectCard': true, 'SubjectCard--big': big}">
     <nuxt-link :to="itemLink">
       <span class="microtext SubjectCard__ItemsCount">{{num_items}}</span>
       <h2>{{title}}</h2>
       <div class="SubjectCard__Description" v-html="description" />
-      <div class="SubjectCard__Cover">
-        <img v-card-image-dimensions :src="imageURL" :alt="description" />
+      <div v-if="!big" class="SubjectCard__Cover">
+        <img v-card-image-dimensions :src="cover" :alt="description" />
       </div>
     </nuxt-link>
+
+    <div v-if="big" class="SubjectCard__Images">
+      <nuxt-link :to="itemLink">
+        <img :src="bigCover" alt />
+      </nuxt-link>
+    </div>
   </article>
 </template>
 
 <script>
 import { sanitize, getMediaUrl, cardImageDimensions } from '@/utils'
+import Card from '@/components/news/Card'
+
 export default {
   name: 'SubjectCard',
   directives: {
@@ -22,6 +30,10 @@ export default {
     subject: {
       type: Object,
       required: true
+    },
+    big: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -39,8 +51,11 @@ export default {
     description() {
       return sanitize(this.subject.description)
     },
-    imageURL() {
+    cover() {
       return getMediaUrl(this.subject.cover)
+    },
+    bigCover() {
+      return getMediaUrl(this.subject.big_cover)
     },
     itemLink() {
       if (this.subject.slug) {
@@ -54,31 +69,57 @@ export default {
 
 <style lang="stylus" scoped>
 .SubjectCard {
-  background: #FAF9F6;
+  background-image: linear-gradient(rgba(250, 249, 246, 1) 0%, rgba(255, 255, 255, 1) 25%);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 270px;
+  min-width: 270px;
   overflow: hidden;
   height: 650px;
   justify-content: flex-end;
   justify-content: flex-end;
   padding: 0.5rem;
+  border: solid 1px #efefef;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, background-image 0.15s ease;
+}
+
+.SubjectCard:hover {
+  box-shadow: 0px 5px 25px #efefef;
+  border-color: rgba(206, 84, 84, 1);
 }
 
 .SubjectCard > a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  flex-grow: 1;
+  min-width: 250px;
   justify-content: flex-start;
   position: relative;
+  height: 100%;
+}
+
+.SubjectCard.SubjectCard--big {
+  align-items: flex-end;
+  text-align: center;
+}
+
+.SubjectCard.SubjectCard--big > a {
+  order: 2;
 }
 
 .SubjectCard__Cover {
   position: absolute;
   bottom: 0;
+}
+
+.SubjectCard__Images {
+  height: 100%;
+  display: -webkit-box;
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .SubjectCard__Cover::before {
@@ -87,7 +128,7 @@ export default {
   content: '';
   position: absolute;
   top: 0;
-  background: linear-gradient(180deg, #faf9f6, rgba(250, 249, 246, 0.25) 30%);
+  background: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.25) 30%);
 }
 
 h2 {
@@ -97,5 +138,9 @@ h2 {
 
 .SubjectCard__Description, h2 {
   color: #333;
+}
+
+.SubjectCard__ItemsCount {
+  font-size: 12px;
 }
 </style>
