@@ -19,7 +19,7 @@
 
 <script>
 import { sanitize, sanitizeOnlyText, getMediaUrl } from '@/utils'
-import Card from '@/components/news/Card'
+const smartTruncate = require('smart-truncate')
 
 export default {
   name: 'SubjectCard',
@@ -47,7 +47,11 @@ export default {
       return sanitize(this.subject.name)
     },
     description() {
-      return sanitize(this.subject.description)
+      const desc = sanitizeOnlyText(this.subject.description)
+      if (this.big) {
+        return smartTruncate(desc, 650)
+      }
+      return smartTruncate(desc, 360)
     },
     cover() {
       return getMediaUrl(this.subject.cover)
