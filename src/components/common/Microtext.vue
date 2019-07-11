@@ -1,17 +1,26 @@
-<template functional>
-  <p>
+<template>
+  <p v-microtext-class="arrow" class="Microtext">
     <slot></slot>&nbsp;
-    <i v-if="hasArrow" class="material-icons">arrow_bottom</i>
+    <i v-if="hasArrow" class="material-icons">{{arrowIcon}}</i>
   </p>
 </template>
 <script>
 export default {
   name: 'Microtext',
+  directives: {
+    'microtext-class': {
+      inserted(el, { value }) {
+        if (value && value !== 'none') {
+          el.classList.add(`Microtext--arrow-${value}`)
+        }
+      }
+    }
+  },
   props: {
     arrow: {
       type: String,
       validator(value) {
-        return ['right', 'top', 'bottom', 'left', 'none'].includes(value)
+        return ['right', 'up', 'down', 'left', 'none'].includes(value)
       },
       default: 'none'
     }
@@ -19,6 +28,17 @@ export default {
   computed: {
     hasArrow() {
       return this.arrow !== 'none'
+    },
+    arrowIcon() {
+      switch (this.arrow) {
+        case 'down':
+        case 'up': {
+          return 'arrow_drop_' + this.arrow
+        }
+        default: {
+          return 'arrow_' + this.arrow
+        }
+      }
     }
   }
 }
@@ -32,5 +52,7 @@ p {
   line-height: 1.06rem;
   text-transform: uppercase;
   color: #d84848;
+  display: inline-flex;
+  align-items: center;
 }
 </style>
