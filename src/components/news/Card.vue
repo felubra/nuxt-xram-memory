@@ -115,13 +115,20 @@ export default {
 </script>
 <style lang="stylus">
 .Card {
-  width: $card-width;
-  border: solid 1px #efefef;
-  transition: background-color 0.25s ease, color 0.25s ease;
-  text-align: center;
+  background-image: linear-gradient(rgba(250, 249, 246, 1) 0%, rgba(255, 255, 255, 1) 25%);
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  overflow: hidden;
+  height: 650px;
+  justify-content: flex-end;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  border: solid 1px #efefef;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  width: $card-width;
+  text-align: center;
 }
 
 .Card h3 {
@@ -132,7 +139,6 @@ export default {
 
 .Card > a {
   text-align: center;
-  height: 100%;
   padding: 6px;
   transition: background-color 0.25s ease, color 0.15s ease-out;
   flex-grow: 1;
@@ -169,10 +175,7 @@ export default {
 }
 
 .Card:focus-within, .Card:active, .Card:focus, .Card:hover {
-  background: $micro-text !important;
-}
-
-.Card:focus-within p, .Card:focus-within p, .Card:focus-within p, .Card:focus-within a, .Card:focus-within a, .Card:focus-within a, .Card:active p, .Card:focus p, .Card:hover p, .Card:active a, .Card:focus a, .Card:hover a {
-  color: #fff !important;
+  box-shadow: 0px 5px 25px #efefef;
+  border-color: rgb(206, 84, 84);
 }
 </style>
