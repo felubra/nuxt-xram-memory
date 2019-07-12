@@ -107,27 +107,15 @@ export const state = () => ({
 
 export const mutations = {
   /** Menu */
-  showMenu(state) {
-    state.menuVisible = true
-  },
-  hideMenu(state) {
-    state.menuVisible = false
-  },
-  toggleMenu(state) {
-    state.menuVisible = !state.menuVisible
-  },
+  showMenu: state => (state.menuVisible = true),
+  hideMenu: state => (state.menuVisible = false),
+  toggleMenu: state => (state.menuVisible = !state.menuVisible),
   /** Modo de busca na barra de navegação */
-  showSearch(state) {
-    state.isNavBarSearching = true
-  },
-  hideSearch(state) {
-    state.isNavBarSearching = false
-  },
-  toggleSearch(state) {
-    state.isNavBarSearching = !state.isNavBarSearching
-  },
+  showSearch: state => (state.isNavBarSearching = true),
+  hideSearch: state => (state.isNavBarSearching = false),
+  toggleSearch: state => (state.isNavBarSearching = !state.isNavBarSearching),
   /** Páginas */
-  addPages(state, pages) {
+  addPages: (state, pages) => {
     if (Array.isArray(pages) && pages.length > 0) {
       const newPages = pages.filter(
         newPage => !state.pages.find(page => page.url === newPage.url)
@@ -138,46 +126,33 @@ export const mutations = {
 }
 
 export const getters = {
-  pageLinks({ pages }) {
-    return function(position = 'menu') {
-      return pages
-        .filter(page => {
-          switch (position) {
-            case 'menu':
-              return (
-                page.show_in_menu ||
-                (page.position && page.position.includes(position))
-              )
-            case 'home':
-              return (
-                page.show_in_home ||
-                (page.position && page.position.includes(position))
-              )
-            default:
-              return page.position && page.position.includes(position)
-          }
-        })
-        .sort((a, b) => a.weight || 0 - b.weight || 0)
-    }
-  },
-  featuredPages({ pages }) {
-    return pages.filter(page => page.featured === true)
-  }
+  pageLinks: ({ pages }) => (position = 'menu') =>
+    pages
+      .filter(page => {
+        switch (position) {
+          case 'menu':
+            return (
+              page.show_in_menu ||
+              (page.position && page.position.includes(position))
+            )
+          case 'home':
+            return (
+              page.show_in_home ||
+              (page.position && page.position.includes(position))
+            )
+          default:
+            return page.position && page.position.includes(position)
+        }
+      })
+      .sort((a, b) => a.weight || 0 - b.weight || 0),
+  featuredPages: ({ pages }) => pages.filter(page => page.featured === true)
 }
 
 export const actions = {
-  toggleMenu({ commit }) {
-    commit('toggleMenu')
-  },
-  hideMenu({ commit }) {
-    commit('hideMenu')
-  },
-  toggleSearch({ commit }) {
-    commit('toggleSearch')
-  },
-  hideSearch({ commit }) {
-    commit('hideSearch')
-  },
+  toggleMenu: ({ commit }) => commit('toggleMenu'),
+  hideMenu: ({ commit }) => commit('hideMenu'),
+  toggleSearch: ({ commit }) => commit('toggleSearch'),
+  hideSearch: ({ commit }) => commit('hideSearch'),
   async fetchPagesInMenu({ commit }) {
     const pagesInMenu = await this.$axios.$get('api/v1/pages/in_menu')
     commit('addPages', pagesInMenu)
