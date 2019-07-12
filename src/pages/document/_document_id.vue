@@ -57,7 +57,6 @@ const dayJs = require('dayjs')
 
 const { getMediaUrl } = require('~/utils')
 export default {
-  layout: 'alt',
   components: {
     AbstractPage,
     UnknownFilePreview,

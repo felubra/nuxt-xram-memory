@@ -55,7 +55,6 @@ const emailValidator = require('email-validator')
 
 import AbstractPage from '~/components/common/AbstractPage'
 export default {
-  layout: 'alt',
   components: {
     AbstractPage,
     VueRecaptcha

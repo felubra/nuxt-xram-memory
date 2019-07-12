@@ -21,7 +21,6 @@ import NewsInfo from '~/components/news/NewsInfo'
 import AbstractPage from '~/components/common/AbstractPage'
 
 export default {
-  layout: 'alt',
   components: {
     NewsInfo,
     PDFFilePreview: () => {

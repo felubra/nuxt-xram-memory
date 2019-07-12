@@ -177,7 +177,6 @@ import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
 import { sanitize } from '@/utils/'
 export default {
-  layout: 'alt',
   components: {
     HomeTagCloud,
     TeaserBlock,

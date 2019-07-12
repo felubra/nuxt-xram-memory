@@ -37,7 +37,6 @@ import HomeTagCloud from '~/components/home/HomeTagCloud'
 import reactiveMixin from '~/utils/reactiveMixin'
 
 export default {
-  layout: 'alt',
   components: {
     Microtext,
     SubjectCard,
