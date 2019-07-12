@@ -218,6 +218,10 @@ input {
   width: 100%;
 }
 
+.NewNavBar__Logo {
+  text-align: center;
+}
+
 .NewNavBar__Logo--search-status--true {
   filter: grayscale(100);
   opacity: 0.22;
