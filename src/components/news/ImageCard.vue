@@ -1,5 +1,5 @@
 <template>
-  <div class="Card Card--image">
+  <div :class="{'Card Card--image': true, 'Card--image-small': small}">
     <nuxt-link :to="itemLink">
       <img :src="image" />
     </nuxt-link>
@@ -10,13 +10,25 @@
 import Card from './Card'
 export default {
   name: 'ImageCard',
-  extends: Card
+  extends: Card,
+  props: {
+    small: {
+      type: Boolean,
+      default: false
+    }
+  }
 }
 </script>
 
 <style lang="stylus" scoped>
 .Card.Card--image {
   height: 425px;
+  padding: 0;
+}
+
+.Card.Card--image-small {
+  width: 250px;
+  height: 250px;
 }
 
 .Card.Card--image a, .Card.Card--image img {
