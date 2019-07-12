@@ -1,14 +1,21 @@
 <template>
   <section class="SubjectsPage">
     <section class="SubjectsPage__Featured">
-      <Microtext arrow="down">Assuntos em destaque</Microtext>
+      <header>
+        <Microtext arrow="down">Assuntos em destaque</Microtext>
+      </header>
       <div class="SubjectsList">
         <SubjectCard :subject="leftSubject" />
         <SubjectCard :subject="featuredSubject" :big="true" />
       </div>
+      <footer>
+        <Microtext arrow="right">Todos os assuntos</Microtext>
+      </footer>
     </section>
     <section class="SubjectsPage__TagCloud">
-      <Microtext arrow="down">Nuvem de palavras-chave</Microtext>
+      <header>
+        <Microtext arrow="down">Nuvem de palavras-chave</Microtext>
+      </header>
       <ReactiveBase
         class-name="PageIndex"
         app="artifact_document,artifact_news"
@@ -78,5 +85,9 @@ export default {
 .SubjectsPage__TagCloud, .SubjectsPage__Featured {
   max-width: $max-width;
   margin: 4rem auto;
+}
+
+section > footer {
+  text-align: right;
 }
 </style>
