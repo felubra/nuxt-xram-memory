@@ -1,46 +1,28 @@
 <template>
-  <AbstractPage class="Page--sidebar Page--aside-after">
-    <template v-slot:aside>
-      <div class="PageAside AlbumInfo">
-        <div class="FileActions">
-          <a class="FileInfo_Button microtext" download :href="fileURL">
-            <i class="material-icons">get_app</i> Baixar
-          </a>
-        </div>
-        <p class="FileInfo__Description">{{fileDescription}}</p>
-        <dl>
-          <div v-if="fileSize">
-            <dt class="microtext">Tamanho</dt>
-            <dd>{{fileSize}}</dd>
-          </div>
-        </dl>
+  <div class="AlbumPage">
+    <main>
+      <viewer class="Album__Viewer" :options="viewerOptions" :images="photos" @inited="inited">
+        <template slot-scope="scope">
+          <img
+            v-for="image in scope.images"
+            :key="image.id"
+            class="ImageFilePreview__OriginalImage"
+            :src="getMediaURL(image.thumbnail)"
+            :originalURL="getMediaURL(image.canonical_url)"
+          />
+        </template>
+      </viewer>
+      <no-ssr>
+        <resize-sensor @resize="selectImageSize"></resize-sensor>
+      </no-ssr>
+    </main>
+    <aside class="PageAside AlbumInfo FieldList">
+      <div v-if="fileDescription" class="FieldList__Field">
+        <h2 class="microtext">Descrição</h2>
+        <p>{{fileDescription}}</p>
       </div>
-    </template>
-    <a :class="{disabled: !hasPrev}" class="PhotoBrowser" @click.prevent="navigatePrev">
-      <i class="material-icons">keyboard_arrow_left</i>
-    </a>
-    <a
-      :class="{disabled: !hasNext}"
-      class="PhotoBrowser PhotoBrowser--right"
-      @click.prevent="navigateNext"
-    >
-      <i class="material-icons">keyboard_arrow_right</i>
-    </a>
-    <viewer class="Album__Viewer" :options="viewerOptions" :images="photos" @inited="inited">
-      <template slot-scope="scope">
-        <img
-          v-for="image in scope.images"
-          :key="image.id"
-          class="ImageFilePreview__OriginalImage"
-          :src="getMediaURL(image.thumbnail)"
-          :originalURL="getMediaURL(image.canonical_url)"
-        >
-      </template>
-    </viewer>
-    <no-ssr>
-      <resize-sensor @resize="selectImageSize"></resize-sensor>
-    </no-ssr>
-  </AbstractPage>
+    </aside>
+  </div>
 </template>
 <script>
 import AbstractPage from '~/components/common/AbstractPage'
@@ -116,9 +98,11 @@ export default {
         navbar: true,
         title: false,
         toolbar: {
+          prev: { show: true },
           zoomIn: { show: true },
           oneToOne: { show: true, size: 'large' },
-          zoomOut: { show: true }
+          zoomOut: { show: true },
+          next: { show: true }
         },
         tooltip: true,
         movable: true,
@@ -188,165 +172,20 @@ export default {
 </style>
 
 
-<style scoped>
-.Album__Viewer {
-  /** Este elemento não precisa ficar visível, pois conterá apenas as imagens */
-  display: none;
-}
-
-a.PhotoBrowser {
-  position: fixed;
-  height: 100vh;
-  width: 56px;
+<style lang="stylus" scoped>
+.AlbumPage {
   display: flex;
-  z-index: 999;
   flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  text-align: center;
-  color: #333;
-  text-decoration: none;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.25s ease;
+  min-height: 90vh;
 }
 
-a.PhotoBrowser > i {
-  font-size: 36px;
-}
-
-a.PhotoBrowser:hover,
-a.PhotoBrowser:active,
-a.PhotoBrowser:focus {
-  color: inherit;
-  text-decoration: none;
-}
-
-a.PhotoBrowser.PhotoBrowser--right {
-  right: 0;
-}
-
-main:hover a.PhotoBrowser {
-  opacity: 1;
-}
-
-main:hover a.PhotoBrowser.disabled {
-  opacity: 0.3;
-}
-
-h1 {
-  font-weight: normal;
-  font-size: 1rem;
-  word-break: break-all;
-  margin: 0;
-}
-
-.Album__Grid {
-  overflow-y: auto;
-}
-
-.Album__Grid img {
-  width: 65px;
+.AlbumPage, main {
+  flex-grow: 1;
 }
 
 .AlbumInfo {
-  max-height: 100vh;
-}
-
-.FilePreview__Label {
-  color: inherit;
-  font-size: 0.75rem;
-  margin-top: 0;
-}
-.FilePreview__Description {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.FileInfo__Description {
-  max-height: 60vh;
-  overflow-y: auto;
-  color: #333;
-  text-align: justify;
-}
-
-dl {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-dl > div {
-  margin: 0.5rem 1rem;
-  margin-left: 0;
-}
-
-dt {
-  margin: 0.5rem 0 0 0;
-}
-dd {
-  margin: 0;
-  color: #333;
-}
-
-.FileActions {
-  display: flex;
-  margin: auto 0.5rem;
-  padding: 1rem 0;
-  justify-content: center;
-}
-
-.FileActions > a {
-  display: inline-block;
-  text-decoration: none;
-  text-align: center;
-  color: #333;
-}
-
-.FileActions > a:hover,
-.FileActions > a:focus,
-.FileActions > a:active {
-  color: #ce5454;
-}
-
-.FileInfo_Button > i {
-  display: block;
-  font-size: 48px;
-}
-@media only screen and (min-width: 768px) {
-  dl {
-    justify-content: flex-start;
-  }
-
-  .FileActions {
-    display: flex;
-    padding: 0;
-    justify-content: center;
-    position: fixed;
-    backface-visibility: hidden;
-    z-index: 100;
-    bottom: 1rem;
-    right: 2.5rem;
-  }
-
-  .FileActions a {
-    opacity: 0.8;
-    margin: 0.5rem;
-    text-transform: uppercase;
-  }
-
-  .FileActions a:hover,
-  .FileActions a:focus,
-  .FileActions a:active {
-    opacity: 1;
-  }
-
-  dl {
-    margin-top: auto;
-  }
-  dl > div:first-of-type {
-    margin-left: 0;
-  }
+  max-width: $max-width;
+  margin: 0 auto;
+  width: 100%;
 }
 </style>
