@@ -34,6 +34,7 @@ export default {
     image() {
       try {
         return (
+          (this.item.cover && getMediaUrl(this.item.cover)) ||
           (this.item.image_capture && getMediaUrl(this.item.image_capture)) ||
           (this.item.thumbnail && getMediaUrl(this.item.thumbnail))
         )
@@ -55,6 +56,14 @@ export default {
           return { name: 'news-slug', params: { slug: this.item.slug } }
         }
         default: {
+          if (Object.keys(this.item).includes('album_id')) {
+            return {
+              name: 'album-album_id',
+              params: {
+                album_id: this.item.album_id
+              }
+            }
+          }
           return { name: 'search' }
         }
       }
