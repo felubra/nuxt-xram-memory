@@ -37,7 +37,7 @@ export default Vue.component('Microtext', {
     }
     return createElement(
       context.props.tag,
-      { class: ['Microtext'] },
+      { class: ['microtext'] },
       context.slots().default
     )
   }
