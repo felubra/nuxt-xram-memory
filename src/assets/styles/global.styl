@@ -44,6 +44,11 @@ h1
   font-size: $microtext
   text-transform: uppercase
   color: $micro-text
+  display: inline-flex;
+  align-items: center
+
+.microtext--arrow-left > i
+  order: -1
 
 .ql-editor
   overflow: hidden
@@ -61,6 +66,17 @@ h1
 }
 .page-enter, .page-leave-active {
   opacity: 0
+}
+
+.offscreen {
+  clip-path: inset(100%);
+  clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; /* added line */
+  width: 1px;
 }
 
 @media only screen and (min-width: $tablet) 
