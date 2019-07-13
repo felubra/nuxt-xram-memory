@@ -2,7 +2,7 @@
   <AbstractPage class="ql-editor pageBody">
     <template v-slot:header>
       <div class="content-container">
-        <h1>{{staticPage.title}}</h1>
+        <Microtext tag="h1">{{staticPage.title}}</Microtext>
       </div>
     </template>
     <div class="content-container" v-html="theBody"></div>
@@ -13,9 +13,11 @@ import { sanitize } from '@/utils/'
 import AbstractPage from '~/components/common/AbstractPage'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
+import Microtext from '@/components/common/Microtext'
 export default {
   components: {
-    AbstractPage
+    AbstractPage,
+    Microtext
   },
   head() {
     return {

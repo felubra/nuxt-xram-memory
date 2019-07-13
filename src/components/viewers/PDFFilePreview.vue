@@ -21,7 +21,7 @@
         :page="i"
       >
         <template slot="loading">
-          <p class="FilePreview__Message microtext">Carregando...</p>
+          <Microtext class="FilePreview__Message">Carregando...</Microtext>
           <div class="FilePreview__Actions FilePreview__Actions--big">
             <a :href="fileURL" class="FilePreview__Action">
               <i class="material-icons">get_app</i>

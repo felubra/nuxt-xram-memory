@@ -4,13 +4,14 @@
       <no-ssr>
         <div class="content-container">
           <h1>Entre em contato</h1>
+          <Microtext
+            arrow="down"
+          >Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</Microtext>
         </div>
       </no-ssr>
     </template>
     <no-ssr>
       <div class="content-container">
-        <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
-        <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
         <el-form
           ref="form"
           :disabled="!isAvailable"
@@ -39,6 +40,7 @@
               @verify="onCaptchaVerify"
             ></vue-recaptcha>
           </el-form-item>
+          <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
           <el-form-item class="Contact__FormItem">
             <el-button type="primary" @click="onSubmit">Enviar</el-button>
             <el-button @click="resetForm()">Limpar</el-button>
@@ -54,10 +56,12 @@ import VueRecaptcha from 'vue-recaptcha'
 const emailValidator = require('email-validator')
 
 import AbstractPage from '~/components/common/AbstractPage'
+import Microtext from '~/components/common/Microtext'
 export default {
   components: {
     AbstractPage,
-    VueRecaptcha
+    VueRecaptcha,
+    Microtext
   },
   data() {
     const validateEmail = (rule, value, callback) => {
@@ -233,6 +237,10 @@ main {
 .Contact__Form {
   font-size: 1.2rem;
   padding: 1rem 0;
+}
+
+.el-alert {
+  margin: 2rem 0;
 }
 
 .el-alert__title,

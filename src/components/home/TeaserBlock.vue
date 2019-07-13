@@ -4,8 +4,10 @@
     <nuxt-link
       v-if="slug && showLink"
       :to="{name: 'slug', params: {slug: slug} }"
-      :class="`TeaserBlock__Link microtext TeaserBlock__Link--${linkPosition}`"
-    >{{teaserText}}</nuxt-link>
+      :class="`TeaserBlock__Link TeaserBlock__Link--${linkPosition}`"
+    >
+      <Microtext tag="span" arrow="right">{{teaserText}}</Microtext>
+    </nuxt-link>
   </section>
 </template>
 
@@ -14,9 +16,13 @@
 import { sanitize } from '@/utils/'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
+import Microtext from '@/components/common/Microtext'
 
 export default {
   name: 'TeaserBlock',
+  components: {
+    Microtext
+  },
   props: {
     pageItem: {
       type: Object,

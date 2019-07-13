@@ -1,8 +1,11 @@
 <template>
   <section class="SubjectsPage">
+    <h1 class="offscreen">Assuntos</h1>
     <section class="SubjectsPage__Featured">
       <header>
-        <Microtext arrow="down">Assuntos em destaque</Microtext>
+        <h2>
+          <Microtext arrow="down">Em destaque</Microtext>
+        </h2>
       </header>
       <div class="SubjectsList">
         <SubjectCard :subject="leftSubject" />
@@ -14,7 +17,9 @@
     </section>
     <section class="SubjectsPage__TagCloud">
       <header>
-        <Microtext arrow="down">Nuvem de palavras-chave</Microtext>
+        <h2>
+          <Microtext arrow="down">Nuvem de palavras-chave</Microtext>
+        </h2>
       </header>
       <ReactiveBase
         class-name="PageIndex"
@@ -81,9 +86,13 @@ export default {
   margin-right: 0;
 }
 
-.SubjectsPage__TagCloud, .SubjectsPage__Featured {
+.SubjectsPage > section {
   max-width: $max-width;
   margin: 4rem auto;
+}
+
+.SubjectsPage > section:first-of-type {
+  margin-top: 0;
 }
 
 section > footer {

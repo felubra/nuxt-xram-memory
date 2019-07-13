@@ -3,7 +3,7 @@
     <div class="NewsPage__Info">
       <header>
         <img :src="theImage" />
-        <p class="microtext">Notícia</p>
+        <Microtext>Notícia</Microtext>
         <h1>{{theTitle}}</h1>
       </header>
       <main>
@@ -19,10 +19,12 @@ import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
 import { sanitize, getMediaUrl } from '@/utils/'
 import NewsInfo from '~/components/news/NewsInfo'
 import AbstractPage from '~/components/common/AbstractPage'
+import Microtext from '~/components/common/Microtext'
 
 export default {
   components: {
     NewsInfo,
+    Microtext,
     PDFFilePreview: () => {
       if (!process.client) {
         return {

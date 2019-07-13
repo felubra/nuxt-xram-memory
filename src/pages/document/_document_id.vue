@@ -15,20 +15,20 @@
       </a>
 
       <div v-if="fileType" class="FieldList__Field">
-        <h2 class="microtext">Tipo</h2>
+        <Microtext tag="h2">Tipo</Microtext>
         <p>{{fileType}}</p>
       </div>
       <div v-if="size" class="FieldList__Field">
-        <h2 class="microtext">Tamanho</h2>
+        <Microtext tag="h2">Tamanho</Microtext>
         <p>{{size}}</p>
       </div>
       <div v-if="senpate" class="FieldList__Field">
-        <h2 class="microtext">Data de envio</h2>
+        <Microtext tag="h2">Data de envio</Microtext>
         <p>{{senpate}}</p>
       </div>
 
       <div v-if="document.description" class="FieldList__Field">
-        <h2 class="microtext">Descrição</h2>
+        <Microtext tag="h2">Descrição</Microtext>
         <p>{{document.description}}</p>
       </div>
 
@@ -51,6 +51,7 @@
 <script>
 import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
 import AbstractPage from '~/components/common/AbstractPage'
+import Microtext from '~/components/common/Microtext'
 
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
@@ -59,6 +60,7 @@ const { getMediaUrl } = require('~/utils')
 export default {
   components: {
     AbstractPage,
+    Microtext,
     UnknownFilePreview,
     PDFFilePreview: () => {
       if (!process.client) {

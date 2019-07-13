@@ -7,6 +7,7 @@
       :theme="reactiveDefaultTheme"
       :credentials="reactiveCredentials"
     >
+      <h1 class="offscreen">Início</h1>
       <div
         :class="{
           'PageIndex__SearchArea': true,

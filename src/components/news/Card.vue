@@ -164,9 +164,6 @@ export default {
 }
 
 .Card p.label {
-  font-size: $microtext;
-  font-family: $microtext-font;
-  text-transform: uppercase;
   text-align: center;
 }
 

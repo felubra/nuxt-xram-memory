@@ -1,7 +1,7 @@
 <template>
   <article :class="{'SubjectCard': true, 'SubjectCard--big': big}">
     <nuxt-link :to="itemLink">
-      <span class="microtext SubjectCard__ItemsCount">{{num_items}}</span>
+      <Microtext tag="span" class="SubjectCard__ItemsCount">{{num_items}}</Microtext>
       <h2>{{title}}</h2>
       <div class="SubjectCard__Description" v-html="description" />
       <div v-if="!big" class="SubjectCard__Cover">
@@ -19,11 +19,14 @@
 
 <script>
 import { sanitize, sanitizeOnlyText, getMediaUrl } from '@/utils'
+import Microtext from '@/components/common/Microtext'
 const smartTruncate = require('smart-truncate')
 
 export default {
   name: 'SubjectCard',
-
+  components: {
+    Microtext
+  },
   props: {
     subject: {
       type: Object,

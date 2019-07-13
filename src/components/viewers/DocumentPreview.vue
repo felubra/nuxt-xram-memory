@@ -1,6 +1,10 @@
 <script>
+import Microtext from '@/components/common/Microtext'
 export default {
   name: 'DocumentPreview',
+  components: {
+    Microtext
+  },
   props: {
     fileURL: {
       type: String,

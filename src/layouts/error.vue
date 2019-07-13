@@ -1,7 +1,9 @@
 <template>
   <section>
     <h1>{{title}}</h1>
-    <nuxt-link class="active" to="/">Voltar à página inicial</nuxt-link>
+    <nuxt-link class="active" to="/">
+      <Microtext arrow="left">Voltar à página inicial</Microtext>
+    </nuxt-link>
     <no-ssr>
       <D3TagCloud hi-color="#999" class="TagCloud" :keywords="errorKeywords" />
     </no-ssr>
@@ -11,10 +13,12 @@
 <script>
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
 import { TAGCLOUD_NUM_KEYWORDS } from '@/config/constants'
+import Microtext from '@/components/common/Microtext'
 const FONT_SIZE_DELTA = 16
 export default {
   components: {
-    D3TagCloud
+    D3TagCloud,
+    Microtext
   },
   props: ['error'],
   computed: {

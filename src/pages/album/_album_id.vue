@@ -18,7 +18,7 @@
     </main>
     <aside class="PageAside AlbumInfo FieldList">
       <div v-if="fileDescription" class="FieldList__Field">
-        <h2 class="microtext">Descrição</h2>
+        <Microtext tag="h2">Descrição</Microtext>
         <p>{{fileDescription}}</p>
       </div>
     </aside>
@@ -26,12 +26,14 @@
 </template>
 <script>
 import AbstractPage from '~/components/common/AbstractPage'
+import Microtext from '~/components/common/Microtext'
 const humanSize = require('human-size')
 
 const { getMediaUrl } = require('~/utils')
 export default {
   components: {
-    AbstractPage
+    AbstractPage,
+    Microtext
   },
   data() {
     return {

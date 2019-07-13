@@ -1,7 +1,7 @@
 <template>
   <div class="FilePreview UnknownFilePreview">
     <div class="FilePreview__Preview FilePreview__Preview--unknown">
-      <p class="FilePreview__Message microtext">Visualização não disponível.</p>
+      <Microtext class="FilePreview__Message">Visualização não disponível.</Microtext>
       <div class="FilePreview__Actions FilePreview__Actions--big">
         <a :href="fileURL" class="FilePreview__Action">
           <i class="material-icons">get_app</i>
