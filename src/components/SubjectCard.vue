@@ -132,6 +132,12 @@ export default {
 
 .SubjectCard__Images img {
   opacity: 0.75;
+  filter: grayscale(60%);
+}
+
+.SubjectCard:hover .SubjectCard__Images img {
+  opacity: 1;
+  filter: grayscale(0);
 }
 
 .SubjectCard__Cover::before {
@@ -141,6 +147,15 @@ export default {
   position: absolute;
   top: 0;
   background: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.25) 30%);
+}
+
+.SubjectCard:hover .SubjectCard__Cover::before {
+  height: 250px;
+  width: 100%;
+  content: '';
+  position: absolute;
+  top: 0;
+  background: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0) 30%);
 }
 
 h2 {
