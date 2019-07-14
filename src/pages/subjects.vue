@@ -73,7 +73,7 @@ export default {
 <style lang="stylus" scoped>
 .SubjectsList {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -82,7 +82,6 @@ export default {
 }
 
 .SubjectsPage__Featured > .SubjectsList > .SubjectCard:last-child {
-  flex-grow: 1;
   margin-right: 0;
 }
 
@@ -97,5 +96,11 @@ export default {
 
 section > footer {
   text-align: right;
+}
+
+@media only screen and (min-width: 768px) {
+  .SubjectsList {
+    flex-wrap: nowrap;
+  }
 }
 </style>

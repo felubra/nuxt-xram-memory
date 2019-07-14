@@ -4,7 +4,7 @@
       <Microtext tag="span" class="SubjectCard__ItemsCount">{{num_items}}</Microtext>
       <h2>{{title}}</h2>
       <div class="SubjectCard__Description" v-html="description" />
-      <div v-if="!big" class="SubjectCard__Cover">
+      <div class="SubjectCard__Cover">
         <img width="250" height="250" :src="cover" :alt="description" />
       </div>
     </nuxt-link>
@@ -51,9 +51,6 @@ export default {
     },
     description() {
       const desc = sanitizeOnlyText(this.subject.description)
-      if (this.big) {
-        return smartTruncate(desc, 650)
-      }
       return smartTruncate(desc, 360)
     },
     cover() {
@@ -73,7 +70,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.SubjectCard {
+.SubjectCard.SubjectCard--big, .SubjectCard {
   background-image: linear-gradient(rgba(250, 249, 246, 1) 0%, rgba(255, 255, 255, 1) 25%);
   display: flex;
   align-items: center;
@@ -103,31 +100,13 @@ export default {
   height: 100%;
 }
 
-.SubjectCard.SubjectCard--big {
-  align-items: flex-end;
-  text-align: center;
-  width: auto;
-}
-
-.SubjectCard.SubjectCard--big > a {
-  order: 2;
-}
-
 .SubjectCard__Cover {
   position: absolute;
   bottom: 0;
 }
 
 .SubjectCard__Images {
-  height: 100%;
-  display: -webkit-box;
-  display: flex;
-  overflow: hidden;
-  flex-grow: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-right: 1rem;
+  display: none;
 }
 
 .SubjectCard__Images img {
@@ -169,5 +148,33 @@ h2 {
 
 .SubjectCard__ItemsCount {
   font-size: 12px;
+}
+
+@media only screen and (min-width: 768px) {
+  .SubjectCard.SubjectCard--big {
+    align-items: flex-end;
+    text-align: center;
+    width: auto;
+    flex-grow: 1;
+  }
+
+  .SubjectCard.SubjectCard--big > a {
+    order: 2;
+  }
+
+  .SubjectCard__Images {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+  }
+
+  .SubjectCard.SubjectCard--big .SubjectCard__Cover {
+    display: none;
+  }
 }
 </style>
