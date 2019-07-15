@@ -78,7 +78,6 @@
           />
           <multi-dropdown-list
             :default-query="customFilterQuery"
-            :default-selected="keywords"
             :inner-class="{
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
