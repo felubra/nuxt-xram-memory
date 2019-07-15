@@ -4,7 +4,7 @@
     class="masonry-container"
     transition-duration="0.3s"
     item-selector=".masonry-container > .item"
-    column-width="270"
+    column-width="250"
     gutter="32"
     fit-width="true"
     stagger="0.03s"
@@ -47,7 +47,6 @@ export default {
 
 <style lang="stylus" scoped>
 .item {
-  width: 270px;
   min-height: 420px;
   margin: 6px 0;
 }
