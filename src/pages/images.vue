@@ -2,16 +2,24 @@
   <section class="ImagesPage">
     <h1 class="offscreen">Imagens</h1>
     <template v-if="hasAlbums">
-      <!--<section class="ImagesPage__Featured">
-      <Microtext arrow="down">Álbuns em destaque</Microtext>
-      <div class="albumsList">
-        <SubjectCard :subject="leftSubject" />
-        <SubjectCard :subject="featuredSubject" :big="true" />
-      </div>
-      </section>-->
+      <section class="ImagesPage__Featured">
+        <Microtext arrow="down">Álbuns em destaque</Microtext>
+        <div class="FeaturedAlbums">
+          <div class="FeaturedAlbum f1">
+            <img :src="albums[0].big_cover" />
+          </div>
+          <div class="FeaturedAlbum f2">
+            <img :src="albums[1].cover" />
+          </div>
+          <div class="FeaturedAlbum f3">
+            <h3>{{albums[1].name}}</h3>
+            <img :src="albums[1].cover" />
+          </div>
+        </div>
+      </section>
       <section class="OtherAlbuns">
         <header>
-          <Microtext tag="h2" arrow="down">Mais Álbuns</Microtext>
+          <Microtext tag="h2" arrow="down">{{hasFeaturedAlbums? 'Mais Álbuns' : 'Todos os álbums'}}</Microtext>
         </header>
         <div class="AlbumList">
           <ImageCard
@@ -43,8 +51,9 @@
 <script>
 import Microtext from '~/components/common/Microtext'
 import ImageCard from '~/components/news/ImageCard'
-
 import reactiveMixin from '~/utils/reactiveMixin'
+
+const { getMediaUrl, sanitize, cardImageDimensions } = require('~/utils')
 
 export default {
   components: {
@@ -54,25 +63,35 @@ export default {
   mixins: [reactiveMixin],
   data() {
     return {
-      albums: []
+      albums_objects: []
     }
   },
   computed: {
     hasAlbums() {
       return this.albums.length > 0
+    },
+    hasFeaturedAlbums() {
+      return this.albums.length > 3
+    },
+    albums() {
+      return this.albums_objects.map(album => {
+        album.big_cover = getMediaUrl(album.big_cover)
+        album.cover = getMediaUrl(album.cover)
+        return album
+      })
     }
   },
   async asyncData({ $axios, route, error }) {
     try {
-      const albums = await $axios.$get(`api/v1/albums`)
+      const albums_objects = await $axios.$get(`api/v1/albums`)
       return {
-        albums
+        albums_objects
       }
     } catch (e) {
       const statusCode = (e.response && e.response.status) || 500
       if (statusCode === 404) {
         return {
-          albums: []
+          albums_objects: []
         }
       }
       error({ statusCode })
@@ -117,5 +136,61 @@ section > footer {
 
 .AlbumList > .Album {
   margin-right: 1rem;
+}
+
+.ImagesPage__Featured {
+}
+
+.FeaturedAlbums {
+  width: 100%;
+  display: grid;
+  grid-template-areas: 'f1' 'f2' 'f3';
+  grid-template-columns: 1fr;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+.FeaturedAlbum {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.FeaturedAlbum > img {
+  position: absolute;
+}
+
+.FeaturedAlbum > h3 {
+  z-index: 500;
+  align-self: flex-end;
+}
+
+.FeaturedAlbums > .f1, .FeaturedAlbums > .f2, .FeaturedAlbums > .f3 {
+  background: #ccc;
+}
+
+.FeaturedAlbums > .f1 {
+  grid-area: f1;
+}
+
+.FeaturedAlbums > .f2, .FeaturedAlbums > .f1 {
+}
+
+.FeaturedAlbums > .f2 {
+  grid-area: f2;
+}
+
+.FeaturedAlbums > .f3 {
+  grid-area: f3;
+}
+
+@media only screen and (min-width: $tablet) {
+  .FeaturedAlbums {
+    grid-template-areas: 'f1 f2' 'f1 f3';
+    grid-template-columns: 1fr 270px;
+    grid-template-rows: 200px 200px;
+  }
 }
 </style>
