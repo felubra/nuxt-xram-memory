@@ -36,9 +36,7 @@ export default {
   methods: {
     componentType(item) {
       if (item._type && item._type === 'Documento') {
-        return item.mime_type && item.mime_type.includes('image/')
-          ? 'ImageCard'
-          : 'DocumentCard'
+        return 'ImageCard'
       } else {
         return 'NewsCard'
       }
