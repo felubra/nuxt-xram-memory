@@ -22,9 +22,9 @@
         <Microtext tag="h2">Tamanho</Microtext>
         <p>{{size}}</p>
       </div>
-      <div v-if="senpate" class="FieldList__Field">
+      <div v-if="sendDate" class="FieldList__Field">
         <Microtext tag="h2">Data de envio</Microtext>
-        <p>{{senpate}}</p>
+        <p>{{sendDate}}</p>
       </div>
 
       <div v-if="document.description" class="FieldList__Field">
