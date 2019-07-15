@@ -153,6 +153,11 @@ export default {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  word-break: break-all;
+}
+
+.Card p, .Card h3 {
+  word-break: break-word;
 }
 
 .Card p {
@@ -183,5 +188,9 @@ export default {
 .Card:focus-within, .Card:active, .Card:focus, .Card:hover {
   box-shadow: 0px 5px 25px #efefef;
   border-color: rgb(206, 84, 84);
+}
+
+.microtext {
+  justify-content: center;
 }
 </style>
