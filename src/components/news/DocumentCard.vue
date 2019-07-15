@@ -1,8 +1,8 @@
 <template>
   <div class="Card Card--document">
     <nuxt-link :to="itemLink">
-      <img v-if="teaser" v-card-image-dimensions :src="image" />
-      <p class="label">{{label}}</p>
+      <img v-if="image" v-card-image-dimensions :src="image" />
+      <Microtext>{{label}}</Microtext>
       <h3>{{title}}</h3>
       <p v-if="teaser">{{teaser}}</p>
     </nuxt-link>

@@ -3,10 +3,10 @@
     <nuxt-link :to="itemLink">
       <div class="ResultCard__Body">
         <div class="NewCard__Image">
-          <img v-if="image" :src="image" alt @error="removeImage">
+          <img v-if="image" :src="image" alt @error="removeImage" />
         </div>
         <div class="news-text">
-          <p v-if="showLabel" class="label">{{label}}</p>
+          <Microtext v-if="showLabel">{{label}}</Microtext>
           <h3>{{ resultItem.title }}</h3>
           <p class="teaser">{{teaser}}</p>
         </div>
@@ -15,7 +15,7 @@
     <div v-if="footer" class="ResultCard__Footer">
       <p class="ResultCard__Newspaper">
         <a :href="newspaper.url">
-          <img v-if="newspaperIcon" :src="newspaperIcon" alt>
+          <img v-if="newspaperIcon" :src="newspaperIcon" alt />
           <strong>{{newspaper.title}}</strong>
         </a>
       </p>
@@ -27,8 +27,12 @@
 /**TODO: adicionar prop centered */
 const dayJs = require('dayjs')
 const { getMediaUrl, sanitize } = require('~/utils')
+import Microtext from '@/components/common/Microtext'
 export default {
   name: 'ResultCard',
+  components: {
+    Microtext
+  },
   props: {
     resultItem: {
       type: Object,
