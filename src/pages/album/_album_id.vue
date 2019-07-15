@@ -1,14 +1,21 @@
 <template>
   <div class="AlbumPage">
     <main>
-      <viewer class="Album__Viewer" :options="viewerOptions" :images="photos" @inited="inited">
+      <viewer
+        v-show="visible"
+        class="Album__Viewer"
+        :options="viewerOptions"
+        :images="photos"
+        @inited="inited"
+      >
         <template slot-scope="scope">
           <img
             v-for="image in scope.images"
-            :key="image.id"
+            :key="image.document_id"
             class="ImageFilePreview__OriginalImage"
-            :src="getMediaURL(image.thumbnail)"
+            :src="getMediaURL(image.thumbnails.thumbnail)"
             :originalURL="getMediaURL(image.canonical_url)"
+            :ready="viewerReady"
           />
         </template>
       </viewer>
@@ -16,12 +23,6 @@
         <resize-sensor @resize="selectImageSize"></resize-sensor>
       </no-ssr>
     </main>
-    <aside class="PageAside AlbumInfo FieldList">
-      <div v-if="fileDescription" class="FieldList__Field">
-        <Microtext tag="h2">Descrição</Microtext>
-        <p>{{fileDescription}}</p>
-      </div>
-    </aside>
   </div>
 </template>
 <script>
@@ -39,7 +40,8 @@ export default {
     return {
       album: {},
       selectedPhotoIndex: 0,
-      selectedImageSize: null
+      selectedImageSize: null,
+      visible: false
     }
   },
   head() {
@@ -96,14 +98,12 @@ export default {
     viewerOptions() {
       return {
         inline: true,
-        button: false,
         navbar: true,
-        title: false,
         toolbar: {
-          prev: { show: true },
           zoomIn: { show: true },
-          oneToOne: { show: true, size: 'large' },
           zoomOut: { show: true },
+          prev: { show: true },
+          oneToOne: { show: true, size: 'large' },
           next: { show: true }
         },
         tooltip: true,
@@ -114,7 +114,11 @@ export default {
         transition: true,
         fullscreen: false,
         keyboard: false,
-        url: 'originalURL'
+        url: 'originalURL',
+        buttom: true,
+        loading: true,
+        title: this.imageTitle,
+        ready: this.viewerReady
       }
     }
   },
@@ -135,6 +139,10 @@ export default {
     }
   },
   methods: {
+    imageTitle() {
+      console.log(this.selectedPhoto)
+      return this.selectedPhoto.description
+    },
     selectImageSize({ width, height }) {
       const largestSide = Math.max(width, height)
       const candidateSizes = this.availableSizes.filter(
@@ -143,6 +151,9 @@ export default {
       this.selectedImageSize = candidateSizes.length
         ? Math.max(...candidateSizes)
         : this.failbackSize
+    },
+    viewerReady() {
+      this.visible = true
     },
     inited(viewer) {
       // Escute o evento 'view' no elemento criado pelo componente para determinar qual foto está sendo vista
@@ -160,6 +171,12 @@ export default {
     getMediaURL(photoPath) {
       return getMediaUrl(photoPath)
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    this.visible = false
+    this.$nextTick(() => {
+      next()
+    })
   }
 }
 </script>
@@ -171,6 +188,22 @@ export default {
 .viewer-navbar {
   background: transparent;
 }
+
+.viewer-title {
+  color: #000;
+  font-family: 'Cabin', sans-serif;
+  font-size: 16px;
+  text-shadow: 0px 0px 5px #dfdfdf;
+}
+
+.viewer-fixed .viewer-canvas {
+  background: #000;
+}
+
+.viewer-fixed .viewer-title {
+  color: #efefef;
+  text-shadow: 0px 0px 5px #000;
+}
 </style>
 
 
@@ -178,7 +211,20 @@ export default {
 .AlbumPage {
   display: flex;
   flex-direction: column;
-  min-height: 90vh;
+  position: relative;
+}
+
+aside {
+  flex-basis: 85px;
+}
+
+.Thumbnails {
+  display: flex;
+}
+
+.Thumbnails > img {
+  height: 75px;
+  padding: 5px;
 }
 
 .AlbumPage, main {
