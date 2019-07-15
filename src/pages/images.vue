@@ -22,11 +22,12 @@
           <Microtext tag="h2" arrow="down">{{hasFeaturedAlbums? 'Mais Álbuns' : 'Todos os álbums'}}</Microtext>
         </header>
         <div class="AlbumList">
-          <ImageCard
+          <NewsCard
             v-for="album in albums"
             :key="album.album_id"
             class="Album"
             :small="true"
+            :show-title="true"
             :item="album"
           />
         </div>
@@ -50,7 +51,7 @@
 
 <script>
 import Microtext from '~/components/common/Microtext'
-import ImageCard from '~/components/news/ImageCard'
+import NewsCard from '~/components/news/NewsCard'
 import reactiveMixin from '~/utils/reactiveMixin'
 
 const { getMediaUrl, sanitize, cardImageDimensions } = require('~/utils')
@@ -58,7 +59,7 @@ const { getMediaUrl, sanitize, cardImageDimensions } = require('~/utils')
 export default {
   components: {
     Microtext,
-    ImageCard
+    NewsCard
   },
   mixins: [reactiveMixin],
   data() {
