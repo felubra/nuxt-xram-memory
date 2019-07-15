@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     title() {
-      return sanitize(this.item.title)
+      return sanitize(this.item.title) || sanitize(this.item.name)
     },
     teaser() {
       return sanitize(smartTruncate(this.item.teaser, 180))
