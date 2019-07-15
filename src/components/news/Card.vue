@@ -134,7 +134,6 @@ export default {
   justify-content: flex-end;
   border: solid 1px #efefef;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
-  width: 250px;
   text-align: center;
   position: relative;
 }
