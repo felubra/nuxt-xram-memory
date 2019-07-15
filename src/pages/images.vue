@@ -2,19 +2,18 @@
   <section class="ImagesPage">
     <h1 class="offscreen">Imagens</h1>
     <template v-if="hasAlbums">
-      <section class="ImagesPage__Featured">
+      <section v-if="hasFeaturedAlbums" class="ImagesPage__Featured">
         <Microtext arrow="down">Álbuns em destaque</Microtext>
         <div class="FeaturedAlbums">
-          <div class="FeaturedAlbum f1">
-            <img :src="albums[0].big_cover" />
-          </div>
-          <div class="FeaturedAlbum f2">
-            <img :src="albums[1].cover" />
-          </div>
-          <div class="FeaturedAlbum f3">
-            <h3>{{albums[1].name}}</h3>
-            <img :src="albums[1].cover" />
-          </div>
+          <NewCard
+            v-for="(album, index) in featuredAlbums"
+            :key="album.album_id"
+            :class="`f${index}`"
+            :item-link="linkFor(album)"
+            :image="imageFor(album)"
+          >
+            <h3 slot="title">{{titleFor(album)}}</h3>
+          </NewCard>
         </div>
       </section>
       <section class="OtherAlbuns">
@@ -22,13 +21,11 @@
           <Microtext tag="h2" arrow="down">{{hasFeaturedAlbums? 'Mais Álbuns' : 'Todos os álbums'}}</Microtext>
         </header>
         <div class="AlbumList">
-          <NewsCard
-            v-for="album in albums"
+          <NewCard
+            v-for="album in otherAlbums"
             :key="album.album_id"
-            class="Album"
-            :small="true"
-            :show-title="true"
-            :item="album"
+            :item-link="linkFor(album)"
+            :image="imageFor(album)"
           />
         </div>
         <footer>
@@ -51,7 +48,8 @@
 
 <script>
 import Microtext from '~/components/common/Microtext'
-import NewsCard from '~/components/news/NewsCard'
+import NewCard from '~/components/news/NewCard'
+
 import reactiveMixin from '~/utils/reactiveMixin'
 
 const { getMediaUrl, sanitize, cardImageDimensions } = require('~/utils')
@@ -59,7 +57,7 @@ const { getMediaUrl, sanitize, cardImageDimensions } = require('~/utils')
 export default {
   components: {
     Microtext,
-    NewsCard
+    NewCard
   },
   mixins: [reactiveMixin],
   data() {
@@ -80,6 +78,13 @@ export default {
         album.cover = getMediaUrl(album.cover)
         return album
       })
+    },
+    featuredAlbums() {
+      //TODO: filtrar featured = true
+      return this.albums.slice(0, 3)
+    },
+    otherAlbums() {
+      return this.hasFeaturedAlbums ? this.albums.slice(3) : this.albums
     }
   },
   async asyncData({ $axios, route, error }) {
@@ -96,6 +101,27 @@ export default {
         }
       }
       error({ statusCode })
+    }
+  },
+  methods: {
+    labelFor(item) {
+      return `${item.items_count} ${item.items_count > 1 ? 'itens' : 'item'}`
+    },
+
+    imageFor(item) {
+      return item.big_cover
+    },
+    titleFor(item) {
+      return item.name
+    },
+
+    linkFor(item) {
+      return {
+        name: 'album-album_id',
+        params: {
+          album_id: item.album_id
+        }
+      }
     }
   }
 }
@@ -169,7 +195,6 @@ section > footer {
 }
 
 .FeaturedAlbums > .f1, .FeaturedAlbums > .f2, .FeaturedAlbums > .f3 {
-  background: #ccc;
 }
 
 .FeaturedAlbums > .f1 {
@@ -185,6 +210,20 @@ section > footer {
 
 .FeaturedAlbums > .f3 {
   grid-area: f3;
+}
+
+.OtherAlbuns .Card {
+  width: 250px;
+  height: 250px;
+}
+
+h3 {
+  font-family: $small-caps;
+  margin-top: 0.25rem;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #000000;
 }
 
 @media only screen and (min-width: $tablet) {

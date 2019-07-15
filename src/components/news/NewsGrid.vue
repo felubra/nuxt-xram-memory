@@ -10,22 +10,28 @@
     stagger="0.03s"
   >
     <div v-for="(item, index) in items" :key="index" v-masonry-tile class="item">
-      <component :is="componentType(item)" class="item" :item="item" />
+      <NewCard
+        class="NewsCard"
+        :item-link="linkFor(item)"
+        :label="labelFor(item)"
+        :image="imageFor(item)"
+        :teaser="teaserFor(item)"
+        :title="titleFor(item)"
+      ></NewCard>
     </div>
   </div>
 </template>
 
 <script>
-import NewsCard from './NewsCard'
-import ImageCard from './ImageCard'
-import DocumentCard from './DocumentCard'
+import NewCard from './NewCard'
+
+const dayJs = require('dayjs')
+const smartTruncate = require('smart-truncate')
 
 export default {
   name: 'NewsGrid',
   components: {
-    NewsCard,
-    ImageCard,
-    DocumentCard
+    NewCard
   },
   props: {
     items: {
@@ -34,11 +40,91 @@ export default {
     }
   },
   methods: {
-    componentType(item) {
-      if (item._type && item._type === 'Documento') {
-        return 'ImageCard'
-      } else {
-        return 'NewsCard'
+    labelFor(item) {
+      const values = [this.typeFor(item), this.dateFor(item)]
+      return values.filter(value => value).join(' em ')
+    },
+    dateFor(item) {
+      try {
+        const dateTime = dayJs(item.published_date)
+        if (!dateTime.isValid()) {
+          throw new Error()
+        }
+        return dateTime.toDate().toLocaleDateString()
+      } catch {
+        return ''
+      }
+    },
+    typeFor(item) {
+      try {
+        let value = item._type || ''
+        if (
+          value === 'Documento' &&
+          item.mime_type &&
+          item.mime_type.includes('image/')
+        ) {
+          value = 'Imagem'
+        }
+        return value
+      } catch {
+        return ''
+      }
+    },
+    imageFor(item) {
+      switch (this.typeFor(item)) {
+        case 'Imagem':
+        case 'Documento': {
+          // TODO: suporte a vários tamanhos de imagem
+          return item.thumbnail
+        }
+        case 'Notícia': {
+          return item.thumbnail
+        }
+        default: {
+          if (Object.keys(item).includes('album_id')) {
+            return item.big_cover
+          }
+          return ''
+        }
+      }
+    },
+    titleFor(item) {
+      switch (this.typeFor(item)) {
+        case 'Imagem':
+        case 'Documento': {
+          return ''
+        }
+        default: {
+          return item.title
+        }
+      }
+    },
+    teaserFor(item) {
+      return smartTruncate(item.teaser, 180)
+    },
+    linkFor(item) {
+      switch (this.typeFor(item)) {
+        case 'Imagem':
+        case 'Documento': {
+          return {
+            name: 'document-document_id',
+            params: { document_id: item.document_id }
+          }
+        }
+        case 'Notícia': {
+          return { name: 'news-slug', params: { slug: item.slug } }
+        }
+        default: {
+          if (Object.keys(item).includes('album_id')) {
+            return {
+              name: 'album-album_id',
+              params: {
+                album_id: item.album_id
+              }
+            }
+          }
+          return { name: 'search' }
+        }
       }
     }
   }
@@ -49,5 +135,6 @@ export default {
 .item {
   min-height: 420px;
   margin: 6px 0;
+  width: 250px;
 }
 </style>
