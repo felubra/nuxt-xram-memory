@@ -130,14 +130,13 @@ export default {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  height: 650px;
   justify-content: flex-end;
   justify-content: flex-end;
-  padding: 0.5rem;
   border: solid 1px #efefef;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
-  width: $card-width;
+  width: 250px;
   text-align: center;
+  position: relative;
 }
 
 .Card h3 {
@@ -148,16 +147,19 @@ export default {
 
 .Card > a {
   text-align: center;
-  padding: 6px;
   transition: background-color 0.25s ease, color 0.15s ease-out;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   word-break: break-all;
+  width: 100%;
+  padding: 0;
+  align-items: center;
 }
 
 .Card p, .Card h3 {
   word-break: break-word;
+  padding: 0.5rem;
 }
 
 .Card p {
