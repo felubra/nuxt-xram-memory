@@ -155,7 +155,9 @@
                 button:'SelectedFilters__Filter'
               }"
             />
-            <div class="ResultCount">{{totalResults}} resultados em {{time}}ms</div>
+            <Microtext
+              arrow="down"
+            >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
           </div>
           <NewsGrid slot="renderAllData" slot-scope="{ results }" :items="results"></NewsGrid>
         </ReactiveList>
@@ -170,6 +172,7 @@ import slugify from 'slugify'
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import TeaserBlock from '~/components/home/TeaserBlock'
 import Logo from '~/components/common/Logo'
+import Microtext from '~/components/common/Microtext'
 import NewsGrid from '~/components/news/NewsGrid'
 
 import reactiveMixin from '~/utils/reactiveMixin'
@@ -181,7 +184,8 @@ export default {
     HomeTagCloud,
     TeaserBlock,
     Logo,
-    NewsGrid
+    NewsGrid,
+    Microtext
   },
   directives: {
     'inner-input-focus': innerInputFocus,
