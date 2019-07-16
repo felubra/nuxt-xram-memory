@@ -5,7 +5,7 @@
     transition-duration="0.3s"
     item-selector=".masonry-container > .item"
     column-width="250"
-    gutter="32"
+    gutter="20"
     fit-width="true"
     stagger="0.03s"
   >
