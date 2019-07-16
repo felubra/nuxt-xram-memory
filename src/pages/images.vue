@@ -16,7 +16,7 @@
           </NewCard>
         </div>
       </section>
-      <section class="OtherAlbuns">
+      <section class="OtherAlbums">
         <header>
           <Microtext tag="h2" arrow="down">{{hasFeaturedAlbums? 'Mais Álbuns' : 'Todos os álbums'}}</Microtext>
         </header>
@@ -34,7 +34,7 @@
       </section>
     </template>
     <template v-else>
-      <section class="NoAlbuns">
+      <section>
         <header>
           <Microtext tag="h2" arrow="down">Sem dados</Microtext>
         </header>
@@ -212,7 +212,7 @@ section > footer {
   grid-area: f3;
 }
 
-.OtherAlbuns .Card {
+.OtherAlbums .Card {
   width: 250px;
   height: 250px;
 }
