@@ -115,11 +115,27 @@ export default {
   }
 }
 </script>
+<style lang="stylus">
+.SubjectItemsList > .SubjectItemsList__ResultsInfo {
+  max-width: $max-width;
+  margin: 0 auto;
+  display: block;
+}
+
+.SubjectItemsList > .masonry-container {
+  margin: 0 auto;
+}
+</style>
+
 
 <style lang="stylus" scoped >
 section > header, section > section, section > main {
   max-width: $max-width;
   margin: 0 auto;
+}
+
+.SubjectItems {
+  max-width: none;
 }
 
 .Subject__Description > div {
@@ -137,6 +153,9 @@ section > header, section > section, section > main {
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
+}
+
+.SubjectItemsList__ResultsInfo {
 }
 
 @media only screen and (min-width: $tablet) {
