@@ -13,7 +13,9 @@
             class="NewNavBar__Item"
             :to="urlOrRoute(page)"
           >{{page.title}}</nuxt-link>
-          <resize-sensor @resize="determineObfuscation"></resize-sensor>
+          <no-ssr>
+            <resize-sensor @resize="determineObfuscation"></resize-sensor>
+          </no-ssr>
         </div>
         <div class="controls">
           <a
