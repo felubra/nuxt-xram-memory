@@ -79,9 +79,15 @@ export default {
     }
   },
   async asyncData({ $axios, route, error }) {
+    try {
     const subjects = await $axios.$get(`api/v1/subjects/page`)
     return {
       subjects
+    }
+    } catch {
+      return {
+        subjects: []
+      }
     }
   },
   methods: {

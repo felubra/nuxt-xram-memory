@@ -94,14 +94,10 @@ export default {
         albums_objects
       }
     } catch (e) {
-      const statusCode = (e.response && e.response.status) || 500
-      if (statusCode === 404) {
         return {
           albums_objects: []
         }
       }
-      error({ statusCode })
-    }
   },
   methods: {
     labelFor(item) {
