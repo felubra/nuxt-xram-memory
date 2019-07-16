@@ -1,50 +1,62 @@
 <template>
   <section class="SubjectsPage">
     <h1 class="offscreen">Assuntos</h1>
-    <section class="SubjectsPage__Featured">
-      <header>
-        <Microtext tag="h2" arrow="down">Em destaque</Microtext>
-      </header>
-      <div class="SubjectsList">
-        <NewCard
-          class="SubjectCard"
-          :item-link="linkFor(leftSubject)"
-          :label="labelFor(leftSubject)"
+    <template v-if="hasContent">
+      <section class="SubjectsPage__Featured">
+        <header>
+          <Microtext tag="h2" arrow="down">Em destaque</Microtext>
+        </header>
+        <div class="SubjectsList">
+          <NewCard
+            class="SubjectCard"
+            :item-link="linkFor(leftSubject)"
+            :label="labelFor(leftSubject)"
+          >
+            <h3 slot="title">{{titleFor(leftSubject)}}</h3>
+            <Microtext slot="label">{{ labelFor(leftSubject) }}</Microtext>
+            <img slot="image" :src="imageFor(leftSubject)" />
+          </NewCard>
+          <NewCard
+            class="SubjectCard SubjectCard--big"
+            :item-link="linkFor(featuredSubject)"
+            :label="labelFor(featuredSubject)"
+          >
+            <h3 slot="title">{{titleFor(featuredSubject)}}</h3>
+            <Microtext slot="label">{{ labelFor(featuredSubject) }}</Microtext>
+            <img slot="image" :src="imageFor(featuredSubject)" />
+          </NewCard>
+        </div>
+        <footer>
+          <Microtext arrow="right">
+            <nuxt-link :to="{name: 'index'}">Todos os assuntos</nuxt-link>
+          </Microtext>
+        </footer>
+      </section>
+      <section class="SubjectsPage__TagCloud">
+        <header>
+          <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
+        </header>
+        <ReactiveBase
+          class-name="PageIndex"
+          app="artifact_document,artifact_news"
+          :url="reactiveServerURL"
+          :theme="reactiveDefaultTheme"
+          :credentials="reactiveCredentials"
         >
-          <h3 slot="title">{{titleFor(leftSubject)}}</h3>
-          <Microtext slot="label">{{ labelFor(leftSubject) }}</Microtext>
-          <img slot="image" :src="imageFor(leftSubject)" />
-        </NewCard>
-        <NewCard
-          class="SubjectCard SubjectCard--big"
-          :item-link="linkFor(featuredSubject)"
-          :label="labelFor(featuredSubject)"
-        >
-          <h3 slot="title">{{titleFor(featuredSubject)}}</h3>
-          <Microtext slot="label">{{ labelFor(featuredSubject) }}</Microtext>
-          <img slot="image" :src="imageFor(featuredSubject)" />
-        </NewCard>
-      </div>
-      <footer>
-        <Microtext arrow="right">
-          <nuxt-link :to="{name: 'index'}">Todos os assuntos</nuxt-link>
-        </Microtext>
-      </footer>
-    </section>
-    <section class="SubjectsPage__TagCloud">
-      <header>
-        <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
-      </header>
-      <ReactiveBase
-        class-name="PageIndex"
-        app="artifact_document,artifact_news"
-        :url="reactiveServerURL"
-        :theme="reactiveDefaultTheme"
-        :credentials="reactiveCredentials"
-      >
-        <HomeTagCloud />
-      </ReactiveBase>
-    </section>
+          <HomeTagCloud />
+        </ReactiveBase>
+      </section>
+    </template>
+    <template v-else>
+      <section>
+        <header>
+          <Microtext tag="h2" arrow="down">Sem dados</Microtext>
+        </header>
+        <main>
+          <p>Não existem assuntos para exibir no momento, por-favor volte mais tarde.</p>
+        </main>
+      </section>
+    </template>
   </section>
 </template>
 
@@ -71,6 +83,9 @@ export default {
     }
   },
   computed: {
+    hasContent() {
+      return this.subjects.length > 0
+    },
     leftSubject() {
       return this.subjects[0]
     },
@@ -80,10 +95,10 @@ export default {
   },
   async asyncData({ $axios, route, error }) {
     try {
-    const subjects = await $axios.$get(`api/v1/subjects/page`)
-    return {
-      subjects
-    }
+      const subjects = await $axios.$get(`api/v1/subjects/page`)
+      return {
+        subjects
+      }
     } catch {
       return {
         subjects: []
@@ -106,7 +121,10 @@ export default {
     linkFor(item) {
       // #TODO:
       return {
-        name: 'index'
+        name: 'subject-slug',
+        params: {
+          slug: item.slug
+        }
       }
     }
   }
