@@ -94,10 +94,10 @@ export default {
         albums_objects
       }
     } catch (e) {
-        return {
-          albums_objects: []
-        }
+      return {
+        albums_objects: []
       }
+    }
   },
   methods: {
     labelFor(item) {
@@ -153,7 +153,10 @@ section > footer {
 
 .AlbumList {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
   padding: 0.5rem 0;
 }
 
