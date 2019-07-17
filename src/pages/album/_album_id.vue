@@ -12,7 +12,7 @@
           <img
             v-for="image in scope.images"
             :key="image.document_id"
-            class="ImageFilePreview__OriginalImage"
+            class="hidden"
             :src="getMediaURL(image.thumbnails.thumbnail)"
             :originalURL="getMediaURL(image.canonical_url)"
             :ready="viewerReady"
