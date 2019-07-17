@@ -3,7 +3,7 @@
     <main>
       <no-ssr>
         <!-- eslint-disable -->
-        <component :is="componentType" :preview="true" :previewURL="previewURL" :fileURL="fileURL"></component>
+        <NewDocumentPreview :document="document" />
         <!-- eslint-enable -->
       </no-ssr>
     </main>
@@ -49,8 +49,7 @@
   </div>
 </template>
 <script>
-import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
-import AbstractPage from '~/components/common/AbstractPage'
+import NewDocumentPreview from '~/components/viewers/NewDocumentPreview'
 import Microtext from '~/components/common/Microtext'
 
 const humanSize = require('human-size')
@@ -59,34 +58,11 @@ const dayJs = require('dayjs')
 const { getMediaUrl } = require('~/utils')
 export default {
   components: {
-    AbstractPage,
     Microtext,
-    UnknownFilePreview,
-    PDFFilePreview: () => {
-      if (!process.client) {
-        return {
-          component: UnknownFilePreview
-        }
-      } else {
-        return {
-          component: import('../../components/viewers/PDFFilePreview')
-        }
-      }
-    },
-    ImageFilePreview: () => {
-      if (!process.client) {
-        return {
-          component: UnknownFilePreview
-        }
-      } else {
-        return {
-          component: import('../../components/viewers/ImageFilePreview')
-        }
-      }
-    }
+    NewDocumentPreview
   },
   data() {
-    return { document: {}, componentType: '' }
+    return { document: {} }
   },
   head() {
     return {
@@ -131,38 +107,16 @@ export default {
         return 'Documento'
       }
     },
-    isCapture() {
-      return this.document.news_items.length > 0 || false
-    },
+
     newsRelated() {
       return this.document.news_items.length && this.document.news_items
-    },
-    isUnknown() {
-      return this.previewComponentType === 'UnknownFilePreview'
     }
   },
   async asyncData({ $axios, route, error }) {
     const documentId = route.params.document_id
     if (documentId) {
-      return $axios
-        .$get(`/api/v1/document/${documentId}`)
-        .then(document => {
-          let componentType = 'UnknownFilePreview'
-          try {
-            if (document.mime_type === 'application/pdf') {
-              componentType = 'PDFFilePreview'
-            } else if (document.mime_type.includes('image/')) {
-              componentType = 'ImageFilePreview'
-            }
-          } catch (e) {
-            //use o padrão acima
-          }
-          return { document, componentType }
-        })
-        .catch(e => {
-          const statusCode = (e.response && e.response.status) || 500
-          error({ statusCode })
-        })
+      const document = await $axios.$get(`/api/v1/document/${documentId}`)
+      return { document }
     } else {
       error({ statusCode: 404, message: 'Documento não encontrado' })
     }
