@@ -2,35 +2,21 @@
   <section class="ImagesPage">
     <h1 class="offscreen">Imagens</h1>
     <template v-if="hasAlbums">
-      <section v-if="hasFeaturedAlbums" class="ImagesPage__Featured">
-        <Microtext arrow="down">Álbuns em destaque</Microtext>
-        <div class="FeaturedAlbums">
-          <NewCard
-            v-for="(album, index) in featuredAlbums"
-            :key="album.album_id"
-            :class="`f${index}`"
-            :item-link="linkFor(album)"
-            :image="imageFor(album)"
-          >
-            <h3 slot="title">{{titleFor(album)}}</h3>
-          </NewCard>
-        </div>
-      </section>
       <section class="OtherAlbums">
         <header>
-          <Microtext tag="h2" arrow="down">{{hasFeaturedAlbums? 'Mais Álbuns' : 'Todos os álbums'}}</Microtext>
+          <Microtext tag="h2" arrow="down">Todos os álbums</Microtext>
         </header>
         <div class="AlbumList">
           <NewCard
-            v-for="album in otherAlbums"
+            v-for="album in albums"
             :key="album.album_id"
             :item-link="linkFor(album)"
             :image="imageFor(album)"
-          />
+            :label="labelFor(album)"
+          >
+            <h3 slot="title">{{album.name}}</h3>
+          </NewCard>
         </div>
-        <footer>
-          <Microtext arrow="right">Ver todos os álbuns</Microtext>
-        </footer>
       </section>
     </template>
     <template v-else>
@@ -101,11 +87,15 @@ export default {
   },
   methods: {
     labelFor(item) {
-      return `${item.items_count} ${item.items_count > 1 ? 'itens' : 'item'}`
+      if (item.file_count) {
+        return item.file_count > 1
+          ? `${item.file_count} itens`
+          : `${item.file_count} item`
+      }
+      return ''
     },
-
     imageFor(item) {
-      return item.big_cover
+      return item.cover
     },
     titleFor(item) {
       return item.name
@@ -154,7 +144,7 @@ section > footer {
 .AlbumList {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-column-gap: 20px;
   grid-row-gap: 20px;
   padding: 0.5rem 0;
@@ -212,7 +202,6 @@ section > footer {
 }
 
 .OtherAlbums .Card {
-  width: 250px;
   height: 250px;
 }
 
