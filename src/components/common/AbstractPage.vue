@@ -40,7 +40,7 @@ export default {
 <style lang="stylus" scoped>
 .Page {
   max-width: $max-width;
-  margin: auto auto;
+  margin: 0 auto;
   width: 100%;
 }
 

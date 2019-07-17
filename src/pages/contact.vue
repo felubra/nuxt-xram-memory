@@ -1,12 +1,10 @@
 <template>
-  <AbstractPage>
+  <AbstractPage class="ContactPage">
     <template v-slot:header>
       <no-ssr>
         <div class="content-container">
           <h1>Entre em contato</h1>
-          <Microtext
-            arrow="down"
-          >Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</Microtext>
+          <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
         </div>
       </no-ssr>
     </template>
@@ -231,6 +229,9 @@ export default {
 </script>
 
 <style>
+.ContactPage {
+  margin: auto auto !important;
+}
 main {
   font-family: 'Cabin', sans-serif;
 }
