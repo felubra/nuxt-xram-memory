@@ -159,7 +159,12 @@
               arrow="down"
             >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
           </div>
-          <NewsGrid slot="renderAllData" slot-scope="{ results }" :items="results"></NewsGrid>
+          <NewsGrid
+            id="HomeMasonryGrid"
+            slot="renderAllData"
+            slot-scope="{ results }"
+            :items="results"
+          ></NewsGrid>
         </ReactiveList>
       </transition>
     </ReactiveBase>
@@ -225,6 +230,12 @@ export default {
       handler({ query }) {
         this.inSearchMode = Object.keys(query).length > 0
       }
+    }
+  },
+  beforeDestroy() {
+    const el = document.getElementById('HomeMasonryGrid')
+    if (el) {
+      el.style.opacity = 0
     }
   },
   methods: {
