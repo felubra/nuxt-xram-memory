@@ -2,7 +2,8 @@
   <AbstractPage class="ql-editor pageBody">
     <template v-slot:header>
       <div class="content-container">
-        <Microtext tag="h1">{{staticPage.title}}</Microtext>
+        <Microtext>{{staticPage.teaser_text}}</Microtext>
+        <h1>{{staticPage.title}}</h1>
       </div>
     </template>
     <div class="content-container" v-html="theBody"></div>
