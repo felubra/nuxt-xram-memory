@@ -229,9 +229,7 @@ export default {
       immediate: true,
       deep: true,
       handler({ query }) {
-        if (!this.inSearchMode) {
-          this.inSearchMode = Object.keys(query).length > 0
-        }
+        this.inSearchMode = Object.keys(query).length > 0
       }
     }
   },
