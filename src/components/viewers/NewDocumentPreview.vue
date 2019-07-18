@@ -49,8 +49,7 @@ export default {
 </script>
 
 <style>
-.viewer-canvas,
-.viewer-backdrop {
+.viewer-canvas {
   background: transparent;
 }
 </style>
