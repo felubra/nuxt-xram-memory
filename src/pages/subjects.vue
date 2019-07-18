@@ -158,6 +158,11 @@ export default {
   grid-row-gap: 20px;
 }
 
+.SubjectCard {
+  transition: all 0.25s ease;
+  min-height: 475px;
+}
+
 .SubjectCard--big {
   padding: 1rem;
 }
