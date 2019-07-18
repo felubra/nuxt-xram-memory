@@ -14,7 +14,9 @@
 <script>
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
 import { TAGCLOUD_QUERY } from '~/config/constants'
+
 const FONT_SIZE_DELTA = 16
+
 export default {
   name: 'HomeTagCloud',
   components: {

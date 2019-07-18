@@ -1,0 +1,46 @@
+<template>
+  <!-- eslint-disable -->
+  <DataSearch
+    v-inner-input-focus
+    class="SearchBar"
+    component-id="search"
+    :field-weights="[10,7]"
+    :data-field="['title', 'teaser']"
+    icon-position="right"
+    :autosuggest="false"
+    placeholder="Pesquisar no acervo"
+    :show-clear="false"
+    :debounce="250"
+    :inner-class="{
+            input: 'SearchBar__Input'
+          }"
+    :URLParams="true"
+    filter-label="Texto"
+    v-active-filter-animation="'search'"
+    v-bind="$attrs"
+    v-on="$listeners"
+  />
+  <!-- eslint-enable -->
+</template>
+<script>
+import { activeFilterAnimation } from './SearchFilters'
+import { innerInputFocus } from '~/utils'
+export default {
+  name: 'HomeSearchInput',
+  directives: {
+    activeFilterAnimation,
+    innerInputFocus
+  },
+  inheritAttrs: false
+}
+</script>
+
+<style>
+.SearchBar {
+  max-width: 730px;
+}
+
+.SearchBar__Input {
+  background: #fff !important; /* #TODO: este estilo não está pegando */
+}
+</style>
