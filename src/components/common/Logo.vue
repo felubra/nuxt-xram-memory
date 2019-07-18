@@ -1,11 +1,13 @@
 <template>
-  <div :class="{'Logo': true, 'Logo--big': big}">
+  <div :class="{'Logo': true, 'Logo--big': big}" @click="exitHomeSearch">
     <nuxt-link class="Logo__Link" to="/">
       <img :src="src" alt />
     </nuxt-link>
   </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'Logo',
   props: {
@@ -32,6 +34,9 @@ export default {
       }
       return `${base}--${this.variant}.svg`
     }
+  },
+  methods: {
+    ...mapMutations(['exitHomeSearch'])
   }
 }
 </script>

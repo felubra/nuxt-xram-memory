@@ -3,22 +3,22 @@
     <DefaultReactiveBase class-name="PageIndex">
       <h1 class="offscreen">Início</h1>
       <div
-        :class="`PageIndex__SearchArea ${inSearchMode ? 'PageIndex__SearchArea--searching' : ''}`"
+        :class="`PageIndex__SearchArea ${isHomeSearching ? 'PageIndex__SearchArea--searching' : ''}`"
       >
         <transition name="fade" appear mode="in-out" :duration="100">
-          <Logo v-if="!inSearchMode" class="Home__Logo" :big="true" />
+          <Logo v-if="!isHomeSearching" class="Home__Logo" :big="true" />
         </transition>
         <HomeSearchInput
           @keyDown.backspace="exitSearchMode"
           @keyDown.enter="enterSearchMode"
           @keyDown.esc="exitSearchMode"
         />
-        <SearchFilters v-if="inSearchMode" />
+        <SearchFilters v-if="isHomeSearching" />
       </div>
 
       <transition name="fade">
         <TeaserBlock
-          v-if="!inSearchMode && featuredPage"
+          v-if="!isHomeSearching && featuredPage"
           link-position="center"
           class="FeaturedPage"
           :page-item="featuredPage"
@@ -26,10 +26,10 @@
       </transition>
 
       <transition name="fade">
-        <HomeTagCloud v-if="!inSearchMode" class="HomeTagCloud" />
+        <HomeTagCloud v-if="!isHomeSearching" class="HomeTagCloud" />
       </transition>
 
-      <transition v-if="inSearchMode" :duration="500" name="fade">
+      <transition v-if="isHomeSearching" :duration="500" name="fade">
         <HomeSearchResults />
       </transition>
     </DefaultReactiveBase>
@@ -44,7 +44,7 @@ import SearchFilters from '@/components/home/SearchFilters'
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import TeaserBlock from '~/components/home/TeaserBlock'
 import Logo from '~/components/common/Logo'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 
 export default {
   components: {
@@ -56,11 +56,6 @@ export default {
     SearchFilters,
     HomeSearchResults
   },
-  data() {
-    return {
-      inSearchMode: false
-    }
-  },
   head: {
     title: 'xraM-Memory',
     bodyAttrs: {
@@ -69,6 +64,7 @@ export default {
   },
   computed: {
     ...mapGetters(['pageLinks', 'featuredPages', 'homeLinks']),
+    ...mapState(['isHomeSearching']),
     featuredPage() {
       return this.featuredPages.length > 0 && this.featuredPages[0]
     }
@@ -78,25 +74,28 @@ export default {
       immediate: true,
       deep: true,
       handler({ query }) {
-        this.inSearchMode = Object.keys(query).length > 0
+        if (Object.keys(query).length > 0) {
+          this.enterHomeSearch()
+        }
       }
     }
   },
   methods: {
     exitSearchMode({ target, keyCode }) {
       if (keyCode === 27) {
-        this.inSearchMode = false
+        this.exitHomeSearch()
       } else {
         if (!target.value || !target.value.trim()) {
-          this.inSearchMode = false
+          this.exitHomeSearch()
         }
       }
     },
     enterSearchMode({ target }) {
       if (target.value && target.value.trim()) {
-        this.inSearchMode = true
+        this.enterHomeSearch()
       }
-    }
+    },
+    ...mapMutations(['enterHomeSearch', 'exitHomeSearch'])
   }
 }
 </script>
