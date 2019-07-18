@@ -12,7 +12,7 @@
           <h3 v-if="title">{{title}}</h3>
         </slot>
         <slot name="teaser">
-          <p v-if="teaser">{{teaser}}</p>
+          <p v-if="teaser" class="teaser">{{teaser}}</p>
         </slot>
       </nuxt-link>
       <slot name="footer"></slot>
@@ -101,7 +101,7 @@ export default {
   width: 100%;
   padding: 0;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .Card p, .Card h3 {
@@ -142,5 +142,9 @@ export default {
 .microtext {
   justify-content: center;
   color: #a1a1a1 !important;
+}
+
+.teaser {
+  text-align: justify;
 }
 </style>
