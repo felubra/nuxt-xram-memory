@@ -2,7 +2,9 @@
   <div class="NewsPage">
     <div class="NewsPage__Info">
       <header>
-        <img :src="theImage" />
+        <figure>
+          <img :src="theImage" />
+        </figure>
         <Microtext>Notícia</Microtext>
         <h1>{{theTitle}}</h1>
       </header>
@@ -53,7 +55,7 @@ export default {
       return sanitize(this.newsItem.title)
     },
     theImage() {
-      const urlVal = sanitize(this.newsItem.image_capture)
+      const urlVal = sanitize(this.newsItem.thumbnails.news_page)
       return urlVal ? getMediaUrl(urlVal) : ''
     },
     pdfUrl() {
@@ -107,6 +109,13 @@ header {
 
 .NewsPage__NewsInfo {
   text-align: justify;
+}
+
+figure {
+  min-height: 350px;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
 }
 
 @media only screen and (min-width: 960px) {
