@@ -89,12 +89,7 @@ export default {
     }
     error({ statusCode: 400 })
   },
-  beforeDestroy() {
-    const el = document.getElementById('SubjectsMasonryGrid')
-    if (el) {
-      el.style.opacity = 0
-    }
-  },
+
   methods: {
     subjectQuery() {
       return {
@@ -143,10 +138,6 @@ export default {
 section > header, section > section, section > main {
   max-width: $max-width;
   margin: 0 auto;
-}
-
-.SubjectItems {
-  max-width: none;
 }
 
 .Subject__Description > div {
