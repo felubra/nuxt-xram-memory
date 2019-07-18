@@ -58,17 +58,17 @@
     </div>
     <div v-if="subjects" class="FieldList__Field">
       <h2>Assuntos</h2>
-      <p class="inline">
+      <ul class="taxonomy-list">
+        <li v-for="subject in subjects" :key="subject.slug">
         <nuxt-link
-          v-for="subject in subjects"
-          :key="subject.slug"
-          :to="{name:'search-query', query:{ subjects: JSON.stringify([subject.name])} }"
+            :to="{name:'index', query:{ subjects: JSON.stringify([subject.name])} }"
         >{{subject.name}}</nuxt-link>
-      </p>
+        </li>
+      </ul>
     </div>
     <div v-if="keywords" class="FieldList__Field">
       <h2>Palavras-chave</h2>
-      <ul class="tag-list">
+      <ul class="taxonomy-list">
         <li v-for="keyword in keywords" :key="keyword.slug">
           <nuxt-link
             :to="{name:'index', query:{ keywords: JSON.stringify([keyword.name])} }"
@@ -253,20 +253,28 @@ export default {
   border-color: $link-color;
 }
 
-ul.tag-list > li {
+ul.taxonomy-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+ul.taxonomy-list > li {
   display: inline-block;
-  margin: 0.5rem;
   border: 1px solid transparent;
-  padding: 5px 12px;
   line-height: 1.2rem;
   color: #333333;
   cursor: pointer;
   user-select: none;
   transition: all 0.3s ease;
+  padding: 5px;
 }
 
 @media only screen and (min-width: $tablet) {
-  ul.tag-list > li {
+  ul.taxonomy-list > li {
     margin: 0.5rem;
   }
 }
