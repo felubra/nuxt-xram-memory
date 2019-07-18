@@ -1,12 +1,6 @@
 <template>
   <no-ssr>
-    <ReactiveBase
-      class-name="PageIndex"
-      app="artifact_document,artifact_news"
-      :url="reactiveServerURL"
-      :theme="reactiveDefaultTheme"
-      :credentials="reactiveCredentials"
-    >
+    <DefaultReactiveBase class-name="PageIndex">
       <h1 class="offscreen">Início</h1>
       <div
         :class="{
@@ -167,7 +161,7 @@
           ></NewsGrid>
         </ReactiveList>
       </transition>
-    </ReactiveBase>
+    </DefaultReactiveBase>
   </no-ssr>
 </template>
 
@@ -180,17 +174,19 @@ import Logo from '~/components/common/Logo'
 import Microtext from '~/components/common/Microtext'
 import NewsGrid from '~/components/news/NewsGrid'
 
-import reactiveMixin from '~/utils/reactiveMixin'
 import { mapGetters } from 'vuex'
 import { innerInputFocus } from '~/utils'
 import { sanitize } from '@/utils/'
+
+import DefaultReactiveBase from '@/components/DefaultReactiveBase'
 export default {
   components: {
     HomeTagCloud,
     TeaserBlock,
     Logo,
     NewsGrid,
-    Microtext
+    Microtext,
+    DefaultReactiveBase
   },
   directives: {
     'inner-input-focus': innerInputFocus,
@@ -205,7 +201,7 @@ export default {
       }
     }
   },
-  mixins: [reactiveMixin],
+
   data() {
     return {
       inSearchMode: false

@@ -10,12 +10,7 @@
       </section>
     </section>
     <section class="SubjectItems">
-      <ReactiveBase
-        app="artifact_document,artifact_news"
-        :url="reactiveServerURL"
-        :theme="reactiveDefaultTheme"
-        :credentials="reactiveCredentials"
-      >
+      <DefaultReactiveBase>
         <ReactiveList
           component-id="SubjectItemsList"
           :pagination="false"
@@ -43,7 +38,7 @@
             :items="results"
           ></NewsGrid>
         </ReactiveList>
-      </ReactiveBase>
+      </DefaultReactiveBase>
     </section>
   </section>
 </template>
@@ -52,15 +47,15 @@
 import { sanitize, getMediaUrl } from '@/utils'
 import Microtext from '@/components/common/Microtext'
 import NewsGrid from '~/components/news/NewsGrid'
+import DefaultReactiveBase from '@/components/DefaultReactiveBase'
 
-import reactiveMixin from '~/utils/reactiveMixin'
 export default {
   name: 'SubjectPage',
   components: {
     Microtext,
-    NewsGrid
+    NewsGrid,
+    DefaultReactiveBase
   },
-  mixins: [reactiveMixin],
   data() {
     return {
       subject: {}

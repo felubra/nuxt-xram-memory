@@ -36,8 +36,6 @@
 import Microtext from '~/components/common/Microtext'
 import NewCard from '~/components/news/NewCard'
 
-import reactiveMixin from '~/utils/reactiveMixin'
-
 const { getMediaUrl, sanitize, cardImageDimensions } = require('~/utils')
 
 export default {
@@ -45,7 +43,6 @@ export default {
     Microtext,
     NewCard
   },
-  mixins: [reactiveMixin],
   data() {
     return {
       albums_objects: []

@@ -36,15 +36,9 @@
         <header>
           <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
         </header>
-        <ReactiveBase
-          class-name="PageIndex"
-          app="artifact_document,artifact_news"
-          :url="reactiveServerURL"
-          :theme="reactiveDefaultTheme"
-          :credentials="reactiveCredentials"
-        >
+        <DefaultReactiveBase>
           <HomeTagCloud />
-        </ReactiveBase>
+        </DefaultReactiveBase>
       </section>
     </template>
     <template v-else>
@@ -61,22 +55,21 @@
 </template>
 
 <script>
+import DefaultReactiveBase from '@/components/DefaultReactiveBase'
+import HomeTagCloud from '~/components/home/HomeTagCloud'
 import Microtext from '~/components/common/Microtext'
 import SubjectCard from '~/components/SubjectCard'
 import NewCard from '~/components/news/NewCard'
-import HomeTagCloud from '~/components/home/HomeTagCloud'
 import { getMediaUrl } from '~/utils'
-
-import reactiveMixin from '~/utils/reactiveMixin'
 
 export default {
   components: {
     Microtext,
     SubjectCard,
     HomeTagCloud,
-    NewCard
+    NewCard,
+    DefaultReactiveBase
   },
-  mixins: [reactiveMixin],
   data() {
     return {
       subjects: []
