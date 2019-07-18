@@ -60,9 +60,9 @@
       <h2>Assuntos</h2>
       <ul class="taxonomy-list">
         <li v-for="subject in subjects" :key="subject.slug">
-        <nuxt-link
+          <nuxt-link
             :to="{name:'index', query:{ subjects: JSON.stringify([subject.name])} }"
-        >{{subject.name}}</nuxt-link>
+          >{{subject.name}}</nuxt-link>
         </li>
       </ul>
     </div>
@@ -232,7 +232,7 @@ export default {
       try {
         return getMediaUrl(
           this.documents.find(document => document.document_id === document_id)
-            .thumbnail
+            .thumbnails.document_thumbnail
         )
       } catch {
         return false
@@ -243,10 +243,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+figure {
+  min-height: 250px;
+}
+
 .NewsInfo--pdf-captures a {
-  border: solid 1px #ccc;
+  border: solid 1px #efefef;
   margin: 6px;
   width: auto;
+  transition: border-color 0.25s ease;
 }
 
 .NewsInfo--pdf-captures a:active, .NewsInfo--pdf-captures a:focus, .NewsInfo--pdf-captures a:hover {
