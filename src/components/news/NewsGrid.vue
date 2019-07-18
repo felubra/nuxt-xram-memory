@@ -1,25 +1,16 @@
 <template>
-  <div
-    v-masonry
-    class="masonry-container"
-    transition-duration="0.3s"
-    item-selector=".masonry-container > .item"
-    column-width="250"
-    gutter="20"
-    fit-width="true"
-    stagger="0.03s"
-  >
-    <div v-for="(item, index) in items" :key="index" v-masonry-tile class="item">
-      <NewCard
-        class="NewsCard"
-        :item-link="linkFor(item)"
-        :label="labelFor(item)"
-        :image="imageFor(item)"
-        :teaser="teaserFor(item)"
-        :title="titleFor(item)"
-      ></NewCard>
-    </div>
-  </div>
+  <transition-group class="NewsGrid" name="list-complete" tag="div">
+    <NewCard
+      v-for="(item, index) in items"
+      :key="index"
+      class="item"
+      :item-link="linkFor(item)"
+      :label="labelFor(item)"
+      :image="imageFor(item)"
+      :teaser="teaserFor(item)"
+      :title="titleFor(item)"
+    ></NewCard>
+  </transition-group>
 </template>
 
 <script>
@@ -132,9 +123,28 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.NewsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+}
+
 .item {
   min-height: 420px;
-  margin: 6px 0;
+  margin: 20px;
   width: 250px;
+  transition: all 0.25s;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.list-complete-enter, .list-complete-leave-to {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.list-complete-leave-active {
+  position: absolute;
 }
 </style>

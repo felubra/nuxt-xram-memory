@@ -223,15 +223,7 @@ export default {
       return this.featuredPages.length > 0 && this.featuredPages[0]
     }
   },
-  beforeRouteLeave({ name }, from, next) {
-    if (name !== 'index') {
-      const el = document.getElementById('HomeMasonryGrid')
-      if (el) {
-        el.style.opacity = 0
-      }
-    }
-    next()
-  },
+
   watch: {
     $route: {
       immediate: true,
@@ -243,12 +235,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
-    const el = document.getElementById('HomeMasonryGrid')
-    if (el) {
-      el.style.opacity = 0
-    }
-  },
+
   methods: {
     lowerSlugify(keyword) {
       return slugify(keyword.toLowerCase())
