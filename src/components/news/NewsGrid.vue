@@ -145,14 +145,13 @@ export default {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  align-items: flex-start;
 }
 
 .item {
-  min-height: 420px;
   margin: 20px;
   width: 250px;
   transition: all 0.25s;
-  display: inline-block;
   margin-right: 10px;
 }
 
