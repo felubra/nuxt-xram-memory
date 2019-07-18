@@ -9,12 +9,15 @@
       :image="imageFor(item)"
       :teaser="teaserFor(item)"
       :title="titleFor(item)"
-    ></NewCard>
+    >
+      <NewspaperInfo v-if="newspaperFor(item)" slot="footer" :newspaper="newspaperFor(item)" />
+    </NewCard>
   </transition-group>
 </template>
 
 <script>
 import NewCard from './NewCard'
+import NewspaperInfo from './NewspaperInfo'
 
 const dayJs = require('dayjs')
 const smartTruncate = require('smart-truncate')
@@ -22,7 +25,8 @@ const smartTruncate = require('smart-truncate')
 export default {
   name: 'NewsGrid',
   components: {
-    NewCard
+    NewCard,
+    NewspaperInfo
   },
   props: {
     items: {
@@ -59,6 +63,20 @@ export default {
         return value
       } catch {
         return ''
+      }
+    },
+    newspaperFor(item) {
+      try {
+        if (item.newspaper) {
+          return {
+            title: item.newspaper.title,
+            image: item.newspaper.favicon_logo,
+            url: item.newspaper.url
+          }
+        }
+        return null
+      } catch {
+        return null
       }
     },
     imageFor(item) {
@@ -145,5 +163,9 @@ export default {
 
 .list-complete-leave-active {
   position: absolute;
+}
+
+.NewspaperInfo {
+  margin-top: auto;
 }
 </style>
