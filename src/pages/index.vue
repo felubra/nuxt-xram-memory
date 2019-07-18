@@ -300,6 +300,10 @@ export default {
 </script>
 
 <style lang="stylus">
+#HomeMasonryGrid {
+  justify-content: center;
+}
+
 @keyframes filterActive {
   0% {
     border-color: #E1DADA;
