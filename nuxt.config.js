@@ -89,8 +89,7 @@ module.exports = {
     { src: '@/plugins/element-ui', ssr: false },
     '@/plugins/v-viewer',
     '@/plugins/axios',
-    '@/plugins/essential-content.js',
-    { src: '@/plugins/vue-masonry.js', ssr: false }
+    '@/plugins/essential-content.js'
   ],
 
   /*
