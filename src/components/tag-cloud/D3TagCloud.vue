@@ -1,12 +1,14 @@
 <template>
   <div class="D3TagCloud">
     <resize-sensor @resize="resize"></resize-sensor>
-    <svg
+    <transition-group
       ref="Cloud"
       xmlns="http://www.w3.org/2000/svg"
       class="Cloud"
       :width="width"
       :height="height"
+      tag="svg"
+      name="list-complete"
     >
       <g
         v-for="(d, i) in words"
@@ -34,7 +36,7 @@
           >{{d.text}}</text>
         </nuxt-link>
       </g>
-    </svg>
+    </transition-group>
   </div>
 </template>
 
@@ -81,6 +83,9 @@ export default {
         }
       }
     }
+  },
+  beforeDestroy() {
+    clearInterval(this.interval)
   },
   methods: {
     colorForSize(size) {
@@ -137,8 +142,12 @@ svg {
   display: block;
   margin: 0 auto;
 }
+
+g {
+  transition: opacity 0.25s ease-in;
+}
 a.Cloud__Word > text {
-  transition: fill 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 a.Cloud__Word:focus,
@@ -151,5 +160,14 @@ a.Cloud__Word:focus > text,
 a.Cloud__Word:active > text,
 a.Cloud__Word:hover > text {
   fill: #ce5454 !important;
+}
+
+.list-complete-enter,
+.list-complete-leave-to {
+  opacity: 0;
+  width: 0;
+}
+
+.list-complete-leave-active {
 }
 </style>
