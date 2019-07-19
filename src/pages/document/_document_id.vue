@@ -3,7 +3,7 @@
     <main>
       <no-ssr>
         <!-- eslint-disable -->
-        <NewDocumentPreview :document="document" />
+        <DocumentPreview :document="document" />
         <!-- eslint-enable -->
       </no-ssr>
     </main>
@@ -49,7 +49,7 @@
   </div>
 </template>
 <script>
-import NewDocumentPreview from '~/components/viewers/NewDocumentPreview'
+import DocumentPreview from '~/components/viewers/DocumentPreview'
 import Microtext from '~/components/common/Microtext'
 
 const humanSize = require('human-size')
@@ -59,7 +59,7 @@ const { getMediaUrl } = require('~/utils')
 export default {
   components: {
     Microtext,
-    NewDocumentPreview
+    DocumentPreview
   },
   data() {
     return { document: {} }
