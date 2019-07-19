@@ -141,13 +141,16 @@ export default {
 svg {
   display: block;
   margin: 0 auto;
+  backface-visibility: hidden;
+  perspective: 1000;
 }
 
 g {
-  transition: opacity 0.25s ease-in;
+  transition: opacity 0.5s ease;
 }
+
 a.Cloud__Word > text {
-  transition: all 0.25s ease;
+  transition: transform 0.25s ease;
 }
 
 a.Cloud__Word:focus,
