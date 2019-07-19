@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Logo from './Logo'
+import Logo from '@/components/nav/Logo'
 import { mapGetters } from 'vuex'
 import { urlOrRoute } from '@/utils'
 export default {

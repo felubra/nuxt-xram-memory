@@ -4,7 +4,7 @@
       <a class="Menu__CloseButton" href="#close" @click.prevent="toggleMenu">
         <i class="material-icons">close</i>
       </a>
-      <Logo class="Menu__Logo" variant="pb--branco"/>
+      <Logo class="Menu__Logo" variant="pb--branco" />
     </header>
     <ul class="Menu__Items Menu__Items--big">
       <li
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Logo from './Logo'
+import Logo from '@/components/nav/Logo'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { urlOrRoute } from '@/utils/'
 

@@ -43,7 +43,7 @@ import HomeSearchInput from '~/components/home/HomeSearchInput'
 import SearchFilters from '@/components/home/SearchFilters'
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import TeaserBlock from '~/components/home/TeaserBlock'
-import Logo from '~/components/common/Logo'
+import Logo from '@/components/nav/Logo'
 import { mapGetters, mapMutations, mapState } from 'vuex'
 
 export default {

@@ -9,7 +9,7 @@
     >
       <i class="material-icons">menu</i>
     </a>
-    <Logo class="Navbar__Item Navbar__Logo"/>
+    <Logo class="Navbar__Item Navbar__Logo" />
     <nuxt-link class="Navbar__Item Navbar__Search" to="/search">
       <i class="material-icons">search</i>
     </nuxt-link>
@@ -17,7 +17,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import Logo from './Logo'
+import Logo from '@/components/nav/Logo'
 import ClickOutside from 'vue-click-outside'
 export default {
   name: 'Navbar',
