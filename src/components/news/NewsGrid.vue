@@ -18,6 +18,7 @@
 <script>
 import NewCard from './NewCard'
 import NewspaperInfo from './NewspaperInfo'
+import { CONTENT_TYPES } from '@/config/constants'
 
 const dayJs = require('dayjs')
 const smartTruncate = require('smart-truncate')
@@ -54,11 +55,11 @@ export default {
       try {
         let value = item._type || ''
         if (
-          value === 'Documento' &&
+          value === CONTENT_TYPES.DOCUMENT &&
           item.mime_type &&
           item.mime_type.includes('image/')
         ) {
-          value = 'Imagem'
+          value = CONTENT_TYPES.IMAGE
         }
         return value
       } catch {
@@ -81,12 +82,12 @@ export default {
     },
     imageFor(item) {
       switch (this.typeFor(item)) {
-        case 'Imagem':
-        case 'Documento': {
+        case CONTENT_TYPES.IMAGE:
+        case CONTENT_TYPES.DOCUMENT: {
           // TODO: suporte a vários tamanhos de imagem
           return item.thumbnail
         }
-        case 'Notícia': {
+        case CONTENT_TYPES.NEWS: {
           return item.thumbnail
         }
         default: {
@@ -99,8 +100,8 @@ export default {
     },
     titleFor(item) {
       switch (this.typeFor(item)) {
-        case 'Imagem':
-        case 'Documento': {
+        case CONTENT_TYPES.IMAGE:
+        case CONTENT_TYPES.DOCUMENT: {
           return ''
         }
         default: {
@@ -113,14 +114,14 @@ export default {
     },
     linkFor(item) {
       switch (this.typeFor(item)) {
-        case 'Imagem':
-        case 'Documento': {
+        case CONTENT_TYPES.IMAGE:
+        case CONTENT_TYPES.DOCUMENT: {
           return {
             name: 'document-document_id',
             params: { document_id: item.document_id }
           }
         }
-        case 'Notícia': {
+        case CONTENT_TYPES.NEWS: {
           return { name: 'news-slug', params: { slug: item.slug } }
         }
         default: {
