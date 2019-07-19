@@ -1,18 +1,36 @@
 <template>
   <div class="DocumentPage">
     <main>
-      <no-ssr>
-        <!-- eslint-disable -->
-        <DocumentPreview :document="document" />
-        <!-- eslint-enable -->
-      </no-ssr>
+      <template v-if="isOfKnownType">
+        <no-ssr>
+          <!-- eslint-disable -->
+          <DocumentPreview :document="document" />
+          <!-- eslint-enable -->
+        </no-ssr>
+      </template>
+      <template v-else>
+        <div class="NoPreview">
+          <p>
+            <i class="material-icons">error</i>
+            Infelizmente não temos uma visualização para este tipo de documento.
+          </p>
+          <p>
+            <a class="FileInfo_Button" download :href="fileURL">
+              <i class="material-icons">get_app</i>
+              Baixar o arquivo
+            </a>
+          </p>
+        </div>
+      </template>
     </main>
 
     <aside class="FieldList">
-      <h1>{{document.document_id || document.name}}</h1>
-      <a class="FileInfo_Button" download :href="fileURL">
-        <i class="material-icons">get_app</i>
-      </a>
+      <header>
+        <h1>{{document.document_id || document.name}}</h1>
+        <a class="FileInfo_Button" download :href="fileURL">
+          <i class="material-icons">get_app</i>
+        </a>
+      </header>
 
       <div v-if="fileType" class="FieldList__Field">
         <Microtext tag="h2">Tipo</Microtext>
@@ -107,7 +125,12 @@ export default {
         return 'Documento'
       }
     },
-
+    isOfKnownType() {
+      return (
+        this.document.mime_type === 'application/pdf' ||
+        this.document.mime_type.startsWith('image/')
+      )
+    },
     newsRelated() {
       return this.document.news_items.length && this.document.news_items
     }
@@ -124,22 +147,58 @@ export default {
 }
 </script>
 
+
 <style lang="stylus" scoped>
+.DocumentPage {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 main {
-  min-height: 75vh;
   padding: 1rem;
   display: flex;
+  flex-grow: 1;
+  min-height: 75vh;
 }
 
 aside {
   max-width: 960px;
   margin: 0 auto;
   position: relative;
+  width: 100%;
+}
+
+.NoPreview {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.NoPreview i {
+  display: block;
+}
+
+.NoPreview p > i {
+  text-align: center;
+  font-size: 72px;
+  color: #888;
+  margin: 1rem 0 0;
+}
+
+aside > header {
+  display: flex;
+  align-items: center;
 }
 
 .FileInfo_Button {
-  position: absolute;
-  top: 0;
-  right: 0;
+  margin-left: auto;
+}
+
+.FileInfo_Button i {
+  font-size: 32px;
 }
 </style>
