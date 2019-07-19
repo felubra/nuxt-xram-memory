@@ -60,9 +60,7 @@
       <h2>Assuntos</h2>
       <ul class="taxonomy-list">
         <li v-for="subject in subjects" :key="subject.slug">
-          <nuxt-link
-            :to="{name:'index', query:{ subjects: JSON.stringify([subject.name])} }"
-          >{{subject.name}}</nuxt-link>
+          <nuxt-link :to="{name:'subject-slug', params:{ slug: subject.slug} }">{{subject.name}}</nuxt-link>
         </li>
       </ul>
     </div>
