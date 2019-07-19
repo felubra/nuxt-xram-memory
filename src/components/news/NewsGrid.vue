@@ -1,6 +1,6 @@
 <template>
   <transition-group class="NewsGrid" name="list-complete" tag="div">
-    <NewCard
+    <Card
       v-for="(item, index) in items"
       :key="index"
       class="item"
@@ -11,12 +11,12 @@
       :title="titleFor(item)"
     >
       <NewspaperInfo v-if="newspaperFor(item)" slot="footer" :newspaper="newspaperFor(item)" />
-    </NewCard>
+    </Card>
   </transition-group>
 </template>
 
 <script>
-import NewCard from './NewCard'
+import Card from '@/components/common/Card'
 import NewspaperInfo from './NewspaperInfo'
 import { CONTENT_TYPES } from '@/config/constants'
 
@@ -26,7 +26,7 @@ const smartTruncate = require('smart-truncate')
 export default {
   name: 'NewsGrid',
   components: {
-    NewCard,
+    Card,
     NewspaperInfo
   },
   props: {

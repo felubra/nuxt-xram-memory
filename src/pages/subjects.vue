@@ -7,7 +7,7 @@
           <Microtext tag="h2" arrow="down">Em destaque</Microtext>
         </header>
         <div class="SubjectsList">
-          <NewCard
+          <Card
             class="SubjectCard"
             :item-link="linkFor(leftSubject)"
             :label="labelFor(leftSubject)"
@@ -15,8 +15,8 @@
             <h3 slot="title">{{titleFor(leftSubject)}}</h3>
             <Microtext slot="label">{{ labelFor(leftSubject) }}</Microtext>
             <img slot="image" :src="imageFor(leftSubject)" />
-          </NewCard>
-          <NewCard
+          </Card>
+          <Card
             class="SubjectCard SubjectCard--big"
             :item-link="linkFor(featuredSubject)"
             :label="labelFor(featuredSubject)"
@@ -24,7 +24,7 @@
             <h3 slot="title">{{titleFor(featuredSubject)}}</h3>
             <Microtext slot="label">{{ labelFor(featuredSubject) }}</Microtext>
             <img slot="image" :src="imageFor(featuredSubject)" />
-          </NewCard>
+          </Card>
         </div>
         <footer>
           <Microtext arrow="right">
@@ -58,16 +58,14 @@
 import DefaultReactiveBase from '@/components/DefaultReactiveBase'
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import Microtext from '~/components/common/Microtext'
-import SubjectCard from '~/components/SubjectCard'
-import NewCard from '~/components/news/NewCard'
+import Card from '~/components/common/Card'
 import { getMediaUrl } from '~/utils'
 
 export default {
   components: {
     Microtext,
-    SubjectCard,
     HomeTagCloud,
-    NewCard,
+    Card,
     DefaultReactiveBase
   },
   data() {

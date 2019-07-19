@@ -7,7 +7,7 @@
           <Microtext tag="h2" arrow="down">Todos os álbums</Microtext>
         </header>
         <div class="AlbumList">
-          <NewCard
+          <Card
             v-for="album in albums"
             :key="album.album_id"
             :item-link="linkFor(album)"
@@ -15,7 +15,7 @@
             :label="labelFor(album)"
           >
             <h3 slot="title">{{album.name}}</h3>
-          </NewCard>
+          </Card>
         </div>
       </section>
     </template>
@@ -34,14 +34,14 @@
 
 <script>
 import Microtext from '~/components/common/Microtext'
-import NewCard from '~/components/news/NewCard'
+import Card from '~/components/common/Card'
 
 const { getMediaUrl, sanitize, cardImageDimensions } = require('~/utils')
 
 export default {
   components: {
     Microtext,
-    NewCard
+    Card
   },
   data() {
     return {
