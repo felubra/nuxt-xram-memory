@@ -148,6 +148,7 @@ export const getters = {
         }
       })
       .sort((a, b) => a.weight || 0 - b.weight || 0),
+  hasPagesOfMenu: (state, { pageLinks }) => pageLinks().length > 0,
   featuredPages: ({ pages }) => pages.filter(page => page.featured === true)
 }
 
