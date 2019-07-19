@@ -48,11 +48,6 @@ export default {
 }
 </script>
 
-<style>
-.viewer-canvas {
-  background: transparent;
-}
-</style>
 
 <style lang="stylus" scoped>
 .OriginalImage {

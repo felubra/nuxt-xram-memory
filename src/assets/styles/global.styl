@@ -91,6 +91,19 @@ h1
 .hidden
   display: none
 
+.viewer-backdrop
+  background-color: #e6e6e6
+
+.viewer-fixed
+  background-color: rgba(0,0,0,.5)
+
+.viewer-canvas > img
+  box-shadow: 0 0 15px #ccc
+  backface-visibility: hidden;
+
+.viewer-fixed .viewer-canvas > img
+  box-shadow: none
+
 @keyframes filterActive {
   0% {
     border-color: #E1DADA;
