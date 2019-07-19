@@ -39,18 +39,7 @@ export const state = () => ({
       },
       weight: 0
     },
-    {
-      position: ['menu'],
-      icon: 'feedback',
-      title: 'Sobre o Projeto',
-      featured: false,
-      published: true,
-      teaser: '',
-      url: {
-        name: 'about'
-      },
-      weight: 10
-    },
+
     {
       position: ['menu-controls'],
       icon: 'email',
