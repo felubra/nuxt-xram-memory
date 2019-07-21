@@ -39,18 +39,7 @@ export const state = () => ({
       },
       weight: 0
     },
-    {
-      position: ['menu'],
-      icon: 'feedback',
-      title: 'Sobre o Projeto',
-      featured: false,
-      published: true,
-      teaser: '',
-      url: {
-        name: 'about'
-      },
-      weight: 10
-    },
+
     {
       position: ['menu-controls'],
       icon: 'email',
@@ -148,6 +137,7 @@ export const getters = {
         }
       })
       .sort((a, b) => a.weight || 0 - b.weight || 0),
+  hasPagesOfMenu: (state, { pageLinks }) => pageLinks().length > 0,
   featuredPages: ({ pages }) => pages.filter(page => page.featured === true)
 }
 

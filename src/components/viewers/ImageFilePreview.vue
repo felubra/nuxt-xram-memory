@@ -55,10 +55,6 @@ export default {
   flex-direction: column;
 }
 
-.ImageFilePreview .viewer-canvas, .ImageFilePreview .viewer-backdrop {
-  background: transparent;
-}
-
 @media only screen and (min-width: 768px) {
   .ImageFilePreview {
     flex: 1;

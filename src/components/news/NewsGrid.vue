@@ -1,6 +1,6 @@
 <template>
   <transition-group class="NewsGrid" name="list-complete" tag="div">
-    <NewCard
+    <Card
       v-for="(item, index) in items"
       :key="idFor(item)"
       class="item"
@@ -11,13 +11,14 @@
       :title="titleFor(item)"
     >
       <NewspaperInfo v-if="newspaperFor(item)" slot="footer" :newspaper="newspaperFor(item)" />
-    </NewCard>
+    </Card>
   </transition-group>
 </template>
 
 <script>
-import NewCard from './NewCard'
+import Card from '@/components/common/Card'
 import NewspaperInfo from './NewspaperInfo'
+import { CONTENT_TYPES } from '@/config/constants'
 
 const dayJs = require('dayjs')
 const smartTruncate = require('smart-truncate')
@@ -25,7 +26,7 @@ const smartTruncate = require('smart-truncate')
 export default {
   name: 'NewsGrid',
   components: {
-    NewCard,
+    Card,
     NewspaperInfo
   },
   props: {
@@ -67,11 +68,11 @@ export default {
       try {
         let value = item._type || ''
         if (
-          value === 'Documento' &&
+          value === CONTENT_TYPES.DOCUMENT &&
           item.mime_type &&
           item.mime_type.includes('image/')
         ) {
-          value = 'Imagem'
+          value = CONTENT_TYPES.IMAGE
         }
         return value
       } catch {
@@ -94,12 +95,12 @@ export default {
     },
     imageFor(item) {
       switch (this.typeFor(item)) {
-        case 'Imagem':
-        case 'Documento': {
+        case CONTENT_TYPES.IMAGE:
+        case CONTENT_TYPES.DOCUMENT: {
           // TODO: suporte a vários tamanhos de imagem
           return item.thumbnail
         }
-        case 'Notícia': {
+        case CONTENT_TYPES.NEWS: {
           return item.thumbnail
         }
         default: {
@@ -112,8 +113,8 @@ export default {
     },
     titleFor(item) {
       switch (this.typeFor(item)) {
-        case 'Imagem':
-        case 'Documento': {
+        case CONTENT_TYPES.IMAGE:
+        case CONTENT_TYPES.DOCUMENT: {
           return ''
         }
         default: {
@@ -126,14 +127,14 @@ export default {
     },
     linkFor(item) {
       switch (this.typeFor(item)) {
-        case 'Imagem':
-        case 'Documento': {
+        case CONTENT_TYPES.IMAGE:
+        case CONTENT_TYPES.DOCUMENT: {
           return {
             name: 'document-document_id',
             params: { document_id: item.document_id }
           }
         }
-        case 'Notícia': {
+        case CONTENT_TYPES.NEWS: {
           return { name: 'news-slug', params: { slug: item.slug } }
         }
         default: {

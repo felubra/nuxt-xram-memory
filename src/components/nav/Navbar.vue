@@ -1,16 +1,16 @@
 <template>
-  <div class="NewNavBar">
+  <div class="Navbar">
     <div class="inner">
       <Logo
         v-if="showLogo !== false"
-        :class="`NewNavBar__Logo NewNavBar__Logo--display-${showLogo} NewNavBar__Logo--search-status--${isNavBarSearching}`"
+        :class="`Navbar__Logo Navbar__Logo--display-${showLogo} Navbar__Logo--search-status--${isNavBarSearching}`"
       />
       <nav v-if="!isNavBarSearching">
         <div v-dragscroll.x="true" class="main-itens">
           <nuxt-link
             v-for="(page, index) in pageLinks()"
             :key="index"
-            class="NewNavBar__Item"
+            class="Navbar__Item"
             :to="urlOrRoute(page)"
           >{{page.title}}</nuxt-link>
           <no-ssr>
@@ -20,7 +20,7 @@
         <div class="controls">
           <a
             v-if="isMenuItensObfuscated"
-            class="NewNavBar__Item NewNavBar__Item--menu-toggle"
+            class="Navbar__Item Navbar__Item--menu-toggle"
             href="#main-menu"
             @click.prevent="menuToggle"
           >
@@ -29,7 +29,7 @@
           <nuxt-link
             v-for="(page, index) in pageLinks('menu-controls')"
             :key="index"
-            class="NewNavBar__Item"
+            class="Navbar__Item"
             :to="urlOrRoute(page)"
           >
             <i class="material-icons">{{page.icon}}</i>
@@ -47,7 +47,7 @@
           @keydown.enter="doSearch"
         />
         <a
-          class="NewNavBar__Item"
+          class="Navbar__Item"
           href="#search"
           :class="{isNavBarSearching: 'active'}"
           @click.prevent="searchToggleOrSearch"
@@ -60,13 +60,13 @@
 </template>
 
 <script>
-import Logo from './Logo'
+import Logo from '@/components/nav/Logo'
 import { mapActions, mapState, mapGetters } from 'vuex'
 import { urlOrRoute } from '@/utils/'
 import ClickOutside from 'vue-click-outside'
 import { dragscroll } from 'vue-dragscroll'
 export default {
-  name: 'NewNavBar',
+  name: 'Navbar',
   components: {
     Logo
   },
@@ -138,21 +138,21 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.NewNavBar {
+.Navbar {
   font-family: $menu-font;
   font-size: $text-size;
   border-bottom: solid 1px #F1EAEA;
   z-index: 900;
 }
 
-.NewNavBar[fixed] {
+.Navbar[fixed] {
   position: fixed;
   top: 0;
   width: 100%;
   background: $bg-color;
 }
 
-.NewNavBar > div.inner {
+.Navbar > div.inner {
   max-width: $max-width;
   width: 100%;
   margin: 0 auto;
@@ -199,7 +199,7 @@ input {
   justify-content: flex-end;
 }
 
-.NewNavBar__Item {
+.Navbar__Item {
   display: inline-block;
   margin: 0 10px;
   padding: 20px 0;
@@ -207,7 +207,7 @@ input {
   text-align: center;
 }
 
-.NewNavBar__Item:hover, .NewNavBar__Item:focus, .NewNavBar__Item:active, .NewNavBar__Item.active, .nuxt-link-exact-active {
+.Navbar__Item:hover, .Navbar__Item:focus, .Navbar__Item:active, .Navbar__Item.active, .nuxt-link-exact-active {
   color: $text-color;
   border-bottom: solid 2px #D84848;
 }
@@ -220,16 +220,16 @@ input {
   width: 100%;
 }
 
-.NewNavBar__Logo {
+.Navbar__Logo {
   text-align: center;
 }
 
-.NewNavBar__Logo--search-status--true {
+.Navbar__Logo--search-status--true {
   filter: grayscale(100);
   opacity: 0.22;
 }
 
-.NewNavBar__Item {
+.Navbar__Item {
   align-self: stretch;
 }
 
@@ -237,21 +237,21 @@ nav a {
   transition: all 0.25;
 }
 
-nav a.NewNavBar__Item:first-of-type {
+nav a.Navbar__Item:first-of-type {
   margin-left: 0;
 }
 
-.search-box a.NewNavBar__Item:last-of-type, nav a.NewNavBar__Item:last-of-type {
+.search-box a.Navbar__Item:last-of-type, nav a.Navbar__Item:last-of-type {
   margin-right: 0;
 }
 
 @media only screen and (min-width: $tablet) {
-  .NewNavBar > div.inner {
+  .Navbar > div.inner {
     flex-direction: row;
     align-items: center;
   }
 
-  .NewNavBar__Item {
+  .Navbar__Item {
     margin-top: 28px;
   }
 }

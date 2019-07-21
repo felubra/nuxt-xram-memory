@@ -43,3 +43,9 @@ export const defaultTheme = {
     borderColor: '#B9B9B9'
   }
 }
+
+export const CONTENT_TYPES = {
+  NEWS: 'Notícia',
+  DOCUMENT: 'Documento',
+  IMAGE: 'Imagem'
+}

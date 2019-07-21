@@ -1,42 +1,56 @@
+<template>
+  <div v-viewer="viewerOptions" class="images">
+    <img class="OriginalImage" :originalURL="image" :src="image" />
+  </div>
+</template>
+
 <script>
-import Microtext from '@/components/common/Microtext'
+import { getMediaUrl } from '@/utils'
 export default {
   name: 'DocumentPreview',
-  components: {
-    Microtext
-  },
   props: {
-    fileURL: {
-      type: String,
-      required: true
+    document: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  computed: {
+    validSizes() {
+      return this.document.thumbnails &&
+        Object.keys(this.document.thumbnails).length > 0
+        ? Object.keys(this.document.thumbnails)
+            .filter(size => !isNaN(parseInt(size, 10)))
+            .map(size => parseInt(size, 10))
+        : []
     },
-    previewURL: {
-      type: String,
-      default: ''
+    image() {
+      if (this.validSizes.length) {
+        return getMediaUrl(
+          this.document.thumbnails[Math.max(...this.validSizes)]
+        )
+      }
+      return ''
+    },
+    viewerOptions() {
+      return {
+        inline: true,
+        button: true,
+        navbar: false,
+        title: false,
+        toolbar: {
+          zoomIn: { show: true },
+          oneToOne: { show: true, size: 'large' },
+          zoomOut: { show: true }
+        }
+      }
     }
   }
 }
 </script>
 
-<style lang="stylus">
-.FilePreview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.FilePreview__Preview {
-  flex-grow: 1;
-  color: #333;
-  background: #e3e1e1;
-  height: 100vh;
-  text-align: center;
-  overflow: hidden;
-}
-
-.FilePreview__Actions {
-  flex-basis: 1.5rem;
-  text-align: right;
-  font-size: 1.5rem;
+<style lang="stylus" scoped>
+.OriginalImage {
+  display: none;
 }
 </style>

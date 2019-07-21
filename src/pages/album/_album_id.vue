@@ -182,9 +182,6 @@ export default {
 </script>
 
 <style>
-.viewer-canvas {
-  background: #e3e1e1;
-}
 .viewer-navbar {
   background: transparent;
 }
@@ -194,10 +191,6 @@ export default {
   font-family: 'Cabin', sans-serif;
   font-size: 16px;
   text-shadow: 0px 0px 5px #dfdfdf;
-}
-
-.viewer-fixed .viewer-canvas {
-  background: #000;
 }
 
 .viewer-fixed .viewer-title {

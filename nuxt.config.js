@@ -123,7 +123,7 @@ module.exports = {
     ELASTIC_SEARCH_CREDENTIALS: process.env.ELASTIC_SEARCH_CREDENTIALS
   },
   router: {
-    middleware: 'collapseMenu'
+    middleware: ['collapseMenu', 'fetchMenuItems']
   },
   /*
   ** Build configuration

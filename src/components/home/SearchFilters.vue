@@ -6,7 +6,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'          }"
-      :react="{or: ['search', 'newspaper', 'keywords', 'published_year']}"
+      :react="{or: ['search', 'newspaper', 'keywords', 'subjects', 'published_year']}"
       :show-filter="true"
       :size="25"
       class-name="FilterList__FilterItem"
@@ -24,7 +24,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'            }"
-      :react="{or: ['search', 'type', 'keywords', 'published_year']}"
+      :react="{or: ['search', 'type', 'keywords', 'subjects', 'published_year']}"
       :show-count="false"
       :show-filter="true"
       :size="25"
@@ -60,6 +60,32 @@
     >
       <template slot="renderItem" slot-scope="{ label }">
         <div>{{lowerSlugify(label)}}</div>
+      </template>
+    </multi-dropdown-list>
+
+    <multi-dropdown-list
+      v-active-filter-animation="'subjects'"
+      :default-query="customFilterQuery"
+      :inner-class="{
+              title: 'microtext',
+              select: 'FilterItem__DropdownToggle',
+              list: 'FilterItem__DropdownList'                }"
+      :react="{or: ['search', 'type', 'newspaper',  'published_year']}"
+      :show-count="false"
+      :show-filter="true"
+      :show-search="true"
+      :size="100"
+      class-name="FilterList__FilterItem"
+      component-id="subjects"
+      data-field="subjects.name"
+      filter-label="Assuntos"
+      nested-field="subjects"
+      placeholder="Todos"
+      title="Assunto"
+      :u-r-l-params="true"
+    >
+      <template slot="renderItem" slot-scope="{ label }">
+        <div>{{label}}</div>
       </template>
     </multi-dropdown-list>
     <!--
@@ -187,7 +213,7 @@ button.FilterItem__DropdownToggle:focus {
 
   .FilterList__FilterItem {
     width: auto;
-    min-width: 20%;
+    min-width: 250px;
     margin: 1rem 4rem;
   }
 }

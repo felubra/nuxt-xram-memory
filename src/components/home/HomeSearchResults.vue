@@ -1,7 +1,7 @@
 <template>
   <!-- eslint-disable -->
   <ReactiveList
-    :react="{and: ['search', 'type', 'newspaper', 'keywords', 'published_year']}"
+    :react="{and: ['search', 'type', 'newspaper', 'keywords', 'subjects', 'published_year']}"
     component-id="SearchResults"
     :pagination="false"
     data-field="title.raw"

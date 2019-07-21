@@ -2,7 +2,7 @@
   <div id="main-wrapper">
     <header>
       <fixed-header :fixed.sync="navBarFixed" :threshold="100">
-        <NewNavBar />
+        <Navbar />
       </fixed-header>
     </header>
     <nuxt />
@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import NewNavBar from '~/components/common/NewNavBar'
+import Navbar from '~/components/nav/Navbar'
 import Footer from '~/components/common/Footer'
 import FixedHeader from 'vue-fixed-header'
 export default {
   name: 'Alt',
   components: {
-    NewNavBar,
+    Navbar,
     Footer,
     FixedHeader
   },
