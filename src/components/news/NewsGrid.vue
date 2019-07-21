@@ -39,8 +39,8 @@ export default {
     idFor(item) {
       const type = this.typeFor(item)
       switch (type) {
-        case 'Imagem':
-        case 'Documento': {
+        case CONTENT_TYPES.IMAGE:
+        case CONTENT_TYPES.NEWS: {
           // TODO: suporte a vários tamanhos de imagem
           return type + item.document_id
         }
