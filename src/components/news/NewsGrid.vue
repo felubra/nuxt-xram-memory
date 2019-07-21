@@ -2,7 +2,7 @@
   <transition-group class="NewsGrid" name="list-complete" tag="div">
     <NewCard
       v-for="(item, index) in items"
-      :key="index"
+      :key="idFor(item)"
       class="item"
       :item-link="linkFor(item)"
       :label="labelFor(item)"
@@ -35,6 +35,19 @@ export default {
     }
   },
   methods: {
+    idFor(item) {
+      const type = this.typeFor(item)
+      switch (type) {
+        case 'Imagem':
+        case 'Documento': {
+          // TODO: suporte a vários tamanhos de imagem
+          return type + item.document_id
+        }
+        default: {
+          return type + item.id
+        }
+      }
+    },
     labelFor(item) {
       const values = [this.typeFor(item), this.dateFor(item)]
       return values.filter(value => value).join(' em ')
