@@ -46,15 +46,9 @@ export default {
       return this.featuredPages.length > 0 && this.featuredPages[0]
     }
   },
-  watch: {
-    $route: {
-      immediate: true,
-      deep: true,
-      handler({ query }) {
-        if (Object.keys(query).length > 0) {
-          this.enterHomeSearch()
-        }
-      }
+  async fetch({ store }) {
+    if (store.getters.featuredPages.length === 0) {
+      return await store.dispatch('fetchFeaturedPages')
     }
   },
   methods: {
