@@ -1,5 +1,5 @@
 <template>
-  <section class="Page ImagesPage">
+  <section class="Page CenteredPage">
     <h1 class="offscreen">Imagens</h1>
     <template v-if="hasAlbums">
       <section class="OtherAlbums">

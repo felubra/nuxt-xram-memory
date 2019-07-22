@@ -1,5 +1,5 @@
 <template>
-  <Section class="Page ContactPage">
+  <Section class="Page CenteredPage">
     <h1>Entre em contato</h1>
     <header>
       <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
@@ -236,12 +236,6 @@ export default {
 <style lang="stylus" scoped>
 h1 {
   margin-top: 0;
-}
-
-.ContactPage {
-  margin: 0 auto;
-  width: 100%;
-  max-width: $max-width;
 }
 
 main {

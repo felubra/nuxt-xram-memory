@@ -1,5 +1,5 @@
 <template>
-  <section class="Page NewsPage">
+  <section class="Page CenteredPage">
     <div class="NewsPage__Info">
       <header>
         <figure>
@@ -90,7 +90,6 @@ header {
 
 .NewsPage__Info {
   flex-grow: 1;
-  max-width: 960px;
   text-align: center;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <Section class="Page StaticPage">
+  <Section class="Page CenteredPage">
     <header>
       <Microtext>{{staticPage.teaser_text}}</Microtext>
       <h1>{{staticPage.title}}</h1>
@@ -44,11 +44,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus" scoped >
-.StaticPage {
-  margin: 0 auto;
-  width: 100%;
-  max-width: $max-width;
-}
-</style>
