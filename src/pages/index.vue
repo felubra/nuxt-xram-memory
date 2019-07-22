@@ -94,7 +94,7 @@ export default {
 
 .HomeTagCloud {
   order: 2;
-  margin-top: 35vh;
+  margin-top: 17vh;
 }
 
 @media only screen and (min-width: 768px) {
