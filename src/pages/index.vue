@@ -2,49 +2,29 @@
   <no-ssr>
     <DefaultReactiveBase class-name="PageIndex">
       <h1 class="offscreen">Início</h1>
-      <div
-        :class="`PageIndex__SearchArea ${isHomeSearching ? 'PageIndex__SearchArea--searching' : ''}`"
-      >
-        <transition name="fade" appear mode="in-out" :duration="100">
-          <Logo v-if="!isHomeSearching" class="Home__Logo" :big="true" />
-        </transition>
-        <HomeSearchInput
-          @keyDown.backspace="exitSearchMode"
-          @keyDown.enter="enterSearchMode"
-          @keyDown.esc="exitSearchMode"
-        />
-        <SearchFilters v-if="isHomeSearching" />
-      </div>
+      <Logo class="Home__Logo" :big="true" />
 
-      <transition name="fade">
-        <TeaserBlock
-          v-if="!isHomeSearching && featuredPage"
-          link-position="center"
-          class="FeaturedPage"
-          :page-item="featuredPage"
-        ></TeaserBlock>
-      </transition>
+      <HomeSearchInput @keyDown.enter="handleSearch" />
 
-      <transition name="fade">
-        <HomeTagCloud v-if="!isHomeSearching" class="HomeTagCloud" />
-      </transition>
+      <TeaserBlock
+        v-if="featuredPage"
+        link-position="center"
+        class="FeaturedPage"
+        :page-item="featuredPage"
+      ></TeaserBlock>
 
-      <transition v-if="isHomeSearching" :duration="500" name="fade">
-        <HomeSearchResults />
-      </transition>
+      <HomeTagCloud class="HomeTagCloud" />
     </DefaultReactiveBase>
   </no-ssr>
 </template>
 
 <script>
-import HomeSearchResults from '~/components/home/HomeSearchResults'
 import DefaultReactiveBase from '@/components/DefaultReactiveBase'
 import HomeSearchInput from '~/components/home/HomeSearchInput'
-import SearchFilters from '@/components/home/SearchFilters'
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import TeaserBlock from '~/components/home/TeaserBlock'
 import Logo from '@/components/nav/Logo'
-import { mapGetters, mapMutations, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -52,9 +32,7 @@ export default {
     HomeSearchInput,
     TeaserBlock,
     Logo,
-    DefaultReactiveBase,
-    SearchFilters,
-    HomeSearchResults
+    DefaultReactiveBase
   },
   head: {
     title: 'xraM-Memory',
@@ -63,8 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['pageLinks', 'featuredPages', 'homeLinks']),
-    ...mapState(['isHomeSearching']),
+    ...mapGetters(['featuredPages']),
     featuredPage() {
       return this.featuredPages.length > 0 && this.featuredPages[0]
     }
@@ -81,27 +58,26 @@ export default {
     }
   },
   methods: {
-    exitSearchMode({ target, keyCode }) {
-      if (keyCode === 27) {
-        this.exitHomeSearch()
-      } else {
-        if (!target.value || !target.value.trim()) {
-          this.exitHomeSearch()
-        }
-      }
-    },
-    enterSearchMode({ target }) {
+    handleSearch({ target }) {
       if (target.value && target.value.trim()) {
-        this.enterHomeSearch()
+        this.$router.push({
+          name: 'search',
+          query: {
+            text: JSON.stringify(target.value)
+          }
+        })
       }
-    },
-    ...mapMutations(['enterHomeSearch', 'exitHomeSearch'])
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.PageIndex__SearchArea, .FeaturedPage, .SearchBar {
+.PageIndex {
+  margin-top: 20vh;
+}
+
+.FeaturedPage, .SearchBar {
   margin-left: auto;
   margin-right: auto;
 }

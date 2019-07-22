@@ -20,7 +20,7 @@
           :alt="d.text"
           class="Cloud__Word"
           :to="d.link || {
-            name: 'index',
+            name: 'search',
             query: {
               keywords: JSON.stringify([d.text])
             }

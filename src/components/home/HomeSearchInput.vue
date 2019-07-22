@@ -3,7 +3,7 @@
   <DataSearch
     v-inner-input-focus
     class="SearchBar"
-    component-id="search"
+    component-id="text"
     :field-weights="[10,7]"
     :data-field="['title', 'teaser']"
     icon-position="right"
@@ -16,7 +16,7 @@
           }"
     :URLParams="true"
     filter-label="Texto"
-    v-active-filter-animation="'search'"
+    v-active-filter-animation="'text'"
     v-bind="$attrs"
     v-on="$listeners"
   />

@@ -6,7 +6,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'          }"
-      :react="{or: ['search', 'newspaper', 'keywords', 'subjects', 'published_year']}"
+      :react="{or: ['text', 'newspaper', 'keywords', 'subjects', 'published_year']}"
       :show-filter="true"
       :size="25"
       class-name="FilterList__FilterItem"
@@ -24,7 +24,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'            }"
-      :react="{or: ['search', 'type', 'keywords', 'subjects', 'published_year']}"
+      :react="{or: ['text', 'type', 'keywords', 'subjects', 'published_year']}"
       :show-count="false"
       :show-filter="true"
       :size="25"
@@ -44,7 +44,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'                }"
-      :react="{or: ['search', 'type', 'newspaper',  'published_year']}"
+      :react="{or: ['text', 'type', 'newspaper',  'published_year']}"
       :show-count="false"
       :show-filter="true"
       :show-search="true"
@@ -70,7 +70,7 @@
               title: 'microtext',
               select: 'FilterItem__DropdownToggle',
               list: 'FilterItem__DropdownList'                }"
-      :react="{or: ['search', 'type', 'newspaper',  'published_year']}"
+      :react="{or: ['text', 'type', 'newspaper',  'published_year']}"
       :show-count="false"
       :show-filter="true"
       :show-search="true"
@@ -91,7 +91,7 @@
     <!--
           <DynamicRangeSlider
             :inner-class="{              title: 'microtext',              slider: 'FilterList__Slider',            }"
-            :react="{or: ['search']}"
+            :react="{or: ['text']}"
             class-name="FilterList__FilterItem"
             component-id="published_year"
             data-field="published_year"

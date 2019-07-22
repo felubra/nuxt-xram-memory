@@ -1,7 +1,6 @@
 export const state = () => ({
   menuVisible: false,
   isNavBarSearching: false,
-  isHomeSearching: false,
   pages: [
     {
       position: ['menu'],
@@ -103,9 +102,6 @@ export const mutations = {
   showSearch: state => (state.isNavBarSearching = true),
   hideSearch: state => (state.isNavBarSearching = false),
   toggleSearch: state => (state.isNavBarSearching = !state.isNavBarSearching),
-  /** Busca na página inicial */
-  enterHomeSearch: state => (state.isHomeSearching = true),
-  exitHomeSearch: state => (state.isHomeSearching = false),
   /** Páginas */
   addPages: (state, pages) => {
     if (Array.isArray(pages) && pages.length > 0) {
