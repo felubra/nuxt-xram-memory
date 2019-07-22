@@ -1,5 +1,5 @@
 <template>
-  <AbstractPage class="ContactPage">
+  <AbstractPage class="Page ContactPage">
     <template v-slot:header>
       <no-ssr>
         <div class="content-container">

@@ -1,6 +1,6 @@
 <template>
   <no-ssr>
-    <DefaultReactiveBase class-name="SearchPage">
+    <DefaultReactiveBase class-name="Page SearchPage">
       <h1 class="offscreen">Pesquisar</h1>
       <HomeSearchInput />
       <SearchFilters />

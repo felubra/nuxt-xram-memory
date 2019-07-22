@@ -1,5 +1,5 @@
 <template>
-  <div class="NewsPage">
+  <div class="Page NewsPage">
     <div class="NewsPage__Info">
       <header>
         <figure>

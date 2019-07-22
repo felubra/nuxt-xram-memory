@@ -1,6 +1,6 @@
 <template>
   <no-ssr>
-    <DefaultReactiveBase class-name="PageIndex">
+    <DefaultReactiveBase class-name="Page PageIndex">
       <h1 class="offscreen">Início</h1>
       <Logo class="Home__Logo" :big="true" />
 

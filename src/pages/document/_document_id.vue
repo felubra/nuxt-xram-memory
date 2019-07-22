@@ -166,6 +166,7 @@ aside {
   max-width: 960px;
   margin: 0 auto;
   position: relative;
+  padding: 1rem;
   width: 100%;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="SubjectsPage">
+  <section class="Page SubjectsPage">
     <h1 class="offscreen">Assuntos</h1>
     <template v-if="hasContent">
       <section class="SubjectsPage__Featured">
