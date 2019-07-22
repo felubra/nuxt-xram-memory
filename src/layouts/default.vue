@@ -19,7 +19,7 @@ import Navbar from '~/components/nav/Navbar'
 import Footer from '~/components/common/Footer'
 import FixedHeader from 'vue-fixed-header'
 export default {
-  name: 'Alt',
+  name: 'NewLayout',
   components: {
     Navbar,
     Footer,
