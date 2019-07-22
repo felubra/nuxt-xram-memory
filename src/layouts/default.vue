@@ -1,8 +1,12 @@
 <template>
   <div id="main-wrapper">
+    <div class="spacer" :style="`height: ${navBarFixed ? spacerHeight: 0}px`"></div>
     <header>
-      <fixed-header :fixed.sync="navBarFixed" :threshold="100">
+      <fixed-header :fixed.sync="navBarFixed">
         <Navbar />
+        <no-ssr>
+          <resize-sensor @resize="setSpacerHeight"></resize-sensor>
+        </no-ssr>
       </fixed-header>
     </header>
     <nuxt />
@@ -23,7 +27,13 @@ export default {
   },
   data() {
     return {
-      navBarFixed: false
+      navBarFixed: false,
+      spacerHeight: 100
+    }
+  },
+  methods: {
+    setSpacerHeight({ width, height }) {
+      this.spacerHeight = height
     }
   }
 }
