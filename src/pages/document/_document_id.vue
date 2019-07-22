@@ -1,5 +1,5 @@
 <template>
-  <div class="DocumentPage">
+  <section class="DocumentPage">
     <main>
       <template v-if="isOfKnownType">
         <no-ssr>
@@ -64,7 +64,7 @@
         </p>
       </div>
     </aside>
-  </div>
+  </section>
 </template>
 <script>
 import DocumentPreview from '~/components/viewers/DocumentPreview'

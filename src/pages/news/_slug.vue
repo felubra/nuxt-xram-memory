@@ -1,5 +1,5 @@
 <template>
-  <div class="Page NewsPage">
+  <section class="Page NewsPage">
     <div class="NewsPage__Info">
       <header>
         <figure>
@@ -13,7 +13,7 @@
       </main>
     </div>
     <div v-if="false" class="NewsPage__Capture"></div>
-  </div>
+  </section>
 </template>
 
 <script>

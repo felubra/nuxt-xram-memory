@@ -1,5 +1,5 @@
 <template>
-  <div class="AlbumPage">
+  <section class="AlbumPage">
     <main>
       <viewer
         v-show="visible"
@@ -23,7 +23,7 @@
         <resize-sensor @resize="selectImageSize"></resize-sensor>
       </no-ssr>
     </main>
-  </div>
+  </section>
 </template>
 <script>
 import AbstractPage from '~/components/common/AbstractPage'
