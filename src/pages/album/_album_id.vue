@@ -26,14 +26,10 @@
   </section>
 </template>
 <script>
-import Microtext from '~/components/common/Microtext'
 const humanSize = require('human-size')
 
 const { getMediaUrl } = require('~/utils')
 export default {
-  components: {
-    Microtext
-  },
   data() {
     return {
       album: {},
@@ -138,7 +134,6 @@ export default {
   },
   methods: {
     imageTitle() {
-      console.log(this.selectedPhoto)
       return this.selectedPhoto.description
     },
     selectImageSize({ width, height }) {

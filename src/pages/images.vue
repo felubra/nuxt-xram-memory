@@ -36,7 +36,7 @@
 import Microtext from '~/components/common/Microtext'
 import Card from '~/components/common/Card'
 
-const { getMediaUrl, sanitize, cardImageDimensions } = require('~/utils')
+const { getMediaUrl } = require('~/utils')
 
 export default {
   components: {
@@ -70,7 +70,7 @@ export default {
       return this.hasFeaturedAlbums ? this.albums.slice(3) : this.albums
     }
   },
-  async asyncData({ $axios, route, error }) {
+  async asyncData({ $axios }) {
     try {
       const albums_objects = await $axios.$get(`api/v1/albums`)
       return {

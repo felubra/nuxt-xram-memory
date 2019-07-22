@@ -17,26 +17,14 @@
 </template>
 
 <script>
-import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
-import { sanitize, getMediaUrl } from '@/utils/'
-import NewsInfo from '~/components/news/NewsInfo'
 import Microtext from '~/components/common/Microtext'
+import NewsInfo from '~/components/news/NewsInfo'
+import { sanitize, getMediaUrl } from '@/utils/'
 
 export default {
   components: {
     NewsInfo,
-    Microtext,
-    PDFFilePreview: () => {
-      if (!process.client) {
-        return {
-          component: UnknownFilePreview
-        }
-      } else {
-        return {
-          component: import('../../components/viewers/PDFFilePreview')
-        }
-      }
-    }
+    Microtext
   },
   head() {
     return {

@@ -1,5 +1,4 @@
 const pkg = require('./package')
-const { resolve } = require('path')
 import axios from 'axios'
 
 module.exports = {

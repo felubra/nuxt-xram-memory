@@ -32,7 +32,7 @@ export default {
     }
   },
   methods: {
-    setSpacerHeight({ width, height }) {
+    setSpacerHeight({ height }) {
       this.spacerHeight = height
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <transition-group class="NewsGrid" name="list-complete" tag="div">
     <Card
-      v-for="(item, index) in items"
+      v-for="item in items"
       :key="idFor(item)"
       class="item"
       :item-link="linkFor(item)"

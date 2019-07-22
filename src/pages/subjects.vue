@@ -60,6 +60,7 @@ import HomeTagCloud from '~/components/home/HomeTagCloud'
 import Microtext from '~/components/common/Microtext'
 import Card from '~/components/common/Card'
 import { getMediaUrl } from '~/utils'
+const smartTruncate = require('smart-truncate')
 
 export default {
   components: {
@@ -84,7 +85,7 @@ export default {
       return this.subjects[1]
     }
   },
-  async asyncData({ $axios, route, error }) {
+  async asyncData({ $axios }) {
     try {
       const subjects = await $axios.$get(`api/v1/subjects/page`)
       return {

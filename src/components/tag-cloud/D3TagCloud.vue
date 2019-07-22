@@ -170,7 +170,4 @@ a.Cloud__Word:hover > text {
   opacity: 0;
   width: 0;
 }
-
-.list-complete-leave-active {
-}
 </style>

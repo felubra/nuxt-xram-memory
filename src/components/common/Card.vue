@@ -21,12 +21,9 @@
 </template>
 
 <script>
-import { sanitizeOnlyText, cardImageDimensions, getMediaUrl } from '@/utils'
+import { sanitizeOnlyText, getMediaUrl } from '@/utils'
 export default {
   name: 'Card',
-  directives: {
-    cardImageDimensions
-  },
   props: {
     image: {
       type: String,
