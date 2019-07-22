@@ -150,7 +150,7 @@ g {
 }
 
 a.Cloud__Word > text {
-  transition: transform 0.25s ease;
+  transition: all 0.25s ease, fill 0.25s ease;
 }
 
 a.Cloud__Word:focus,
