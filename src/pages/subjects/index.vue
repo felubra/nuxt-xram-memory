@@ -28,7 +28,7 @@
         </div>
         <footer>
           <Microtext arrow="right">
-            <nuxt-link :to="{name: 'index'}">Todos os assuntos</nuxt-link>
+            <nuxt-link :to="{name: 'subjects-all'}">Todos os assuntos</nuxt-link>
           </Microtext>
         </footer>
       </section>
