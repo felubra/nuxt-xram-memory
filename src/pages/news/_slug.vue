@@ -20,7 +20,6 @@
 import UnknownFilePreview from '~/components/viewers/UnknownFilePreview'
 import { sanitize, getMediaUrl } from '@/utils/'
 import NewsInfo from '~/components/news/NewsInfo'
-import AbstractPage from '~/components/common/AbstractPage'
 import Microtext from '~/components/common/Microtext'
 
 export default {

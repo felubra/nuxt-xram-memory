@@ -26,14 +26,12 @@
   </section>
 </template>
 <script>
-import AbstractPage from '~/components/common/AbstractPage'
 import Microtext from '~/components/common/Microtext'
 const humanSize = require('human-size')
 
 const { getMediaUrl } = require('~/utils')
 export default {
   components: {
-    AbstractPage,
     Microtext
   },
   data() {

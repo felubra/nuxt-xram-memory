@@ -1,65 +1,56 @@
 <template>
-  <AbstractPage class="Page ContactPage">
-    <template v-slot:header>
-      <no-ssr>
-        <div class="content-container">
-          <h1>Entre em contato</h1>
-          <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
-        </div>
-      </no-ssr>
-    </template>
-    <no-ssr>
-      <div class="content-container">
-        <el-form
-          ref="form"
-          :disabled="!isAvailable"
-          :rules="formRules"
-          class="Contact__Form"
-          :model="form"
-          :label-position="labelPosition"
-          label-width="200px"
-        >
-          <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <el-form-item class="Contact__FormItem" label="Seu e-mail de contato" prop="email">
-            <el-input v-model="form.email" type="email"></el-input>
-          </el-form-item>
-          <el-form-item class="Contact__FormItem" label="Sua mensagem" prop="message">
-            <el-input v-model="form.message" rows="5" type="textarea"></el-input>
-          </el-form-item>
-          <el-form-item class="Contact__FormItem">
-            <vue-recaptcha
-              v-if="isAvailable"
-              ref="recaptcha"
-              size="invisible"
-              :sitekey="recaptchaKey"
-              @expired="onExpired"
-              @verify="onCaptchaVerify"
-            ></vue-recaptcha>
-          </el-form-item>
-          <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
-          <el-form-item class="Contact__FormItem">
-            <el-button type="primary" @click="onSubmit">Enviar</el-button>
-            <el-button @click="resetForm()">Limpar</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </no-ssr>
-  </AbstractPage>
+  <Section class="Page ContactPage">
+    <h1>Entre em contato</h1>
+    <header>
+      <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
+    </header>
+    <main>
+      <el-form
+        ref="form"
+        :disabled="!isAvailable"
+        :rules="formRules"
+        class="Contact__Form"
+        :model="form"
+        :label-position="labelPosition"
+        label-width="200px"
+      >
+        <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item class="Contact__FormItem" label="Seu e-mail de contato" prop="email">
+          <el-input v-model="form.email" type="email"></el-input>
+        </el-form-item>
+        <el-form-item class="Contact__FormItem" label="Sua mensagem" prop="message">
+          <el-input v-model="form.message" rows="5" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item class="Contact__FormItem">
+          <vue-recaptcha
+            v-if="isAvailable"
+            ref="recaptcha"
+            size="invisible"
+            :sitekey="recaptchaKey"
+            @expired="onExpired"
+            @verify="onCaptchaVerify"
+          ></vue-recaptcha>
+        </el-form-item>
+        <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
+        <el-form-item class="Contact__FormItem">
+          <el-button type="primary" @click="onSubmit">Enviar</el-button>
+          <el-button @click="resetForm()">Limpar</el-button>
+        </el-form-item>
+      </el-form>
+    </main>
+  </Section>
 </template>
 <script>
-const xss = require('xss')
 import VueRecaptcha from 'vue-recaptcha'
+
+const xss = require('xss')
 const emailValidator = require('email-validator')
 
-import AbstractPage from '~/components/common/AbstractPage'
-import Microtext from '~/components/common/Microtext'
 export default {
   components: {
-    AbstractPage,
-    VueRecaptcha,
-    Microtext
+    VueRecaptcha
   },
   data() {
     const validateEmail = (rule, value, callback) => {
@@ -178,7 +169,7 @@ export default {
           }
         })
         .catch(() => {
-          this.alert('Corrija os erros abaixo e tente novamente.', 'error')
+          this.alert('Corrija os erros acima e tente novamente.', 'error')
         })
     },
     alert(message, type = 'success') {
@@ -229,23 +220,40 @@ export default {
 </script>
 
 <style>
-.ContactPage {
-  margin: auto auto !important;
+.el-alert {
+  margin: 2rem 0;
+  font-family: 'Cabin', sans-serif;
 }
+
+.el-form-item__label,
+.el-alert__title {
+  font-size: 1rem;
+}
+</style>
+
+
+
+<style lang="stylus" scoped>
+h1 {
+  margin-top: 0;
+}
+
+.ContactPage {
+  margin: 0 auto;
+  width: 100%;
+  max-width: $max-width;
+}
+
 main {
   font-family: 'Cabin', sans-serif;
 }
+
 .Contact__Form {
   font-size: 1.2rem;
   padding: 1rem 0;
 }
 
-.el-alert {
-  margin: 2rem 0;
-}
-
-.el-alert__title,
-.Contact__FormItem label {
+.el-alert__title, .Contact__FormItem label {
   font-size: 1rem;
   line-height: 1rem;
 }

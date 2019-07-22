@@ -1,23 +1,19 @@
 <template>
-  <AbstractPage class="ql-editor pageBody">
-    <template v-slot:header>
-      <div class="content-container">
-        <Microtext>{{staticPage.teaser_text}}</Microtext>
-        <h1>{{staticPage.title}}</h1>
-      </div>
-    </template>
-    <div class="content-container" v-html="theBody"></div>
-  </AbstractPage>
+  <Section class="Page StaticPage">
+    <header>
+      <Microtext>{{staticPage.teaser_text}}</Microtext>
+      <h1>{{staticPage.title}}</h1>
+    </header>
+    <main v-html="theBody"></main>
+  </Section>
 </template>
 <script>
 import { sanitize } from '@/utils/'
-import AbstractPage from '~/components/common/AbstractPage'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
 import Microtext from '@/components/common/Microtext'
 export default {
   components: {
-    AbstractPage,
     Microtext
   },
   head() {
@@ -49,8 +45,10 @@ export default {
 }
 </script>
 
-<style scoped>
-.pageBody {
-  padding: 0;
+<style lang="stylus" scoped >
+.StaticPage {
+  margin: 0 auto;
+  width: 100%;
+  max-width: $max-width;
 }
 </style>
