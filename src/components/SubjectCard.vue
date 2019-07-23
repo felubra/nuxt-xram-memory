@@ -111,7 +111,7 @@ export default {
 
 .SubjectCard__Images img {
   opacity: 0.75;
-  filter: grayscale(60%);
+  filter: grayscale($grayscale-image);
 }
 
 .SubjectCard:hover .SubjectCard__Images img {

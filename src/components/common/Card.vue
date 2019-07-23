@@ -119,7 +119,7 @@ export default {
 }
 
 .Card img {
-  filter: grayscale(60%);
+  filter: grayscale($grayscale-image);
   transition: opacity 0.25s ease;
 }
 

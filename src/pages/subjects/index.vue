@@ -135,7 +135,7 @@ export default {
   margin-top: auto;
   position: relative;
   display: inline-block;
-  filter: grayscale(60%);
+  filter: grayscale($grayscale-image);
 }
 
 .SubjectCard a:active img, .SubjectCard a:focus img, .SubjectCard a:hover img {
