@@ -1,29 +1,22 @@
 <template>
   <section class="Page SubjectsPage">
     <h1 class="offscreen">Assuntos</h1>
-    <template v-if="hasContent">
+    <template v-if="hasFeaturedSubjects">
       <section class="SubjectsPage__Featured">
         <header>
           <Microtext tag="h2" arrow="down">Em destaque</Microtext>
         </header>
         <div class="SubjectsList">
           <Card
+            v-for="subject in featuredSubjects"
+            :key="subject.slug"
             class="SubjectCard"
-            :item-link="linkFor(leftSubject)"
-            :label="labelFor(leftSubject)"
+            :item-link="linkFor(subject)"
+            :label="labelFor(subject)"
           >
-            <h3 slot="title">{{titleFor(leftSubject)}}</h3>
-            <Microtext slot="label">{{ labelFor(leftSubject) }}</Microtext>
-            <img slot="image" :src="imageFor(leftSubject)" />
-          </Card>
-          <Card
-            class="SubjectCard SubjectCard--big"
-            :item-link="linkFor(featuredSubject)"
-            :label="labelFor(featuredSubject)"
-          >
-            <h3 slot="title">{{titleFor(featuredSubject)}}</h3>
-            <Microtext slot="label">{{ labelFor(featuredSubject) }}</Microtext>
-            <img slot="image" :src="imageFor(featuredSubject)" />
+            <h3 slot="title">{{titleFor(subject)}}</h3>
+            <Microtext slot="label">{{ labelFor(subject) }}</Microtext>
+            <img slot="image" :src="imageFor(subject)" />
           </Card>
         </div>
         <footer>
@@ -71,29 +64,25 @@ export default {
   },
   data() {
     return {
-      subjects: []
+      featuredSubjects: []
     }
   },
   computed: {
-    hasContent() {
-      return this.subjects.length > 0
-    },
-    leftSubject() {
-      return this.subjects[0]
-    },
-    featuredSubject() {
-      return this.subjects[1]
+    hasFeaturedSubjects() {
+      return this.featuredSubjects.length > 0
     }
   },
   async asyncData({ $axios }) {
     try {
-      const subjects = await $axios.$get(`api/v1/subjects/page`)
+      const featuredSubjects = await $axios.$get(
+        `api/v1/subjects/featured?limit=5`
+      )
       return {
-        subjects
+        featuredSubjects
       }
     } catch {
       return {
-        subjects: []
+        featuredSubjects: []
       }
     }
   },
@@ -102,7 +91,7 @@ export default {
       return `${item.items_count} ${item.items_count > 1 ? 'itens' : 'item'}`
     },
     imageFor(item) {
-      return getMediaUrl(item.big_cover)
+      return getMediaUrl(item.cover)
     },
     titleFor(item) {
       return item.name
@@ -144,7 +133,6 @@ export default {
 
 .SubjectsList {
   display: grid;
-  grid-template-areas: 'l' 'f';
   grid-template-columns: 1fr;
   grid-column-gap: 20px;
   grid-row-gap: 20px;
@@ -155,12 +143,15 @@ export default {
   min-height: 475px;
 }
 
-.SubjectCard--big {
-  padding: 1rem;
+.SubjectCard img {
+  margin-top: auto;
+  position: relative;
+  display: inline-block;
+  filter: grayscale(60%);
 }
 
-.SubjectCard.SubjectCard--big img {
-  margin: auto 0;
+.SubjectCard a:active img, .SubjectCard a:focus img, .SubjectCard a:hover img {
+  filter: none;
 }
 
 h3, .microtext {
@@ -189,8 +180,7 @@ footer {
 
 @media only screen and (min-width: 768px) {
   .SubjectsList {
-    grid-template-areas: 'l f';
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: repeat(5, auto);
   }
 }
 </style>
