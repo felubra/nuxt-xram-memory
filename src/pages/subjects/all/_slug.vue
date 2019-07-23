@@ -38,6 +38,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+a {
+  color: #343333;
+}
+
 header ul {
   list-style: none;
   padding: 0;

@@ -118,6 +118,14 @@ header ul > li {
   cursor: pointer;
 }
 
+a {
+  color: #555;
+}
+
+a:active, a:hover, a:focus, a.nuxt-link-exact-active {
+  color: $link-color;
+}
+
 header ul > li:first-of-type {
   margin-left: 0;
 }
