@@ -1,49 +1,37 @@
 <template>
   <section class="Page SubjectsPage">
     <h1 class="offscreen">Assuntos</h1>
-    <template v-if="hasFeaturedSubjects">
-      <section class="SubjectsPage__Featured">
-        <header>
-          <Microtext tag="h2" arrow="down">Em destaque</Microtext>
-        </header>
-        <div class="SubjectsList">
-          <Card
-            v-for="subject in featuredSubjects"
-            :key="subject.slug"
-            class="SubjectCard"
-            :item-link="linkFor(subject)"
-            :label="labelFor(subject)"
-          >
-            <h3 slot="title">{{titleFor(subject)}}</h3>
-            <Microtext slot="label">{{ labelFor(subject) }}</Microtext>
-            <img slot="image" :src="imageFor(subject)" />
-          </Card>
-        </div>
-        <footer>
-          <Microtext arrow="right">
-            <nuxt-link :to="{name: 'subjects-all'}">Todos os assuntos</nuxt-link>
-          </Microtext>
-        </footer>
-      </section>
-      <section class="SubjectsPage__TagCloud">
-        <header>
-          <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
-        </header>
-        <DefaultReactiveBase>
-          <HomeTagCloud />
-        </DefaultReactiveBase>
-      </section>
-    </template>
-    <template v-else>
-      <section>
-        <header>
-          <Microtext tag="h2" arrow="down">Sem dados</Microtext>
-        </header>
-        <main>
-          <p>Não existem assuntos para exibir no momento, por-favor volte mais tarde.</p>
-        </main>
-      </section>
-    </template>
+    <section v-if="hasFeaturedSubjects" class="SubjectsPage__Featured">
+      <header>
+        <Microtext tag="h2" arrow="down">Em destaque</Microtext>
+      </header>
+      <div class="SubjectsList">
+        <Card
+          v-for="subject in featuredSubjects"
+          :key="subject.slug"
+          class="SubjectCard"
+          :item-link="linkFor(subject)"
+          :label="labelFor(subject)"
+        >
+          <h3 slot="title">{{titleFor(subject)}}</h3>
+          <Microtext slot="label">{{ labelFor(subject) }}</Microtext>
+          <img slot="image" :src="imageFor(subject)" />
+        </Card>
+      </div>
+      <footer>
+        <Microtext arrow="right">
+          <nuxt-link :to="{name: 'subjects-all'}">Todos os assuntos</nuxt-link>
+        </Microtext>
+      </footer>
+    </section>
+    <section class="SubjectsPage__TagCloud">
+      <header>
+        <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
+      </header>
+      <DefaultReactiveBase>
+        <HomeTagCloud />
+      </DefaultReactiveBase>
+    </section>
   </section>
 </template>
 
