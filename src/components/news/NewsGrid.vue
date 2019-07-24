@@ -40,7 +40,7 @@ export default {
       const type = this.typeFor(item)
       switch (type) {
         case CONTENT_TYPES.IMAGE:
-        case CONTENT_TYPES.NEWS: {
+        case CONTENT_TYPES.DOCUMENT: {
           // TODO: suporte a vários tamanhos de imagem
           return type + item.document_id
         }
