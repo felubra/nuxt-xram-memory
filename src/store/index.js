@@ -132,7 +132,13 @@ export const getters = {
             return page.position && page.position.includes(position)
         }
       })
-      .sort((a, b) => a.weight || 0 - b.weight || 0),
+      .sort((a, b) => {
+        // TODO: bug misterioso que altera a ordem dos controles do menu
+        if (position !== 'menu-controls') {
+          return a.weight || 0 - b.weight || 0
+        }
+        return 0
+      }),
   hasPagesOfMenu: (state, { pageLinks }) => pageLinks().length > 0,
   featuredPages: ({ pages }) => pages.filter(page => page.featured === true)
 }
