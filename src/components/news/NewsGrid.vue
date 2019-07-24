@@ -164,7 +164,7 @@ export default {
 
 .item {
   margin: 20px;
-  width: 250px;
+  width: 100%;
   transition: all 0.25s;
   margin-right: 10px;
 }
@@ -180,5 +180,11 @@ export default {
 
 .NewspaperInfo {
   margin-top: auto;
+}
+
+@media only screen and (min-width: 768px) {
+  .item {
+    width: 250px;
+  }
 }
 </style>
