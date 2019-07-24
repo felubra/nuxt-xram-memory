@@ -5,7 +5,7 @@
         <Microtext arrow="down">Assunto</Microtext>
         <h1>{{subject.name}}</h1>
       </header>
-      <section class="Subject__Description">
+      <section v-if="description" class="Subject__Description">
         <div v-html="description"></div>
       </section>
     </section>
