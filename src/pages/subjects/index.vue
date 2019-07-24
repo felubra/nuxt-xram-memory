@@ -18,11 +18,9 @@
           <img slot="image" :src="imageFor(subject)" />
         </Card>
       </div>
-      <footer>
-        <Microtext arrow="right">
-          <nuxt-link :to="{name: 'subjects-all'}">Todos os assuntos</nuxt-link>
-        </Microtext>
-      </footer>
+    </section>
+    <section class="AllSubjects">
+      <SubjectPicker :initials="subjectInitials"></SubjectPicker>
     </section>
     <section class="SubjectsPage__TagCloud">
       <header>
@@ -39,6 +37,7 @@
 import DefaultReactiveBase from '@/components/DefaultReactiveBase'
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import Microtext from '~/components/common/Microtext'
+import SubjectPicker from '~/components/SubjectPicker'
 import Card from '~/components/common/Card'
 import { getMediaUrl } from '~/utils'
 const smartTruncate = require('smart-truncate')
@@ -48,11 +47,13 @@ export default {
     Microtext,
     HomeTagCloud,
     Card,
-    DefaultReactiveBase
+    DefaultReactiveBase,
+    SubjectPicker
   },
   data() {
     return {
-      featuredSubjects: []
+      featuredSubjects: [],
+      subjectInitials: []
     }
   },
   computed: {
@@ -61,17 +62,23 @@ export default {
     }
   },
   async asyncData({ $axios }) {
+    let featuredSubjects
+    let subjectInitials
     try {
-      const featuredSubjects = await $axios.$get(
-        `api/v1/subjects/featured?limit=5`
-      )
-      return {
-        featuredSubjects
-      }
+      subjectInitials = await $axios.$get(`api/v1/subjects/initials`)
     } catch {
-      return {
-        featuredSubjects: []
-      }
+      subjectInitials = []
+    }
+
+    try {
+      featuredSubjects = await $axios.$get(`api/v1/subjects/featured?limit=5`)
+    } catch {
+      featuredSubjects = []
+    }
+
+    return {
+      featuredSubjects,
+      subjectInitials
     }
   },
   methods: {

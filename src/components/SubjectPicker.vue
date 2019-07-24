@@ -1,15 +1,39 @@
-<template v-if="hasInitials">
-  <div class="SubjectPicker">
+<template>
+  <div v-if="hasInitials" class="SubjectPicker">
     <header>
-      <Microtext arrow="down">Assuntos (em ordem alfabética)</Microtext>
+      <Microtext arrow="down">
+        Todos os assuntos
+        <span>(em ordem alfabética)</span>
+      </Microtext>
       <ul class="InitialsList">
-        <li v-for="initial in initials" :key="initial" @click="selectInitial(initial)">{{initial}}</li>
+        <li
+          v-for="initial in initials"
+          :key="initial"
+          :class="{
+            'active': selectedInitial === initial
+          }"
+          @click="selectInitial(initial)"
+        >{{initial}}</li>
       </ul>
     </header>
-    <section class="SubjectList">
-      <ul class="SubjectsList">
-        <li v-for="subject in subjects" :key="subject.slug">{{subject.name}}</li>
-      </ul>
+    <section class="SubjectsList" :style="`min-height: ${minHeight}px`">
+      <transition name="fade">
+        <ul v-if="hasSubjects" ref="SubjectsList" class="SubjectsList">
+          <li v-for="subject in subjects" :key="subject.slug">
+            <nuxt-link
+              :to="{
+              name: 'subject-slug',
+              params: {
+                  slug: subject.slug
+                }
+              }"
+            >{{subject.name}}</nuxt-link>
+          </li>
+        </ul>
+      </transition>
+      <no-ssr>
+        <resize-sensor @resize="determineMinHeight"></resize-sensor>
+      </no-ssr>
     </section>
   </div>
 </template>
@@ -29,12 +53,16 @@ export default {
   data() {
     return {
       selectedInitial: '',
-      subjects: []
+      subjects: [],
+      minHeight: 100
     }
   },
   computed: {
     hasInitials() {
       return Array.isArray(this.initials) && this.initials.length > 0
+    },
+    hasSubjects() {
+      return Array.isArray(this.subjects) && this.subjects.length > 0
     }
   },
   watch: {
@@ -51,7 +79,13 @@ export default {
     }
   },
   methods: {
+    determineMinHeight({ width, height }) {
+      this.minHeight = this.minHeight < height ? height : this.minHeight
+    },
     async selectInitial(initial) {
+      if (initial === this.selectedInitial) {
+        return
+      }
       try {
         const subjectsForInitial = await this.$axios.$get(
           `api/v1/subjects/initial/${initial}`
@@ -90,10 +124,18 @@ ul > li {
 }
 
 a {
+  color: #343333;
+}
+
+a, header li {
+  transition: color 0.25s ease;
+}
+
+header a {
   color: #555;
 }
 
-a:active, a:hover, a:focus, a.nuxt-link-exact-active {
+li.active, li:hover, a:active, a:hover, a:focus, a.nuxt-link-exact-active {
   color: $link-color;
 }
 
@@ -105,10 +147,29 @@ ul > li:last-of-type {
   margin-right: 0;
 }
 
-main ul {
-  column-count: 2;
+ul.SubjectsList {
+  display: block;
+  column-count: 1;
   padding: 0;
   list-style: none;
   font-size: 22px;
+}
+
+section.SubjectsList {
+  transition: height 0.25s ease;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to { /* .fade-leave-active below version 2.1.8 */
+  opacity: 0;
+}
+
+@media only screen and (min-width: $tablet) {
+  ul.SubjectsList {
+    column-count: 2;
+  }
 }
 </style>
