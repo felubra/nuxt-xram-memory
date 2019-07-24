@@ -102,7 +102,7 @@ export default {
 ul {
   list-style: none;
   padding: 0;
-  font-size: 36px;
+  font-size: 28px;
   color: #555;
   margin: 0;
   display: grid;
@@ -152,7 +152,7 @@ ul.SubjectsList {
   column-count: 1;
   padding: 0;
   list-style: none;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 section.SubjectsList {
