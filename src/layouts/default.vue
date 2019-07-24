@@ -1,14 +1,14 @@
 <template>
   <div id="main-wrapper">
     <div class="spacer" :style="`height: ${navBarFixed ? spacerHeight: 0}px`"></div>
-    <header>
-      <fixed-header :fixed.sync="navBarFixed">
-        <Navbar />
-        <no-ssr>
-          <resize-sensor @resize="setSpacerHeight"></resize-sensor>
-        </no-ssr>
-      </fixed-header>
-    </header>
+    <fixed-header :fixed.sync="navBarFixed">
+      <header class="MainHeader">
+        <Navbar class="MainNavBar" />
+      </header>
+      <no-ssr>
+        <resize-sensor @resize="setSpacerHeight"></resize-sensor>
+      </no-ssr>
+    </fixed-header>
     <nuxt />
     <Footer />
   </div>
@@ -41,6 +41,22 @@ export default {
 
 
 <style lang="stylus">
+.MainHeader {
+  border-bottom: solid 1px #e1dada;
+}
+
+.MainNavBar {
+  position: relative;
+  bottom: -1px;
+}
+
+.MainHeader[fixed] {
+  position: fixed;
+  width: 100%;
+  background: #fbfafa;
+  z-index: 9999;
+}
+
 .FieldList > .FieldList__Field {
   display: flex;
   flex-direction: column;
