@@ -1,9 +1,6 @@
 <template>
   <nav class="Navbar">
-    <Logo
-      v-if="showLogo !== false"
-      :class="`Navbar__Logo Navbar__Logo--display-${showLogo} Navbar__Logo--search-status--${isNavBarSearching}`"
-    />
+    <Logo v-if="showLogo !== false" :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`" />
     <div v-dragscroll.x="true" class="main-itens">
       <nuxt-link
         v-for="(page, index) in pageLinks()"
