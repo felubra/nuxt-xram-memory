@@ -14,7 +14,6 @@
     :inner-class="{
             input: 'SearchBar__Input'
           }"
-    :URLParams="true"
     filter-label="Texto"
     v-active-filter-animation="'text'"
     v-bind="$attrs"
