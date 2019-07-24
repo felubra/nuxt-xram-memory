@@ -15,10 +15,16 @@ export default Vue.component('Microtext', {
         return ['right', 'up', 'down', 'left', 'none'].includes(value)
       },
       default: 'none'
+    },
+    className: {
+      type: String,
+      default: ''
     }
   },
   render(createElement, context) {
     const { arrow } = context.props
+    const additionalClasses =
+      context.props.className && context.props.className.split(' ')
     if (arrow !== 'none') {
       const arrowIcon =
         arrow === 'down' || arrow === 'up'
@@ -31,13 +37,19 @@ export default Vue.component('Microtext', {
       )
       return createElement(
         context.props.tag,
-        { class: ['microtext', `microtext--arrow-${arrow}`] },
+        {
+          class: [
+            'microtext',
+            `microtext--arrow-${arrow}`,
+            ...additionalClasses
+          ]
+        },
         [context.slots().default, arrowElement]
       )
     }
     return createElement(
       context.props.tag,
-      { class: ['microtext'] },
+      { class: ['microtext', ...additionalClasses] },
       context.slots().default
     )
   }
