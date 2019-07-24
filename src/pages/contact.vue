@@ -5,6 +5,7 @@
       <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
     </header>
     <main>
+      <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
       <el-form
         ref="form"
         :disabled="!isAvailable"
@@ -33,7 +34,7 @@
             @verify="onCaptchaVerify"
           ></vue-recaptcha>
         </el-form-item>
-        <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
+
         <el-form-item class="Contact__FormItem">
           <el-button type="primary" @click="onSubmit">Enviar</el-button>
           <el-button @click="resetForm()">Limpar</el-button>
