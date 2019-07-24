@@ -69,7 +69,7 @@
       <ul class="taxonomy-list">
         <li v-for="keyword in keywords" :key="keyword.slug">
           <nuxt-link
-            :to="{name:'index', query:{ keywords: JSON.stringify([keyword.name])} }"
+            :to="{name:'search', query:{ keywords: JSON.stringify([keyword.name])} }"
           >{{keyword.name}}</nuxt-link>
         </li>
       </ul>
