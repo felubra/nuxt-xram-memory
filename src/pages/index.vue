@@ -68,7 +68,7 @@ export default {
 
 <style lang="stylus" scoped>
 .PageIndex {
-  margin-top: 20vh;
+  margin-top: 5vh;
 }
 
 .FeaturedPage, .SearchBar {
@@ -98,6 +98,10 @@ export default {
 }
 
 @media only screen and (min-width: 768px) {
+  .PageIndex {
+    margin-top: 20vh;
+  }
+
   .HomeTagCloud {
     margin-top: 15vh;
   }
