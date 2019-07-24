@@ -45,7 +45,7 @@ h1
   font-size: $h1
 
 .Page
-  padding: 1rem
+  padding: $min-padding
 
 .CenteredPage
   margin: 0 auto
@@ -133,8 +133,10 @@ header > .microtext > span
   }
 }
 
-@media only screen and (min-width: $tablet) 
+@media only screen and (min-width: $tablet)
   html
     overflow-y: scroll;
+
+@media only screen and (min-width: $desktop)
   .Page
-    padding: 1rem 0
+    padding: $min-padding 0
