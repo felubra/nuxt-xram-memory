@@ -12,24 +12,13 @@
         :to="urlOrRoute(page)"
       >{{page.title}}</nuxt-link>
     </div>
-    <div class="controls">
-      <a id="Navbar__MenuToggle" class="Navbar__Item" href="#main-menu" @click.prevent="menuToggle">
-        <i class="material-icons">more_horiz</i>
-      </a>
-      <nuxt-link
-        v-for="(page, index) in pageLinks('menu-controls')"
-        :key="index"
-        class="Navbar__Item"
-        :to="urlOrRoute(page)"
-      >
-        <i class="material-icons">{{page.icon}}</i>
-      </nuxt-link>
-    </div>
+    <NavbarControls />
   </nav>
 </template>
 
 <script>
 import Logo from '@/components/nav/Logo'
+import NavbarControls from '@/components/nav/NavbarControls'
 import { mapActions, mapGetters } from 'vuex'
 import { urlOrRoute } from '@/utils/'
 import ClickOutside from 'vue-click-outside'
@@ -37,7 +26,8 @@ import { dragscroll } from 'vue-dragscroll'
 export default {
   name: 'Navbar',
   components: {
-    Logo
+    Logo,
+    NavbarControls
   },
   directives: {
     ClickOutside,
@@ -123,10 +113,6 @@ nav a.nuxt-link-exact-active, nav a:hover, nav a:active, nav a:focus {
 @media only screen and (min-width: $tablet) {
   .main-itens {
     display: flex;
-  }
-
-  #Navbar__MenuToggle {
-    display: none;
   }
 }
 </style>
