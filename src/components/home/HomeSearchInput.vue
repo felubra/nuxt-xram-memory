@@ -11,7 +11,7 @@
     placeholder="Pesquisar no acervo"
     :show-clear="false"
     :debounce="250"
-    fuzziness="auto"
+    fuzziness="AUTO"
     :inner-class="{
             input: 'SearchBar__Input'
           }"
