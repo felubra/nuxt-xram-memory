@@ -1,110 +1,121 @@
 <template>
   <div class="FilterList">
-    <single-dropdown-list
-      v-active-filter-animation="'type'"
-      :inner-class="{
-              title: 'microtext',
-              select: 'FilterItem__DropdownToggle',
-              list: 'FilterItem__DropdownList'          }"
-      :react="{or: ['text', 'newspaper', 'keywords', 'subjects', 'published_year']}"
-      :show-filter="true"
-      :size="25"
-      class-name="FilterList__FilterItem"
-      component-id="type"
-      data-field="_type"
-      filter-label="Tipo"
-      placeholder="Todos"
-      title="Tipo"
-      :u-r-l-params="true"
-    />
-    <single-dropdown-list
-      v-active-filter-animation="'newspaper'"
-      :default-query="customFilterQuery"
-      :inner-class="{
-              title: 'microtext',
-              select: 'FilterItem__DropdownToggle',
-              list: 'FilterItem__DropdownList'            }"
-      :react="{or: ['text', 'type', 'keywords', 'subjects', 'published_year']}"
-      :show-count="false"
-      :show-filter="true"
-      :size="25"
-      class-name="FilterList__FilterItem"
-      component-id="newspaper"
-      data-field="newspaper.title"
-      filter-label="Site/Veículo"
-      nested-field="newspaper"
-      placeholder="Todos"
-      title="Site/Veículo"
-      :u-r-l-params="true"
-    />
-    <multi-dropdown-list
-      v-active-filter-animation="'keywords'"
-      :default-query="customFilterQuery"
-      :inner-class="{
-              title: 'microtext',
-              select: 'FilterItem__DropdownToggle',
-              list: 'FilterItem__DropdownList'                }"
-      :react="{or: ['text', 'type', 'newspaper',  'published_year']}"
-      :show-count="false"
-      :show-filter="true"
-      :show-search="true"
-      :size="100"
-      class-name="FilterList__FilterItem"
-      component-id="keywords"
-      data-field="keywords.name"
-      filter-label="Palavras-chave"
-      nested-field="keywords"
-      placeholder="Todas"
-      title="Palavras-chave"
-      :u-r-l-params="true"
-    >
-      <template slot="renderItem" slot-scope="{ label }">
-        <div>{{lowerSlugify(label)}}</div>
-      </template>
-    </multi-dropdown-list>
+    <section :class="{'filters-visible': filtersVisible}">
+      <single-dropdown-list
+        v-active-filter-animation="'type'"
+        :inner-class="{
+                title: 'microtext',
+                select: 'FilterItem__DropdownToggle',
+                list: 'FilterItem__DropdownList'          }"
+        :react="{or: ['text', 'newspaper', 'keywords', 'subjects', 'published_year']}"
+        :show-filter="true"
+        :size="25"
+        class-name="FilterList__FilterItem"
+        component-id="type"
+        data-field="_type"
+        filter-label="Tipo"
+        placeholder="Todos"
+        title="Tipo"
+        :u-r-l-params="true"
+      />
+      <single-dropdown-list
+        v-active-filter-animation="'newspaper'"
+        :default-query="customFilterQuery"
+        :inner-class="{
+                title: 'microtext',
+                select: 'FilterItem__DropdownToggle',
+                list: 'FilterItem__DropdownList'            }"
+        :react="{or: ['text', 'type', 'keywords', 'subjects', 'published_year']}"
+        :show-count="false"
+        :show-filter="true"
+        :size="25"
+        class-name="FilterList__FilterItem"
+        component-id="newspaper"
+        data-field="newspaper.title"
+        filter-label="Site/Veículo"
+        nested-field="newspaper"
+        placeholder="Todos"
+        title="Site/Veículo"
+        :u-r-l-params="true"
+      />
+      <multi-dropdown-list
+        v-active-filter-animation="'keywords'"
+        :default-query="customFilterQuery"
+        :inner-class="{
+                title: 'microtext',
+                select: 'FilterItem__DropdownToggle',
+                list: 'FilterItem__DropdownList'                }"
+        :react="{or: ['text', 'type', 'newspaper',  'published_year']}"
+        :show-count="false"
+        :show-filter="true"
+        :show-search="true"
+        :size="100"
+        class-name="FilterList__FilterItem"
+        component-id="keywords"
+        data-field="keywords.name"
+        filter-label="Palavras-chave"
+        nested-field="keywords"
+        placeholder="Todas"
+        title="Palavras-chave"
+        :u-r-l-params="true"
+      >
+        <template slot="renderItem" slot-scope="{ label }">
+          <div>{{lowerSlugify(label)}}</div>
+        </template>
+      </multi-dropdown-list>
 
-    <multi-dropdown-list
-      v-active-filter-animation="'subjects'"
-      :default-query="customFilterQuery"
-      :inner-class="{
-              title: 'microtext',
-              select: 'FilterItem__DropdownToggle',
-              list: 'FilterItem__DropdownList'                }"
-      :react="{or: ['text', 'type', 'newspaper',  'published_year']}"
-      :show-count="false"
-      :show-filter="true"
-      :show-search="true"
-      :size="100"
-      class-name="FilterList__FilterItem"
-      component-id="subjects"
-      data-field="subjects.name"
-      filter-label="Assuntos"
-      nested-field="subjects"
-      placeholder="Todos"
-      title="Assunto"
-      :u-r-l-params="true"
-    >
-      <template slot="renderItem" slot-scope="{ label }">
-        <div>{{label}}</div>
-      </template>
-    </multi-dropdown-list>
-    <!--
-          <DynamicRangeSlider
-            :inner-class="{              title: 'microtext',              slider: 'FilterList__Slider',            }"
-            :react="{or: ['text']}"
-            class-name="FilterList__FilterItem"
-            component-id="published_year"
-            data-field="published_year"
-            filter-label="Publicado entre"
-            title="Publicado entre"
-            :URLParams="true"
-          />
-    -->
+      <multi-dropdown-list
+        v-active-filter-animation="'subjects'"
+        :default-query="customFilterQuery"
+        :inner-class="{
+                title: 'microtext',
+                select: 'FilterItem__DropdownToggle',
+                list: 'FilterItem__DropdownList'                }"
+        :react="{or: ['text', 'type', 'newspaper',  'published_year']}"
+        :show-count="false"
+        :show-filter="true"
+        :show-search="true"
+        :size="100"
+        class-name="FilterList__FilterItem"
+        component-id="subjects"
+        data-field="subjects.name"
+        filter-label="Assuntos"
+        nested-field="subjects"
+        placeholder="Todos"
+        title="Assunto"
+        :u-r-l-params="true"
+      >
+        <template slot="renderItem" slot-scope="{ label }">
+          <div>{{label}}</div>
+        </template>
+      </multi-dropdown-list>
+      <!--
+            <DynamicRangeSlider
+              :inner-class="{              title: 'microtext',              slider: 'FilterList__Slider',            }"
+              :react="{or: ['text']}"
+              class-name="FilterList__FilterItem"
+              component-id="published_year"
+              data-field="published_year"
+              filter-label="Publicado entre"
+              title="Publicado entre"
+              :URLParams="true"
+            />
+      -->
+    </section>
+    <footer>
+      <Microtext class-name="ShowFilters">
+        <a href="#toggle" @click.prevent="toggleFilters">
+          <i class="material-icons">filter_list</i>
+          {{filtersVisible ? 'Esconder filtros' : 'Mostrar filtros'}}
+        </a>
+      </Microtext>
+    </footer>
   </div>
 </template>
 
 <script>
 import slugify from 'slugify'
+import Microtext from '@/components/common/Microtext'
 
 export const activeFilterAnimation = {
   inserted(el, { value }, { context }) {
@@ -119,7 +130,18 @@ export default {
   directives: {
     activeFilterAnimation
   },
+  components: {
+    Microtext
+  },
+  data() {
+    return {
+      filtersVisible: false
+    }
+  },
   methods: {
+    toggleFilters() {
+      this.filtersVisible = !this.filtersVisible
+    },
     lowerSlugify(keyword) {
       return slugify(keyword.toLowerCase())
     },
@@ -157,12 +179,25 @@ export default {
 }
 </script>
 <style lang="stylus">
-.FilterList {
+.FilterList > section {
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-wrap: wrap;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease-out;
+}
+
+.FilterList > section.filters-visible {
   margin-top: 2rem;
+  max-height: 1000px;
+  overflow: visible;
+}
+
+footer {
+  text-align: right;
+  padding: 0.5rem 0;
 }
 
 .FilterList__FilterItem {
@@ -205,9 +240,13 @@ button.FilterItem__DropdownToggle:focus {
   color: #000 !important;
 }
 
+.ShowFilters > a {
+  display: inline-flex;
+  align-items: center;
+}
+
 @media only screen and (min-width: 768px) {
-  .FilterList {
-    display: flex;
+  .FilterList >section {
     flex-direction: row;
   }
 
@@ -215,6 +254,15 @@ button.FilterItem__DropdownToggle:focus {
     width: auto;
     min-width: 250px;
     margin: 1rem 4rem;
+  }
+
+  .FilterList > section {
+    margin-top: 2rem;
+    max-height: 1000px;
+  }
+
+  .ShowFilters {
+    display: none !important;
   }
 }
 </style>
