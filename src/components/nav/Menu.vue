@@ -1,10 +1,8 @@
 <template>
   <div :class="menuVisible ? 'Menu Menu--visible': 'Menu'">
-    <header class="Menu__Header">
-      <a class="Menu__CloseButton" href="#close" @click.prevent="toggleMenu">
-        <i class="material-icons">close</i>
-      </a>
-      <Logo class="Menu__Logo" variant="pb--branco" />
+    <header>
+      <Logo variant="pb--branco" />
+      <NavbarControls />
     </header>
     <ul class="Menu__Items Menu__Items--big">
       <li
@@ -16,10 +14,7 @@
           :title="page.title"
           :alt="`Clique para visitar a página '${page.title}'`"
           :to="urlOrRoute(page)"
-        >
-          <i class="material-icons-outlined">{{page.icon || 'info'}}</i>
-          {{page.title}}
-        </nuxt-link>
+        >{{page.title}}</nuxt-link>
       </li>
     </ul>
     <footer class="Menu__Footer">
@@ -45,11 +40,13 @@
 import Logo from '@/components/nav/Logo'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { urlOrRoute } from '@/utils/'
+import NavbarControls from '@/components/nav/NavbarControls'
 
 export default {
   name: 'Menu',
   components: {
-    Logo
+    Logo,
+    NavbarControls
   },
   computed: {
     ...mapState(['menuVisible']),
@@ -65,7 +62,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+header {
+  display: flex;
+  padding: 0 $min-padding;
+  min-height: 100px;
+  align-items: stretch;
+}
+
+header > * {
+  display: flex;
+  align-items: center;
+}
+
 .Menu {
   display: flex;
   flex-direction: column;
@@ -73,11 +82,11 @@ export default {
   top: 0;
   height: 100%;
   background: #ce5454;
-  z-index: 10;
+  z-index: 999;
   transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s;
-  transform: translate3d(-100%, 0, 0);
+  transform: translate3d(0, -100%, 0);
   backface-visibility: hidden;
-  width: 350px;
+  width: 100%;
 }
 
 .Menu--visible {
@@ -117,6 +126,12 @@ export default {
   text-decoration: none;
   display: flex;
   align-items: center;
+  border-bottom: solid 2px transparent;
+  transition: border-color 0.25s ease;
+}
+
+.Menu__Item a:active, .Menu__Item a:focus, .Menu__Item a:hover, .Menu__Item a.nuxt-link-exact-active {
+  border-color: #fff;
 }
 
 .Menu__Item i {
@@ -125,12 +140,12 @@ export default {
 
 .Menu__Items--big {
   list-style: none;
-  margin: 0;
-  padding: 1rem 2rem;
-  margin: 0 1.5rem 0 0;
-  padding-top: 25vh;
+  margin: auto 0;
   font-size: 1.2rem;
-  flex-grow: 1;
+  text-align: center;
+  font-size: 140%;
+  padding: 0;
+  flex-grow: 0;
 }
 
 .Menu__Item--big {
@@ -141,7 +156,7 @@ export default {
 .Menu__Item--big a {
   color: inherit;
   text-decoration: none;
-  display: flex;
+  display: inline-flex;
   align-items: center;
 }
 
@@ -168,5 +183,20 @@ export default {
   color: #fff;
   text-align: center;
   padding-bottom: 1rem;
+}
+
+.NavbarControls >>> a {
+  color: #fbfafa;
+}
+
+.NavbarControls >>> a:hover, .NavbarControls >>> a:active, .NavbarControls >>> a:focus, .NavbarControls >>> a.nuxt-link-exact-active {
+  color: #fbfafa;
+  border-color: #fff;
+}
+
+@media only screen and (min-width: $tablet) {
+  .Menu {
+    display: none;
+  }
 }
 </style>
