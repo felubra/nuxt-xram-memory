@@ -42,7 +42,7 @@ export default {
 
 <style lang="stylus">
 .MainHeader {
-  border-bottom: solid 1px #e1dada;
+  border-bottom: solid 1px #f1eaea;
 }
 
 .MainNavBar {
