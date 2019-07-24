@@ -1,6 +1,8 @@
 <template>
   <div id="main-wrapper">
     <div class="spacer" :style="`height: ${navBarFixed ? spacerHeight: 0}px`"></div>
+    <Menu />
+
     <fixed-header :fixed.sync="navBarFixed">
       <header class="MainHeader">
         <Navbar class="MainNavBar" />
@@ -16,19 +18,30 @@
 
 <script>
 import Navbar from '~/components/nav/Navbar'
+import Menu from '~/components/nav/Menu'
 import Footer from '~/components/common/Footer'
 import FixedHeader from 'vue-fixed-header'
+import { mapState } from 'vuex'
 export default {
   name: 'NewLayout',
   components: {
     Navbar,
     Footer,
-    FixedHeader
+    FixedHeader,
+    Menu
+  },
+  head() {
+    return {
+      bodyAttrs: {
+        'menu-visible': this.menuVisible()
+      }
+    }
   },
   data() {
     return {
       navBarFixed: false,
-      spacerHeight: 100
+      spacerHeight: 100,
+      ...mapState(['menuVisible'])
     }
   },
   methods: {
@@ -54,7 +67,7 @@ export default {
   position: fixed;
   width: 100%;
   background: #fbfafa;
-  z-index: 9999;
+  z-index: 900;
 }
 
 .FieldList > .FieldList__Field {
