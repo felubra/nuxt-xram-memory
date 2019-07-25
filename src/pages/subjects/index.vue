@@ -131,11 +131,12 @@ export default {
   grid-template-columns: 1fr;
   grid-column-gap: 20px;
   grid-row-gap: 20px;
+  justify-items: center;
 }
 
 .SubjectCard {
   transition: all 0.25s ease;
-  min-height: 475px;
+  min-height: 275px;
 }
 
 .SubjectCard img {
