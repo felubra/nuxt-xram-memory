@@ -1,7 +1,6 @@
 <template>
   <!-- eslint-disable -->
   <DataSearch
-    v-inner-input-focus
     class="SearchBar"
     component-id="text"
     :field-weights="[10,7]"
