@@ -91,6 +91,7 @@ header {
 .NewsPage__Info {
   flex-grow: 1;
   text-align: center;
+  max-width: $max-width;
 }
 
 .NewsPage__NewsInfo {
