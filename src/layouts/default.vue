@@ -127,6 +127,11 @@ body.page--index .MainHeader[fixed] .Navbar__Logo {
     align-items: center;
   }
 
+  .MainNavBar {
+    position: relative;
+    bottom: -1px;
+  }
+
   .FieldList > .FieldList__Field > h2 {
     width: 15%;
   }
