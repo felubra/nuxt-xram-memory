@@ -21,7 +21,10 @@
       :total-results="totalResults"
       :time="time"
     />
-    <div class="NoResults" slot="renderNoResults">Nenhum resultado encontrado</div>
+    <div class="NoResults" slot="renderNoResults">
+      Nenhum resultado encontrado
+      <button class="ClearResults" @click="clearValues">Recomeçar</button>
+    </div>
     <NewsGrid id="HomeMasonryGrid" slot="renderAllData" slot-scope="{ results }" :items="results"></NewsGrid>
   </ReactiveList>
   <!-- eslint-enable -->
@@ -36,19 +39,48 @@ export default {
   components: {
     ResultStats,
     NewsGrid
+  },
+  methods: {
+    clearValues() {
+      this.$parent.$$store.dispatch({
+        type: 'CLEAR_VALUES' //hack
+      })
+    }
   }
 }
 </script>
 
-<style>
+<style lang="stylus">
 .SearchResults {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.ClearResults {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: rgb(220, 219, 219);
+  color: #333333;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: $sans-serif;
+  user-select: none;
+  transition: all 0.3s ease;
+  margin: 1rem auto;
+}
+
 #HomeMasonryGrid {
   justify-content: center;
 }
+
 .NoResults {
   font-weight: bold;
 }
