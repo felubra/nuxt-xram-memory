@@ -80,6 +80,7 @@ export default {
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
   text-align: center;
   position: relative;
+  max-width: 350px;
 }
 
 .Card h3 {
@@ -108,6 +109,7 @@ export default {
 
 .Card p {
   color: #333333;
+  font-family: $sans-serif;
 }
 
 .Card h3 {
