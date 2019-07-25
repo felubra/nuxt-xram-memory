@@ -132,7 +132,7 @@ a, header li {
 }
 
 header a {
-  color: #555;
+  color: #888;
 }
 
 li.active, li:hover, a:active, a:hover, a:focus, a.nuxt-link-exact-active {
