@@ -145,6 +145,7 @@ section > footer {
   grid-column-gap: 20px;
   grid-row-gap: 20px;
   padding: 0.5rem 0;
+  justify-items: center;
 }
 
 .AlbumList > .Album {
