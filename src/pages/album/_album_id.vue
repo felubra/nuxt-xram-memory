@@ -3,6 +3,7 @@
     <main>
       <viewer
         v-show="visible"
+        ref="viewer"
         class="Album__Viewer"
         :options="viewerOptions"
         :images="photos"
@@ -27,7 +28,6 @@
 </template>
 <script>
 const humanSize = require('human-size')
-
 const { getMediaUrl } = require('~/utils')
 export default {
   data() {
@@ -35,7 +35,8 @@ export default {
       album: {},
       selectedPhotoIndex: 0,
       selectedImageSize: null,
-      visible: false
+      visible: false,
+      isServer: true
     }
   },
   head() {
@@ -116,13 +117,13 @@ export default {
       }
     }
   },
-  async asyncData({ $axios, route, error }) {
+  async asyncData({ $axios, route, error, isServer }) {
     const albumId = route.params.album_id
     if (albumId) {
       return $axios
         .$get(`/api/v1/album/${albumId}`)
         .then(album => {
-          return { album }
+          return { album, isServer }
         })
         .catch(e => {
           const statusCode = (e.response && e.response.status) || 500
@@ -132,7 +133,34 @@ export default {
       error({ statusCode: 404, message: 'Álbum não encontrado' })
     }
   },
+  mounted() {
+    if (!this.isServer) {
+      window.addEventListener(
+        'orientationchange',
+        this.orientationChange,
+        false
+      )
+    }
+  },
+  beforeDestroy() {
+    if (!this.isServer) {
+      window.removeEventListener(
+        'orientationchange',
+        this.orientationChange,
+        false
+      )
+    }
+  },
+
   methods: {
+    orientationChange(e) {
+      const { $viewer } = this.$refs.viewer
+      if (Math.abs(window.orientation) === 90) {
+        $viewer.full()
+      } else {
+        $viewer.exit()
+      }
+    },
     imageTitle() {
       return this.selectedPhoto.description
     },
@@ -147,6 +175,7 @@ export default {
     },
     viewerReady() {
       this.visible = true
+      this.orientationChange()
     },
     inited(viewer) {
       // Escute o evento 'view' no elemento criado pelo componente para determinar qual foto está sendo vista
