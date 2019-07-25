@@ -44,15 +44,11 @@ export default {
   transition: border-color 0.25s ease;
 }
 
-a {
-  padding-top: 17px;
-}
-
 .NavbarControls {
   align-items: stretch;
 }
 
-a.nuxt-link-exact-active, a:hover, a:active, a:focus {
+a.nuxt-link-exact-active, a.nuxt-link-active, a:hover, a:active, a:focus {
   border-color: $link-color;
 }
 

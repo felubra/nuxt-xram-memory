@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       navBarFixed: false,
-      spacerHeight: 100,
+      spacerHeight: 80,
       ...mapState(['menuVisible'])
     }
   },
@@ -60,7 +60,7 @@ export default {
 
 .MainNavBar {
   position: relative;
-  bottom: -1px;
+  bottom: -3px;
 }
 
 .MainHeader[fixed] {
@@ -103,6 +103,22 @@ export default {
 .FieldList .FieldList__Field a {
   word-break: break-all;
   display: inline-block;
+}
+
+body.page--index .MainHeader {
+  border-color: transparent;
+}
+
+body.page--index .MainHeader[fixed] {
+  border-color: #f1eaea;
+}
+
+body.page--index .Navbar__Logo {
+  opacity: 0;
+}
+
+body.page--index .MainHeader[fixed] .Navbar__Logo {
+  opacity: 1;
 }
 
 @media only screen and (min-width: $tablet) {

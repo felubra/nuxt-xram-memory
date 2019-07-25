@@ -77,7 +77,7 @@ export default {
   justify-content: space-between;
   align-items: stretch;
   display: flex;
-  min-height: 100px;
+  min-height: 80px;
   padding: 0 0.5rem;
 }
 
@@ -86,12 +86,15 @@ export default {
   display: flex;
 }
 
+.Navbar__Logo {
+  transition: opacity 0.25s ease;
+}
+
 .main-itens, .controls {
   align-items: stretch;
 }
 
 .main-itens a, .controls a {
-  padding-top: 17px;
   color: #555;
   border-bottom: solid 2px transparent;
   margin: 0 0.5rem;
@@ -99,7 +102,7 @@ export default {
   transition: border-color 0.25s ease;
 }
 
-nav a.nuxt-link-exact-active, nav a:hover, nav a:active, nav a:focus {
+nav a.nuxt-link-exact-active, nav a.nuxt-link-active, nav a:hover, nav a:active, nav a:focus {
   border-color: $link-color;
 }
 
@@ -108,6 +111,10 @@ nav a.nuxt-link-exact-active, nav a:hover, nav a:active, nav a:focus {
 }
 
 @media only screen and (min-width: $tablet) {
+  .Navbar {
+    min-height: 100px;
+  }
+
   .main-itens {
     display: flex;
   }

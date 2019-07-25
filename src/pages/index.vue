@@ -37,7 +37,7 @@ export default {
   head: {
     title: 'xraM-Memory',
     bodyAttrs: {
-      class: 'Navbar--no-logo'
+      class: 'page--index'
     }
   },
   computed: {
