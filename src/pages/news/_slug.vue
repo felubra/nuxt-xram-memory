@@ -1,5 +1,5 @@
 <template>
-  <section class="Page CenteredPage">
+  <section class="Page NewsPage">
     <div class="NewsPage__Info">
       <header>
         <figure>
@@ -85,7 +85,7 @@ header {
 .NewsPage {
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
+  padding-top: 0;
 }
 
 .NewsPage__Info {
@@ -102,6 +102,7 @@ figure {
   transition: all 0.25s ease;
   display: flex;
   align-items: center;
+  margin: 0;
 }
 
 @media only screen and (min-width: 960px) {

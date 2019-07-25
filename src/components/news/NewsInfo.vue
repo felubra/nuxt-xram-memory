@@ -243,6 +243,8 @@ export default {
 <style lang="stylus" scoped>
 figure {
   min-height: 250px;
+  padding: 0;
+  margin: 0;
 }
 
 .NewsInfo--pdf-captures a {
