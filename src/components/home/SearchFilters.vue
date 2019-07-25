@@ -259,6 +259,7 @@ button.FilterItem__DropdownToggle:focus {
   .FilterList > section {
     margin-top: 2rem;
     max-height: 1000px;
+    overflow: visible;
   }
 
   .ShowFilters {
