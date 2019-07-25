@@ -8,6 +8,7 @@
               }"
     />
     <Microtext
+      class-name="ResultsCounter"
       arrow="down"
     >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
   </div>
@@ -33,6 +34,10 @@ export default {
 }
 </script>
 <style lang="stylus">
+.ResultsCounter {
+  justify-content: center;
+}
+
 .SearchResults__ResultsInfo {
   align-self: stretch;
 }
