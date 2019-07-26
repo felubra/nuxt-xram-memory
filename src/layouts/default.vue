@@ -22,6 +22,8 @@ import Menu from '~/components/nav/Menu'
 import Footer from '~/components/common/Footer'
 import FixedHeader from 'vue-fixed-header'
 import { mapState } from 'vuex'
+import { isCookieEnabled, getCookie, setCookie, remove } from 'tiny-cookie'
+
 export default {
   name: 'NewLayout',
   components: {
@@ -44,6 +46,22 @@ export default {
       ...mapState(['menuVisible'])
     }
   },
+  mounted() {
+    console.log('MOUNTED')
+    if (!getCookie('GDPR_cookie')) {
+      this.$notify({
+        title: 'Este site usa cookies',
+        dangerouslyUseHTMLString: true,
+        message: `Nós usamos cookies para melhorar a sua experiência neste site. <br />Ao continuar, você concorda com isso.`,
+        position: 'bottom-right',
+        duration: 0,
+        type: 'info',
+        onClose() {
+          setCookie('GDPR_cookie', 'accepted')
+        }
+      })
+    }
+  },
   methods: {
     setSpacerHeight({ height }) {
       this.spacerHeight = height
@@ -54,6 +72,10 @@ export default {
 
 
 <style lang="stylus">
+.el-notification__content, .el-notification__title {
+  font-family: $sans-serif;
+}
+
 .MainHeader {
   border-bottom: solid 1px #f1eaea;
   transition: all 0.25s ease;
