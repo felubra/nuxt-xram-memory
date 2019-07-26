@@ -102,7 +102,7 @@ export default {
   transition: border-color 0.25s ease;
 }
 
-nav a.nuxt-link-exact-active, nav a.nuxt-link-active, nav a:hover, nav a:active, nav a:focus {
+nav a.nuxt-link-exact-active, nav a:hover, nav a:active, nav a:focus {
   border-color: $link-color;
 }
 
