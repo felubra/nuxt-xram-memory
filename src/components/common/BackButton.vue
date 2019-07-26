@@ -1,5 +1,7 @@
 <template>
-  <el-button icon="el-icon-back" circle @click="goBack()"></el-button>
+  <el-button circle @click="goBack()">
+    <i class="material-icons">arrow_back</i>
+  </el-button>
 </template>
 
 <script>
