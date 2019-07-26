@@ -50,12 +50,16 @@ export default {
     initials: {
       type: Array,
       default: () => []
+    },
+    initialSubjects: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
       selectedInitial: '',
-      subjects: [],
+      subjects: this.initialSubjects,
       minHeight: 100
     }
   },
