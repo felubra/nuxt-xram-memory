@@ -115,6 +115,7 @@ body.page--index .MainHeader[fixed] {
 
 body.page--index .Navbar__Logo {
   opacity: 0;
+  pointer-events: none;
 }
 
 body.page--index .MainHeader[fixed] .Navbar__Logo {
