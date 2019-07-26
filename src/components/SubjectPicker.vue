@@ -1,24 +1,26 @@
 <template>
-  <div v-if="hasInitials" class="SubjectPicker">
+  <div class="SubjectPicker">
     <header>
       <Microtext arrow="down">
         Todos os assuntos
         <span>(em ordem alfabética)</span>
       </Microtext>
-      <ul class="InitialsList">
-        <li
-          v-for="initial in initials"
-          :key="initial"
-          :class="{
+      <transition name="fade">
+        <ul v-if="hasInitials && hasSubjects" class="InitialsList">
+          <li
+            v-for="initial in initials"
+            :key="initial"
+            :class="{
             'active': selectedInitial === initial
           }"
-          @click="selectInitial(initial)"
-        >{{initial}}</li>
-      </ul>
+            @click="selectInitial(initial)"
+          >{{initial}}</li>
+        </ul>
+      </transition>
     </header>
     <section class="SubjectsList" :style="`min-height: ${minHeight}px`">
       <transition name="fade">
-        <ul v-if="hasSubjects" ref="SubjectsList" class="SubjectsList">
+        <ul v-if="hasInitials && hasSubjects" ref="SubjectsList" class="SubjectsList">
           <li v-for="subject in subjects" :key="subject.slug">
             <nuxt-link
               :to="{
