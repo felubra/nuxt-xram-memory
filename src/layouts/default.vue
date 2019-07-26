@@ -56,6 +56,7 @@ export default {
 <style lang="stylus">
 .MainHeader {
   border-bottom: solid 1px #f1eaea;
+  transition: all 0.25s ease;
 }
 
 .MainNavBar {
@@ -119,6 +120,16 @@ body.page--index .Navbar__Logo {
 }
 
 body.page--index .MainHeader[fixed] .Navbar__Logo {
+  opacity: 1;
+}
+
+body.page--full-screen .MainHeader {
+  position: fixed;
+  opacity: 0;
+  width: 100%;
+}
+
+body.page--full-screen .MainHeader[fixed] {
   opacity: 1;
 }
 

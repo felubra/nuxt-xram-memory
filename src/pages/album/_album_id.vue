@@ -1,6 +1,7 @@
 <template>
-  <section class="AlbumPage">
+  <section class="Page AlbumPage">
     <main>
+      <BackButton class="BackButton" />
       <viewer
         v-show="visible"
         ref="viewer"
@@ -29,7 +30,11 @@
 <script>
 const humanSize = require('human-size')
 const { getMediaUrl } = require('~/utils')
+import BackButton from '@/components/common/BackButton'
 export default {
+  components: {
+    BackButton
+  },
   data() {
     return {
       album: {},
@@ -42,7 +47,10 @@ export default {
   head() {
     return {
       title: this.album.name,
-      titleTemplate: 'xraM-Memory - Álbum de fotos: %s'
+      titleTemplate: 'xraM-Memory - Álbum de fotos: %s',
+      bodyAttrs: {
+        class: 'page--full-screen'
+      }
     }
   },
   computed: {
@@ -204,6 +212,13 @@ export default {
 </script>
 
 <style>
+.BackButton {
+  z-index: 9;
+  position: absolute;
+  top: 48px;
+  left: 24px;
+}
+
 .viewer-navbar {
   background: transparent;
 }
@@ -227,6 +242,7 @@ export default {
   display: flex;
   flex-direction: column;
   position: relative;
+  padding: 0;
 }
 
 aside {

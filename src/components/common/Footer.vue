@@ -57,8 +57,12 @@ export default {
   line-height: 0.93rem;
   text-transform: uppercase;
   color: #666666;
-  display: block;
+  display: inline-block;
   margin: 6px 0;
+}
+
+.MainFooter p {
+  margin: 0;
 }
 
 .MainFooter a:focus, .MainFooter a:active, .MainFooter a:hover {
@@ -75,7 +79,6 @@ export default {
     line-height: 0.93rem;
     text-transform: uppercase;
     color: #666666;
-    display: inline-block;
     margin: 0 6px;
   }
 }

@@ -1,6 +1,7 @@
 <template>
-  <section class="DocumentPage">
+  <section class="Page DocumentPage">
     <main>
+      <BackButton class="BackButton" />
       <template v-if="isOfKnownType">
         <no-ssr>
           <!-- eslint-disable -->
@@ -69,6 +70,7 @@
 <script>
 import DocumentPreview from '~/components/viewers/DocumentPreview'
 import Microtext from '~/components/common/Microtext'
+import BackButton from '@/components/common/BackButton'
 
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
@@ -77,7 +79,8 @@ const { getMediaUrl } = require('~/utils')
 export default {
   components: {
     Microtext,
-    DocumentPreview
+    DocumentPreview,
+    BackButton
   },
   data() {
     return { document: {} }
@@ -85,7 +88,10 @@ export default {
   head() {
     return {
       title: this.document.name,
-      titleTemplate: 'xraM-Memory - Documento: %s'
+      titleTemplate: 'xraM-Memory - Documento: %s',
+      bodyAttrs: {
+        class: 'page--full-screen'
+      }
     }
   },
   computed: {
@@ -149,10 +155,18 @@ export default {
 
 
 <style lang="stylus" scoped>
+.BackButton {
+  z-index: 9;
+  position: absolute;
+  top: 48px;
+  left: 24px;
+}
+
 .DocumentPage {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding: 0;
 }
 
 main {
