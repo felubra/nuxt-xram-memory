@@ -45,15 +45,23 @@
             },
           }"
       >
-        <figure>
-          <img
-            v-if="thumbnailForDocument(capture.document_id)"
-            :src="thumbnailForDocument(capture.document_id)"
-            :alt="capture.title"
-            :title="capture.title"
-          />
-          <figcaption>{{capture.title}}</figcaption>
-        </figure>
+        <el-image
+          v-for="capture in pdf_captures"
+          :key="capture.url"
+          :src="thumbnailForDocument(capture.document_id)"
+          :alt="capture.title"
+          :title="capture.title"
+          class="ImageCapture"
+          fit="contain"
+        >
+          <div slot="placeholder" class="image-slot">
+            <i class="el-icon-picture-outline"></i>
+          </div>
+          <div slot="error" class="image-slot">
+            <i class="el-icon-picture-outline"></i>
+          </div>
+        </el-image>
+        <Microtext tag="p">{{capture.title}}</Microtext>
       </nuxt-link>
     </div>
     <div v-if="subjects" class="FieldList__Field">
@@ -82,8 +90,12 @@ const smartTruncate = require('smart-truncate')
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
 import { getMediaUrl } from '@/utils'
+import Microtext from '@/components/common/Microtext'
 export default {
   name: 'NewsInfo',
+  components: {
+    Microtext
+  },
   props: {
     newsItem: {
       type: Object,
@@ -241,10 +253,21 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-figure {
-  min-height: 250px;
-  padding: 0;
-  margin: 0;
+.NewsInfo__PDFCapture, .ImageCapture {
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+}
+
+.ImageCapture {
+  padding: 2px;
+}
+
+.image-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .NewsInfo--pdf-captures a {
@@ -252,6 +275,11 @@ figure {
   margin: 6px;
   width: auto;
   transition: border-color 0.25s ease;
+}
+
+.NewsInfo--pdf-captures p {
+  display: block;
+  text-align: center;
 }
 
 .NewsInfo--pdf-captures a:active, .NewsInfo--pdf-captures a:focus, .NewsInfo--pdf-captures a:hover {
