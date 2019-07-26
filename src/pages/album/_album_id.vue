@@ -32,6 +32,7 @@ const humanSize = require('human-size')
 const { getMediaUrl } = require('~/utils')
 import BackButton from '@/components/common/BackButton'
 export default {
+  name: 'AlbumPage',
   components: {
     BackButton
   },

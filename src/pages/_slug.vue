@@ -13,6 +13,7 @@ import { sanitize } from '@/utils/'
 import 'quill/assets/core.styl'
 import Microtext from '@/components/common/Microtext'
 export default {
+  name: 'ContentPage',
   components: {
     Microtext
   },

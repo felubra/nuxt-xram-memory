@@ -39,6 +39,7 @@ import Card from '~/components/common/Card'
 const { getMediaUrl } = require('~/utils')
 
 export default {
+  name: 'AlbumsPage',
   components: {
     Microtext,
     Card

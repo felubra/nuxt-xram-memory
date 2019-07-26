@@ -18,6 +18,7 @@ import HomeSearchInput from '~/components/home/HomeSearchInput'
 import SearchFilters from '@/components/home/SearchFilters'
 
 export default {
+  name: 'SearchPage',
   components: {
     HomeSearchInput,
     DefaultReactiveBase,

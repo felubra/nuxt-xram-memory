@@ -43,6 +43,7 @@ import { getMediaUrl } from '~/utils'
 const smartTruncate = require('smart-truncate')
 
 export default {
+  name: 'SubjectsPage',
   components: {
     Microtext,
     HomeTagCloud,

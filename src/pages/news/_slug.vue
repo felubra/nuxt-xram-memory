@@ -22,6 +22,7 @@ import NewsInfo from '~/components/news/NewsInfo'
 import { sanitize, getMediaUrl } from '@/utils/'
 
 export default {
+  name: 'NewsPage',
   components: {
     NewsInfo,
     Microtext

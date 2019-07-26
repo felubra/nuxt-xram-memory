@@ -77,6 +77,7 @@ const dayJs = require('dayjs')
 
 const { getMediaUrl } = require('~/utils')
 export default {
+  name: 'DocumentPage',
   components: {
     Microtext,
     DocumentPreview,

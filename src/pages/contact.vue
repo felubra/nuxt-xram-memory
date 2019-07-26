@@ -50,6 +50,7 @@ const xss = require('xss')
 const emailValidator = require('email-validator')
 
 export default {
+  name: 'ContactPage',
   components: {
     VueRecaptcha
   },

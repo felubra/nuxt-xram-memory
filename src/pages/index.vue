@@ -27,6 +27,7 @@ import Logo from '@/components/nav/Logo'
 import { mapGetters } from 'vuex'
 
 export default {
+  name: 'IndexPage',
   components: {
     HomeTagCloud,
     HomeSearchInput,
