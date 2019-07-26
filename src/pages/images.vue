@@ -139,68 +139,13 @@ section > footer {
 }
 
 .AlbumList {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fill, 250px);
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-column-gap: 20px;
-  grid-row-gap: 20px;
-  padding: 0.5rem 0;
-  justify-items: center;
-}
-
-.AlbumList > .Album {
-  margin-right: 1rem;
-}
-
-.ImagesPage__Featured {
-}
-
-.FeaturedAlbums {
-  width: 100%;
   display: grid;
-  grid-template-areas: 'f1' 'f2' 'f3';
-  grid-template-columns: 1fr;
-  column-gap: 20px;
-  row-gap: 20px;
-}
-
-.FeaturedAlbum {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  position: relative;
-}
-
-.FeaturedAlbum > img {
-  position: absolute;
-}
-
-.FeaturedAlbum > h3 {
-  z-index: 500;
-  align-self: flex-end;
-}
-
-.FeaturedAlbums > .f1, .FeaturedAlbums > .f2, .FeaturedAlbums > .f3 {
-}
-
-.FeaturedAlbums > .f1 {
-  grid-area: f1;
-}
-
-.FeaturedAlbums > .f2, .FeaturedAlbums > .f1 {
-}
-
-.FeaturedAlbums > .f2 {
-  grid-area: f2;
-}
-
-.FeaturedAlbums > .f3 {
-  grid-area: f3;
-}
-
-.OtherAlbums .Card {
-  height: 250px;
+  grid-row-gap: 20px;
+  justify-content: space-evenly;
 }
 
 h3 {
@@ -213,10 +158,5 @@ h3 {
 }
 
 @media only screen and (min-width: $tablet) {
-  .FeaturedAlbums {
-    grid-template-areas: 'f1 f2' 'f1 f3';
-    grid-template-columns: 1fr 270px;
-    grid-template-rows: 200px 200px;
-  }
 }
 </style>

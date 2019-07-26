@@ -127,11 +127,13 @@ export default {
 }
 
 .SubjectsList {
-  display: grid;
-  grid-template-columns: 1fr;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fill, 250px);
+  width: 100%;
   grid-column-gap: 20px;
+  display: grid;
   grid-row-gap: 20px;
-  justify-items: center;
+  justify-content: space-evenly;
 }
 
 .SubjectCard {
@@ -175,8 +177,5 @@ footer {
 }
 
 @media only screen and (min-width: 768px) {
-  .SubjectsList {
-    grid-template-columns: repeat(5, auto);
-  }
 }
 </style>
