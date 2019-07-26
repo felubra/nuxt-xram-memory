@@ -181,5 +181,10 @@ body.page--full-screen .MainHeader[fixed] {
   .FieldList > .FieldList__Field > p {
     margin: 0 1rem 0;
   }
+
+  body.page--index .Navbar__Logo {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 </style>
