@@ -212,9 +212,10 @@ aside > header {
 
 .FileInfo_Button {
   margin-left: auto;
+  color: #606266;
 }
 
 .FileInfo_Button i {
-  font-size: 32px;
+  font-size: 24px;
 }
 </style>
