@@ -28,7 +28,7 @@
     <aside class="FieldList">
       <header>
         <h1>{{document.document_id || document.name}}</h1>
-        <a class="FileInfo_Button" download :href="fileURL">
+        <a class="FileInfo_Button el-button el-button--default is-circle" download :href="fileURL">
           <i class="material-icons">get_app</i>
         </a>
       </header>
