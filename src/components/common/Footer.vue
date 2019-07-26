@@ -5,7 +5,7 @@
       <p>
         &copy; 2019
         <strong>xraM-Memory</strong>.
-        <br />Todos os direitos reservados.
+        <br />
       </p>
       <nuxt-link
         v-for="(page, index) in footerLinks"
