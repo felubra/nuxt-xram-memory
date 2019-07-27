@@ -31,6 +31,9 @@
               arrow="down"
             >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
           </div>
+          <div class="NoResults" slot="renderNoResults">
+            Nenhum item encontrado.
+          </div>
           <NewsGrid
             id="SubjectsMasonryGrid"
             slot="renderAllData"
