@@ -47,7 +47,6 @@ export default {
     }
   },
   mounted() {
-    console.log('MOUNTED')
     if (!getCookie('GDPR_cookie')) {
       this.$notify({
         title: 'Este site usa cookies',
