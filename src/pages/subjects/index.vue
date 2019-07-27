@@ -103,7 +103,6 @@ export default {
       return smartTruncate(item.teaser, 180)
     },
     linkFor(item) {
-      // #TODO:
       return {
         name: 'subject-slug',
         params: {

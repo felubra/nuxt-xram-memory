@@ -53,22 +53,12 @@ export default {
     hasAlbums() {
       return this.albums.length > 0
     },
-    hasFeaturedAlbums() {
-      return this.albums.length > 3
-    },
     albums() {
       return this.albums_objects.map(album => {
         album.big_cover = getMediaUrl(album.big_cover)
         album.cover = getMediaUrl(album.cover)
         return album
       })
-    },
-    featuredAlbums() {
-      //TODO: filtrar featured = true
-      return this.albums.slice(0, 3)
-    },
-    otherAlbums() {
-      return this.hasFeaturedAlbums ? this.albums.slice(3) : this.albums
     }
   },
   async asyncData({ $axios }) {
