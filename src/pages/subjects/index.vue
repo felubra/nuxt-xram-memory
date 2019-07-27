@@ -20,7 +20,11 @@
       </div>
     </section>
     <section class="AllSubjects">
-      <SubjectPicker :initial-subjects="initialSubjects" :initials="subjectInitials"></SubjectPicker>
+      <SubjectPicker
+        :initial-selected-initial="initialSelectedInitial"
+        :initial-subjects="initialSubjects"
+        :initials="subjectInitials"
+      ></SubjectPicker>
     </section>
     <section class="SubjectsPage__TagCloud">
       <header>
@@ -67,11 +71,17 @@ export default {
     let featuredSubjects
     let subjectInitials
     let initialSubjects
+    let initialSelectedInitial
     try {
       subjectInitials = await $axios.$get(`api/v1/subjects/initials`)
-      initialSubjects = await $axios.$get(
-        `api/v1/subjects/initial/${subjectInitials[0]}`
-      )
+      initialSelectedInitial = subjectInitials[0] || ''
+      if (initialSelectedInitial) {
+        initialSubjects = await $axios.$get(
+          `api/v1/subjects/initial/${initialSelectedInitial}`
+        )
+      } else {
+        initialSubjects = ''
+      }
     } catch {
       subjectInitials = []
       initialSubjects = []
@@ -86,7 +96,8 @@ export default {
     return {
       featuredSubjects,
       subjectInitials,
-      initialSubjects
+      initialSubjects,
+      initialSelectedInitial
     }
   },
   methods: {
