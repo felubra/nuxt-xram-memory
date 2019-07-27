@@ -73,7 +73,6 @@ export default {
   },
   watch: {
     initials: {
-      immediate: true,
       handler(initials) {
         if (Array.isArray(initials) && initials.length > 0) {
           // Defina a inicial selecionada como a primeira da lista, se não houver inicial selecionada.
