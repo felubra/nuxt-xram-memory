@@ -54,11 +54,15 @@ export default {
     initialSubjects: {
       type: Array,
       default: () => []
+    },
+    initialSelectedInitial: {
+      type: String,
+      default: 'A'
     }
   },
   data() {
     return {
-      selectedInitial: '',
+      selectedInitial: this.initialSelectedInitial,
       subjects: this.initialSubjects,
       minHeight: 100
     }
