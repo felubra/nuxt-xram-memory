@@ -2,6 +2,472 @@ Changelog
 =========
 
 
+0.4.0 (2019-07-27)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- Nomeie todas as páginas. [Felipe Lube de Bragança]
+- Já carregue os assuntos iniciais para o picker. [Felipe Lube de
+  Bragança]
+- Exiba uma mensagem de sobre uso de cookies. [Felipe Lube de Bragança]
+- Defina a cor principal do element-ui para o estilo do site. [Felipe
+  Lube de Bragança]
+- Correções nas classes das páginas, botão voltar. [Felipe Lube de
+  Bragança]
+- Pequeno componente para botão voltar. [Felipe Lube de Bragança]
+- Entre no modo tela inteira em paisagem na página do álbum. [Felipe
+  Lube de Bragança]
+- Permita recomeçar se a pesquisa não der resultados. [Felipe Lube de
+  Bragança]
+- Adicione license-checker para pegar info sobre as licenças usadas.
+  [Felipe Lube de Bragança]
+- Permita esconder/exibir os fltros em mobile para melhor uso do espaço.
+  [Felipe Lube de Bragança]
+- Permita definir classes adicionais para o componente microtexto.
+  [Felipe Lube de Bragança]
+- Separação dos controles de navgeação em componente à parte. [Felipe
+  Lube de Bragança]
+- Definição de variável para tamaho desktop. [Felipe Lube de Bragança]
+- Faça uma pesquisa fuzzi. [Felipe Lube de Bragança]
+- Microtextos, títulos de seção, devem ser negritados. [Felipe Lube de
+  Bragança]
+- (wip) componente à parte para lista de todos os assuntos. [Felipe Lube
+  de Bragança]
+- (wip) página de 'todos os assuntos' [Felipe Lube de Bragança]
+- (wip): página de todos os assuntos. [Felipe Lube de Bragança]
+- Defina o nome do novo layout. [Felipe Lube de Bragança]
+- Use o mais semântico section como elemento pai das páginas. [Felipe
+  Lube de Bragança]
+- Acerto nos espaçamentos internos. [Felipe Lube de Bragança]
+- Somente mostre a página inicial depois de carregar um bloco de página
+  em destaque. [Felipe Lube de Bragança]
+- Separação da página de busca e da página inicial. [Felipe Lube de
+  Bragança]
+- Animações na nuvem de tags mais suves. [Felipe Lube de Bragança]
+- Adicione o filtro assuntos na página de busca. [Felipe Lube de
+  Bragança]
+- Carregue as páginas antes de exibir a barra de navegação / abrir rota.
+  [Felipe Lube de Bragança]
+- Use constantes para definir tipos de conteúdo. [Felipe Lube de
+  Bragança]
+- Estado da busca na página inicial guardado na store. [Felipe Lube de
+  Bragança]
+- Acertos na lista de cartões. [Felipe Lube de Bragança]
+- Exiba o jornal no cartão, se for uma notícia. [Felipe Lube de
+  Bragança]
+- Cor para link em estado ativo. [Felipe Lube de Bragança]
+- Adicione transições à nuvem de tags. [Felipe Lube de Bragança]
+- Página de imagens. [Felipe Lube de Bragança]
+- Simplifique o componente de visualização do documento. [Felipe Lube de
+  Bragança]
+- Página do assunto. [Felipe Lube de Bragança]
+- Estado sem assuntos para a página de assuntos. [Felipe Lube de
+  Bragança]
+- Páginas assuntos e Imagens: exiba uma mensagem amigável em caso de
+  erro. [Felipe Lube de Bragança]
+- Utilização do componnete NewCard. [Felipe Lube de Bragança]
+- Um único cartão para mandar em todos. [Felipe Lube de Bragança]
+- Use o NewsCard na lista de álbuns. [Felipe Lube de Bragança]
+- Suporte a itens que usam o campo name como título. [Felipe Lube de
+  Bragança]
+- Página de álbuns/imagens. [Felipe Lube de Bragança]
+- Use o ImageCard para todo tipo de documento. [Felipe Lube de Bragança]
+- Efeitos de hover sobre o cartão. [Felipe Lube de Bragança]
+- Utilização do componente Microtext. [Felipe Lube de Bragança]
+- Componente Microtext em js puro, com suporte a tag customizada.
+  [Felipe Lube de Bragança]
+- [wip] Página do álbum. [Felipe Lube de Bragança]
+- Remoção do antigo layout padrão. [Felipe Lube de Bragança]
+- Suporte a cartão de imagem pequeno. [Felipe Lube de Bragança]
+- Suporte ao cartão de álbum. [Felipe Lube de Bragança]
+- Adicione elementos de cabeçalho e rodapé. [Felipe Lube de Bragança]
+- Página de assuntos. [Felipe Lube de Bragança]
+- Filtro sanitizeOnlyText. [Felipe Lube de Bragança]
+- Descrição no cartão do assunto. [Felipe Lube de Bragança]
+- Cartão com aparência unificada a do cartão de assunto. [Felipe Lube de
+  Bragança]
+- SubjectCard: suporte para cartão grande. [Felipe Lube de Bragança]
+- Cartão do Assunto. [Felipe Lube de Bragança]
+- Compatibilidade com o componente de imagens. [Felipe Lube de Bragança]
+- Estilo para lista de campos. [Felipe Lube de Bragança]
+- Página do documento deve exibir uma imagem ao invés de carregar o pdf
+  direto. [Felipe Lube de Bragança]
+- Modo de pré-visualização do arquivo do documento. [Felipe Lube de
+  Bragança]
+- Remova o pulo de margem da lista de resultados. [Felipe Lube de
+  Bragança]
+- (closes #13) animação para filtro ativo pela url. [Felipe Lube de
+  Bragança]
+- Diretiva para determinar o tamanho da imagem no cartão masonry.
+  [Felipe Lube de Bragança]
+- NewsGrid: dê um tempo entre a inserção de cada cartão. [Felipe Lube de
+  Bragança]
+- Ajustes no layout de NewsInfo. [Felipe Lube de Bragança]
+- Evite o 'pulo' dos itens do menu com uma barra de scroll sempre
+  visível. [Felipe Lube de Bragança]
+- Transições entre páginas. [Felipe Lube de Bragança]
+- Exiba o logo mesmo na página inicial. [Felipe Lube de Bragança]
+- [wip] página da notícia. [Felipe Lube de Bragança]
+- Novas variáveis para. [Felipe Lube de Bragança]
+- Substitua opacidade por um filtro preto e branco para um cartão
+  inativo. [Felipe Lube de Bragança]
+- Ajustes finais no design dos filtros. [Felipe Lube de Bragança]
+- Utilize a página inicial como rota para a seleção da palavra. [Felipe
+  Lube de Bragança]
+- Página inicial reativa aos parâmetros de busca e estilização. [Felipe
+  Lube de Bragança]
+- Filtros de busca na página inicial [wip] [Felipe Lube de Bragança]
+- Componentes separados para tipos diferentes de item. [Felipe Lube de
+  Bragança]
+- Variáveis relacionadas ao cartão. [Felipe Lube de Bragança]
+- Exiba a descrição do item no cartão. [Felipe Lube de Bragança]
+- [wip] grid masonry para os resultados de busca na página inicial.
+  [Felipe Lube de Bragança]
+- Componente NewsGrid para exibir as notícias num estilo masonry.
+  [Felipe Lube de Bragança]
+- Adicione use a biblioteca vue-masonry. [Felipe Lube de Bragança]
+- [wip] páginainicial com suporte ao modo de pesquisa. [Felipe Lube de
+  Bragança]
+- Remova as barras de scroll de .ql-editor. [Felipe Lube de Bragança]
+- Novo design da página inicial. [Felipe Lube de Bragança]
+- Layout para página índice. [Felipe Lube de Bragança]
+- TeaserBlock: link centralizado por padrão. [Felipe Lube de Bragança]
+- Suporte ao navbar fixo depois do scroll. [Felipe Lube de Bragança]
+- Aumento no tamanho do logo. [Felipe Lube de Bragança]
+- Ajustes no rodapé. [Felipe Lube de Bragança]
+- Ajustes no componente da página. [Felipe Lube de Bragança]
+- Ajuste no microtexto. [Felipe Lube de Bragança]
+- Suporte à páginas com largura total. [Felipe Lube de Bragança]
+- Estilo global de microtexto. [Felipe Lube de Bragança]
+- Layout novo. [Felipe Lube de Bragança]
+- Atualização da página de erro. [Felipe Lube de Bragança]
+- Remoção de main.css em desuso com a folha stylus. [Felipe Lube de
+  Bragança]
+- Finalização do compoenente barra de menu. [Felipe Lube de Bragança]
+- Microtext: use variáveis stylus. [Felipe Lube de Bragança]
+- Finalização do componente de rodapé. [Felipe Lube de Bragança]
+- Separação da folha de estilos, blocos e variáveis. [Felipe Lube de
+  Bragança]
+- Variável para a fonte do menu. [Felipe Lube de Bragança]
+- Uso de fonte normal nos títulos. [Felipe Lube de Bragança]
+- Definição e uso de var com largura máxima. [Felipe Lube de Bragança]
+- Suporte ao arrastamento dos itens escondidos da barar de navegação.
+  [Felipe Lube de Bragança]
+- Mostre o ícone do menu somente se itens da barra estiverem não
+  visíveis. [Felipe Lube de Bragança]
+- Distribua igualmente os itens da barra de menu. [Felipe Lube de
+  Bragança]
+- (store): estados para a busca na navbar. [Felipe Lube de Bragança]
+- Página para teste de componentes. [Felipe Lube de Bragança]
+- [WIP] componente de barra de navegação. [Felipe Lube de Bragança]
+- [WIP] componente de microtexto. [Felipe Lube de Bragança]
+- [WIP] componente de rodapé. [Felipe Lube de Bragança]
+- Variáveis padrão de estilo. [Felipe Lube de Bragança]
+- Suporte à folha de estilos Stylus. [Felipe Lube de Bragança]
+- Carregue a fonte Vollkorn SC, usada nos títulos. [Felipe Lube de
+  Bragança]
+- Layout centralizado, links abaixo da caixa de pesquisa. [Felipe Lube
+  de Bragança]
+- Posicionamento e estilo dos links na página inicial. [Felipe Lube de
+  Bragança]
+- TeaserBlock: props para exibição e posicionamento do link. [Felipe
+  Lube de Bragança]
+- Componente de rodapé. [Felipe Lube de Bragança]
+- Navbar: prop para exibir o menu. [Felipe Lube de Bragança]
+- Filtro xss: permita a tag br. [Felipe Lube de Bragança]
+- Links na barra superior da página inicial. [Felipe Lube de Bragança]
+- Deixe as palavras-chave em minúsculo na lista de filtros closes #50.
+  [Felipe Lube de Bragança]
+- Suporte para textos de chamada de página customizados closes #48.
+  [Felipe Lube de Bragança]
+- Exiba notícias associadas ao documento. [Felipe Lube de Bragança]
+- Closes #32 link para a versão arquivada da notícia. [Felipe Lube de
+  Bragança]
+- Atualização dos labels de pesquisa. [Felipe Lube de Bragança]
+- Separe o link da notífica do link do jornal. [Felipe Lube de Bragança]
+- ResultCard: suporte para ambas notícias e documentos. [Felipe Lube de
+  Bragança]
+- Adicione um campo tipo de objeto na página de pesquisa. [Felipe Lube
+  de Bragança]
+- (closes #1) Pesquisa sobre dois índices, notícia e documento. [Felipe
+  Lube de Bragança]
+- (closes #41) suporte a favicons ao lado do nome de jornais; eslint.
+  [Felipe Lube de Bragança]
+- (closes #41) suporte à favicons ao lado do nome de jornais. [Felipe
+  Lube de Bragança]
+- Melhorias estéticas na listagem de notícias. [Felipe Lube de Bragança]
+- Feat (closes #35): adicione favicons. [Felipe Lube de Bragança]
+- (closes #38) usar hashs ao invés de ids nas urls da API. [Felipe Lube
+  de Bragança]
+- Não execute o container como root. [Felipe Lube de Bragança]
+- Conexões autenticadas ao servidor do ElasticSearch. [Felipe Lube de
+  Bragança]
+- Otimizações na geração da imagem do docker. [Felipe Lube de Bragança]
+- Atualizaçao da imagem docker com inclusao de ARG para o build
+  funcionar. [Felipe Lube de Bragança]
+- Template para o arquivo .env. [Felipe Lube de Bragança]
+- Closes #7: throttle para componentes de pesquisa. [Felipe Lube de
+  Bragança]
+
+Corrigido
+~~~~~~~~~
+- Remoção de código não usado. [Felipe Lube de Bragança]
+- Remoção de console.log. [Felipe Lube de Bragança]
+- Acerto no tamanho do botão de download. [Felipe Lube de Bragança]
+- Aparência de botão em link. [Felipe Lube de Bragança]
+- Utilize o estilo de ícone do google. [Felipe Lube de Bragança]
+- Somente esconda o logo na página inicial se mobile. [Felipe Lube de
+  Bragança]
+- Acerto nos grids de assuntos e imagens. [Felipe Lube de Bragança]
+- Correções no carregamento da pré-visualização na página da notícia.
+  [Felipe Lube de Bragança]
+- Não permita cliques no logo escondido. [Felipe Lube de Bragança]
+- Correção no selector de navegação. [Felipe Lube de Bragança]
+- Mostre os assuntos somente depois de carregar iniciais e assuntos.
+  [Felipe Lube de Bragança]
+- Acerto na lista de álbuns em mobile. [Felipe Lube de Bragança]
+- Acerto na indiciação da barra de navegação. [Felipe Lube de Bragança]
+- Correção na largura máxma da página da notícia. [Felipe Lube de
+  Bragança]
+- Não use margem na figura da página de notícias. [Felipe Lube de
+  Bragança]
+- Centralize a lista de assuntos em mobile. [Felipe Lube de Bragança]
+- Ajuste na navbar; não exiba o logo na página inicial. [Felipe Lube de
+  Bragança]
+- Não esconda as listas combo. [Felipe Lube de Bragança]
+- Centralze o número de resultados. [Felipe Lube de Bragança]
+- Não deixe o foco na barra de pesquisa por padrão para evitar teclados.
+  [Felipe Lube de Bragança]
+- Largura máxima para todos os cartões. [Felipe Lube de Bragança]
+- Correção na cor da letra inicial. [Felipe Lube de Bragança]
+- Volte com o alerta na parte de cima do formulário de contato. [Felipe
+  Lube de Bragança]
+- Correção em idFor() [Felipe Lube de Bragança]
+- Remoção de código não usado. [Felipe Lube de Bragança]
+- Correção em prop fuzziness. [Felipe Lube de Bragança]
+- Não renderize o bloco de descrição se o assunto não tiver descrição.
+  [Felipe Lube de Bragança]
+- Correção no link para a palavra-chave na pasta da notícia. [Felipe
+  Lube de Bragança]
+- Correção na mudança na ordem dos itens dos controles de navegação.
+  [Felipe Lube de Bragança]
+- Correção na cor da borda da navbar. [Felipe Lube de Bragança]
+- Conserto na navbar. [Felipe Lube de Bragança]
+- Coreção nas margens da página. [Felipe Lube de Bragança]
+- Acerto no tamanho das letras do picker. [Felipe Lube de Bragança]
+- Correção na margem da página inicial. [Felipe Lube de Bragança]
+- NewsGrid: largura dos itens em mobile deve ser 100% [Felipe Lube de
+  Bragança]
+- Não use parâmetros de url para a pesquisa na página inicial. [Felipe
+  Lube de Bragança]
+- Página de assuntos: exiba ao menos a nuvem de palavras-chave. [Felipe
+  Lube de Bragança]
+- Acertos no estilo da página 'Todos Assuntos' [Felipe Lube de Bragança]
+- Limpeza no código. [Felipe Lube de Bragança]
+- Deixe a nuvem mais para cima em mobile. [Felipe Lube de Bragança]
+- Correção em retrocesso nos efeitos das palavras da nuvem. [Felipe Lube
+  de Bragança]
+- Correção sobre o pulo da barra de navegação. [Felipe Lube de Bragança]
+- Use constantes. [Felipe Lube de Bragança]
+- Remoção de página hardcoded. [Felipe Lube de Bragança]
+- Corrija a rota para a página individual do assunto. [Felipe Lube de
+  Bragança]
+- Mensagem de erro para arquivos desconhecidos, acerto na página do
+  documento. [Felipe Lube de Bragança]
+- Coerência com estilos do v-viewer. [Felipe Lube de Bragança]
+- Defina corretamente a chave de componentes filhos. [Felipe Lube de
+  Bragança]
+- Acertos na página de assuntos. [Felipe Lube de Bragança]
+- Acerto no texto de descrição do cartão. [Felipe Lube de Bragança]
+- Ajustes na imagem da notícia. [Felipe Lube de Bragança]
+- Ajustes na imagem da captura. [Felipe Lube de Bragança]
+- Ajustes na listagem de assuntos e palavras-chave. [Felipe Lube de
+  Bragança]
+- Defina a cor dos links em estados ativos. [Felipe Lube de Bragança]
+- Remoção de código não usado, alinhamento do grid. [Felipe Lube de
+  Bragança]
+- Alinhamento do grid na página inicial. [Felipe Lube de Bragança]
+- Correção no fundo, que deve ser preto. [Felipe Lube de Bragança]
+- Alinhamento dos itens deverá ser feito externamente. [Felipe Lube de
+  Bragança]
+- Correção na página inicial. [Felipe Lube de Bragança]
+- Substitua o masonry por trasições css3. [Felipe Lube de Bragança]
+- Hack para tentar resolver o pulo do masonry. [Felipe Lube de Bragança]
+- Esconda o grid masonry imediatamente antes da destruição da página.
+  [Felipe Lube de Bragança]
+- Correção na classe da imagem oculta no álbum. [Felipe Lube de
+  Bragança]
+- Centralize verticalmente apenas a página de contato. [Felipe Lube de
+  Bragança]
+- Retorne com o título da página. [Felipe Lube de Bragança]
+- Acerto no layout da página do Assunto. [Felipe Lube de Bragança]
+- Não use o componente resize-sensor em SSR. [Felipe Lube de Bragança]
+- Use o componente Microtexto na contagem de resultados. [Felipe Lube de
+  Bragança]
+- Use um grid css para listar os álbuns. [Felipe Lube de Bragança]
+- Correção em nome de classe. [Felipe Lube de Bragança]
+- Acerto no espaçamento do NewsGrid. [Felipe Lube de Bragança]
+- Acerto na margem do microtexto. [Felipe Lube de Bragança]
+- Correção em nome de computed prop. [Felipe Lube de Bragança]
+- Remoção de prop inválida. [Felipe Lube de Bragança]
+- Correção na cor do microtexto. [Felipe Lube de Bragança]
+- Remoção de página não usada. [Felipe Lube de Bragança]
+- Largura do cartão será definida por seu container. [Felipe Lube de
+  Bragança]
+- Acerto na largura dos cartões em NewsGrid. [Felipe Lube de Bragança]
+- Correção no layout do cartão. [Felipe Lube de Bragança]
+- Uso do componente de microtexto. [Felipe Lube de Bragança]
+- Correção na largura do cartão. [Felipe Lube de Bragança]
+- Correções na página do álbum - remoção do aside inútil - definição do
+  título - transição suave antes de sair da página. [Felipe Lube de
+  Bragança]
+- Consertos na responsividade da página e do cartão de assuntos. [Felipe
+  Lube de Bragança]
+- Correção no nome da classe, componente Microtext. [Felipe Lube de
+  Bragança]
+- Centrelize o logo na barra de navegação. [Felipe Lube de Bragança]
+- Correção na função cardImageDimensions. [Felipe Lube de Bragança]
+- Correções no componente microtext. [Felipe Lube de Bragança]
+- Correções no layout. [Felipe Lube de Bragança]
+- Não use a diretiva quando desncessário. [Felipe Lube de Bragança]
+- Correção no layout do bloco main. [Felipe Lube de Bragança]
+- Navbar deve ficar acima de tudo. [Felipe Lube de Bragança]
+- (active-filter-animation) use o valor, não a expressão. [Felipe Lube
+  de Bragança]
+- Definição do tamaho do logo em px. [Felipe Lube de Bragança]
+- Remoção do DynamicRangeSlider, que está bugado segundo #53. [Felipe
+  Lube de Bragança]
+- Correção na relação entre os filtros na página inicial. [Felipe Lube
+  de Bragança]
+- Remoção de classe não usada. [Felipe Lube de Bragança]
+- Correção no validador de linkPosition. [Felipe Lube de Bragança]
+- Adicione uma cor para o microtexto. [Felipe Lube de Bragança]
+- Adicione uma cor para o estilo microtext. [Felipe Lube de Bragança]
+- Posicionamento do HomeTagCloud deve ser definido externamente. [Felipe
+  Lube de Bragança]
+- Correção na margem automática do rodapé. [Felipe Lube de Bragança]
+- Não centralize logotipo por padrão. [Felipe Lube de Bragança]
+- Diminiução do tamanho do h1. [Felipe Lube de Bragança]
+- Fundo transparente para barra de pesquisa. [Felipe Lube de Bragança]
+- Correção no tamanho do texto no bloco de chamada. [Felipe Lube de
+  Bragança]
+- Alinhe a margem do bloco de chamada com link de chamada. [Felipe Lube
+  de Bragança]
+- Não inclua o captcha se o formulário não estiver disponível. [Felipe
+  Lube de Bragança]
+- Adicione um 'por-favor' na mensagem de erro. [Felipe Lube de Bragança]
+- Não renderize o formulário de contato em ssr. [Felipe Lube de
+  Bragança]
+- Mostre a data correta de upload do documento. [Felipe Lube de
+  Bragança]
+- Não renderize componentes/páginas com o reactiveSearch em SSR. [Felipe
+  Lube de Bragança]
+- ResultCard: considere a prop showLabel. [Felipe Lube de Bragança]
+- Closes #39 filtros devem ficar abertos por padrão em desktop. [Felipe
+  Lube de Bragança]
+- Closes #28: formulário de contato na vertical. [Felipe Lube de
+  Bragança]
+- Suba a nuvem de tags (closes #45) [Felipe Lube de Bragança]
+- Corrija a geração do label em ResultCard. [Felipe Lube de Bragança]
+- NewsInfo: failback para caso haja falha na obtenção dos documentos.
+  [Felipe Lube de Bragança]
+- Não exiba a nuvem na página de erro em ssr. [Felipe Lube de Bragança]
+- Retorno com valores failback para variáveis ambiente. [Felipe Lube de
+  Bragança]
+- (closes #29) Ordem constante dos elementos na página inicial. [Felipe
+  Lube de Bragança]
+- Correção no link de contato no menu. [Felipe Lube de Bragança]
+- Especifique o usuario pelo uid, nao pelo nome (inexistente) [Felipe
+  Lube de Bragança]
+- Adicione variaveis ambiente para o ssr funcionar. [Felipe Lube de
+  Bragança]
+
+Outros
+~~~~~~
+- Chore: atualização de pacotes. [Felipe Lube de Bragança]
+- Refat: remoção de mensagem de copyright. [Felipe Lube de Bragança]
+- Refat: retorno do menu. [Felipe Lube de Bragança]
+- Refat: refatoração do menu em tela inteira. [Felipe Lube de Bragança]
+- Refat: componete substitui página 'Todos os Assuntos' [Felipe Lube de
+  Bragança]
+- Chore: remoção de arquivo não mais usado. [Felipe Lube de Bragança]
+- Refat: consolide a porcentagem do efeito preto-e-branco numa variável.
+  [Felipe Lube de Bragança]
+- Refat: redesign dos cartões página assuntos; atualização do enpoint na
+  API. [Felipe Lube de Bragança]
+- Refat: padronize, numa classe só, as páginas centralizadas. [Felipe
+  Lube de Bragança]
+- Refat: fim do componente AbstractPage. [Felipe Lube de Bragança]
+- Chore: remoção de arquivo não usado. [Felipe Lube de Bragança]
+- Merge branch 'new-design' of github.com:felubra/nuxt-xram-memory into
+  new-design. [Felipe Lube de Bragança]
+- Chore: substituição  do velho DocumentPreview pelo novo. [Felipe Lube
+  de Bragança]
+- Chore: remoção de arquivo não usado. [Felipe Lube de Bragança]
+- Chore: mova os componentes de navegação para uma pasta própria.
+  [Felipe Lube de Bragança]
+- Chore: renomação do componente NewCard. [Felipe Lube de Bragança]
+- Refat: limpeza da página índice e reorganização em sub-componentes.
+  [Felipe Lube de Bragança]
+- Refat: obsolete o reactiveMixin por um componente já configurado.
+  [Felipe Lube de Bragança]
+- Refat: remoção do vue-masonry. [Felipe Lube de Bragança]
+- Chore: remoção de layout não usado. [Felipe Lube de Bragança]
+- Refat: sintaxe es6, mais curta. [Felipe Lube de Bragança]
+- Refat: mova a doretiva cardImageDimensions para utils. [Felipe Lube de
+  Bragança]
+- Chore: pasta para componentes da página inicial. [Felipe Lube de
+  Bragança]
+- Chore: atualização de pacotes. [Felipe Lube de Bragança]
+- Refat: mova a transição 'fade' para a folha de estilos global. [Felipe
+  Lube de Bragança]
+- [wip] [Felipe Lube de Bragança]
+- Refat: mova urlOrRoute para utils. [Felipe Lube de Bragança]
+- Refat: encapsule a nuvem de tags num componente próprio. [Felipe Lube
+  de Bragança]
+- Chore: atualização do nuxt para 2.8.0. [Felipe Lube de Bragança]
+- Refat: páginas padrão na store, ao invés de hardcoded no componente.
+  [Felipe Lube de Bragança]
+- Chore: atualize o nuxt para v2.6.3. [Felipe Lube de Bragança]
+- Merge pull request #44 from felubra/document_in_index. [Felipe Lübe de
+  Bragança]
+
+  Pesquise também documentos no índice
+- Chore: renomeie arquivos. [Felipe Lube de Bragança]
+- Chore: eslint. [Felipe Lube de Bragança]
+
+
+0.3.0 (2019-04-23)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- Imagem docker. [Felipe Lube de Bragança]
+- Feat: use @nuxtjs/dotenv para acessar diretamente process.env. [Felipe
+  Lube de Bragança]
+- Página de contato com formulário com validação e recaptcha. [Felipe
+  Lube de Bragança]
+
+Corrigido
+~~~~~~~~~
+- Remoção de variáveis e funções não utilizadas. [Felipe Lube de
+  Bragança]
+- Remoção de configuração da url do ES. [Felipe Lube de Bragança]
+- Correção na definição da classe da barra de pesquisa. [Felipe Lube de
+  Bragança]
+- Fix (Ccntact): correção no fluxo de validação; mensagem de
+  indisponibilidade. [Felipe Lube de Bragança]
+- Correção na mensagem na página de erro. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Merge branch 'dev' of github.com:felubra/nuxt-xram-memory into dev.
+  [Felipe Lube de Bragança]
+- Chore: adicione um changelog e a configuração para gerá-lo. [Felipe
+  Lube de Bragança]
+
+
 0.2.0 (2019-04-18)
 ------------------
 
