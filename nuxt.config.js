@@ -76,11 +76,9 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: ['element-ui/lib/theme-chalk/index.css'],
 
   /**
    * Plugins to load before mounting the App
-   * TODO: remover o element-ui e o reactive-search e usá-los de forma fracionada, por componente
    */
   plugins: [
     { src: '@/plugins/resize-sensor.js', ssr: false },
@@ -128,10 +126,20 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    transpile: [/^element-ui/],
     /*
     ** You can extend webpack config here
     */
+    babel: {
+      plugins: [
+        [
+          'component',
+          {
+            libraryName: 'element-ui',
+            styleLibraryName: 'theme-chalk'
+          }
+        ]
+      ]
+    },
     extend(config, ctx) {
       // Necessário para utilizar o componente pdfVuer: https://github.com/webpack/webpack/issues/6525
       config.output.globalObject = '(self || this)'
