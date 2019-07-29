@@ -44,15 +44,14 @@
   </Section>
 </template>
 <script>
-import VueRecaptcha from 'vue-recaptcha'
-
 const xss = require('xss')
 const emailValidator = require('email-validator')
 
 export default {
   name: 'ContactPage',
   components: {
-    VueRecaptcha
+    VueRecaptcha: () =>
+      import(/* webpackChunkName: "vue-recaptcha" */ 'vue-recaptcha')
   },
   data() {
     const validateEmail = (rule, value, callback) => {
