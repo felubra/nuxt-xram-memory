@@ -245,7 +245,7 @@ export default {
             .thumbnails.document_thumbnail
         )
       } catch {
-        return false
+        return ''
       }
     }
   }
