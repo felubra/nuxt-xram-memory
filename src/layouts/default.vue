@@ -82,7 +82,7 @@ export default {
 
 .MainNavBar {
   position: relative;
-  bottom: -3px;
+  bottom: -1px;
 }
 
 .MainHeader[fixed] {
@@ -158,11 +158,6 @@ body.page--full-screen .MainHeader[fixed] {
   .FieldList > .FieldList__Field {
     flex-direction: row;
     align-items: center;
-  }
-
-  .MainNavBar {
-    position: relative;
-    bottom: -1px;
   }
 
   .FieldList > .FieldList__Field > h2 {

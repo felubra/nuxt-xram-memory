@@ -45,6 +45,10 @@ export default {
 }
 
 .NavbarControls {
+  border-bottom: none;
+}
+
+.NavbarControls {
   align-items: stretch;
 }
 
