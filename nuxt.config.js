@@ -84,7 +84,6 @@ module.exports = {
     { src: '@/plugins/resize-sensor.js', ssr: false },
     { src: '@/plugins/reactive-search', ssr: false },
     { src: '@/plugins/element-ui', ssr: false },
-    '@/plugins/v-viewer',
     '@/plugins/axios',
     '@/plugins/essential-content.js'
   ],

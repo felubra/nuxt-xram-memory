@@ -31,6 +31,10 @@
 const humanSize = require('human-size')
 const { getMediaUrl } = require('~/utils')
 import BackButton from '@/components/common/BackButton'
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+import Vue from 'vue'
+Vue.use(Viewer)
 export default {
   name: 'AlbumPage',
   components: {

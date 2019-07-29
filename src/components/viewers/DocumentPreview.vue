@@ -6,6 +6,11 @@
 
 <script>
 import { getMediaUrl } from '@/utils'
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+import Vue from 'vue'
+Vue.use(Viewer)
+
 export default {
   name: 'DocumentPreview',
   props: {

@@ -14,6 +14,11 @@
 
 <script>
 import DocumentPreview from './DocumentPreview'
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+import Vue from 'vue'
+Vue.use(Viewer)
+
 export default {
   name: 'ImageFilePreview',
   extends: DocumentPreview,
