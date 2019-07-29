@@ -139,6 +139,24 @@ module.exports = {
       if (ctx.isDev && ctx.isClient) {
         config.devtool = 'source-map'
       }
+      config.module.rules.forEach(rule => {
+        if (String(rule.test) === String(/\.(png|jpe?g|gif|svg|webp)$/)) {
+          // add a second loader when loading images
+          rule.use.push({
+            loader: 'image-webpack-loader',
+            options: {
+              svgo: {
+                plugins: [
+                  // use these settings for internet explorer for proper scalable SVGs
+                  // https://css-tricks.com/scale-svg/
+                  { removeViewBox: false },
+                  { removeDimensions: true }
+                ]
+              }
+            }
+          })
+        }
+      })
     }
   }
 }
