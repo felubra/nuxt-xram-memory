@@ -12,13 +12,9 @@
 </template>
 
 <script>
-import { ReactiveBase } from '@appbaseio/reactivesearch-vue'
 import { defaultTheme } from '~/config/constants'
 export default {
   name: 'DefaultReactiveSearch',
-  components: {
-    ReactiveBase
-  },
   inheritAttrs: false,
   data: function() {
     return {

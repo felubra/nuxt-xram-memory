@@ -1,6 +1,27 @@
 import Vue from 'vue'
-import VueRs from '@appbaseio/reactivesearch-vue'
+import {
+  ReactiveBase,
+  DataSearch,
+  MultiDropdownList,
+  SingleDropdownList,
+  SelectedFilters,
+  ReactiveComponent,
+  ReactiveList
+} from '@appbaseio/reactivesearch-vue'
 
 export default () => {
-  Vue.use(VueRs)
+  const components = [
+    ReactiveBase,
+    DataSearch,
+    MultiDropdownList,
+    SingleDropdownList,
+    SelectedFilters,
+    ReactiveComponent,
+    ReactiveList
+  ]
+
+  components.map(function(component) {
+    Vue.use(component)
+    return null
+  })
 }
