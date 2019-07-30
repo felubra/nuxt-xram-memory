@@ -49,7 +49,9 @@ export default {
   },
   async fetch({ store }) {
     if (store.getters.featuredPages.length === 0) {
-      return await store.dispatch('fetchFeaturedPages')
+      try {
+        await store.dispatch('fetchFeaturedPages')
+      } catch {}
     }
   },
   methods: {
