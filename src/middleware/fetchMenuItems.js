@@ -1,6 +1,10 @@
-export default function({ store }) {
+export default async function({ store }) {
   if (!store.hasPagesOfMenu) {
-    return store.dispatch('fetchPagesInMenu')
+    try {
+      await store.dispatch('fetchPagesInMenu')
+    } catch {
+      return Promise.resolve()
+    }
   }
   return Promise.resolve()
 }
