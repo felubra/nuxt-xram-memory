@@ -1,12 +1,12 @@
 <template>
-  <div class="SubjectPicker">
+  <div v-if="hasInitials && hasSubjects" class="SubjectPicker">
     <header>
       <Microtext arrow="down">
         Todos os assuntos
         <span>(em ordem alfabética)</span>
       </Microtext>
       <transition name="fade">
-        <ul v-if="hasInitials && hasSubjects" class="InitialsList">
+        <ul class="InitialsList">
           <li
             v-for="initial in initials"
             :key="initial"
@@ -20,7 +20,7 @@
     </header>
     <section class="SubjectsList" :style="`min-height: ${minHeight}px`">
       <transition name="fade">
-        <ul v-if="hasInitials && hasSubjects" ref="SubjectsList" class="SubjectsList">
+        <ul ref="SubjectsList" class="SubjectsList">
           <li v-for="subject in subjects" :key="subject.slug">
             <nuxt-link
               :to="{
