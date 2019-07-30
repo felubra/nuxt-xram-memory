@@ -32,16 +32,17 @@ export default {
     }
   },
   async asyncData({ $axios, route, error }) {
-    const slug = route.params.slug
-    return $axios
-      .$get(`/api/v1/pages/${slug}`)
-      .then(staticPage => {
+    const { slug } = route.params
+    if (slug) {
+      try {
+        const staticPage = await $axios.$get(`/api/v1/pages/${slug}`)
         return { staticPage }
-      })
-      .catch(e => {
+      } catch (e) {
         const statusCode = (e.response && e.response.status) || 500
-        error({ statusCode })
-      })
+        return error({ statusCode })
+      }
+    }
+    return error({ statusCode: 400 })
   }
 }
 </script>

@@ -64,15 +64,16 @@ export default {
   },
   async asyncData({ $axios, route, error }) {
     const newsSlug = route.params.slug
-    return $axios
-      .$get(`/api/v1/news/${newsSlug}`)
-      .then(newsItem => {
+    if (newsSlug) {
+      try {
+        const newsItem = await $axios.$get(`/api/v1/news/${newsSlug}`)
         return { newsItem }
-      })
-      .catch(e => {
+      } catch (e) {
         const statusCode = (e.response && e.response.status) || 500
-        error({ statusCode })
-      })
+        return error({ statusCode })
+      }
+    }
+    return error({ statusCode: 400 })
   }
 }
 </script>

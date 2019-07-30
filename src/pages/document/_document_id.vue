@@ -145,11 +145,15 @@ export default {
   async asyncData({ $axios, route, error }) {
     const documentId = route.params.document_id
     if (documentId) {
-      const document = await $axios.$get(`/api/v1/document/${documentId}`)
-      return { document }
-    } else {
-      error({ statusCode: 404, message: 'Documento não encontrado' })
+      try {
+        const document = await $axios.$get(`/api/v1/document/${documentId}`)
+        return { document }
+      } catch (e) {
+        const statusCode = (e.response && e.response.status) || 500
+        return error({ statusCode })
+      }
     }
+    return error({ statusCode: 400 })
   }
 }
 </script>

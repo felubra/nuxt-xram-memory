@@ -133,18 +133,15 @@ export default {
   async asyncData({ $axios, route, error, isServer }) {
     const albumId = route.params.album_id
     if (albumId) {
-      return $axios
-        .$get(`/api/v1/album/${albumId}`)
-        .then(album => {
-          return { album, isServer }
-        })
-        .catch(e => {
-          const statusCode = (e.response && e.response.status) || 500
-          error({ statusCode })
-        })
-    } else {
-      error({ statusCode: 404, message: 'Álbum não encontrado' })
+      try {
+        const album = await $axios.$get(`/api/v1/album/${albumId}`)
+        return { album, isServer }
+      } catch (e) {
+        const statusCode = (e.response && e.response.status) || 500
+        return error({ statusCode })
+      }
     }
+    return error({ statusCode: 400 })
   },
   mounted() {
     if (!this.isServer) {

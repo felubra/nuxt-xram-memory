@@ -31,9 +31,7 @@
               arrow="down"
             >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
           </div>
-          <div class="NoResults" slot="renderNoResults">
-            Nenhum item encontrado.
-          </div>
+          <div slot="renderNoResults" class="NoResults">Nenhum item encontrado.</div>
           <NewsGrid
             id="SubjectsMasonryGrid"
             slot="renderAllData"
@@ -77,15 +75,13 @@ export default {
     if (slug) {
       try {
         const subject = await $axios.$get(`api/v1/subject/${slug}`)
-        return {
-          subject
-        }
+        return { subject }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500
         return error({ statusCode })
       }
     }
-    error({ statusCode: 400 })
+    return error({ statusCode: 400 })
   },
 
   methods: {
