@@ -286,6 +286,14 @@ export default {
   border-color: $link-color;
 }
 
+.NewsInfo__Newspaper {
+  display: inline-flex;
+}
+
+.NewsInfo__Newspaper > img {
+  padding-right: 5px;
+}
+
 ul.taxonomy-list {
   margin: 0;
   padding: 0;
