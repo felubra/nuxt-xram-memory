@@ -28,9 +28,14 @@
     <aside class="FieldList">
       <header>
         <h1>{{document.document_id || document.name}}</h1>
-        <a class="FileInfo_Button el-button el-button--default is-circle" download :href="fileURL">
-          <i class="material-icons">get_app</i>
-        </a>
+        <div class="microtext download-area">
+          <a download :href="fileURL">
+            <span class="FileInfo_Button el-button el-button--default is-circle">
+              <i class="material-icons">get_app</i>
+            </span>
+            <p>Baixar</p>
+          </a>
+        </div>
       </header>
 
       <div v-if="fileType" class="FieldList__Field">
@@ -214,9 +219,10 @@ aside > header {
   align-items: center;
 }
 
-.FileInfo_Button {
+.download-area {
   margin-left: auto;
   color: #606266;
+  text-align: center;
 }
 
 .FileInfo_Button i {
