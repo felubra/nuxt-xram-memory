@@ -46,7 +46,6 @@
           }"
       >
         <el-image
-          v-for="capture in pdf_captures"
           :key="capture.url"
           :src="thumbnailForDocument(capture.document_id)"
           :alt="capture.title"
