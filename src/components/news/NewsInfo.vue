@@ -30,7 +30,7 @@
       <p>{{published_date}}</p>
     </div>
     <div
-      v-if="pdf_captures"
+      v-if="pdf_captures.length"
       class="FieldList__Field FieldList__Field--centered NewsInfo--pdf-captures"
     >
       <h2>Capturas de página</h2>
@@ -63,7 +63,7 @@
         <Microtext tag="p">{{capture.title}}</Microtext>
       </nuxt-link>
     </div>
-    <div v-if="subjects" class="FieldList__Field">
+    <div v-if="subjects.length" class="FieldList__Field">
       <h2>Assuntos</h2>
       <ul class="taxonomy-list">
         <li v-for="subject in subjects" :key="subject.slug">
@@ -71,7 +71,7 @@
         </li>
       </ul>
     </div>
-    <div v-if="keywords" class="FieldList__Field">
+    <div v-if="keywords.length" class="FieldList__Field">
       <h2>Palavras-chave</h2>
       <ul class="taxonomy-list">
         <li v-for="keyword in keywords" :key="keyword.slug">
@@ -113,18 +113,26 @@ export default {
       return this.newsItem.teaser
     },
     keywords() {
-      return (
-        this.newsItem.keywords &&
-        this.newsItem.keywords.length &&
-        this.newsItem.keywords
-      )
+      try {
+        return (
+          this.newsItem.keywords &&
+          this.newsItem.keywords.length &&
+          this.newsItem.keywords
+        )
+      } catch {
+        return []
+      }
     },
     subjects() {
-      return (
-        this.newsItem.subjects &&
-        this.newsItem.subjects.length &&
-        this.newsItem.subjects
-      )
+      try {
+        return (
+          this.newsItem.subjects &&
+          this.newsItem.subjects.length &&
+          this.newsItem.subjects
+        )
+      } catch {
+        return []
+      }
     },
     pdf_captures() {
       try {
@@ -138,7 +146,7 @@ export default {
           })
         )
       } catch {
-        return ''
+        return []
       }
     },
     published_date() {
@@ -174,21 +182,29 @@ export default {
       }
     },
     url() {
-      return {
-        url: this.newsItem.url,
-        title: smartTruncate(this.newsItem.url, 120, { position: 20 })
+      try {
+        return {
+          url: this.newsItem.url,
+          title: smartTruncate(this.newsItem.url, 120, { position: 20 })
+        }
+      } catch {
+        return ''
       }
     },
     archivedUrl() {
-      if (this.newsItem.archived_news_url) {
-        return {
-          url: this.newsItem.archived_news_url,
-          title: smartTruncate(this.newsItem.archived_news_url, 120, {
-            position: 20
-          })
+      try {
+        if (this.newsItem.archived_news_url) {
+          return {
+            url: this.newsItem.archived_news_url,
+            title: smartTruncate(this.newsItem.archived_news_url, 120, {
+              position: 20
+            })
+          }
         }
+        return ''
+      } catch {
+        return ''
       }
-      return ''
     }
   },
   watch: {
