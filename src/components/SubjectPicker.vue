@@ -33,9 +33,9 @@
           </li>
         </ul>
       </transition>
-      <no-ssr>
+      <client-only>
         <resize-sensor @resize="determineMinHeight"></resize-sensor>
-      </no-ssr>
+      </client-only>
     </section>
   </div>
 </template>

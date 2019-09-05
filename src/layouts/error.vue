@@ -4,9 +4,9 @@
     <nuxt-link class="active" to="/">
       <Microtext arrow="left">Voltar à página inicial</Microtext>
     </nuxt-link>
-    <no-ssr>
+    <client-only>
       <D3TagCloud hi-color="#999" class="TagCloud" :keywords="errorKeywords" />
-    </no-ssr>
+    </client-only>
   </section>
 </template>
 

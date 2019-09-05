@@ -1,5 +1,5 @@
 <template>
-  <no-ssr>
+  <client-only>
     <DefaultReactiveBase class-name="Page SearchPage">
       <h1 class="offscreen">Pesquisar</h1>
       <!-- eslint-disable -->
@@ -8,7 +8,7 @@
       <SearchFilters />
       <HomeSearchResults />
     </DefaultReactiveBase>
-  </no-ssr>
+  </client-only>
 </template>
 
 <script>

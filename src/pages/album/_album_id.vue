@@ -21,9 +21,9 @@
           />
         </template>
       </viewer>
-      <no-ssr>
+      <client-only>
         <resize-sensor @resize="selectImageSize"></resize-sensor>
-      </no-ssr>
+      </client-only>
     </main>
   </section>
 </template>

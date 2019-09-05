@@ -1,5 +1,5 @@
 <template>
-  <no-ssr>
+  <client-only>
     <DefaultReactiveBase class-name="Page PageIndex">
       <h1 class="offscreen">Início</h1>
       <Logo class="Home__Logo" :big="true" />
@@ -15,7 +15,7 @@
 
       <HomeTagCloud class="HomeTagCloud" />
     </DefaultReactiveBase>
-  </no-ssr>
+  </client-only>
 </template>
 
 <script>

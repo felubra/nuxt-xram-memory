@@ -7,9 +7,9 @@
       <header class="MainHeader">
         <Navbar class="MainNavBar" />
       </header>
-      <no-ssr>
+      <client-only>
         <resize-sensor @resize="setSpacerHeight"></resize-sensor>
-      </no-ssr>
+      </client-only>
     </fixed-header>
     <nuxt />
     <Footer />

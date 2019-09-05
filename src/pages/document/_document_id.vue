@@ -3,11 +3,11 @@
     <main>
       <BackButton class="BackButton" />
       <template v-if="isOfKnownType">
-        <no-ssr>
+        <client-only>
           <!-- eslint-disable -->
           <DocumentPreview :document="document" />
           <!-- eslint-enable -->
-        </no-ssr>
+        </client-only>
       </template>
       <template v-else>
         <div class="NoPreview">
