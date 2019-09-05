@@ -163,6 +163,11 @@ export default {
 }
 </script>
 
+<style lang="stylus" >
+.viewer-backdrop {
+  background-color: #e6e6e6;
+}
+</style>
 
 <style lang="stylus" scoped>
 .BackButton {
