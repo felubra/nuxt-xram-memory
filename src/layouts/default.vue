@@ -56,7 +56,7 @@ export default {
         duration: 0,
         type: 'info',
         onClose() {
-          setCookie('GDPR_cookie', 'accepted')
+          setCookie('GDPR_cookie', 'accepted', { expires: '2147483647s' })
         }
       })
     }
