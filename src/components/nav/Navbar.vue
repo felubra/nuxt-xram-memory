@@ -1,14 +1,24 @@
 <template>
   <nav class="Navbar">
     <Logo v-if="showLogo !== false" :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`" />
-    <div v-dragscroll.x="true" class="main-itens">
-      <nuxt-link
-        v-for="(page, index) in pageLinks()"
-        :key="index"
-        class="Navbar__Item"
-        :to="urlOrRoute(page)"
-      >{{page.title}}</nuxt-link>
-    </div>
+    <client-only>
+      <div v-dragscroll.x="true" class="main-itens">
+        <nuxt-link
+          v-for="(page, index) in pageLinks()"
+          :key="index"
+          class="Navbar__Item"
+          :to="urlOrRoute(page)"
+        >{{page.title}}</nuxt-link>
+      </div>
+      <div slot="placeholder" class="main-itens">
+        <nuxt-link
+          v-for="(page, index) in pageLinks()"
+          :key="index"
+          class="Navbar__Item"
+          :to="urlOrRoute(page)"
+        >{{page.title}}</nuxt-link>
+      </div>
+    </client-only>
     <NavbarControls />
   </nav>
 </template>
@@ -19,7 +29,7 @@ import NavbarControls from '@/components/nav/NavbarControls'
 import { mapActions, mapGetters } from 'vuex'
 import { urlOrRoute } from '@/utils/'
 import ClickOutside from 'vue-click-outside'
-import { dragscroll } from 'vue-dragscroll'
+
 export default {
   name: 'Navbar',
   components: {
@@ -27,8 +37,7 @@ export default {
     NavbarControls
   },
   directives: {
-    ClickOutside,
-    dragscroll
+    ClickOutside
   },
   props: {
     showLogo: {
