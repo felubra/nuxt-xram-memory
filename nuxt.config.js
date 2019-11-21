@@ -60,7 +60,7 @@ module.exports = {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Cabin:400,400i,600,600i|Vollkorn:400,400i,700,700i'
+          'https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i&display=swap'
       },
       {
         rel: 'stylesheet',
