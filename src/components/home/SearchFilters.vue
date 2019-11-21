@@ -207,6 +207,7 @@ footer {
 
 .FilterList__FilterItem > h2 {
   color: #A1A1A1;
+  transition: color 0.25 ease;
 }
 
 button.FilterItem__DropdownToggle {
