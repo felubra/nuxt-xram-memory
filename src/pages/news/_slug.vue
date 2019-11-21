@@ -2,7 +2,7 @@
   <section class="Page NewsPage">
     <div class="NewsPage__Info">
       <header>
-        <figure>
+        <figure v-if="theImage">
           <img :src="theImage" />
         </figure>
         <Microtext>Notícia</Microtext>
@@ -82,6 +82,8 @@ header {
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-height: 200px;
+  margin-bottom: 40px;
 }
 
 .NewsPage {
@@ -106,6 +108,14 @@ figure {
   display: flex;
   align-items: center;
   margin: 0;
+}
+
+p.microtext {
+  margin-top: auto;
+}
+
+h1 {
+  margin-bottom: auto;
 }
 
 @media only screen and (min-width: 960px) {
