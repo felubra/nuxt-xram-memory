@@ -216,7 +216,7 @@ button.FilterItem__DropdownToggle {
   border-width: 3px;
 }
 
-button.FilterItem__DropdownToggle:focus {
+button.FilterItem__DropdownToggle:focus, button.FilterItem__DropdownToggle:hover {
   background: transparent;
   border-color: #d84848;
 }
