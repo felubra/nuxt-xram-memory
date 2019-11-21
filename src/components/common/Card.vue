@@ -6,7 +6,7 @@
           <img :key="imageSrc" class="ImageFilePreview__OriginalImage" :src="imageSrc" />
         </slot>
         <slot name="label">
-          <Microtext v-if="label">{{label}}</Microtext>
+          <Microtext v-if="label" class-name="label">{{label}}</Microtext>
         </slot>
         <slot name="title">
           <h3 v-if="title">{{title}}</h3>
@@ -118,6 +118,7 @@ export default {
 
 .Card p.label {
   text-align: center;
+  margin-top: 15px;
 }
 
 .Card img {
