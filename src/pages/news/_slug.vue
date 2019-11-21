@@ -5,7 +5,6 @@
         <figure v-if="theImage">
           <img :src="theImage" />
         </figure>
-        <Microtext>Notícia</Microtext>
         <h1>{{theTitle}}</h1>
       </header>
       <main>
@@ -17,15 +16,13 @@
 </template>
 
 <script>
-import Microtext from '~/components/common/Microtext'
 import NewsInfo from '~/components/news/NewsInfo'
 import { sanitize, getMediaUrl } from '@/utils/'
 
 export default {
   name: 'NewsPage',
   components: {
-    NewsInfo,
-    Microtext
+    NewsInfo
   },
   head() {
     return {
