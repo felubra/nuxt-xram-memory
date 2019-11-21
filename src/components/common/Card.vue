@@ -146,5 +146,6 @@ export default {
 
 .teaser {
   text-align: justify;
+  line-height: 1.5;
 }
 </style>

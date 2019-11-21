@@ -1,8 +1,8 @@
 <template>
   <div class="NewsInfo FieldList">
     <div v-if="teaser" class="FieldList__Field">
-      <h2>Resumo</h2>
-      <p>{{teaser}}</p>
+      <h2>Resumo da notícia</h2>
+      <p class="NewsInfo__Teaser">{{teaser}}</p>
     </div>
     <div v-if="url" class="FieldList__Field">
       <h2>Endereço original</h2>
@@ -327,6 +327,11 @@ ul.taxonomy-list > li {
   user-select: none;
   transition: all 0.3s ease;
   padding: 5px;
+}
+
+p.NewsInfo__Teaser {
+  line-height: 1.5;
+  text-align: left;
 }
 
 @media only screen and (min-width: $tablet) {
