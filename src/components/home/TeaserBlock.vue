@@ -75,6 +75,10 @@ export default {
   text-align: center;
 }
 
+.TeaserBlock__Link .microtext {
+  font-size: 14px;
+}
+
 .TeaserBlock__Link--left {
   text-align: right;
 }
