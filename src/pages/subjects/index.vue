@@ -31,7 +31,7 @@
         <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
       </header>
       <DefaultReactiveBase>
-        <HomeTagCloud />
+        <HomeTagCloud size-delta="10" />
       </DefaultReactiveBase>
     </section>
   </section>
@@ -132,7 +132,6 @@ export default {
 }
 
 .SubjectsPage > section.SubjectsPage__TagCloud {
-  max-width: none;
 }
 
 .SubjectsPage > section.SubjectsPage__TagCloud > header {
