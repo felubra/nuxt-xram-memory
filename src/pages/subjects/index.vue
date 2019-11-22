@@ -55,6 +55,9 @@ export default {
     DefaultReactiveBase,
     SubjectPicker
   },
+  head: {
+    title: 'xraM-Memory - Assuntos'
+  },
   data() {
     return {
       featuredSubjects: [],

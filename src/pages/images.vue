@@ -44,6 +44,9 @@ export default {
     Microtext,
     Card
   },
+  head: {
+    title: 'xraM-Memory - Imagens'
+  },
   data() {
     return {
       albums_objects: []

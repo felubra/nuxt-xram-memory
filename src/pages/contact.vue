@@ -127,7 +127,7 @@ export default {
   },
   head() {
     return {
-      title: 'Entre em contato',
+      title: 'Contato',
       titleTemplate: 'xraM-Memory - %s',
       script: [
         {
