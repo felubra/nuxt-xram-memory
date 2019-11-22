@@ -15,12 +15,16 @@
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
 import { TAGCLOUD_QUERY } from '~/config/constants'
 
-const FONT_SIZE_DELTA = 16
-
 export default {
   name: 'HomeTagCloud',
   components: {
     D3TagCloud
+  },
+  props: {
+    sizeDelta: {
+      type: Number,
+      default: 16
+    }
   },
   computed: {
     tagCloudQuery() {
@@ -37,7 +41,7 @@ export default {
           return {
             text: keyword.key,
             slug: keyword.slug.buckets[0].key,
-            size: (keyword.doc_count / keywordsStdDeviation) * FONT_SIZE_DELTA
+            size: (keyword.doc_count / keywordsStdDeviation) * this.sizeDelta
           }
         })
       } catch {
