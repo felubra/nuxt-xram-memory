@@ -31,7 +31,7 @@
         <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
       </header>
       <DefaultReactiveBase>
-        <HomeTagCloud size-delta="10" />
+        <HomeTagCloud :size-delta="10" />
       </DefaultReactiveBase>
     </section>
   </section>
