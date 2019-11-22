@@ -7,14 +7,13 @@
       </Microtext>
       <transition name="fade">
         <ul class="InitialsList">
-          <li
-            v-for="initial in initials"
-            :key="initial"
-            :class="{
-            'active': selectedInitial === initial
-          }"
-            @click="selectInitial(initial)"
-          >{{initial}}</li>
+          <li v-for="initial in initials" :key="initial">
+            <nuxt-link
+              :title="initial"
+              :to="{name:'subjects', hash:`#${initial}`}"
+              @click="selectInitial(initial)"
+            >{{initial}}</nuxt-link>
+          </li>
         </ul>
       </transition>
     </header>
@@ -62,7 +61,7 @@ export default {
   },
   data() {
     return {
-      selectedInitial: this.initialSelectedInitial,
+      selectedInitial: '',
       subjects: this.initialSubjects,
       minHeight: 100
     }
@@ -73,16 +72,39 @@ export default {
     },
     hasSubjects() {
       return Array.isArray(this.subjects) && this.subjects.length > 0
+    },
+    hashInitial() {
+      return this.$route && this.$route.hash[1]
     }
   },
   watch: {
     initials: {
       handler(initials) {
-        if (Array.isArray(initials) && initials.length > 0) {
-          // Defina a inicial selecionada como a primeira da lista, se não houver inicial selecionada.
-          if (!this.selectedInitial) {
-            this.selectInitial(initials[0])
-          }
+        if (!this.selectedInitial && initials.length) {
+          this.$router.push({ name: 'subjects', hash: `#${initials[0]}` })
+        }
+      }
+    },
+    selectedInitial: {
+      immediate: true,
+      async handler(initial) {
+        try {
+          const subjectsForInitial = await this.$axios.$get(
+            `api/v1/subjects/initial/${initial}`
+          )
+          this.$nextTick(() => (this.subjects = subjectsForInitial))
+        } catch {}
+      }
+    },
+    $route: {
+      immediate: true,
+      handler() {
+        if (
+          this.hashInitial &&
+          this.initials &&
+          this.initials.includes(this.hashInitial)
+        ) {
+          this.$nextTick(() => this.selectInitial(this.hashInitial))
         }
       }
     }
@@ -91,17 +113,11 @@ export default {
     determineMinHeight({ width, height }) {
       this.minHeight = this.minHeight < height ? height : this.minHeight
     },
-    async selectInitial(initial) {
+    selectInitial(initial) {
       if (initial === this.selectedInitial) {
         return
       }
-      try {
-        const subjectsForInitial = await this.$axios.$get(
-          `api/v1/subjects/initial/${initial}`
-        )
-        this.selectedInitial = initial
-        this.subjects = subjectsForInitial
-      } catch {}
+      this.selectedInitial = initial
     }
   }
 }
@@ -111,7 +127,7 @@ export default {
 ul {
   list-style: none;
   padding: 0;
-  font-size: 28px;
+  font-size: 22px;
   color: #555;
   margin: 0;
   display: grid;
@@ -129,7 +145,6 @@ ul {
 
 ul > li {
   margin: 0;
-  cursor: pointer;
 }
 
 a {
@@ -142,10 +157,6 @@ a, header li {
 
 header a {
   color: #888;
-}
-
-li.active, li:hover, a:active, a:hover, a:focus, a.nuxt-link-exact-active {
-  color: $link-color;
 }
 
 ul > li:first-of-type {
