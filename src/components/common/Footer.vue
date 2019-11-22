@@ -2,16 +2,21 @@
   <footer class="MainFooter">
     <div class="innner">
       <Logo variant="claro" />
-      <p>
+      <p class="copyright">
         &copy; 2019
-        <strong>xraM-Memory</strong>.
-        <br />
+        <strong>xraM-Memory</strong>
       </p>
-      <nuxt-link
-        v-for="(page, index) in footerLinks"
-        :key="index"
-        :to="urlOrRoute(page)"
-      >{{page.title}}</nuxt-link>
+      <p class="version">v 0.4.7</p>
+      <p class="by">
+        <a href="https://br.linkedin.com/in/felubra">Desenvolvido por Felipe Lube Bragança</a>
+      </p>
+      <div class="links">
+        <nuxt-link
+          v-for="(page, index) in footerLinks"
+          :key="index"
+          :to="urlOrRoute(page)"
+        >{{page.title}}</nuxt-link>
+      </div>
     </div>
   </footer>
 </template>
@@ -44,7 +49,7 @@ export default {
   margin: auto auto 0;
   padding: 1rem 0;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .MainFooter > .inner {
@@ -62,7 +67,20 @@ export default {
 }
 
 .MainFooter p {
-  margin: 0;
+  margin: 5px;
+}
+
+.copyright {
+  margin-bottom: 20px;
+}
+
+.links {
+  margin-top: 10px;
+}
+
+p.version, p.by {
+  font-family: $sans-serif;
+  font-size: 12px;
 }
 
 .MainFooter a:focus, .MainFooter a:active, .MainFooter a:hover {
