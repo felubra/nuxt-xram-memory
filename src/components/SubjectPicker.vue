@@ -89,6 +89,9 @@ export default {
       immediate: true,
       async handler(initial) {
         try {
+          if (!initial) {
+            return
+          }
           const subjectsForInitial = await this.$axios.$get(
             `api/v1/subjects/initial/${initial}`
           )
