@@ -107,7 +107,8 @@ module.exports = {
   */
   axios: {
     baseURL: process.env.API_URL || 'http://localhost:8000',
-    debug: !(process.env.NODE_ENV && process.env.NODE_ENV === 'production')
+    debug: !(process.env.NODE_ENV && process.env.NODE_ENV === 'production'),
+    progress: false
   },
   env: {
     CONTACT_MESSAGE_RELAY_URL:
