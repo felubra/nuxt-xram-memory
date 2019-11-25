@@ -18,20 +18,18 @@
       </transition>
     </header>
     <section class="SubjectsList" :style="`min-height: ${minHeight}px`">
-      <transition name="fade">
-        <ul ref="SubjectsList" class="SubjectsList">
-          <li v-for="subject in subjects" :key="subject.slug">
-            <nuxt-link
-              :to="{
+      <ul ref="SubjectsList" class="SubjectsList">
+        <li v-for="subject in subjects" :key="subject.slug">
+          <nuxt-link
+            :to="{
               name: 'subject-slug',
               params: {
                   slug: subject.slug
                 }
               }"
-            >{{subject.name}}</nuxt-link>
-          </li>
-        </ul>
-      </transition>
+          >{{subject.name}}</nuxt-link>
+        </li>
+      </ul>
       <client-only>
         <resize-sensor @resize="determineMinHeight"></resize-sensor>
       </client-only>
