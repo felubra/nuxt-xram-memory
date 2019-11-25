@@ -80,6 +80,10 @@ module.exports = {
   /**
    * Plugins to load before mounting the App
    */
+  buildModules: [
+    // Simple usage
+    '@nuxtjs/vuetify'
+  ],
   plugins: [
     { src: '@/plugins/resize-sensor.js', ssr: false },
     { src: '@/plugins/reactive-search', ssr: false },
