@@ -1,7 +1,7 @@
 <template>
-  <el-button circle @click="goBack()">
-    <i class="material-icons">arrow_back</i>
-  </el-button>
+  <v-btn fab @click="goBack()">
+    <v-icon>mdi-arrow-left</v-icon>
+  </v-btn>
 </template>
 
 <script>
