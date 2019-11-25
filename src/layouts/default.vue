@@ -1,6 +1,6 @@
 <template>
   <div id="main-wrapper">
-    <div class="spacer" :style="`height: ${navBarFixed ? spacerHeight: 0}px`"></div>
+    <div v-if="navBarFixed" class="spacer" :style="`height: ${spacerHeight}px`"></div>
     <Menu />
 
     <fixed-header :fixed.sync="navBarFixed">
