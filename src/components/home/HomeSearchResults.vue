@@ -5,12 +5,18 @@
     component-id="SearchResults"
     :pagination="false"
     data-field="title.raw"
+    :sortOptions="[{
+      label: 'Data de publicação',
+      dataField: 'published_date',
+      sortBy: 'desc',
+    }]"
     class-name="SearchResults"
     loader="Carregando..."
     renderError="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
     :inner-class="{
       resultsInfo: 'SearchResults__ResultsInfo microtext',
-      list: 'SearchResults__List'
+      list: 'SearchResults__List',
+      sortOptions: 'SearchResults__SortOptions microtext',
     }"
     :from="0"
     :size="20"
