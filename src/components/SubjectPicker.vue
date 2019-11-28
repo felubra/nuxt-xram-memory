@@ -9,10 +9,9 @@
         <ul class="InitialsList">
           <li v-for="initial in initials" :key="initial">
             <nuxt-link
-              :id="initial"
               :title="initial"
               :to="{name:'subjects', hash:`#${initial}`}"
-              @click="selectInitial(initial)"
+              @click.prevent="selectInitial(initial)"
             >{{initial}}</nuxt-link>
           </li>
         </ul>
