@@ -26,8 +26,8 @@
           :from="0"
           :size="20"
         >
-          <template v-slot:renderResultStats="{ totalResults, time }">
-            <ResultStats :total-results="totalResults" :time="time" />
+          <template v-slot:renderResultStats="{ numberOfResults, time }">
+            <ResultStats :total-results="numberOfResults" :time="time" />
           </template>
           <div slot="renderNoResults" class="NoResults">Nenhum item encontrado.</div>
           <template v-slot:render="{ data }">
