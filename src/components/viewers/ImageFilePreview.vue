@@ -1,7 +1,7 @@
 <template>
   <div class="FilePreview ImageFilePreview">
     <viewer :options="viewerOptions" :images="[fileURL]">
-      <template slot-scope="scope">
+      <template v-slot:default="scope">
         <figure class="images">
           <div v-for="image in scope.images" :key="image" class="image-wrapper">
             <img class="ImageFilePreview__OriginalImage" :src="image" />

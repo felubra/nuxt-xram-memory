@@ -10,9 +10,9 @@
         :images="photos"
         @inited="inited"
       >
-        <template slot-scope="scope">
+        <template v-slot:default="{ images }">
           <img
-            v-for="image in scope.images"
+            v-for="image in images"
             :key="image.document_id"
             class="hidden"
             :src="getMediaURL(image.thumbnails.thumbnail)"

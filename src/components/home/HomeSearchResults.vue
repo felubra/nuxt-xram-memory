@@ -15,17 +15,16 @@
     :from="0"
     :size="20"
   >
-    <ResultStats
-      slot="renderResultStats"
-      slot-scope="{ totalResults, time }"
-      :total-results="totalResults"
-      :time="time"
-    />
+    <template v-slot:renderResultStats="{ totalResults, time }">
+      <ResultStats :total-results="totalResults" :time="time" />
+    </template>
     <div class="NoResults" slot="renderNoResults">
       Nenhum resultado encontrado
       <button class="ClearResults" @click="clearValues">Recomeçar</button>
     </div>
-    <NewsGrid id="HomeMasonryGrid" slot="renderAllData" slot-scope="{ results }" :items="results"></NewsGrid>
+    <template v-slot:renderAllData="{ results }">
+      <NewsGrid id="HomeMasonryGrid" :items="results"></NewsGrid>
+    </template>
   </ReactiveList>
   <!-- eslint-enable -->
 </template>
