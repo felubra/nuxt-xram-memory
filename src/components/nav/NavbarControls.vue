@@ -41,7 +41,7 @@ export default {
   border-bottom: solid 2px transparent;
   margin: 0 0.5rem;
   outline: none;
-  transition: border-color 0.25s ease;
+  transition: border-color 0.25s ease, color 0.25s ease;
 }
 
 .NavbarControls {

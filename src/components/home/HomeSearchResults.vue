@@ -81,6 +81,11 @@ export default {
 }
 
 .NoResults {
-  font-weight: bold;
+  font-weight: 500;
+  font-family: $sans-serif;
+}
+
+.ClearResults {
+  font-family: $sans-serif !important;
 }
 </style>

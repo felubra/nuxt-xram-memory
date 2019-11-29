@@ -105,7 +105,7 @@ export default {
 .FieldList > .FieldList__Field > h2 {
   display: inline-block;
   color: #555;
-  font-weight: bold;
+  font-weight: 500;
   text-align: left;
   display: flex;
   font-family: $sans-serif;

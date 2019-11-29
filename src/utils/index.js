@@ -1,6 +1,9 @@
 const xss = require('xss')
 export const getMediaUrl = function(path) {
   const mediaUrl = process.env.MEDIA_URL
+  if (!path) {
+    return
+  }
   try {
     if (mediaUrl) {
       if (path.includes(mediaUrl)) {

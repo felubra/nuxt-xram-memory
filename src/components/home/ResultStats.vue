@@ -97,7 +97,7 @@ export default {
 
   .ResultCount {
     display: flex;
-    font-weight: bold;
+    font-weight: 500;
     align-items: center;
   }
 }

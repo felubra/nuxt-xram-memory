@@ -2,10 +2,9 @@
   <section class="Page NewsPage">
     <div class="NewsPage__Info">
       <header>
-        <figure>
+        <figure v-if="theImage">
           <img :src="theImage" />
         </figure>
-        <Microtext>Notícia</Microtext>
         <h1>{{theTitle}}</h1>
       </header>
       <main>
@@ -17,15 +16,13 @@
 </template>
 
 <script>
-import Microtext from '~/components/common/Microtext'
 import NewsInfo from '~/components/news/NewsInfo'
 import { sanitize, getMediaUrl } from '@/utils/'
 
 export default {
   name: 'NewsPage',
   components: {
-    NewsInfo,
-    Microtext
+    NewsInfo
   },
   head() {
     return {
@@ -82,6 +79,8 @@ header {
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-height: 200px;
+  margin-bottom: 40px;
 }
 
 .NewsPage {
@@ -106,6 +105,14 @@ figure {
   display: flex;
   align-items: center;
   margin: 0;
+}
+
+p.microtext {
+  margin-top: auto;
+}
+
+h1 {
+  margin-bottom: auto;
 }
 
 @media only screen and (min-width: 960px) {

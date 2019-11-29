@@ -51,7 +51,7 @@ export default {
     },
     labelFor(item) {
       const values = [this.typeFor(item), this.dateFor(item)]
-      return values.filter(value => value).join(' em ')
+      return values.filter(value => value).join(' - ')
     },
     dateFor(item) {
       try {

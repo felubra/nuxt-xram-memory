@@ -207,6 +207,7 @@ footer {
 
 .FilterList__FilterItem > h2 {
   color: #A1A1A1;
+  transition: color 0.25 ease;
 }
 
 button.FilterItem__DropdownToggle {
@@ -216,7 +217,7 @@ button.FilterItem__DropdownToggle {
   border-width: 3px;
 }
 
-button.FilterItem__DropdownToggle:focus {
+button.FilterItem__DropdownToggle:focus, button.FilterItem__DropdownToggle:hover {
   background: transparent;
   border-color: #d84848;
 }

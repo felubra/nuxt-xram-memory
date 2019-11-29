@@ -52,7 +52,7 @@ export default {
   head() {
     return {
       title: this.album.name,
-      titleTemplate: 'xraM-Memory - Álbum de fotos: %s',
+      titleTemplate: 'xraM-Memory - Álbum: %s',
       bodyAttrs: {
         class: 'page--full-screen'
       }

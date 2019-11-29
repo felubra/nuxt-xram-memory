@@ -59,6 +59,12 @@ export default {
       subject: {}
     }
   },
+  head() {
+    return {
+      title: this.subject.name,
+      titleTemplate: 'xraM-Memory - Assunto: %s'
+    }
+  },
   computed: {
     description() {
       return sanitize(this.subject.description)

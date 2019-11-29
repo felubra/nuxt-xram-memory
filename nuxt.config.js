@@ -60,7 +60,7 @@ module.exports = {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Cabin:400,400i,600,600i|Vollkorn:400,400i,700,700i'
+          'https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i&display=swap'
       },
       {
         rel: 'stylesheet',
@@ -107,7 +107,8 @@ module.exports = {
   */
   axios: {
     baseURL: process.env.API_URL || 'http://localhost:8000',
-    debug: !(process.env.NODE_ENV && process.env.NODE_ENV === 'production')
+    debug: !(process.env.NODE_ENV && process.env.NODE_ENV === 'production'),
+    progress: false
   },
   env: {
     CONTACT_MESSAGE_RELAY_URL:
