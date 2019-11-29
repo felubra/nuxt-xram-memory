@@ -45,6 +45,7 @@ export default {
   padding: 1rem 0;
   text-align: center;
   font-size: 14px;
+  opacity: 0;
 }
 
 .MainFooter > .inner {

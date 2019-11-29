@@ -22,8 +22,8 @@
       Nenhum resultado encontrado
       <button class="ClearResults" @click="clearValues">Recomeçar</button>
     </div>
-    <template v-slot:renderAllData="{ results }">
-      <NewsGrid id="HomeMasonryGrid" :items="results"></NewsGrid>
+    <template v-slot:render="{ data }">
+      <NewsGrid id="HomeMasonryGrid" :items="data"></NewsGrid>
     </template>
   </ReactiveList>
   <!-- eslint-enable -->

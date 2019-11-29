@@ -30,12 +30,9 @@
             <ResultStats :total-results="totalResults" :time="time" />
           </template>
           <div slot="renderNoResults" class="NoResults">Nenhum item encontrado.</div>
-          <NewsGrid
-            id="SubjectsMasonryGrid"
-            slot="renderAllData"
-            slot-scope="{ results }"
-            :items="results"
-          ></NewsGrid>
+          <template v-slot:render="{ data }">
+            <NewsGrid id="SubjectsMasonryGrid" :items="data"></NewsGrid>
+          </template>
         </ReactiveList>
       </DefaultReactiveBase>
     </section>
