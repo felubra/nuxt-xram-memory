@@ -26,11 +26,9 @@
           :from="0"
           :size="20"
         >
-          <div slot="renderResultStats" slot-scope="{ totalResults, time }">
-            <Microtext
-              arrow="down"
-            >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
-          </div>
+          <template v-slot:renderResultStats="{ totalResults, time }">
+            <ResultStats :total-results="totalResults" :time="time" />
+          </template>
           <div slot="renderNoResults" class="NoResults">Nenhum item encontrado.</div>
           <NewsGrid
             id="SubjectsMasonryGrid"
@@ -49,13 +47,15 @@ import { sanitize, getMediaUrl } from '@/utils'
 import Microtext from '@/components/common/Microtext'
 import NewsGrid from '~/components/news/NewsGrid'
 import DefaultReactiveBase from '@/components/DefaultReactiveBase'
+import ResultStats from '~/components/home/ResultStats'
 
 export default {
   name: 'SubjectPage',
   components: {
     Microtext,
     NewsGrid,
-    DefaultReactiveBase
+    DefaultReactiveBase,
+    ResultStats
   },
   data() {
     return {
