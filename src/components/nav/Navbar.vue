@@ -1,25 +1,23 @@
 <template>
-  <nav class="Navbar">
-    <Logo v-if="showLogo !== false" :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`" />
-    <client-only>
-      <div v-dragscroll.x="true" class="main-itens">
-        <nuxt-link
-          v-for="(page, index) in pageLinks()"
-          :key="index"
-          class="Navbar__Item"
-          :to="urlOrRoute(page)"
-        >{{page.title}}</nuxt-link>
+  <nav>
+    <transition name="fade">
+      <div v-show="hasLogoLoaded" class="Navbar">
+        <Logo
+          v-if="showLogo !== false"
+          :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`"
+          @load="() => hasLogoLoaded = true"
+        />
+        <div v-dragscroll.x="true" class="main-itens">
+          <nuxt-link
+            v-for="(page, index) in pageLinks()"
+            :key="index"
+            class="Navbar__Item"
+            :to="urlOrRoute(page)"
+          >{{page.title}}</nuxt-link>
+        </div>
+        <NavbarControls />
       </div>
-      <div slot="placeholder" class="main-itens">
-        <nuxt-link
-          v-for="(page, index) in pageLinks()"
-          :key="index"
-          class="Navbar__Item"
-          :to="urlOrRoute(page)"
-        >{{page.title}}</nuxt-link>
-      </div>
-    </client-only>
-    <NavbarControls />
+    </transition>
   </nav>
 </template>
 
@@ -57,7 +55,8 @@ export default {
   data() {
     return {
       searchInput: '',
-      isMenuItensObfuscated: false
+      isMenuItensObfuscated: false,
+      hasLogoLoaded: false
     }
   },
   computed: {

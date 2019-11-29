@@ -1,7 +1,7 @@
 <template>
   <div :class="{'Logo': true, 'Logo--big': big}">
     <nuxt-link class="Logo__Link" to="/">
-      <img :src="src" alt />
+      <img :src="src" alt @load="imageLoaded" />
     </nuxt-link>
   </div>
 </template>
@@ -31,6 +31,11 @@ export default {
         return `${base}.svg`
       }
       return `${base}--${this.variant}.svg`
+    }
+  },
+  methods: {
+    imageLoaded() {
+      this.$emit('load')
     }
   }
 }

@@ -78,6 +78,8 @@ export default {
 .MainHeader {
   border-bottom: solid 1px #f1eaea;
   transition: all 0.25s ease;
+  /* Tamanho mínimo para evitar pulos ao mostrar a barra de navegação */
+  min-height: 101px;
 }
 
 .MainNavBar {
