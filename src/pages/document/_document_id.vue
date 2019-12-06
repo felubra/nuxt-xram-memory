@@ -5,7 +5,7 @@
       <template v-if="isOfKnownType">
         <client-only>
           <!-- eslint-disable -->
-          <DocumentPreview :document="document" />
+          <DocumentViewer :document="document" />
           <!-- eslint-enable -->
         </client-only>
       </template>
@@ -73,7 +73,7 @@
   </section>
 </template>
 <script>
-import DocumentPreview from '~/components/viewers/DocumentPreview'
+import DocumentViewer from '~/components/viewers/DocumentViewer'
 import Microtext from '~/components/common/Microtext'
 import BackButton from '@/components/common/BackButton'
 
@@ -85,7 +85,7 @@ export default {
   name: 'DocumentPage',
   components: {
     Microtext,
-    DocumentPreview,
+    DocumentViewer,
     BackButton
   },
   data() {
