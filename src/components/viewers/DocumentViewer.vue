@@ -1,21 +1,23 @@
 <template>
-  <viewer
-    v-show="visible"
-    :images="documentImages"
-    :options="getViewerOptions()"
-    @inited="onViewerStarted"
-  >
-    <template v-slot:default="{ images }">
-      <img
-        v-for="image in images"
-        :key="image.src"
-        class="hidden"
-        :src="image.thumbnailSrc"
-        :originalURL="image.src"
-        @load="viewerReady"
-      />
-    </template>
-  </viewer>
+  <div class="DocumentViewer">
+    <viewer
+      v-show="visible"
+      :images="documentImages"
+      :options="getViewerOptions()"
+      @inited="onViewerStarted"
+    >
+      <template v-slot:default="{ images }">
+        <img
+          v-for="image in images"
+          :key="image.src"
+          class="hidden"
+          :src="image.thumbnailSrc"
+          :originalURL="image.src"
+          @load="viewerReady"
+        />
+      </template>
+    </viewer>
+  </div>
 </template>
 
 <script>
@@ -23,6 +25,7 @@ import { getMediaUrl } from '@/utils'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 import Vue from 'vue'
+import { resetLoadingConfig, setContinuousLoading } from '~/utils'
 
 Vue.use(Viewer)
 
@@ -70,12 +73,22 @@ export default {
   },
   methods: {
     async fetchDocumentPages() {
+      const oldConfig = {
+        continuous: this.$nuxt.$loading.continuous,
+        duration: this.$nuxt.$loading.duration
+      }
+
       try {
+        setContinuousLoading(this.$nuxt.$loading)
+        this.$nuxt.$loading.start()
         const { pages } = await this.$axios.$get(
           `/api/v1/document/${this.document.document_id}/pages`
         )
         this.$set(this.document, 'pages', pages)
-      } catch {}
+      } finally {
+        this.$nuxt.$loading.finish()
+        resetLoadingConfig(this.$nuxt.$loading, oldConfig)
+      }
     },
     viewerReady() {
       this.visible = true
@@ -114,6 +127,9 @@ export default {
 </script>
 
 <style>
+.DocumentViewer {
+  flex: 1;
+}
 .viewer-navbar {
   background: transparent;
 }
