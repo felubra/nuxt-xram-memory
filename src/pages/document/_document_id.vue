@@ -185,7 +185,6 @@ export default {
 }
 
 main {
-  padding: 1rem;
   display: flex;
   flex-grow: 1;
   min-height: 75vh;
