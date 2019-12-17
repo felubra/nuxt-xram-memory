@@ -2,10 +2,10 @@
   <section class="Page DocumentPage">
     <main>
       <BackButton class="BackButton" />
-      <template v-if="isOfKnownType">
+      <template v-if="isDocumentOfKnownType">
         <client-only>
           <!-- eslint-disable -->
-          <DocumentViewer :document="document" />
+          <DocumentViewer :images="documentImages" :show-title="documentIsPDF" />
           <!-- eslint-enable -->
         </client-only>
       </template>
@@ -38,9 +38,9 @@
         </div>
       </header>
 
-      <div v-if="fileType" class="FieldList__Field">
+      <div v-if="documentHumanType" class="FieldList__Field">
         <Microtext tag="h2">Tipo</Microtext>
-        <p>{{fileType}}</p>
+        <p>{{documentHumanType}}</p>
       </div>
       <div v-if="size" class="FieldList__Field">
         <Microtext tag="h2">Tamanho</Microtext>
@@ -76,11 +76,10 @@
 import DocumentViewer from '~/components/viewers/DocumentViewer'
 import Microtext from '~/components/common/Microtext'
 import BackButton from '@/components/common/BackButton'
+import { getMediaUrl } from '@/utils'
 
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
-
-const { getMediaUrl } = require('~/utils')
 export default {
   name: 'DocumentPage',
   components: {
@@ -101,11 +100,30 @@ export default {
     }
   },
   computed: {
-    previewURL() {
-      if (this.document.mime_type === 'application/pdf') {
-        return getMediaUrl(this.document.thumbnails.document_preview)
+    documentIsPDF() {
+      return this.document.mime_type === 'application/pdf'
+    },
+    documentImages() {
+      if (this.documentIsPDF) {
+        try {
+          return this.document.pages.map((page, index) => {
+            return {
+              src: getMediaUrl(page.canonical_url),
+              thumbnailSrc: getMediaUrl(page.thumbnails.document_thumbnail),
+              description: page.description || `(página ${index + 1})`
+            }
+          })
+        } catch {
+          return []
+        }
       }
-      return ''
+      return [
+        {
+          src: getMediaUrl(this.document.canonical_url),
+          thumbnailSrc: getMediaUrl(this.document.thumbnails.thumbnail),
+          description: document.description || ''
+        }
+      ]
     },
     size() {
       try {
@@ -128,8 +146,8 @@ export default {
         return ''
       }
     },
-    fileType() {
-      if (this.document.mime_type === 'application/pdf') {
+    documentHumanType() {
+      if (this.documentIsPDF) {
         return this.isCapture ? 'Captura de notícia em PDF' : 'Documento PDF'
       } else if (this.document.mime_type.includes('image/')) {
         return this.isCapture ? 'Imagem de notícia' : 'Imagem'
@@ -137,7 +155,7 @@ export default {
         return 'Documento'
       }
     },
-    isOfKnownType() {
+    isDocumentOfKnownType() {
       return (
         this.document.mime_type === 'application/pdf' ||
         this.document.mime_type.startsWith('image/')
@@ -152,6 +170,12 @@ export default {
     if (documentId) {
       try {
         const document = await $axios.$get(`/api/v1/document/${documentId}`)
+        if (document.mime_type === 'application/pdf') {
+          const { pages } = await $axios.$get(
+            `/api/v1/document/${document.document_id}/pages`
+          )
+          document.pages = pages
+        }
         return { document }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500

@@ -2,7 +2,7 @@
   <div class="DocumentViewer">
     <viewer
       v-show="visible"
-      :images="documentImages"
+      :images="images"
       :options="getViewerOptions()"
       @inited="onViewerStarted"
     >
@@ -10,6 +10,7 @@
         <img
           v-for="image in images"
           :key="image.src"
+          :alt="image.description"
           class="hidden"
           :src="image.thumbnailSrc"
           :originalURL="image.src"
@@ -21,54 +22,25 @@
 </template>
 
 <script>
-import { getMediaUrl } from '@/utils'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 import Vue from 'vue'
-import { resetLoadingConfig, setContinuousLoading } from '~/utils'
-
 Vue.use(Viewer)
 
 export default {
   props: {
-    document: {
-      type: Object,
-      required: true
+    images: {
+      type: Array,
+      default: () => []
+    },
+    showTitle: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       visible: false
-    }
-  },
-  computed: {
-    documentIsPDF() {
-      return this.document.mime_type === 'application/pdf'
-    },
-    documentImages() {
-      if (this.documentIsPDF) {
-        try {
-          return this.document.pages.map(page => {
-            return {
-              src: getMediaUrl(page.canonical_url),
-              thumbnailSrc: getMediaUrl(page.thumbnails.document_thumbnail)
-            }
-          })
-        } catch {
-          return []
-        }
-      }
-      return [
-        {
-          src: this.document.canonical_url,
-          thumbnailSrc: this.document.thumbnails.thumbnail
-        }
-      ]
-    }
-  },
-  created() {
-    if (this.documentIsPDF) {
-      this.fetchDocumentPages()
     }
   },
   beforeDestroy() {
@@ -77,24 +49,6 @@ export default {
     }
   },
   methods: {
-    async fetchDocumentPages() {
-      const oldConfig = {
-        continuous: this.$nuxt.$loading.continuous,
-        duration: this.$nuxt.$loading.duration
-      }
-
-      try {
-        setContinuousLoading(this.$nuxt.$loading)
-        this.$nuxt.$loading.start()
-        const { pages } = await this.$axios.$get(
-          `/api/v1/document/${this.document.document_id}/pages`
-        )
-        this.$set(this.document, 'pages', pages)
-      } finally {
-        this.$nuxt.$loading.finish()
-        resetLoadingConfig(this.$nuxt.$loading, oldConfig)
-      }
-    },
     viewerReady() {
       this.visible = true
     },
@@ -123,8 +77,7 @@ export default {
         url: 'originalURL',
         buttom: true,
         loading: true,
-        title: () => this.document.description
-        //ready: this.viewerReady
+        title: image => (this.showTitle ? image.alt : '')
       }
     }
   }
