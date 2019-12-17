@@ -108,7 +108,7 @@ export default {
         try {
           return this.document.pages.map((page, index) => {
             return {
-              src: getMediaUrl(page.canonical_url),
+              src: getMediaUrl(page.thumbnails.document_preview),
               thumbnailSrc: getMediaUrl(page.thumbnails.document_thumbnail),
               description: page.description || `(página ${index + 1})`
             }
