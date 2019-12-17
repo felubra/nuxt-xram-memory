@@ -43,14 +43,32 @@ export default {
       visible: false
     }
   },
+  mounted() {
+    window.addEventListener('orientationchange', this.orientationChange, false)
+  },
   beforeDestroy() {
+    window.removeEventListener(
+      'orientationchange',
+      this.orientationChange,
+      false
+    )
     if (this.viewer) {
       this.viewer.destroy()
     }
   },
   methods: {
+    orientationChange() {
+      if (this.viewer) {
+        if (Math.abs(window.orientation) === 90) {
+          this.viewer.full()
+        } else {
+          this.viewer.exit()
+        }
+      }
+    },
     viewerReady() {
       this.visible = true
+      this.orientationChange()
     },
     onViewerStarted(viewer) {
       this.viewer = viewer
