@@ -71,6 +71,11 @@ export default {
       this.fetchDocumentPages()
     }
   },
+  beforeDestroy() {
+    if (this.viewer) {
+      this.viewer.destroy()
+    }
+  },
   methods: {
     async fetchDocumentPages() {
       const oldConfig = {
