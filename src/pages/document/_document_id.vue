@@ -171,10 +171,26 @@ export default {
       try {
         const document = await $axios.$get(`/api/v1/document/${documentId}`)
         if (document.mime_type === 'application/pdf') {
+          try {
+            /**
+             * Faça outra requisição para pegar as páginas do documento.
+             */
           const { pages } = await $axios.$get(
             `/api/v1/document/${document.document_id}/pages`
           )
           document.pages = pages
+          } catch {
+            /**
+             * Adicione a visualização de capa deste documento como failback caso o endpoint das
+             * páginas não esteja disponível
+             */
+            document.pages = [
+              {
+                thumbnails: document.thumbnails,
+                description: document.description
+              }
+            ]
+          }
         }
         return { document }
       } catch (e) {
