@@ -116,3 +116,21 @@ export const urlOrRoute = item => {
         }
       }
 }
+
+/**
+ * Reseta a configuração de um componente Loading do Nuxt.js
+ * @param {*} $loading a instância do componente Loading do Nuxt.js
+ * @param {*} oldConfig a configuração anterior
+ */
+export const resetLoadingConfig = ($loading, oldConfig) => {
+  $loading.continuous = oldConfig.continuous
+  $loading.duration = oldConfig.duration
+}
+/**
+ * Define carregamento contínuo para um componente Loading do Nuxt.js
+ * @param {*} $loading a instância do componente Loading do Nuxt.js
+ */
+export const setContinuousLoading = $loading => {
+  $loading.duration = 1500
+  $loading.continuous = true
+}
