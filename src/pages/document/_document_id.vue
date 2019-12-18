@@ -2,10 +2,10 @@
   <section class="Page DocumentPage">
     <main>
       <BackButton class="BackButton" />
-      <template v-if="isDocumentOfKnownType">
+      <template v-if="canPreviewDocument">
         <client-only>
           <!-- eslint-disable -->
-          <DocumentViewer :images="documentImages" :show-title="documentIsPDF" />
+          <DocumentViewer :images="documentPages" :show-title="documentIsPDF" />
           <!-- eslint-enable -->
         </client-only>
       </template>
@@ -16,7 +16,7 @@
             Infelizmente não temos uma visualização para este tipo de documento.
           </p>
           <p>
-            <a class="FileInfo_Button" download :href="fileURL">
+            <a class="FileInfo_Button" download :href="documentOriginalURL">
               <i class="material-icons">get_app</i>
               Baixar o arquivo
             </a>
@@ -29,7 +29,7 @@
       <header>
         <h1>{{document.document_id || document.name}}</h1>
         <div class="microtext download-area">
-          <a download :href="fileURL">
+          <a download :href="documentOriginalURL">
             <span class="FileInfo_Button el-button el-button--default is-circle">
               <i class="material-icons">get_app</i>
             </span>
@@ -42,13 +42,13 @@
         <Microtext tag="h2">Tipo</Microtext>
         <p>{{documentHumanType}}</p>
       </div>
-      <div v-if="size" class="FieldList__Field">
+      <div v-if="documentSize" class="FieldList__Field">
         <Microtext tag="h2">Tamanho</Microtext>
-        <p>{{size}}</p>
+        <p>{{documentSize}}</p>
       </div>
-      <div v-if="sendDate" class="FieldList__Field">
+      <div v-if="documentUploadDate" class="FieldList__Field">
         <Microtext tag="h2">Data de envio</Microtext>
-        <p>{{sendDate}}</p>
+        <p>{{documentUploadDate}}</p>
       </div>
 
       <div v-if="document.description" class="FieldList__Field">
@@ -103,7 +103,7 @@ export default {
     documentIsPDF() {
       return this.document.mime_type === 'application/pdf'
     },
-    documentImages() {
+    documentPages() {
       if (this.documentIsPDF) {
         try {
           return this.document.pages.map((page, index) => {
@@ -125,17 +125,17 @@ export default {
         }
       ]
     },
-    size() {
+    documentSize() {
       try {
         return humanSize(this.document.size)
       } catch {
         return '0KB'
       }
     },
-    fileURL() {
+    documentOriginalURL() {
       return getMediaUrl(this.document.canonical_url)
     },
-    sendDate() {
+    documentUploadDate() {
       try {
         const dateTime = dayJs(this.document.uploaded_at)
         if (!dateTime.isValid()) {
@@ -155,7 +155,7 @@ export default {
         return 'Documento'
       }
     },
-    isDocumentOfKnownType() {
+    canPreviewDocument() {
       return (
         this.document.mime_type === 'application/pdf' ||
         this.document.mime_type.startsWith('image/')
@@ -175,10 +175,10 @@ export default {
             /**
              * Faça outra requisição para pegar as páginas do documento.
              */
-          const { pages } = await $axios.$get(
-            `/api/v1/document/${document.document_id}/pages`
-          )
-          document.pages = pages
+            const { pages } = await $axios.$get(
+              `/api/v1/document/${document.document_id}/pages`
+            )
+            document.pages = pages
           } catch {
             /**
              * Adicione a visualização de capa deste documento como failback caso o endpoint das
