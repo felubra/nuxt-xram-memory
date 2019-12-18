@@ -1,6 +1,6 @@
 <template>
   <div class="DocumentViewer">
-    <viewer
+    <Viewer
       v-show="visible"
       :images="images"
       :options="getViewerOptions()"
@@ -17,17 +17,19 @@
           @load="viewerReady"
         />
       </template>
-    </viewer>
+    </Viewer>
   </div>
 </template>
 
 <script>
 import 'viewerjs/dist/viewer.css'
-import Viewer from 'v-viewer'
-import Vue from 'vue'
-Vue.use(Viewer)
+import Viewer from 'v-viewer/src/component.vue'
 
 export default {
+  name: 'DocumentViewer',
+  components: {
+    Viewer
+  },
   props: {
     images: {
       type: Array,
