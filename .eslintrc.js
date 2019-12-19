@@ -2,7 +2,8 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
+    "jest/globals": true
   },
   parserOptions: {
     parser: 'babel-eslint'
@@ -11,11 +12,19 @@ module.exports = {
     "plugin:vue/recommended",
     "eslint:recommended",
     "plugin:prettier/recommended",
-    "prettier/vue"
+    "prettier/vue",
+
   ],
   plugins: [
-    'prettier'
+    "prettier",
+    "jest"
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
+  }
 }
