@@ -1,0 +1,508 @@
+[
+  {
+    "_index": "artifact_news",
+    "_type": "Notícia",
+    "_id": "20",
+    "_score": 1.0,
+    "_source": {
+      "newspaper": {
+        "favicon_logo": "",
+        "title": "abril",
+        "url": "https://veja.abril.com.br"
+      },
+      "thumbnail": "/media/filer_public_thumbnails/filer_public/98/b5/98b5e1d9-5bcb-4225-bd64-6c626d7c340e/4de2ae0ae7b0bfb0af9db522e771960f.jpe__250x250_q85_autocrop_background-%23f3f1f1_crop-smart_subsampling-2.jpg",
+      "featured": true,
+      "keywords": [
+        {
+          "name": "haddad",
+          "slug": "haddad"
+        },
+        {
+          "name": "kit",
+          "slug": "kit"
+        },
+        {
+          "name": "ministro",
+          "slug": "ministro"
+        },
+        {
+          "name": "governo",
+          "slug": "governo"
+        },
+        {
+          "name": "dilma",
+          "slug": "dilma"
+        },
+        {
+          "name": "mec",
+          "slug": "mec-2"
+        },
+        {
+          "name": "gay",
+          "slug": "gay"
+        },
+        {
+          "name": "lançado",
+          "slug": "lancado"
+        },
+        {
+          "name": "realização",
+          "slug": "realizacao"
+        },
+        {
+          "name": "reformulado",
+          "slug": "reformulado"
+        }
+      ],
+      "published_year": 2011,
+      "pdf_captures": [
+        {
+          "pdf_capture_date": "2019-12-16T15:01:19.899306+00:00",
+          "pdf_document": {
+            "size": 1775253,
+            "id": 30
+          }
+        }
+      ],
+      "subjects": [],
+      "created_at": "2019-12-16T15:00:12.641491+00:00",
+      "language": "pt",
+      "published": true,
+      "title": "Governo Dilma: ‘Kit gay’ será reformulado e lançado até fim do ano",
+      "url": "https://veja.abril.com.br/educacao/kit-gay-sera-reformulado-e-lancado-ate-fim-do-ano-diz-haddad/",
+      "id": 20,
+      "modified_at": "2019-12-16T15:01:19.072470+00:00",
+      "published_date": "2011-05-27T17:53:00+00:00",
+      "slug": "governo-dilma-kit-gay-sera-reformulado-e-lancado-a",
+      "teaser": "O anúncio acontece um dia depois de a presidente Dilma Roussef criticar o conteúdo do material, que ainda está em fase de avaliação pelo MEC.\nO ministro afirmou que ainda está em discussão se serão mantidas as diretrizas que guiaram a formulação do material.\nAté agora, a produção envolveu gastos com pesquisa, produção e gravação dos vídeos, além da realização de seminários para treinamento de cerca de 200 pessoas no final de 2010.\nPara isso, analisa locais seguros onde poderão ser instalados computadores para a realização da prova.\nO ministro acrescentou que o MEC ainda espera notificação judicial acerca da ação movida pelo Ministério Público Federal no Ceará sobre o Enem."
+    }
+  },
+  {
+    "_index": "artifact_news",
+    "_type": "Notícia",
+    "_id": "45",
+    "_score": 1.0,
+    "_source": {
+      "newspaper": {
+        "favicon_logo": "",
+        "title": "abril",
+        "url": "https://veja.abril.com.br"
+      },
+      "thumbnail": "/media/filer_public_thumbnails/filer_public/0e/28/0e28b443-9180-41c7-bf72-40a7d3b6d577/a841a59205ff78b94c15169d167accab.jpg__250x250_q85_autocrop_background-%23f3f1f1_crop-smart_subsampling-2.jpg",
+      "featured": true,
+      "keywords": [
+        {
+          "name": "kit",
+          "slug": "kit"
+        },
+        {
+          "name": "ministro",
+          "slug": "ministro"
+        },
+        {
+          "name": "inverdades",
+          "slug": "inverdades"
+        },
+        {
+          "name": "mandou",
+          "slug": "mandou"
+        }
+      ],
+      "published_year": 2011,
+      "pdf_captures": [
+        {
+          "pdf_capture_date": "2019-12-16T15:01:40.561149+00:00",
+          "pdf_document": {
+            "size": 5792283,
+            "id": 45
+          }
+        }
+      ],
+      "subjects": [],
+      "created_at": "2019-12-16T15:00:17.791147+00:00",
+      "language": "pt",
+      "published": true,
+      "title": "O kit anti-homofobia e as inverdades do ministro da Educação. Ou: O dia em que um articulista mandou a democracia às favas em nome do… bem!",
+      "url": "https://veja.abril.com.br/blog/reinaldo/o-kit-anti-homofobia-e-as-inverdades-do-ministro-da-educacao-ou-o-dia-em-que-um-articulista-mandou-a-democracia-as-favas-em-nome-do-8230-bem/",
+      "id": 45,
+      "modified_at": "2019-12-16T15:01:25.043293+00:00",
+      "published_date": "2011-05-19T10:33:30+00:00",
+      "slug": "o-kit-anti-homofobia-e-as-inverdades-do-ministro-d",
+      "teaser": "Ou: O dia em que um articulista mandou a democracia às favas em nome do… bem!\nNa sessão, também foi apresentado o filme em que um adolescente chamado José Ricardo diz ser, na verdade, “Bianca”.\nNão é que ele seja especialmente simpático aos gays; é que ele é notoriamente hostil às religiões.\nO problema aqui é que o próprio Congresso reflete, e de forma exagerada, as heterogeneidades sociais, de modo que é o primeiro a imobilizar-se diante de temas polêmicos.\nÉ o que pensa qualquer tirano mais burro do que ele, mas com mais coragem para pôr em prática as idéias que ele enuncia."
+    }
+  },
+  {
+    "_index": "artifact_news",
+    "_type": "Notícia",
+    "_id": "73",
+    "_score": 1.0,
+    "_source": {
+      "newspaper": {
+        "favicon_logo": "",
+        "title": "abril",
+        "url": "https://veja.abril.com.br"
+      },
+      "thumbnail": "/media/filer_public_thumbnails/filer_public/98/b5/98b5e1d9-5bcb-4225-bd64-6c626d7c340e/4de2ae0ae7b0bfb0af9db522e771960f.jpe__250x250_q85_autocrop_background-%23f3f1f1_crop-smart_subsampling-2.jpg",
+      "featured": true,
+      "keywords": [
+        {
+          "name": "haddad",
+          "slug": "haddad"
+        },
+        {
+          "name": "kit",
+          "slug": "kit"
+        },
+        {
+          "name": "ministro",
+          "slug": "ministro"
+        },
+        {
+          "name": "governo",
+          "slug": "governo"
+        },
+        {
+          "name": "dilma",
+          "slug": "dilma"
+        },
+        {
+          "name": "mec",
+          "slug": "mec-2"
+        },
+        {
+          "name": "gay",
+          "slug": "gay"
+        },
+        {
+          "name": "lançado",
+          "slug": "lancado"
+        },
+        {
+          "name": "realização",
+          "slug": "realizacao"
+        },
+        {
+          "name": "reformulado",
+          "slug": "reformulado"
+        }
+      ],
+      "published_year": 2011,
+      "pdf_captures": [
+        {
+          "pdf_capture_date": "2019-12-16T15:01:39.605468+00:00",
+          "pdf_document": {
+            "size": 1775322,
+            "id": 43
+          }
+        }
+      ],
+      "subjects": [],
+      "created_at": "2019-12-16T15:00:24.161830+00:00",
+      "language": "pt",
+      "published": true,
+      "title": "Governo Dilma: ‘Kit gay’ será reformulado e lançado até fim do ano",
+      "url": "https://veja.abril.com.br/educacao/kit-gay-sera-reformulado-e-lancado-ate-fim-do-ano-diz-haddad/?fbclid=IwAR3utwy1PUo1EEildFtvoaMWzQ4NpnbRnOxP0KntVHYp9W2UnvY-yDYufQ8",
+      "id": 73,
+      "modified_at": "2019-12-16T15:02:05.184953+00:00",
+      "published_date": "2011-05-27T17:53:00+00:00",
+      "slug": "governo-dilma-kit-gay-sera-reformulado-e-lancado-2",
+      "teaser": "O anúncio acontece um dia depois de a presidente Dilma Roussef criticar o conteúdo do material, que ainda está em fase de avaliação pelo MEC.\nO ministro afirmou que ainda está em discussão se serão mantidas as diretrizas que guiaram a formulação do material.\nAté agora, a produção envolveu gastos com pesquisa, produção e gravação dos vídeos, além da realização de seminários para treinamento de cerca de 200 pessoas no final de 2010.\nPara isso, analisa locais seguros onde poderão ser instalados computadores para a realização da prova.\nO ministro acrescentou que o MEC ainda espera notificação judicial acerca da ação movida pelo Ministério Público Federal no Ceará sobre o Enem."
+    }
+  },
+  {
+    "_index": "artifact_news",
+    "_type": "Notícia",
+    "_id": "62",
+    "_score": 1.0,
+    "_source": {
+      "newspaper": {
+        "favicon_logo": "",
+        "title": "uol",
+        "url": "https://educacao.uol.com.br"
+      },
+      "thumbnail": "/media/filer_public_thumbnails/filer_public/55/be/55bedc1e-89c5-451b-95ba-4b59950f11df/d1add19f28bb4ed29d78281c73396426.png__250x250_q85_autocrop_background-%23f3f1f1_crop-smart_subsampling-2.jpg",
+      "featured": true,
+      "keywords": [
+        {
+          "name": "kit",
+          "slug": "kit"
+        },
+        {
+          "name": "ministério",
+          "slug": "ministerio"
+        },
+        {
+          "name": "educação",
+          "slug": "educacao"
+        },
+        {
+          "name": "ministro",
+          "slug": "ministro"
+        },
+        {
+          "name": "governo",
+          "slug": "governo"
+        },
+        {
+          "name": "material",
+          "slug": "material"
+        },
+        {
+          "name": "gay",
+          "slug": "gay"
+        },
+        {
+          "name": "vídeos",
+          "slug": "videos"
+        },
+        {
+          "name": "wyllys",
+          "slug": "wyllys"
+        },
+        {
+          "name": "jean",
+          "slug": "jean"
+        },
+        {
+          "name": "suspensão",
+          "slug": "suspensao"
+        }
+      ],
+      "published_year": 2011,
+      "pdf_captures": [
+        {
+          "pdf_capture_date": "2019-12-16T15:02:08.388196+00:00",
+          "pdf_document": {
+            "size": 4594915,
+            "id": 62
+          }
+        }
+      ],
+      "subjects": [],
+      "created_at": "2019-12-16T15:00:21.160549+00:00",
+      "language": "pt",
+      "published": true,
+      "title": "\"Ministério da Educação está sendo covarde\", diz Jean Wyllys sobre suspensão do kit gay",
+      "url": "https://educacao.uol.com.br/noticias/2011/05/27/ministerio-da-educacao-esta-sendo-covarde-diz-jean-wyllys-sobre-suspensao-do-kit-gay.htm",
+      "id": 62,
+      "modified_at": "2019-12-16T15:02:04.404225+00:00",
+      "published_date": "2011-05-27T03:00:00+00:00",
+      "slug": "ministerio-da-educacao-esta-sendo-covarde-diz-jean",
+      "teaser": "Segundo o ministro da Educação, Fernando Haddad, \"a Secad [Secretaria de Educação Continuada, Alfabetização e Diversidade] aprovou, [ela] se deu por satisfeita\", disse o ministro sobre a elaboração conjunta de ONGs e MEC do kit gay.\nNão sou contra o governo, não faço oposição sistemática.\nO deputado Anthony Garotinho (PR-RJ), da bancada religiosa, disse que não se trata de \"chantagem\", mas sim de \"jogo político\".\nO conteúdo chocou os parlamentares que se voltaram imediatamente contra o projeto \"Escola sem Homofobia\".\n\"O material não vai ser distribuído para crianças de cinco ou seis anos."
+    }
+  },
+  {
+    "_index": "artifact_news",
+    "_type": "Notícia",
+    "_id": "87",
+    "_score": 1.0,
+    "_source": {
+      "newspaper": {
+        "favicon_logo": "",
+        "title": "terra",
+        "url": "https://www.terra.com.br"
+      },
+      "thumbnail": null,
+      "featured": true,
+      "keywords": [
+        {
+          "name": "haddad",
+          "slug": "haddad"
+        },
+        {
+          "name": "kit",
+          "slug": "kit"
+        },
+        {
+          "name": "comissão",
+          "slug": "comissao"
+        },
+        {
+          "name": "antihomofobia",
+          "slug": "antihomofobia"
+        },
+        {
+          "name": "ministro",
+          "slug": "ministro"
+        },
+        {
+          "name": "material",
+          "slug": "material"
+        },
+        {
+          "name": "vídeos",
+          "slug": "videos"
+        },
+        {
+          "name": "refeito",
+          "slug": "refeito"
+        },
+        {
+          "name": "analisará",
+          "slug": "analisara"
+        }
+      ],
+      "published_year": 2011,
+      "pdf_captures": [
+        {
+          "pdf_capture_date": "2019-12-16T15:02:05.766667+00:00",
+          "pdf_document": {
+            "size": 1812494,
+            "id": 59
+          }
+        }
+      ],
+      "subjects": [],
+      "created_at": "2019-12-16T15:00:27.592996+00:00",
+      "language": "pt",
+      "published": true,
+      "title": "Haddad: comissão analisará e kit anti-homofobia será refeito",
+      "url": "https://www.terra.com.br/noticias/educacao/haddad-comissao-analisara-e-kit-anti-homofobia-sera-refeito,994942ba7d2da310VgnCLD200000bbcceb0aRCRD.html?fbclid=IwAR0EE763HDrSRwRGa3F7ByTT3DG4RrFJBCAQExuD7kTWX3FKqD54iPU7JhA",
+      "id": 87,
+      "modified_at": "2019-12-16T15:02:48.709215+00:00",
+      "published_date": "2011-05-31T20:48:14+00:00",
+      "slug": "haddad-comissao-analisara-e-kit-anti-homofobia-ser",
+      "teaser": "Haddad também disse que o material será refeito.\nO convênio do Ministério da Educação (MEC) firmado para preparação do kit contra homofobia, a ser distribuído em escolas de ensino médio, será cumprido na sua totalidade.\nA produção foi suspensa após críticas de líderes religiosos sobre o material que iria compor o kit.\n\"A presidente viu parte do material, manifestou desagrado em relação a um vídeo específico e pediu que a comissão analisasse\".\nDilma negou que cedeu às pressões e que desistiu do kit porque o governo \"não aceita propaganda de opções sexuais\"."
+    }
+  },
+  {
+    "_index": "artifact_news",
+    "_type": "Notícia",
+    "_id": "50",
+    "_score": 1.0,
+    "_source": {
+      "newspaper": {
+        "favicon_logo": "",
+        "title": "globo",
+        "url": "https://oglobo.globo.com"
+      },
+      "thumbnail": "/media/filer_public_thumbnails/filer_public/9b/ad/9bad899c-9b99-4b64-a9da-669a2a5772a8/33b81d7c09b83386ebdce90fcced4a20.jpg__250x250_q85_autocrop_background-%23f3f1f1_crop-smart_subsampling-2.jpg",
+      "featured": true,
+      "keywords": [
+        {
+          "name": "candidato",
+          "slug": "candidato"
+        },
+        {
+          "name": "pt",
+          "slug": "pt"
+        },
+        {
+          "name": "ministro",
+          "slug": "ministro"
+        },
+        {
+          "name": "propaganda",
+          "slug": "propaganda"
+        },
+        {
+          "name": "lula",
+          "slug": "lula"
+        },
+        {
+          "name": "tse",
+          "slug": "tse"
+        },
+        {
+          "name": "proíbe",
+          "slug": "proibe"
+        },
+        {
+          "name": "promoveu",
+          "slug": "promoveu"
+        },
+        {
+          "name": "tv",
+          "slug": "tv"
+        }
+      ],
+      "published_year": 2018,
+      "pdf_captures": [
+        {
+          "pdf_capture_date": "2019-12-16T15:01:53.587952+00:00",
+          "pdf_document": {
+            "size": 346506,
+            "id": 51
+          }
+        }
+      ],
+      "subjects": [],
+      "created_at": "2019-12-16T15:00:18.407429+00:00",
+      "language": "pt",
+      "published": true,
+      "title": "Ministro do TSE proíbe propaganda do PT que promoveu Lula na TV",
+      "url": "https://oglobo.globo.com/brasil/ministro-do-tse-proibe-propaganda-do-pt-que-promoveu-lula-na-tv-23035609",
+      "id": 50,
+      "modified_at": "2019-12-16T15:01:27.376118+00:00",
+      "published_date": "2018-09-03T21:10:00+00:00",
+      "slug": "ministro-do-tse-proibe-propaganda-do-pt-que-promov",
+      "teaser": "Mais cedo, o ministro Luis Felipe Salomão determinou que o PT suspenda a veiculação da propaganda eleitoral de rádio que também apresenta o ex-presidente como candidato.\nSalomão já tinha dado decisão semelhante à proferida agora por Horbach, proibindo propagandas em que Lula é apresentado como candidato.\nO Novo diz ainda que houve manipulação de dados na propaganda ao dizer que a “a ONU já decidiu que Lula poderia ser candidato e ser eleito presidente do Brasil\".\nOutro ponto questionado é que Lula aparece em mais de 25% da propaganda.\n\"Não fosse apenas o descumprimento da decisão judicial deste Tribunal que torna a propaganda irregular, a propaganda descumpre a lei ao tornar personagem central da propaganda alguém que não é candidato."
+    }
+  },
+  {
+    "_index": "artifact_news",
+    "_type": "Notícia",
+    "_id": "78",
+    "_score": 1.0,
+    "_source": {
+      "newspaper": {
+        "favicon_logo": "",
+        "title": "vermelho",
+        "url": "http://www.vermelho.org.br"
+      },
+      "thumbnail": "/media/filer_public_thumbnails/filer_public/fa/6b/fa6ba124-9512-45ef-aad7-238b330194bd/1400aeb884fcbe259f825bceceaedfa0.ico__250x250_q85_autocrop_background-%23f3f1f1_crop-smart_subsampling-2.jpg",
+      "featured": true,
+      "keywords": [
+        {
+          "name": "haddad",
+          "slug": "haddad"
+        },
+        {
+          "name": "kit",
+          "slug": "kit"
+        },
+        {
+          "name": "antihomofobia",
+          "slug": "antihomofobia"
+        },
+        {
+          "name": "ministro",
+          "slug": "ministro"
+        },
+        {
+          "name": "governo",
+          "slug": "governo"
+        },
+        {
+          "name": "presidente",
+          "slug": "presidente"
+        },
+        {
+          "name": "sair",
+          "slug": "sair"
+        }
+      ],
+      "published_year": 2011,
+      "pdf_captures": [
+        {
+          "pdf_capture_date": "2019-12-16T15:03:45.705732+00:00",
+          "pdf_document": {
+            "size": 1348542,
+            "id": 152
+          }
+        }
+      ],
+      "subjects": [],
+      "created_at": "2019-12-16T15:00:24.620384+00:00",
+      "language": "pt",
+      "published": true,
+      "title": "Novo kit anti-homofobia deve sair neste ano, diz ministro Haddad",
+      "url": "http://www.vermelho.org.br/noticia/155316-1#.W8VlmyzOPzA.twitter",
+      "id": 78,
+      "modified_at": "2019-12-16T15:02:19.638368+00:00",
+      "published_date": "2011-05-30T17:10:24+00:00",
+      "slug": "novo-kit-anti-homofobia-deve-sair-neste-ano-diz-mi",
+      "teaser": "Kit não ensina a ser homossexualPara o presidente da Associação Brasileira de Lésbicas, Gays, Bissexuais, Travestis e Transexuais (ABGLT), Toni Reis, \"é mentira que (o kit) ensina a ser homossexual\".\nO presidente da associação afirmou que o ministro e pelo menos dez parlamentares que elogiaram o material rejeitado pela presidente Dilma.\nSegundo o ministro, a determinação do governo de suspender o kit não é um \"recuo\" na política de educacional contrária à homofobia.\n\"A presidenta vai fazer um diálogo com os ministros para que a gente tome todos os devidos cuidados.\nEm qualquer área do governo estamos demandando que qualquer material editado passe por um crivo de debate e de discussão e da coordenação da Presidência.\""
+    }
+  }
+]
