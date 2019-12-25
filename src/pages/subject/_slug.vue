@@ -6,6 +6,7 @@
         <h1>{{subject.name}}</h1>
       </header>
       <section v-if="description" class="Subject__Description">
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <div v-html="description"></div>
       </section>
     </section>

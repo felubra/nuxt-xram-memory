@@ -94,7 +94,7 @@ export default {
             `api/v1/subjects/initial/${initial}`
           )
           this.$nextTick(() => (this.subjects = subjectsForInitial))
-        } catch {}
+        } catch {} //eslint-disable-line no-empty
       }
     },
     $route: {
@@ -111,7 +111,7 @@ export default {
     }
   },
   methods: {
-    determineMinHeight({ width, height }) {
+    determineMinHeight({ height }) {
       this.minHeight = this.minHeight < height ? height : this.minHeight
     },
     selectInitial(initial) {

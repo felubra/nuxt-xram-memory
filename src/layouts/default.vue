@@ -22,7 +22,7 @@ import Menu from '~/components/nav/Menu'
 import Footer from '~/components/common/Footer'
 import FixedHeader from 'vue-fixed-header'
 import { mapState } from 'vuex'
-import { isCookieEnabled, getCookie, setCookie, remove } from 'tiny-cookie'
+import { getCookie, setCookie } from 'tiny-cookie'
 
 export default {
   name: 'NewLayout',

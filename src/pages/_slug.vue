@@ -4,6 +4,7 @@
       <Microtext>{{staticPage.teaser_text}}</Microtext>
       <h1>{{staticPage.title}}</h1>
     </header>
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <main v-html="theBody"></main>
   </Section>
 </template>

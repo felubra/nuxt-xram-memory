@@ -1,5 +1,6 @@
 <template>
   <section v-if="teaser" :class="{'TeaserBlock': true, 'TeaserBlock--home': home}">
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div class="ql-editor TeaserBlock__Body" v-html="teaser"></div>
     <nuxt-link
       v-if="slug && showLink"

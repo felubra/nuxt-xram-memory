@@ -20,7 +20,14 @@ export default {
     D3TagCloud,
     Microtext
   },
-  props: ['error'],
+  props: {
+    error: {
+      type: Object,
+      default: () => ({
+        statusCode: 500
+      })
+    }
+  },
   computed: {
     title() {
       return this.error.statusCode === 404
