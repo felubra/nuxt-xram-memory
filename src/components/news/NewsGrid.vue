@@ -159,7 +159,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .item {

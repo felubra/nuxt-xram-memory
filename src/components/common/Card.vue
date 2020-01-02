@@ -3,7 +3,7 @@
     <slot>
       <nuxt-link :to="itemLink">
         <slot name="image">
-          <img :key="imageSrc" class="ImageFilePreview__OriginalImage" :src="imageSrc" />
+          <img :key="imageSrc" width="250" height="250" class="ImageFilePreview__OriginalImage" :src="imageSrc" @error="removeImage" />
         </slot>
         <slot name="label">
           <Microtext v-if="label" class-name="label">{{label}}</Microtext>
