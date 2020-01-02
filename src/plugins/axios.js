@@ -1,6 +1,9 @@
+import { setupCache } from 'axios-cache-adapter'
+
 export default function({ $axios }) {
-  $axios.onRequest(config => {
-    // ignore o proxy nas requisições
-    config.proxy = false
+  const cache = setupCache({
+    maxAge: 15 * 60 * 1000
   })
+  const { defaults } = $axios
+  defaults.adapter = cache.adapter
 }
