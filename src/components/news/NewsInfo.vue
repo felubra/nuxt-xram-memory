@@ -50,15 +50,14 @@
           :src="thumbnailForDocument(capture.document_id)"
           aspect-ratio="1"
           class="ImageCapture"
-          max-width="500"
-          max-height="300"
           :alt="capture.title"
           :title="capture.title"
+          @error="changeImagePlaceholder"
         >
           <template v-slot:placeholder class="image-slot">
-            <div class="image-slot error">
-              <v-icon>mdi-image-off</v-icon>
-              <Microtext>Falha ao carregar a imagem</Microtext>
+            <div class="image-slot">
+              <v-icon>download</v-icon>
+              <Microtext>{{imagePlaceholder}}</Microtext>
             </div>
           </template>
         </v-img>
@@ -107,7 +106,8 @@ export default {
   },
   data() {
     return {
-      documents: []
+      documents: [],
+      imagePlaceholder: 'Carregando...'
     }
   },
   computed: {
@@ -218,6 +218,9 @@ export default {
     }
   },
   methods: {
+    changeImagePlaceholder() {
+      this.imagePlaceholder = 'Falha ao carregar a imagem.'
+    },
     captureNameAndSize(capture) {
       let title = {}
       try {
@@ -299,7 +302,7 @@ export default {
 .NewsInfo--pdf-captures a {
   border: solid 1px #efefef;
   margin: 6px;
-  width: auto;
+  overflow: hidden;
   transition: border-color 0.25s ease;
 }
 
