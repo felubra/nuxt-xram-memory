@@ -38,20 +38,13 @@ export default {
   justify-content: center;
 }
 
-.SearchResults__ResultsInfo {
-  align-self: stretch;
-}
-
 .ResultStats {
-  margin: 0.5rem 22px;
   display: flex;
   flex-direction: column;
-  margin: 3rem 0 0;
   text-align: center;
-  width: 100%;
-  margin-top: 2.5rem;
   display: flex;
   justify-content: space-between;
+  flex: 1;
 }
 
 .SelectedFilters {
@@ -92,7 +85,6 @@ export default {
 @media only screen and (min-width: 768px) {
   .ResultStats {
     flex-direction: row;
-    margin: 3rem 4rem 0;
   }
 
   .ResultCount {
