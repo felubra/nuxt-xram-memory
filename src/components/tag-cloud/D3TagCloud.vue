@@ -11,8 +11,8 @@
       name="list-complete"
     >
       <g
-        v-for="d in words"
-        :key="d.text"
+        v-for="(d,i) in words"
+        :key="d.text + i"
         :style="`transform: translate(${width/2}px, ${height/2}px);`"
       >
         <nuxt-link

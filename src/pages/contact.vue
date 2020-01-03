@@ -230,6 +230,9 @@ export default {
 .el-alert__title {
   font-size: 1rem;
 }
+.el-form-item__error {
+  font-size: 14px;
+}
 </style>
 
 

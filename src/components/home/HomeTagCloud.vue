@@ -4,9 +4,11 @@
     component-id="ReactiveD3TagCloud"
     :default-query="tagCloudQuery"
   >
-    <div slot-scope="{ aggregations, error }">
-      <D3TagCloud v-if="!error" :keywords="keywords(aggregations)" />
-    </div>
+    <template v-slot:default="{ aggregations, error }">
+      <div>
+        <D3TagCloud v-if="!error" :keywords="keywords(aggregations)" />
+      </div>
+    </template>
   </ReactiveComponent>
 </template>
 

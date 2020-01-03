@@ -142,8 +142,6 @@ module.exports = {
       ]
     },
     extend(config, ctx) {
-      // Necessário para utilizar o componente pdfVuer: https://github.com/webpack/webpack/issues/6525
-      config.output.globalObject = '(self || this)'
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.devtool = 'source-map'

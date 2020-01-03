@@ -2,10 +2,10 @@
   <section class="Page DocumentPage">
     <main>
       <BackButton class="BackButton" />
-      <template v-if="isOfKnownType">
+      <template v-if="canPreviewDocument">
         <client-only>
           <!-- eslint-disable -->
-          <DocumentPreview :document="document" />
+          <DocumentViewer :images="documentPages" :show-title="documentIsPDF" />
           <!-- eslint-enable -->
         </client-only>
       </template>
@@ -16,7 +16,7 @@
             Infelizmente não temos uma visualização para este tipo de documento.
           </p>
           <p>
-            <a class="FileInfo_Button" download :href="fileURL">
+            <a class="FileInfo_Button" download :href="documentOriginalURL">
               <i class="material-icons">get_app</i>
               Baixar o arquivo
             </a>
@@ -29,7 +29,7 @@
       <header>
         <h1>{{document.document_id || document.name}}</h1>
         <div class="microtext download-area">
-          <a download :href="fileURL">
+          <a download :href="documentOriginalURL">
             <span class="FileInfo_Button el-button el-button--default is-circle">
               <i class="material-icons">get_app</i>
             </span>
@@ -38,17 +38,17 @@
         </div>
       </header>
 
-      <div v-if="fileType" class="FieldList__Field">
+      <div v-if="documentHumanType" class="FieldList__Field">
         <Microtext tag="h2">Tipo</Microtext>
-        <p>{{fileType}}</p>
+        <p>{{documentHumanType}}</p>
       </div>
-      <div v-if="size" class="FieldList__Field">
+      <div v-if="documentSize" class="FieldList__Field">
         <Microtext tag="h2">Tamanho</Microtext>
-        <p>{{size}}</p>
+        <p>{{documentSize}}</p>
       </div>
-      <div v-if="sendDate" class="FieldList__Field">
+      <div v-if="documentUploadDate" class="FieldList__Field">
         <Microtext tag="h2">Data de envio</Microtext>
-        <p>{{sendDate}}</p>
+        <p>{{documentUploadDate}}</p>
       </div>
 
       <div v-if="document.description" class="FieldList__Field">
@@ -73,19 +73,18 @@
   </section>
 </template>
 <script>
-import DocumentPreview from '~/components/viewers/DocumentPreview'
+import DocumentViewer from '~/components/viewers/DocumentViewer'
 import Microtext from '~/components/common/Microtext'
 import BackButton from '@/components/common/BackButton'
+import { getMediaUrl } from '@/utils'
 
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
-
-const { getMediaUrl } = require('~/utils')
 export default {
   name: 'DocumentPage',
   components: {
     Microtext,
-    DocumentPreview,
+    DocumentViewer,
     BackButton
   },
   data() {
@@ -101,23 +100,42 @@ export default {
     }
   },
   computed: {
-    previewURL() {
-      if (this.document.mime_type === 'application/pdf') {
-        return getMediaUrl(this.document.thumbnails.document_preview)
-      }
-      return ''
+    documentIsPDF() {
+      return this.document.mime_type === 'application/pdf'
     },
-    size() {
+    documentPages() {
+      if (this.documentIsPDF) {
+        try {
+          return this.document.pages.map((page, index) => {
+            return {
+              src: getMediaUrl(page.thumbnails.document_preview),
+              thumbnailSrc: getMediaUrl(page.thumbnails.document_thumbnail),
+              description: page.description || `(página ${index + 1})`
+            }
+          })
+        } catch {
+          return []
+        }
+      }
+      return [
+        {
+          src: getMediaUrl(this.document.canonical_url),
+          thumbnailSrc: getMediaUrl(this.document.thumbnails.thumbnail),
+          description: document.description || ''
+        }
+      ]
+    },
+    documentSize() {
       try {
         return humanSize(this.document.size)
       } catch {
         return '0KB'
       }
     },
-    fileURL() {
+    documentOriginalURL() {
       return getMediaUrl(this.document.canonical_url)
     },
-    sendDate() {
+    documentUploadDate() {
       try {
         const dateTime = dayJs(this.document.uploaded_at)
         if (!dateTime.isValid()) {
@@ -128,8 +146,8 @@ export default {
         return ''
       }
     },
-    fileType() {
-      if (this.document.mime_type === 'application/pdf') {
+    documentHumanType() {
+      if (this.documentIsPDF) {
         return this.isCapture ? 'Captura de notícia em PDF' : 'Documento PDF'
       } else if (this.document.mime_type.includes('image/')) {
         return this.isCapture ? 'Imagem de notícia' : 'Imagem'
@@ -137,7 +155,7 @@ export default {
         return 'Documento'
       }
     },
-    isOfKnownType() {
+    canPreviewDocument() {
       return (
         this.document.mime_type === 'application/pdf' ||
         this.document.mime_type.startsWith('image/')
@@ -152,6 +170,28 @@ export default {
     if (documentId) {
       try {
         const document = await $axios.$get(`/api/v1/document/${documentId}`)
+        if (document.mime_type === 'application/pdf') {
+          try {
+            /**
+             * Faça outra requisição para pegar as páginas do documento.
+             */
+            const { pages } = await $axios.$get(
+              `/api/v1/document/${document.document_id}/pages`
+            )
+            document.pages = pages
+          } catch {
+            /**
+             * Adicione a visualização de capa deste documento como failback caso o endpoint das
+             * páginas não esteja disponível
+             */
+            document.pages = [
+              {
+                thumbnails: document.thumbnails,
+                description: document.description
+              }
+            ]
+          }
+        }
         return { document }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500
@@ -185,7 +225,6 @@ export default {
 }
 
 main {
-  padding: 1rem;
   display: flex;
   flex-grow: 1;
   min-height: 75vh;

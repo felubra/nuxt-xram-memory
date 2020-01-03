@@ -1,6 +1,6 @@
 <template>
   <div id="main-wrapper">
-    <div class="spacer" :style="`height: ${navBarFixed ? spacerHeight: 0}px`"></div>
+    <div v-if="navBarFixed" class="spacer" :style="`height: ${spacerHeight}px`"></div>
     <Menu />
 
     <fixed-header :fixed.sync="navBarFixed">
@@ -22,7 +22,7 @@ import Menu from '~/components/nav/Menu'
 import Footer from '~/components/common/Footer'
 import FixedHeader from 'vue-fixed-header'
 import { mapState } from 'vuex'
-import { isCookieEnabled, getCookie, setCookie, remove } from 'tiny-cookie'
+import { getCookie, setCookie } from 'tiny-cookie'
 
 export default {
   name: 'NewLayout',
@@ -47,7 +47,13 @@ export default {
     }
   },
   mounted() {
-    if (!getCookie('GDPR_cookie')) {
+    const isBot =
+      navigator &&
+      navigator.userAgent &&
+      /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)
+
+    //Somente mostre a notificação se não for um robô a acessar a página e não houver um cookie de aceite
+    if (!isBot && !getCookie('GDPR_cookie')) {
       this.$notify({
         title: 'Este site usa cookies',
         dangerouslyUseHTMLString: true,
@@ -78,6 +84,8 @@ export default {
 .MainHeader {
   border-bottom: solid 1px #f1eaea;
   transition: all 0.25s ease;
+  /* Tamanho mínimo para evitar pulos ao mostrar a barra de navegação */
+  min-height: 101px;
 }
 
 .MainNavBar {

@@ -59,7 +59,7 @@
         title="Palavras-chave"
         :u-r-l-params="true"
       >
-        <template slot="renderItem" slot-scope="{ label }">
+        <template v-slot:renderItem="{ label }">
           <div>{{lowerSlugify(label)}}</div>
         </template>
       </multi-dropdown-list>
@@ -85,7 +85,7 @@
         title="Assunto"
         :u-r-l-params="true"
       >
-        <template slot="renderItem" slot-scope="{ label }">
+        <template v-slot:renderItem="{ label }">
           <div>{{label}}</div>
         </template>
       </multi-dropdown-list>

@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="ErrorPage">
     <h1>{{title}}</h1>
     <nuxt-link class="active" to="/">
       <Microtext arrow="left">Voltar à página inicial</Microtext>
@@ -20,7 +20,14 @@ export default {
     D3TagCloud,
     Microtext
   },
-  props: ['error'],
+  props: {
+    error: {
+      type: Object,
+      default: () => ({
+        statusCode: 500
+      })
+    }
+  },
   computed: {
     title() {
       return this.error.statusCode === 404
@@ -32,7 +39,7 @@ export default {
         const keywords = []
         for (let i = 0; i < TAGCLOUD_NUM_KEYWORDS; i++) {
           keywords.push({
-            text: this.error.statusCode || 'erro',
+            text: this.error.statusCode || '500',
             size: Math.random() * 8 * FONT_SIZE_DELTA,
             link: {
               name: 'index'
@@ -66,7 +73,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-section {
+section.ErrorPage {
   flex-grow: 1;
   text-align: center;
   display: flex;
@@ -74,8 +81,6 @@ section {
 }
 
 h1 {
-  margin-top: auto;
-  margin-bottom: 0;
   font-weight: bold;
 }
 

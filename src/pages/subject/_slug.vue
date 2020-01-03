@@ -6,6 +6,7 @@
         <h1>{{subject.name}}</h1>
       </header>
       <section v-if="description" class="Subject__Description">
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <div v-html="description"></div>
       </section>
     </section>
@@ -26,18 +27,13 @@
           :from="0"
           :size="20"
         >
-          <div slot="renderResultStats" slot-scope="{ totalResults, time }">
-            <Microtext
-              arrow="down"
-            >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
-          </div>
+          <template v-slot:renderResultStats="{ numberOfResults, time }">
+            <ResultStats :total-results="numberOfResults" :time="time" />
+          </template>
           <div slot="renderNoResults" class="NoResults">Nenhum item encontrado.</div>
-          <NewsGrid
-            id="SubjectsMasonryGrid"
-            slot="renderAllData"
-            slot-scope="{ results }"
-            :items="results"
-          ></NewsGrid>
+          <template v-slot:render="{ data }">
+            <NewsGrid id="SubjectsMasonryGrid" :items="data"></NewsGrid>
+          </template>
         </ReactiveList>
       </DefaultReactiveBase>
     </section>
@@ -49,13 +45,15 @@ import { sanitize, getMediaUrl } from '@/utils'
 import Microtext from '@/components/common/Microtext'
 import NewsGrid from '~/components/news/NewsGrid'
 import DefaultReactiveBase from '@/components/DefaultReactiveBase'
+import ResultStats from '~/components/home/ResultStats'
 
 export default {
   name: 'SubjectPage',
   components: {
     Microtext,
     NewsGrid,
-    DefaultReactiveBase
+    DefaultReactiveBase,
+    ResultStats
   },
   data() {
     return {

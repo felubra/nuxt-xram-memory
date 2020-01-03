@@ -51,7 +51,7 @@ export default {
     if (store.getters.featuredPages.length === 0) {
       try {
         await store.dispatch('fetchFeaturedPages')
-      } catch {}
+      } catch {} //eslint-disable-line no-empty
     }
   },
   methods: {
