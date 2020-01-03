@@ -70,6 +70,7 @@ export default {
 .SearchResults__SortOptions.microtext {
   order: 2;
   color: #555;
+  font-family: $sans-serif;
 }
 
 .SearchResults {
