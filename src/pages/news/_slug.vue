@@ -3,7 +3,9 @@
     <div class="NewsPage__Info">
       <header>
         <figure v-if="theImage">
-          <img :src="theImage" />
+          <nuxt-link class="ImageLink" :to="imageLink">
+            <img :src="theImage" />
+          </nuxt-link>
         </figure>
         <h1>{{theTitle}}</h1>
       </header>
@@ -42,6 +44,18 @@ export default {
     theImage() {
       const urlVal = sanitize(this.newsItem.thumbnails.news_page)
       return urlVal ? getMediaUrl(urlVal) : ''
+    },
+    imageLink() {
+      try {
+        return {
+          name: 'document-document_id',
+          params: {
+            document_id: this.newsItem.image_capture.image_document.document_id
+          }
+        }
+      } catch {
+        return null
+      }
     },
     pdfUrl() {
       try {
@@ -113,6 +127,17 @@ p.microtext {
 
 h1 {
   margin: auto 0;
+}
+
+a.ImageLink {
+  border: solid 1px #efefef;
+  display: inline-flex;
+  padding: 2px;
+  transition: border-color 0.25s ease;
+}
+
+a.ImageLink:hover {
+  border-color: #a00;
 }
 
 @media only screen and (min-width: 960px) {
