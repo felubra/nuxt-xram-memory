@@ -47,7 +47,13 @@ export default {
     }
   },
   mounted() {
-    if (!getCookie('GDPR_cookie')) {
+    const isBot =
+      navigator &&
+      navigator.userAgent &&
+      /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)
+
+    //Somente mostre a notificação se não for um robô a acessar a página e não houver um cookie de aceite
+    if (!isBot && !getCookie('GDPR_cookie')) {
       this.$notify({
         title: 'Este site usa cookies',
         dangerouslyUseHTMLString: true,
