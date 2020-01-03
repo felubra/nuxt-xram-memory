@@ -104,7 +104,7 @@ figure {
   transition: all 0.25s ease;
   display: flex;
   align-items: center;
-  margin: 0;
+  margin-bottom: 1rem;
 }
 
 p.microtext {
@@ -112,7 +112,7 @@ p.microtext {
 }
 
 h1 {
-  margin-bottom: auto;
+  margin: auto 0;
 }
 
 @media only screen and (min-width: 960px) {
