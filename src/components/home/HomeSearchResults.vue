@@ -5,12 +5,22 @@
     component-id="SearchResults"
     :pagination="false"
     data-field="title.raw"
+    :sortOptions="[{
+      label: 'Data de publicação',
+      dataField: 'published_date',
+      sortBy: 'desc',
+    }, {
+      label: 'Título',
+      dataField: 'title.raw',
+      sortBy: 'asc',
+    }]"
     class-name="SearchResults"
     loader="Carregando..."
     renderError="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
     :inner-class="{
       resultsInfo: 'SearchResults__ResultsInfo microtext',
-      list: 'SearchResults__List'
+      list: 'SearchResults__List',
+      sortOptions: 'SearchResults__SortOptions microtext',
     }"
     :from="0"
     :size="20"
@@ -50,6 +60,19 @@ export default {
 </script>
 
 <style lang="stylus">
+.SearchResults__ResultsInfo.microtext {
+  display: flex;
+  align-self: stretch;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.SearchResults__SortOptions.microtext {
+  order: 2;
+  color: #555;
+  font-family: $sans-serif;
+}
+
 .SearchResults {
   display: flex;
   flex-direction: column;
@@ -87,5 +110,12 @@ export default {
 
 .ClearResults {
   font-family: $sans-serif !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .SearchResults__ResultsInfo.microtext {
+    margin: 3rem 4rem 0;
+    flex-direction: row;
+  }
 }
 </style>
