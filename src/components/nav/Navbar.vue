@@ -1,24 +1,14 @@
 <template>
   <nav class="Navbar">
     <Logo v-if="showLogo !== false" :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`" />
-    <client-only>
-      <div v-dragscroll.x="true" class="main-itens">
-        <nuxt-link
-          v-for="(page, index) in pageLinks()"
-          :key="index"
-          class="Navbar__Item"
-          :to="urlOrRoute(page)"
-        >{{page.title}}</nuxt-link>
-      </div>
-      <div slot="placeholder" class="main-itens">
-        <nuxt-link
-          v-for="(page, index) in pageLinks()"
-          :key="index"
-          class="Navbar__Item"
-          :to="urlOrRoute(page)"
-        >{{page.title}}</nuxt-link>
-      </div>
-    </client-only>
+    <div v-dragscroll.x="true" class="main-itens">
+      <nuxt-link
+        v-for="(page, index) in pageLinks()"
+        :key="index"
+        class="Navbar__Item"
+        :to="urlOrRoute(page)"
+      >{{page.title}}</nuxt-link>
+    </div>
     <NavbarControls />
   </nav>
 </template>
