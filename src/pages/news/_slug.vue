@@ -3,7 +3,14 @@
     <div class="NewsPage__Info">
       <header>
         <figure v-if="theImage">
-          <img :src="theImage" />
+          <v-img :src="theImage" @error="changeImagePlaceholder">
+            <template v-slot:placeholder class="image-slot">
+              <div class="image-slot">
+                <v-icon>download</v-icon>
+                <Microtext>{{imagePlaceholder}}</Microtext>
+              </div>
+            </template>
+          </v-img>
         </figure>
         <h1>{{theTitle}}</h1>
       </header>
@@ -32,7 +39,8 @@ export default {
   },
   data() {
     return {
-      newsItem: {}
+      newsItem: {},
+      imagePlaceholder: 'Carregando...'
     }
   },
   computed: {
@@ -71,6 +79,11 @@ export default {
       }
     }
     return error({ statusCode: 400 })
+  },
+  methods: {
+    changeImagePlaceholder() {
+      this.imagePlaceholder = 'Falha ao carregar a imagem.'
+    }
   }
 }
 </script>
@@ -113,6 +126,14 @@ p.microtext {
 
 h1 {
   margin-bottom: auto;
+}
+
+.image-slot {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 @media only screen and (min-width: 960px) {
