@@ -38,9 +38,11 @@ export default {
 <style scoped>
 .Logo img {
   height: 38px;
+  width: 156.27px;
 }
 
 .Logo.Logo--big img {
   height: 56px;
+  width: 230.28px;
 }
 </style>
