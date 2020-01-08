@@ -203,6 +203,7 @@ footer {
 .FilterList__FilterItem {
   margin: 1rem 0;
   width: 100%;
+  transition: all .2s ease;
 }
 
 .FilterList__FilterItem > h2 {
