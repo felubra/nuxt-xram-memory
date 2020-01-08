@@ -43,7 +43,6 @@
           @expired="onExpired"
           @verify="onCaptchaVerify"
         ></vue-recaptcha>
-
         <v-btn :disabled="isSending || !isAvailable" color="primary" @click="onSubmit">Enviar</v-btn>
         <v-btn :disabled="isSending || !isAvailable" @click="clearForm">Limpar</v-btn>
       </v-form>
@@ -244,5 +243,8 @@ main {
 .v-btn.primary {
   /** Existe um bug no vuletify que não está carregando a cor de fundo deste botão */
   background-color: $link-color-active !important;
+}
+.v-input {
+  padding: 24px 0;
 }
 </style>
