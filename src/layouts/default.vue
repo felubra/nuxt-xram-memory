@@ -154,6 +154,16 @@ body.page--full-screen .MainHeader[fixed] {
   opacity: 1;
 }
 
+.v-label {
+  font-family: $sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.v-messages {
+  font-family: $sans-serif;
+}
+
 @media only screen and (min-width: $tablet) {
   .FieldList > .FieldList__Field {
     flex-direction: row;
