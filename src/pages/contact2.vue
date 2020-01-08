@@ -240,4 +240,9 @@ main {
   font-size: 1.2rem;
   padding: 1rem 0;
 }
+
+.v-btn.primary {
+  /** Existe um bug no vuletify que não está carregando a cor de fundo deste botão */
+  background-color: $link-color-active !important;
+}
 </style>
