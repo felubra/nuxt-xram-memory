@@ -41,7 +41,7 @@ export default {
   border-bottom: solid 2px transparent;
   margin: 0 0.5rem;
   outline: none;
-  transition: border-color 0.25s ease, color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
 .NavbarControls {
@@ -50,10 +50,6 @@ export default {
 
 .NavbarControls {
   align-items: stretch;
-}
-
-a.nuxt-link-exact-active, a.nuxt-link-active, a:hover, a:active, a:focus {
-  border-color: $link-color;
 }
 
 @media only screen and (min-width: $tablet) {

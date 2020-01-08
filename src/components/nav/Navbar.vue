@@ -95,14 +95,13 @@ export default {
 
 .main-itens a, .controls a {
   color: #555;
-  border-bottom: solid 2px transparent;
   margin: 0 0.5rem;
   outline: none;
-  transition: border-color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
 nav a.nuxt-link-exact-active, nav a:hover, nav a:active, nav a:focus {
-  border-color: $link-color;
+  color: $link-color-active;
 }
 
 .main-itens {
