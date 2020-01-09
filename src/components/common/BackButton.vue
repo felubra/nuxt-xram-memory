@@ -1,5 +1,5 @@
 <template>
-  <v-btn nuxt fab @click="goBack()">
+  <v-btn nuxt fab small @click="goBack()">
     <v-icon>mdi-arrow-left</v-icon>
   </v-btn>
 </template>

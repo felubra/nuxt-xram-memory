@@ -41,6 +41,7 @@ export default {
 
 .SearchBar input {
   transition: border-color 0.25s ease;
+  font-size: 16px;
 }
 
 .SearchBar input:focus,

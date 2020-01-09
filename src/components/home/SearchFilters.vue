@@ -247,6 +247,10 @@ button.FilterItem__DropdownToggle:focus, button.FilterItem__DropdownToggle:hover
   align-items: center;
 }
 
+.FilterList__FilterItem button > span {
+  color: #a1a1a1;
+}
+
 @media only screen and (min-width: 768px) {
   .FilterList >section {
     flex-direction: row;
