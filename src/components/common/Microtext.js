@@ -16,6 +16,13 @@ export default Vue.component('Microtext', {
       },
       default: 'none'
     },
+    arrowPosition: {
+      type: String,
+      validator(value) {
+        return ['before', 'after'].includes(value)
+      },
+      default: 'after'
+    },
     className: {
       type: String,
       default: ''
@@ -23,6 +30,7 @@ export default Vue.component('Microtext', {
   },
   render(createElement, context) {
     const { arrow } = context.props
+    const { arrowPosition } = context.props
     const additionalClasses =
       context.props.className && context.props.className.split(' ')
     if (arrow !== 'none') {
@@ -44,7 +52,9 @@ export default Vue.component('Microtext', {
             ...additionalClasses
           ]
         },
-        [context.slots().default, arrowElement]
+        arrowPosition === 'after'
+          ? [context.slots().default, arrowElement]
+          : [arrowElement, context.slots().default]
       )
     }
     return createElement(
