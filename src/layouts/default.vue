@@ -162,6 +162,53 @@ body.page--full-screen .MainHeader[fixed] {
   opacity: 1;
 }
 
+.v-label {
+  font-family: $sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.v-messages {
+  font-family: $sans-serif;
+}
+
+.v-text-field > .v-input__control > .v-input__slot:after,
+.v-text-field > .v-input__control > .v-input__slot:before {
+  border: none;
+}
+
+.v-text-field > .v-input__control > .v-input__slot:before {
+  border: solid 1px #ccc;
+  border-color: #ccc !important;
+}
+
+.v-text-field  > .v-input__control > .v-input__slot:after {
+  border: solid 1px $link-color-active;
+  transform: scaleY(0)
+}
+
+
+.v-text-field.v-input--is-focused  > .v-input__control > .v-input__slot:after {
+  transform: scaleY(1)
+}
+
+.theme--light.v-label.v-label--active {
+  color: $link-color;
+}
+
+.v-text-field .v-label {
+  top: -12px;
+  font-size: 14px;
+  color: #a1a1a1 !important;
+  transition: color .2s ease;
+}
+
+.v-text-field .v-label--active {
+  transform: none;
+  color: $link-color !important;
+}
+
+
 @media only screen and (min-width: $tablet) {
   .FieldList > .FieldList__Field {
     flex-direction: row;

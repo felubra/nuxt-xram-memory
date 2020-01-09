@@ -62,7 +62,9 @@ export default {
 main {
   display: flex;
 }
+</style>
 
+<style lang="stylus">
 .BackButton {
   z-index: 9;
   position: absolute;
@@ -70,6 +72,25 @@ main {
   left: 24px;
 }
 
+.viewer-navbar {
+  background: transparent;
+}
+
+.viewer-title {
+  color: #000;
+  font-family: $sans-serif;
+  font-size: 16px;
+  text-shadow: 0px 0px 5px #dfdfdf;
+}
+
+.viewer-fixed .viewer-title {
+  color: #efefef;
+  text-shadow: 0px 0px 5px #000;
+}
+</style>
+
+
+<style lang="stylus" scoped>
 .AlbumPage {
   display: flex;
   flex-direction: column;

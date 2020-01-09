@@ -11,7 +11,7 @@
             <nuxt-link
               :title="initial"
               :to="{name:'subjects', hash:`#${initial}`}"
-              @click="selectInitial(initial)"
+              @click.prevent="selectInitial(initial)"
             >{{initial}}</nuxt-link>
           </li>
         </ul>

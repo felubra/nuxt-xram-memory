@@ -1,51 +1,65 @@
 <template>
-  <Section class="Page CenteredPage">
+  <section class="Page CenteredPage">
     <h1>Entre em contato</h1>
     <header>
       <p>Use o formulário abaixo para enviar a sua mensagem, críticas, sugestões etc:</p>
     </header>
-    <main>
-      <el-alert v-if="alertTitle" :title="alertTitle" :type="alertType" @close="clearAlert"></el-alert>
-      <el-form
-        ref="form"
-        :disabled="!isAvailable"
-        :rules="formRules"
-        class="Contact__Form"
-        :model="form"
-        :label-position="labelPosition"
-        label-width="200px"
-      >
-        <el-form-item class="Contact__FormItem" label="Seu nome" prop="name">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item class="Contact__FormItem" label="Seu e-mail de contato" prop="email">
-          <el-input v-model="form.email" type="email"></el-input>
-        </el-form-item>
-        <el-form-item class="Contact__FormItem" label="Sua mensagem" prop="message">
-          <el-input v-model="form.message" rows="5" type="textarea"></el-input>
-        </el-form-item>
-        <el-form-item class="Contact__FormItem">
-          <vue-recaptcha
-            v-if="isAvailable"
-            ref="recaptcha"
-            size="invisible"
-            :sitekey="recaptchaKey"
-            @expired="onExpired"
-            @verify="onCaptchaVerify"
-          ></vue-recaptcha>
-        </el-form-item>
 
-        <el-form-item class="Contact__FormItem">
-          <el-button type="primary" @click="onSubmit">Enviar</el-button>
-          <el-button @click="resetForm()">Limpar</el-button>
-        </el-form-item>
-      </el-form>
+    <main>
+      <v-alert v-if="alertText" :type="alertType">{{alertText}}</v-alert>
+      <v-form ref="form" @input="resetSuccess">
+        <v-text-field
+          v-model="name"
+          autocomplete="off"
+          required
+          label="Nome"
+          :disabled="isSending || !isAvailable"
+          :error-messages="nameErrors"
+          @input="$v.name.$touch()"
+          @blur="$v.name.$touch()"
+        ></v-text-field>
+        <v-text-field
+          v-model="email"
+          autocomplete="off"
+          required
+          name="emaila"
+          label="E-mail"
+          :disabled="isSending || !isAvailable"
+          :error-messages="emailErrors"
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+        ></v-text-field>
+        <v-textarea
+          v-model="message"
+          autocomplete="off"
+          required
+          label="Mensagem"
+          :disabled="isSending || !isAvailable"
+          :error-messages="messageErrors"
+          @input="$v.message.$touch()"
+          @blur="$v.message.$touch()"
+        ></v-textarea>
+        <vue-recaptcha
+          v-if="isAvailable"
+          ref="recaptcha"
+          size="invisible"
+          :sitekey="recaptchaKey"
+          @expired="onExpired"
+          @verify="onCaptchaVerify"
+        ></vue-recaptcha>
+        <v-btn :disabled="isSending || !isAvailable" color="primary" @click="onSubmit">Enviar</v-btn>
+        <v-btn :disabled="isSending || !isAvailable" @click="clearForm">Limpar</v-btn>
+      </v-form>
     </main>
-  </Section>
+  </section>
 </template>
+
 <script>
-const xss = require('xss')
-const emailValidator = require('email-validator')
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, minLength, email } from 'vuelidate/lib/validators'
+
+class ServerError extends Error {}
+class ValidationError extends Error {}
 
 export default {
   name: 'ContactPage',
@@ -53,76 +67,71 @@ export default {
     VueRecaptcha: () =>
       import(/* webpackChunkName: "vue-recaptcha" */ 'vue-recaptcha')
   },
+  mixins: [validationMixin],
   data() {
-    const validateEmail = (rule, value, callback) => {
-      if (!emailValidator.validate(value)) {
-        callback(new Error('Informe um e-mail válido'))
-      } else {
-        callback()
-      }
-    }
     return {
+      error: null,
+      success: false,
+      isSending: false,
       isAvailable: false,
-      form: {
-        name: '',
-        email: '',
-        message: '',
-        recaptcha_response: ''
-      },
-      alertType: 'success',
-      alertTitle: '',
-      formRules: {
-        name: [
-          {
-            required: true,
-            message: 'Por-favor informe o seu nome',
-            trigger: 'blur'
-          },
-          {
-            min: 3,
-            message: 'Seu nome deve ter no mínimo três caracteres',
-            trigger: 'blur'
-          }
-        ],
-        email: [
-          {
-            required: true,
-            message: 'Por-favor informe o seu e-mail de contato',
-            trigger: 'blur'
-          },
-          {
-            validator: validateEmail,
-            trigger: 'blur'
-          }
-        ],
-        message: [
-          {
-            required: true,
-            message: 'Por-favor digite uma mensagem',
-            trigger: 'blur'
-          }
-        ]
-      }
+      name: '',
+      email: '',
+      message: ''
     }
   },
   computed: {
     recaptchaKey() {
       return process.env.RECAPTCHA_KEY
     },
-    labelPosition() {
-      return this.$device.isDesktop || false ? 'left' : 'top'
+    nameErrors() {
+      const errors = []
+      if (!this.$v.name.$dirty) return errors
+      !this.$v.name.maxLength &&
+        errors.push('O nome não pode ter mais do que 255 caracteres')
+      !this.$v.name.required && errors.push('É necessário digitar um nome')
+      return errors
+    },
+    emailErrors() {
+      const errors = []
+      if (!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('E-mail inválido')
+      !this.$v.email.required && errors.push('É necessário digitar um e-mail')
+      return errors
+    },
+    messageErrors() {
+      const errors = []
+      if (!this.$v.message.$dirty) return errors
+      !this.$v.message.minLength && errors.push('Mensagem curta demais')
+      !this.$v.message.required &&
+        errors.push('É necessário digitar uma mensagem')
+      return errors
+    },
+    alertType() {
+      return this.error ? 'error' : 'success'
+    },
+    alertText() {
+      return this.error && this.error.message
+        ? this.error.message
+        : this.success
+          ? 'Mensagem enviada com sucesso'
+          : ''
     }
   },
-  watch: {
-    isAvailable: {
-      immediate: true,
-      handler(value) {
-        if (!value) {
-          this.alertType = 'error'
-          this.alertTitle =
-            'Formulário indisponível no momento, por-favor tente mais tarde.'
-        }
-      }
+  async asyncData() {
+    // Esta página estará disponível somente se houver uma chave para o recaptcha
+    const isAvailable =
+      process.env &&
+      process.env.RECAPTCHA_KEY &&
+      process.env.CONTACT_MESSAGE_RELAY_URL
+    return {
+      isAvailable
+    }
+  },
+  mounted() {
+    if (!this.isAvailable) {
+      this.error = new ServerError(
+        'Formulário indisponível, por-favor tente novamente mais tarde.'
+      )
     }
   },
   head() {
@@ -141,101 +150,85 @@ export default {
       ]
     }
   },
-  async asyncData() {
-    /**
-     * TODO: pingue o backend em caso de falha, exiba um erro ou um e-mail para o qual o usuário poderá enviar a mensagem
-     */
-    // Esta página estará disponível somente se houver uma chave para o recaptcha
-    const isAvailable =
-      process.env &&
-      process.env.RECAPTCHA_KEY &&
-      process.env.CONTACT_MESSAGE_RELAY_URL
-    return {
-      isAvailable
-    }
-  },
   methods: {
-    clearAlert() {
-      this.alertTitle = ''
-    },
-    onSubmit() {
-      this.cleanFields()
-      this.clearAlert()
-      const form = this.$refs['form']
-      form
-        .validate()
-        .then(isValid => {
-          if (isValid) {
-            this.$refs.recaptcha.execute()
-          }
-        })
-        .catch(() => {
-          this.alert('Corrija os erros acima e tente novamente.', 'error')
-        })
-    },
-    alert(message, type = 'success') {
-      this.alertType = type
-      this.alertTitle = message
-    },
-    cleanFields() {
-      Object.entries(this.form).forEach(
-        ([key, value]) =>
-          (this.form[key] = xss(value, {
-            whiteList: [],
-            stripIgnoreTag: true,
-            stripIgnoreTagBody: ['script']
-          }))
-      )
-    },
     onCaptchaVerify(response) {
-      this.form.recaptcha_response = response
+      this.isSending = true
       this.$axios
-        .post(process.env.CONTACT_MESSAGE_RELAY_URL, this.form)
+        .post(process.env.CONTACT_MESSAGE_RELAY_URL, {
+          name: this.name,
+          email: this.email,
+          message: this.message,
+          recaptcha_response: response
+        })
         .then(() => {
-          this.alert('Mensagem enviada com sucesso!', 'success')
-          this.resetForm()
+          this.showSuccess()
+          this.$refs.recaptcha.reset()
+          this.isSending = false
         })
         .catch(e => {
           if (e.response && e.response.status === 400) {
-            this.alert(
-              'A validação do ReCaptcha falhou, atualize a página e tente novamente.',
-              'error'
+            this.showValidationError(
+              'A validação do ReCaptcha falhou, atualize a página e tente novamente.'
             )
           } else {
-            this.alert(
-              'Formulário indisponível no momento, tente mais tarde.',
-              'error'
+            this.showUnavailabilityError(
+              'Formulário indisponível no momento, tente mais tarde.'
             )
           }
+          this.$refs.recaptcha.reset()
+          this.isSending = false
         })
-      this.$refs.recaptcha.reset()
     },
     onExpired() {
       this.$refs.recaptcha.reset()
     },
-    resetForm(formName = 'form') {
-      this.$refs[formName].resetFields()
+    onSubmit() {
+      if (this.$v.$invalid) {
+        this.showValidationError()
+      } else {
+        this.error = null
+        // dê o pontapé na validação do recaptcha, que por si mesma enviará o formulário ao final
+        this.$refs.recaptcha.execute()
+      }
+    },
+    resetSuccess() {
+      this.success = false
+    },
+    showValidationError(message = 'Por-favor, corrija os erros abaixo:') {
+      this.error = new ValidationError(message)
+      this.$v.$touch()
+    },
+    showUnavailabilityError() {
+      this.error = new ServerError(
+        'Formulário indisponível, por-favor tente novamente mais tarde.'
+      )
+      this.$v.$reset()
+    },
+    showSuccess() {
+      this.success = true
+      this.$v.$reset()
+      this.clearFields()
+    },
+    clearFields() {
+      for (let fieldName of ['name', 'email', 'message']) {
+        this[fieldName] = ''
+      }
+    },
+    clearForm() {
+      this.clearFields()
+      this.$v.$reset()
+      this.error = null
+      this.success = false
+      this.isSending = false
     }
+  },
+  validations: {
+    name: { required, maxLength: maxLength(255) },
+    email: { required, email },
+    message: { required, minLength: minLength(3) }
   }
 }
 </script>
-
-<style>
-.el-alert {
-  margin: 2rem 0;
-  font-family: 'Cabin', sans-serif;
-}
-
-.el-form-item__label,
-.el-alert__title {
-  font-size: 1rem;
-}
-.el-form-item__error {
-  font-size: 14px;
-}
-</style>
-
-
 
 <style lang="stylus" scoped>
 h1 {
@@ -243,7 +236,7 @@ h1 {
 }
 
 main {
-  font-family: 'Cabin', sans-serif;
+  font-family: $sans-serif;
 }
 
 .Contact__Form {
@@ -251,8 +244,11 @@ main {
   padding: 1rem 0;
 }
 
-.el-alert__title, .Contact__FormItem label {
-  font-size: 1rem;
-  line-height: 1rem;
+.v-btn.primary {
+  /** Existe um bug no vuletify que não está carregando a cor de fundo deste botão */
+  background-color: $link-color-active !important;
+}
+.v-input {
+  padding: 24px 0;
 }
 </style>

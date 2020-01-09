@@ -68,6 +68,7 @@ export default {
 .SelectedFilters__Filter {
   background: #dcdbdb !important;
   color: #909399;
+  font-size: 12px !important;
   /* text-transform: none; */
 }
 

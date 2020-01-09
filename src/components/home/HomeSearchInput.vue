@@ -34,12 +34,49 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
 .SearchBar {
   max-width: 730px;
 }
 
+.SearchBar input {
+  transition: border-color 0.25s ease;
+  font-size: 16px;
+}
+
+.SearchBar input:focus,
+.SearchBar input:hover,
+.SearchBar input:active {
+  border-color: $link-color;
+}
+
+.SearchBar input::placeholder {
+  transition: border-color 0.25s ease;
+}
+
+.SearchBar input:active::placeholder,
+.SearchBar input:hover::placeholder,
+.SearchBar input:focus::placeholder {
+  color: #333;
+}
+
 .SearchBar__Input {
   background: #fff !important; /* #TODO: este estilo não está pegando */
+}
+
+
+.SearchBar--as-filter input {
+  border: none;
+  border-bottom: solid 1px #e1dada;
+  font-size: 18px;
+  background: transparent !important;
+  border-width: 3px;
+  padding-left: 5px;
+}
+
+.SearchBar.SearchBar--as-filter input:focus,
+.SearchBar.SearchBar--as-filter input:hover,
+.SearchBar.SearchBar--as-filter input:active {
+   border-color: $link-color-active;
 }
 </style>

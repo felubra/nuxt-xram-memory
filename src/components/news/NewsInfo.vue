@@ -45,21 +45,22 @@
             },
           }"
       >
-        <el-image
+        <v-img
           :key="capture.url"
           :src="thumbnailForDocument(capture.document_id)"
+          aspect-ratio="1"
+          class="ImageCapture"
           :alt="capture.title"
           :title="capture.title"
-          class="ImageCapture"
-          fit="contain"
+          @error="changeImagePlaceholder"
         >
-          <div slot="placeholder" class="image-slot">
-            <i class="el-icon-picture-outline"></i>
-          </div>
-          <div slot="error" class="image-slot">
-            <i class="el-icon-picture-outline"></i>
-          </div>
-        </el-image>
+          <template v-slot:placeholder class="image-slot">
+            <div class="image-slot">
+              <v-icon>download</v-icon>
+              <Microtext>{{imagePlaceholder}}</Microtext>
+            </div>
+          </template>
+        </v-img>
         <Microtext tag="p">{{capture.title}}</Microtext>
       </nuxt-link>
     </div>
@@ -105,7 +106,8 @@ export default {
   },
   data() {
     return {
-      documents: []
+      documents: [],
+      imagePlaceholder: 'Carregando...'
     }
   },
   computed: {
@@ -216,6 +218,9 @@ export default {
     }
   },
   methods: {
+    changeImagePlaceholder() {
+      this.imagePlaceholder = 'Falha ao carregar a imagem.'
+    },
     captureNameAndSize(capture) {
       let title = {}
       try {
@@ -281,14 +286,23 @@ export default {
 .image-slot {
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   height: 100%;
+}
+
+.image-slot.error > i {
+  color: #a00;
+}
+
+.image-slot.error > p {
+  color: #900;
 }
 
 .NewsInfo--pdf-captures a {
   border: solid 1px #efefef;
   margin: 6px;
-  width: auto;
+  overflow: hidden;
   transition: border-color 0.25s ease;
 }
 

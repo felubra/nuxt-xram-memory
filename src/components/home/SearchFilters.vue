@@ -203,6 +203,7 @@ footer {
 .FilterList__FilterItem {
   margin: 1rem 0;
   width: 100%;
+  transition: all .2s ease;
 }
 
 .FilterList__FilterItem > h2 {
@@ -244,6 +245,10 @@ button.FilterItem__DropdownToggle:focus, button.FilterItem__DropdownToggle:hover
 .ShowFilters > a {
   display: inline-flex;
   align-items: center;
+}
+
+.FilterList__FilterItem button > span {
+  color: #a1a1a1;
 }
 
 @media only screen and (min-width: 768px) {

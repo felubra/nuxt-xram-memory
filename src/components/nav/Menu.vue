@@ -177,7 +177,7 @@ header > * {
 
 .Menu__Footer {
   justify-self: flex-end;
-  font-family: 'Cabin', sans-serif;
+  font-family: $sans-serif;
   font-size: 0.675rem;
   text-transform: uppercase;
   color: #fff;

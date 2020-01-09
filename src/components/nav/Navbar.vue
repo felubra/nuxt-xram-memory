@@ -1,23 +1,15 @@
 <template>
-  <nav>
-    <transition name="fade">
-      <div v-show="hasLogoLoaded" class="Navbar">
-        <Logo
-          v-if="showLogo !== false"
-          :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`"
-          @load="() => hasLogoLoaded = true"
-        />
-        <div v-dragscroll.x="true" class="main-itens">
-          <nuxt-link
-            v-for="(page, index) in pageLinks()"
-            :key="index"
-            class="Navbar__Item"
-            :to="urlOrRoute(page)"
-          >{{page.title}}</nuxt-link>
-        </div>
-        <NavbarControls />
-      </div>
-    </transition>
+  <nav class="Navbar">
+    <Logo v-if="showLogo !== false" :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`" />
+    <div v-dragscroll.x="true" class="main-itens">
+      <nuxt-link
+        v-for="(page, index) in pageLinks()"
+        :key="index"
+        class="Navbar__Item"
+        :to="urlOrRoute(page)"
+      >{{page.title}}</nuxt-link>
+    </div>
+    <NavbarControls />
   </nav>
 </template>
 
@@ -104,14 +96,13 @@ export default {
 
 .main-itens a, .controls a {
   color: #555;
-  border-bottom: solid 2px transparent;
   margin: 0 0.5rem;
   outline: none;
-  transition: border-color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
 nav a.nuxt-link-exact-active, nav a:hover, nav a:active, nav a:focus {
-  border-color: $link-color;
+  color: $link-color-active;
 }
 
 .main-itens {

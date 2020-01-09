@@ -29,12 +29,10 @@
       <header>
         <h1>{{document.document_id || document.name}}</h1>
         <div class="microtext download-area">
-          <a download :href="documentOriginalURL">
-            <span class="FileInfo_Button el-button el-button--default is-circle">
-              <i class="material-icons">get_app</i>
-            </span>
-            <p>Baixar</p>
-          </a>
+          <v-btn text download fab :href="fileURL">
+            <v-icon>mdi-download</v-icon>
+          </v-btn>
+          <Microtext>Baixar</Microtext>
         </div>
       </header>
 
@@ -267,9 +265,12 @@ aside > header {
   margin-left: auto;
   color: #606266;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.FileInfo_Button i {
-  font-size: 24px;
+.download-area p.microtext {
+  display: block;
+  margin: 0.5rem;
 }
 </style>
