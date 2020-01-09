@@ -62,4 +62,20 @@ export default {
 .SearchBar__Input {
   background: #fff !important; /* #TODO: este estilo não está pegando */
 }
+
+
+.SearchBar--as-filter input {
+  border: none;
+  border-bottom: solid 1px #e1dada;
+  font-size: 18px;
+  background: transparent !important;
+  border-width: 3px;
+  padding-left: 5px;
+}
+
+.SearchBar.SearchBar--as-filter input:focus,
+.SearchBar.SearchBar--as-filter input:hover,
+.SearchBar.SearchBar--as-filter input:active {
+   border-color: $link-color-active;
+}
 </style>

@@ -3,7 +3,7 @@
     <DefaultReactiveBase class-name="Page SearchPage">
       <h1 class="offscreen">Pesquisar</h1>
       <!-- eslint-disable -->
-      <HomeSearchInput :URLParams="true" />
+      <HomeSearchInput class="SearchBar--as-filter" :URLParams="true" />
       <!-- eslint-enable -->
       <SearchFilters />
       <HomeSearchResults />
