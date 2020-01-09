@@ -3,7 +3,7 @@
     <div class="innner">
       <Logo variant="claro" />
       <p class="copyright">
-        &copy; 2019
+        &copy; 2019-20
         <strong>xraM-Memory</strong>
       </p>
       <p class="version">v 0.4.7</p>
