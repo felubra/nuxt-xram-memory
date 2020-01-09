@@ -34,9 +34,29 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
 .SearchBar {
   max-width: 730px;
+}
+
+.SearchBar input {
+  transition: border-color 0.25s ease;
+}
+
+.SearchBar input:focus,
+.SearchBar input:hover,
+.SearchBar input:active {
+  border-color: $link-color;
+}
+
+.SearchBar input::placeholder {
+  transition: border-color 0.25s ease;
+}
+
+.SearchBar input:active::placeholder,
+.SearchBar input:hover::placeholder,
+.SearchBar input:focus::placeholder {
+  color: #333;
 }
 
 .SearchBar__Input {
