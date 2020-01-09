@@ -253,3 +253,10 @@ main {
   line-height: 1rem;
 }
 </style>
+
+<style>
+.el-form.Contact__Form .el-form-item__label {
+  text-transform: uppercase;
+  font-size: 14px;
+}
+</style>
