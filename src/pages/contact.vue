@@ -10,6 +10,7 @@
       <v-form ref="form" @input="resetSuccess">
         <v-text-field
           v-model="name"
+          autocomplete="off"
           required
           label="Nome"
           :disabled="isSending || !isAvailable"
@@ -19,7 +20,9 @@
         ></v-text-field>
         <v-text-field
           v-model="email"
+          autocomplete="off"
           required
+          name="emaila"
           label="E-mail"
           :disabled="isSending || !isAvailable"
           :error-messages="emailErrors"
@@ -28,6 +31,7 @@
         ></v-text-field>
         <v-textarea
           v-model="message"
+          autocomplete="off"
           required
           label="Mensagem"
           :disabled="isSending || !isAvailable"
