@@ -57,7 +57,7 @@ export default {
 }
 
 .MainFooter a {
-  font-family: 'Cabin', sans-serif;
+  font-family: $sans-serif;
   font-size: 12px;
   line-height: 0.93rem;
   text-transform: uppercase;
@@ -93,7 +93,7 @@ p.version, p.by {
 
 @media only screen and (min-width: 768px) {
   .MainFooter a {
-    font-family: 'Cabin', sans-serif;
+    font-family: $sans-serif;
     line-height: 0.93rem;
     text-transform: uppercase;
     color: #666666;

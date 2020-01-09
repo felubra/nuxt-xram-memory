@@ -213,7 +213,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
 .BackButton {
   z-index: 9;
   position: absolute;
@@ -227,7 +227,7 @@ export default {
 
 .viewer-title {
   color: #000;
-  font-family: 'Cabin', sans-serif;
+  font-family: $sans-serif;
   font-size: 16px;
   text-shadow: 0px 0px 5px #dfdfdf;
 }
