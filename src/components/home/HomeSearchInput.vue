@@ -51,7 +51,7 @@ export default {
 }
 
 .SearchBar input::placeholder {
-  transition: border-color 0.25s ease;
+  transition: color 0.25s ease, border-color 0.25s ease;
 }
 
 .SearchBar input:active::placeholder,
@@ -72,6 +72,14 @@ export default {
   background: transparent !important;
   border-width: 3px;
   padding-left: 5px;
+}
+.SearchBar--as-filter input::placeholder {
+  color: #a1a1a1;
+}
+
+.SearchBar--as-filter input:active::placeholder,
+.SearchBar--as-filter input:focus::placeholder {
+  color: $link-color;
 }
 
 .SearchBar.SearchBar--as-filter input:focus,
