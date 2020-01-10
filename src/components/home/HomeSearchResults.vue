@@ -59,16 +59,25 @@ export default {
 }
 </script>
 
+<style scoped>
+div.spacer {
+}
+</style>
+
 <style lang="stylus">
 .SearchResults__ResultsInfo.microtext {
   display: flex;
   align-self: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-direction: column;
+  margin: 0;
+}
+
+.ResultStats {
+  flex: 1;
 }
 
 .SearchResults__SortOptions.microtext {
-  order: 2;
   color: #555;
   font-family: $sans-serif;
 }
@@ -116,6 +125,10 @@ export default {
   .SearchResults__ResultsInfo.microtext {
     margin: 3rem 4rem 0;
     flex-direction: row;
+  }
+  .SearchResults__SortOptions.microtext {
+    margin-left: 20px;
+    order: 2;
   }
 }
 </style>

@@ -1,5 +1,10 @@
 <template>
   <div class="ResultStats">
+    <Microtext
+      class-name="ResultsCounter"
+      arrow="down"
+      arrow-position="before"
+    >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
     <selected-filters
       class-name="SelectedFilters"
       clear-all-label="Limpar filtros"
@@ -7,10 +12,6 @@
                 button:'SelectedFilters__Filter'
               }"
     />
-    <Microtext
-      class-name="ResultsCounter"
-      arrow="down"
-    >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
   </div>
 </template>
 <script>
@@ -35,7 +36,11 @@ export default {
 </script>
 <style lang="stylus">
 .ResultsCounter {
-  justify-content: center;
+  order: 1;
+}
+.ResultsCounter.microtext {
+  margin-right: 1rem;
+
 }
 
 .ResultStats {
@@ -43,26 +48,17 @@ export default {
   flex-direction: column;
   text-align: center;
   display: flex;
-  justify-content: space-between;
-  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .SelectedFilters {
-  margin: 2rem 1rem;
-}
-
-.SelectedFilters {
-  margin: 2rem 1rem;
-}
-
-.SelectedFilters {
-  margin: 0;
-  /* margin-left: auto; */
+  margin: 1rem auto !important;
   align-content: center;
   align-items: center;
   justify-items: center;
   justify-content: center;
-  /* margin-left: 20px; */
+
 }
 
 .SelectedFilters__Filter {
@@ -92,6 +88,9 @@ export default {
     display: flex;
     font-weight: 500;
     align-items: center;
+  }
+  .ResultsCounter {
+    order: -1;
   }
 }
 </style>
