@@ -21,22 +21,26 @@ export function createRouter() {
       {
         path: '/contato',
         component: Contact,
-        name: 'contact'
+        name: 'contact',
+        alias: '/contact'
       },
       {
         path: '/imagens',
         component: Images,
-        name: 'images'
+        name: 'images',
+        alias: '/images'
       },
       {
         path: '/busca',
         component: Search,
-        name: 'search'
+        name: 'search',
+        alias: '/search'
       },
       {
         path: '/assuntos',
         component: Subjects,
-        name: 'subjects'
+        name: 'subjects',
+        alias: '/subjects'
       },
       {
         path: '/album/:album_id?',
@@ -46,17 +50,20 @@ export function createRouter() {
       {
         path: '/documento/:document_id?',
         component: Document,
-        name: 'document-document_id'
+        name: 'document-document_id',
+        alias: '/document/:document_id?'
       },
       {
         path: '/noticia/:slug?',
         component: News,
-        name: 'news-slug'
+        name: 'news-slug',
+        alias: '/news/:slug?'
       },
       {
         path: '/assunto/:slug?',
         component: Subject,
-        name: 'subject-slug'
+        name: 'subject-slug',
+        alias: '/subject/:slug?'
       },
       {
         path: '/',
