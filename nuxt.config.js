@@ -80,10 +80,7 @@ module.exports = {
   /**
    * Plugins to load before mounting the App
    */
-  buildModules: [
-    // Simple usage
-    '@nuxtjs/vuetify'
-  ],
+  buildModules: ['@nuxtjs/vuetify', '@nuxtjs/router'],
   plugins: [
     { src: '@/plugins/resize-sensor.js', ssr: false },
     { src: '@/plugins/reactive-search', ssr: false },
@@ -125,7 +122,10 @@ module.exports = {
     ELASTIC_SEARCH_CREDENTIALS: process.env.ELASTIC_SEARCH_CREDENTIALS
   },
   router: {
-    middleware: ['collapseMenu', 'fetchMenuItems']
+    middleware: ['collapseMenu', 'fetchMenuItems'],
+    extendRoutes(routes) {
+      console.log(routes)
+    }
   },
   /*
   ** Build configuration

@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
+    "@nuxtjs/router": "^1.5.0",
     "@nuxtjs/vuetify": "^1.9.1",
     "@vue/test-utils": "^1.0.0-beta.27",
     "ava": "^1.0.1",
