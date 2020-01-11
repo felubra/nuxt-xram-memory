@@ -10,7 +10,7 @@
       <v-form ref="form" @input="resetSuccess">
         <v-text-field
           v-model="name"
-          autocomplete="off"
+          autocomplete="name"
           required
           label="Nome"
           :disabled="isSending || !isAvailable"
@@ -20,7 +20,7 @@
         ></v-text-field>
         <v-text-field
           v-model="email"
-          autocomplete="off"
+          autocomplete="email"
           required
           name="emaila"
           label="E-mail"
