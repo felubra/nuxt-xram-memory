@@ -52,6 +52,7 @@
           class="ImageCapture"
           :alt="capture.title"
           :title="capture.title"
+          contain="False"
           @error="changeImagePlaceholder"
         >
           <template v-slot:placeholder class="image-slot">
