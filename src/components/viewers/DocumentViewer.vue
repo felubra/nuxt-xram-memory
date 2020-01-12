@@ -104,7 +104,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
 .DocumentViewer {
   flex: 1;
 }
@@ -114,7 +114,7 @@ export default {
 
 .viewer-title {
   color: #000;
-  font-family: 'Cabin', sans-serif;
+  font-family: $sans-serif;
   font-size: 16px;
   text-shadow: 0px 0px 5px #dfdfdf;
 }
@@ -123,9 +123,7 @@ export default {
   color: #efefef;
   text-shadow: 0px 0px 5px #000;
 }
-</style>
 
-<style lang="stylus">
 .viewer-backdrop {
   background-color: #e6e6e6;
 }
