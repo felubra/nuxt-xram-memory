@@ -76,11 +76,19 @@ export default {
 
 .links {
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
 
 p.version, p.by {
   font-family: $sans-serif;
   font-size: 12px;
+}
+
+p.by a {
+  text-transform: none;
 }
 
 .MainFooter a:focus, .MainFooter a:active, .MainFooter a:hover {
