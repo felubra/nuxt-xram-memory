@@ -16,7 +16,7 @@
             Infelizmente não temos uma visualização para este tipo de documento.
           </p>
           <p>
-            <a class="FileInfo_Button" download :href="documentOriginalURL">
+            <a class="FileInfo_Button" download :href="documentOriginalURL" target="_blank">
               <i class="material-icons">get_app</i>
               Baixar o arquivo
             </a>
@@ -29,7 +29,7 @@
       <header>
         <h1>{{document.document_id || document.name}}</h1>
         <div class="microtext download-area">
-          <v-btn text download fab :href="fileURL">
+          <v-btn text download fab :href="documentOriginalURL" target="_blank">
             <v-icon>mdi-download</v-icon>
           </v-btn>
           <Microtext>Baixar</Microtext>
