@@ -104,11 +104,14 @@ export default {
     documentPages() {
       if (this.documentIsPDF) {
         try {
-          return this.document.pages.map((page, index) => {
+          return this.document.pages.map((page, index, pages) => {
             return {
               src: getMediaUrl(page.thumbnails.document_preview),
               thumbnailSrc: getMediaUrl(page.thumbnails.document_thumbnail),
-              description: page.description || `(página ${index + 1})`
+              description:
+                page.description || pages.length > 1
+                  ? `(página ${index + 1})`
+                  : '(capa)'
             }
           })
         } catch {
