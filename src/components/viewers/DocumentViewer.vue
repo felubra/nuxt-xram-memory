@@ -14,7 +14,6 @@
           class="hidden"
           :src="image.thumbnailSrc"
           :originalURL="image.src"
-          @load="viewerReady"
         />
       </template>
     </Viewer>
@@ -97,12 +96,18 @@ export default {
         url: 'originalURL',
         buttom: true,
         loading: true,
-        title: image => (this.showTitle ? image.alt : '')
+        title: image => (this.showTitle ? image.alt : ''),
+        ready: this.viewerReady
       }
     }
   }
 }
 </script>
+<style>
+.viewer-canvas.viewer-loading > img {
+  display: none;
+}
+</style>
 
 <style lang="stylus">
 .DocumentViewer {
