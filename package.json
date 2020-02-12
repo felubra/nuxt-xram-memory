@@ -48,7 +48,7 @@
     "xss": "^1.0.3"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^0.0.1",
+    "@nuxtjs/eslint-config": "^1.1.2",
     "@nuxtjs/vuetify": "^1.9.1",
     "@vue/test-utils": "^1.0.0-beta.27",
     "ava": "^1.0.1",
