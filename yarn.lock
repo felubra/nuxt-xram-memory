@@ -12676,10 +12676,10 @@ vue-client-only@^2.0.0:
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.0.0.tgz#ddad8d675ee02c761a14229f0e440e219de1da1c"
   integrity sha512-arhk1wtWAfLsJyxGMoEYhoBowM87/i6HLSG2LH/03Yog6i2d9JEN1peMP0Ceis+/n9DxdenGYZZTxbPPJyHciA==
 
-vue-dragscroll@^1.8.3:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/vue-dragscroll/-/vue-dragscroll-1.10.2.tgz#34ace3c6aa7a39edc157cac5e9ea1d5b31b1119c"
-  integrity sha512-fGVw8KP3ggbp49csa1Tbj2my0YuNmZ1zxYYge4QWIypGNHVwd9hResy/v6QF5HxY0a+qd2EBteeBpxtJxFMp5A==
+vue-dragscroll@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-dragscroll/-/vue-dragscroll-2.0.1.tgz#46646ae36ffec9d2c1c40f5f14e0af1fc81ece81"
+  integrity sha512-U1AlKP5fzwc2S8mZAopBDiwIlkLZa8S88XlsLQ+L4eIjvhJDrZCsvoJ1VFdEg+DvCHZRmNAbHScXJ05K56rVwA==
 
 vue-eslint-parser@^5.0.0:
   version "5.0.0"
