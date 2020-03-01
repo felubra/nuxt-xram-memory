@@ -37,6 +37,9 @@ export default {
   },
   methods: {
     keywords(aggregations) {
+      if (!aggregations) {
+        return []
+      }
       const keywordsStdDeviation = this.keywordsStdDeviation(aggregations)
       try {
         return aggregations.keywords.names.buckets.map(keyword => {
