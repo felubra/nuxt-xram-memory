@@ -4,7 +4,7 @@
     <template v-if="hasAlbums">
       <section class="OtherAlbums">
         <header>
-          <Microtext tag="h2" arrow="down">Todos os álbums</Microtext>
+          <Microtext tag="h2" arrow="down">Todos os álbuns</Microtext>
         </header>
         <div class="AlbumList">
           <Card
