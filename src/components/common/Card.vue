@@ -124,6 +124,7 @@ export default {
 .Card img {
   filter: grayscale($grayscale-image);
   transition: opacity 0.25s ease;
+  object-fit: cover;
 }
 
 .Card a:hover, .Card a:active, .Card a:focus {
