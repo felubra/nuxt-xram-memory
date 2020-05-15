@@ -56,7 +56,7 @@ module.exports = {
         rel: 'stylesheet',
         href:
           'https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Roboto:400,400i,500,500i|Vollkorn:400,400i,700,700i|Vollkorn+SC&display=swap'
-      },
+      }
     ]
   },
   /*
@@ -76,8 +76,8 @@ module.exports = {
     '@nuxtjs/vuetify'
   ],
   plugins: [
+    '@plugins/lunr',
     { src: '@/plugins/resize-sensor.js', ssr: false },
-    { src: '@/plugins/reactive-search', ssr: false },
     { src: '@/plugins/element-ui', ssr: false },
     { src: '@/plugins/drag-scroll', ssr: false },
     '@/plugins/axios',
