@@ -3,6 +3,7 @@
     <h1 class="offscreen">Pesquisar</h1>
     <!-- eslint-disable -->
     <el-input v-model="searchQuery" placeholder="Pesquisar no acervo"  ></el-input>
+    <NewsGrid id="HomeMasonryGrid" :items="searchResults"></NewsGrid>
     <!-- eslint-enable -->
     <!--<SearchFilters />=-->
     <!--<HomeSearchResults />-->
@@ -10,36 +11,46 @@
 </template>
 
 <script>
+import NewsGrid from '~/components/news/NewsGrid'
+
 export default {
   name: 'SearchPage',
+  components: {
+    NewsGrid
+  },
   data() {
     return {
-      searchQuery: ''
+      searchQuery: '',
+      searchIndex: null
     }
   },
   computed: {
     searchResults() {
-      if (this.searchIndex) {
+      try {
         return this.searchIndex
           .search(this.searchQuery)
           .map(result => result.ref)
           .map(ref => this.searchIndex.documentStore.getDoc(ref))
+      } catch (e) {
+        return []
       }
-      return []
     }
+    /** TODO:
+    searchIndex() {
+
+    }
+     */
   },
-  async asyncData({ query }) {
+  async asyncData({ query, store, app }) {
+    const indexData = await store.dispatch('fetchLunrIndex')
+    const searchIndex = app.$lunr.Index.load(indexData)
     if (query && query.text) {
       return {
-        searchQuery: query.text
+        searchQuery: query.text,
+        //FIXME: usar uma computed prop e um getter com o índice na store
+        searchIndex
       }
     }
-  },
-  async mounted() {
-    const index = await this.$store.dispatch('fetchLunrIndex')
-    this.searchIndex = this.$lunr.Index.load(index)
-    // forçamos a atualização, porque this.searchIndex não é reativa, já que não precisa mudar
-    this.$forceUpdate()
   },
   head: {
     title: 'xraM-Memory - Pesquisar'
