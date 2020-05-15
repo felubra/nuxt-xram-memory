@@ -1,6 +1,7 @@
 export const state = () => ({
   menuVisible: false,
   isNavBarSearching: false,
+  lunrIndex: null,
   pages: [
     {
       position: ['menu'],
@@ -110,7 +111,8 @@ export const mutations = {
       )
       state.pages = [...state.pages, ...newPages]
     }
-  }
+  },
+  setLunrIndex: (state, index) => (state.lunrIndex = index)
 }
 
 export const getters = {
@@ -155,5 +157,12 @@ export const actions = {
   async fetchFeaturedPages({ commit }) {
     const featuredPages = await this.$axios.$get('api/v1/pages/featured')
     commit('addPages', featuredPages)
+  },
+  async fetchLunrIndex({ commit, state }, force = false) {
+    if (state.lunrIndex === null || force) {
+      const lunrIndex = await this.$axios.$get('media/lunr_index/index.json')
+      commit('setLunrIndex', lunrIndex)
+    }
+    return state.lunrIndex
   }
 }

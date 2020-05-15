@@ -1,10 +1,9 @@
 <template>
-  <client-only>
-    <DefaultReactiveBase class-name="Page PageIndex">
+  <div>
       <h1 class="offscreen">Início</h1>
       <Logo class="Home__Logo" :big="true" />
 
-      <HomeSearchInput @keyDown.enter="handleSearch" />
+      <el-input v-model="searchQuery" placeholder="Pesquisar no acervo" @change="handleSearch" ></el-input>
 
       <TeaserBlock
         v-if="featuredPage"
@@ -13,9 +12,8 @@
         :page-item="featuredPage"
       ></TeaserBlock>
 
-      <HomeTagCloud class="HomeTagCloud" />
-    </DefaultReactiveBase>
-  </client-only>
+      <!--<HomeTagCloud class="HomeTagCloud" />-->
+  </div>
 </template>
 
 <script>
@@ -41,6 +39,11 @@ export default {
       class: 'page--index'
     }
   },
+  data() {
+    return {
+      searchQuery: ''
+    }
+  },
   computed: {
     ...mapGetters(['featuredPages']),
     featuredPage() {
@@ -55,12 +58,12 @@ export default {
     }
   },
   methods: {
-    handleSearch({ target }) {
-      if (target.value && target.value.trim()) {
+    handleSearch(query) {
+      if (query && query.trim()) {
         this.$router.push({
           name: 'search',
           query: {
-            text: JSON.stringify(target.value)
+            text: query
           }
         })
       }

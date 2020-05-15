@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable -->
-  <DataSearch
+  <!--<DataSearch
     class="SearchBar"
     component-id="text"
     :field-weights="[10,7]"
@@ -18,7 +18,8 @@
     v-active-filter-animation="'text'"
     v-bind="$attrs"
     v-on="$listeners"
-  />
+  />-->
+  <el-input v-model="searchInput" placeholder="Pesquisar no acervo" ></el-input>
   <!-- eslint-enable -->
 </template>
 <script>
@@ -30,7 +31,12 @@ export default {
     activeFilterAnimation,
     innerInputFocus
   },
-  inheritAttrs: false
+  inheritAttrs: false,
+  data() {
+    return {
+      searchInput: ''
+    }
+  }
 }
 </script>
 
