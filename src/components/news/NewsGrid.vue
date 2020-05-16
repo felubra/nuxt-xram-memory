@@ -38,16 +38,7 @@ export default {
   methods: {
     idFor(item) {
       const type = this.typeFor(item)
-      switch (type) {
-        case CONTENT_TYPES.IMAGE:
-        case CONTENT_TYPES.DOCUMENT: {
-          // TODO: suporte a vários tamanhos de imagem
-          return type + item.document_id
-        }
-        default: {
-          return type + item.id
-        }
-      }
+      return type + item.id
     },
     labelFor(item) {
       const values = [this.typeFor(item), this.dateFor(item)]
@@ -131,11 +122,11 @@ export default {
         case CONTENT_TYPES.DOCUMENT: {
           return {
             name: 'document-document_id',
-            params: { document_id: item.document_id }
+            params: { document_id: item.uri }
           }
         }
         case CONTENT_TYPES.NEWS: {
-          return { name: 'news-slug', params: { slug: item.slug } }
+          return { name: 'news-slug', params: { slug: item.uri } }
         }
         default: {
           if (Object.keys(item).includes('album_id')) {
