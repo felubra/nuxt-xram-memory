@@ -12,6 +12,7 @@
 
 <script>
 import NewsGrid from '~/components/news/NewsGrid'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'SearchPage',
@@ -21,36 +22,27 @@ export default {
   data() {
     return {
       searchQuery: '',
-      searchIndex: null
+      searchResults: []
     }
   },
-  computed: {
-    searchResults() {
-      try {
-        return this.searchIndex
-          .search(this.searchQuery)
-          .map(result => result.ref)
-          .map(ref => this.searchIndex.documentStore.getDoc(ref))
-      } catch (e) {
-        return []
+  watch: {
+    searchQuery: {
+      immediate: true,
+      async handler(query) {
+        this.searchResults = await this.search(query)
       }
     }
-    /** TODO:
-    searchIndex() {
-
-    }
-     */
   },
   async asyncData({ query, store, app }) {
-    const indexData = await store.dispatch('fetchLunrIndex')
-    const searchIndex = app.$lunr.Index.load(indexData)
+    await store.dispatch('fetchLunrIndex')
     if (query && query.text) {
       return {
-        searchQuery: query.text,
-        //FIXME: usar uma computed prop e um getter com o índice na store
-        searchIndex
+        searchQuery: query.text
       }
     }
+  },
+  methods: {
+    ...mapActions(['search'])
   },
   head: {
     title: 'xraM-Memory - Pesquisar'

@@ -1,6 +1,19 @@
+import {
+  EMPTY,
+  DOWNLOADING,
+  LOADING,
+  LOADED,
+  LOAD_ERROR,
+  DOWNLOAD_ERROR,
+  LUNR_INDEX_STATUSES,
+  LOAD_LUNR_INDEX,
+  SET_LUNR_INDEX_STATUS
+} from './constants'
+
 export const state = () => ({
   menuVisible: false,
   isNavBarSearching: false,
+  lunrIndexStatus: EMPTY,
   lunrIndex: null,
   pages: [
     {
@@ -95,6 +108,7 @@ export const state = () => ({
 })
 
 export const mutations = {
+  // TODO: usar constantes em todos os nomes de mutação
   /** Menu */
   showMenu: state => (state.menuVisible = true),
   hideMenu: state => (state.menuVisible = false),
@@ -112,7 +126,22 @@ export const mutations = {
       state.pages = [...state.pages, ...newPages]
     }
   },
-  setLunrIndex: (state, index) => (state.lunrIndex = index)
+  /**
+   * Define o estado de processamento do índice para um estado conhecido
+   */
+  [SET_LUNR_INDEX_STATUS](state, status) {
+    if (!LUNR_INDEX_STATUSES.includes(status)) {
+      throw new Error('Estado de índice inválido')
+    }
+    state.lunrIndexStatus = status
+  },
+
+  /**
+   * Processa um índice serializado e o define no estado
+   */
+  [LOAD_LUNR_INDEX](state, index) {
+    state.lunrIndex = this.$lunr.Index.load(index)
+  }
 }
 
 export const getters = {
@@ -135,7 +164,7 @@ export const getters = {
         }
       })
       .sort((a, b) => {
-        // TODO: bug misterioso que altera a ordem dos controles do menu
+        // FIXME: bug misterioso que altera a ordem dos controles do menu
         if (position !== 'menu-controls') {
           return a.weight || 0 - b.weight || 0
         }
@@ -158,11 +187,39 @@ export const actions = {
     const featuredPages = await this.$axios.$get('api/v1/pages/featured')
     commit('addPages', featuredPages)
   },
-  async fetchLunrIndex({ commit, state }, force = false) {
-    if (state.lunrIndex === null || force) {
-      const lunrIndex = await this.$axios.$get('media/lunr_index/index.json')
-      commit('setLunrIndex', lunrIndex)
+  /**
+   * Faz uma pesquisa no índice e retorna os resultados
+   */
+  async search({ state }, searchQuery = '') {
+    if (state.lunrIndexStatus === LOADED) {
+      return state.lunrIndex
+        .search(searchQuery)
+        .map(result => result.ref)
+        .map(ref => state.lunrIndex.documentStore.getDoc(ref))
     }
-    return state.lunrIndex
+    return []
+  },
+  /**
+   * Faz o download do índice e o carrega na memória
+   */
+  async fetchLunrIndex({ commit, state }, forceDownload = false) {
+    //TODO: avaliar se podemos colocar o documentStore do índice numa prop separadas
+    if (state.lunrIndexStatus !== LOADED || forceDownload) {
+      try {
+        commit(SET_LUNR_INDEX_STATUS, DOWNLOADING)
+        const serializedIndex = await this.$axios.$get(
+          'media/lunr_index/index.json'
+        )
+        try {
+          commit(SET_LUNR_INDEX_STATUS, LOADING)
+          commit(LOAD_LUNR_INDEX, serializedIndex)
+          commit(SET_LUNR_INDEX_STATUS, LOADED)
+        } catch {
+          commit(SET_LUNR_INDEX_STATUS, LOAD_ERROR)
+        }
+      } catch (e) {
+        commit(SET_LUNR_INDEX_STATUS, DOWNLOAD_ERROR)
+      }
+    }
   }
 }
