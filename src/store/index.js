@@ -193,7 +193,13 @@ export const actions = {
   async search({ state }, searchQuery = '') {
     if (state.lunrIndexStatus === LOADED) {
       return state.lunrIndex
-        .search(searchQuery)
+        .search(searchQuery, {
+          fields: {
+            title: { boost: 2 },
+            teaser: { boost: 1 }
+          },
+          bool: 'OR'
+        })
         .map(result => result.ref)
         .map(ref => state.lunrIndex.documentStore.getDoc(ref))
     }
