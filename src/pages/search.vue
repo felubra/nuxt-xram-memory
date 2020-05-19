@@ -2,22 +2,30 @@
   <div>
     <h1 class="offscreen">Pesquisar</h1>
     <!-- eslint-disable -->
-    <el-input v-model="searchQuery" placeholder="Pesquisar no acervo"  ></el-input>
-    <NewsGrid id="HomeMasonryGrid" :items="searchResults"></NewsGrid>
+    <LocalSearch indexURL="media/lunr_index/index.json">
+      <template v-slot="{searchResults}">
+        <div>
+          <LocalSearchInput componentId="mainQuery" />
+          <NewsGrid :items=searchResults />
+        </div>
+      </template>
+    </LocalSearch>
     <!-- eslint-enable -->
-    <!--<SearchFilters />=-->
-    <!--<HomeSearchResults />-->
   </div>
 </template>
 
 <script>
 import NewsGrid from '~/components/news/NewsGrid'
+import LocalSearch from '~/components/search/LocalSearch'
+import LocalSearchInput from '~/components/search/LocalSearchInput'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'SearchPage',
   components: {
-    NewsGrid
+    NewsGrid,
+    LocalSearch,
+    LocalSearchInput
   },
   data() {
     return {
