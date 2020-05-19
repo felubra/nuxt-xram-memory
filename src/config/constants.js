@@ -44,8 +44,14 @@ export const defaultTheme = {
   }
 }
 
-export const CONTENT_TYPES = {
-  NEWS: 'Notícia',
-  DOCUMENT: 'Documento',
-  IMAGE: 'Imagem'
+/** Tipos de conteúdo */
+export const NEWS = 'news'
+export const DOCUMENT = 'document'
+export const IMAGE = 'image'
+
+/** Nomes amigáveis para os tipos de conteúdo */
+export const CONTENT_TYPE_LABELS = {
+  [NEWS]: 'Notícia',
+  [DOCUMENT]: 'Documento',
+  [IMAGE]: 'Imagem'
 }

@@ -18,7 +18,7 @@
 <script>
 import Card from '@/components/common/Card'
 import NewspaperInfo from './NewspaperInfo'
-import { CONTENT_TYPES } from '@/config/constants'
+import { NEWS, DOCUMENT, IMAGE, CONTENT_TYPE_LABELS } from '@/config/constants'
 
 const dayJs = require('dayjs')
 const smartTruncate = require('smart-truncate')
@@ -41,7 +41,10 @@ export default {
       return type + item.id
     },
     labelFor(item) {
-      const values = [this.typeFor(item), this.dateFor(item)]
+      const values = [
+        CONTENT_TYPE_LABELS[this.typeFor(item)],
+        this.dateFor(item)
+      ]
       return values.filter(value => value).join(' - ')
     },
     dateFor(item) {
@@ -57,13 +60,13 @@ export default {
     },
     typeFor(item) {
       try {
-        let value = item._type || ''
+        let value = item.type || ''
         if (
-          value === CONTENT_TYPES.DOCUMENT &&
+          value === DOCUMENT &&
           item.mime_type &&
           item.mime_type.includes('image/')
         ) {
-          value = CONTENT_TYPES.IMAGE
+          value = IMAGE
         }
         return value
       } catch {
@@ -81,17 +84,18 @@ export default {
         }
         return null
       } catch {
+        debugger
         return null
       }
     },
     imageFor(item) {
       switch (this.typeFor(item)) {
-        case CONTENT_TYPES.IMAGE:
-        case CONTENT_TYPES.DOCUMENT: {
+        case IMAGE:
+        case DOCUMENT: {
           // TODO: suporte a vários tamanhos de imagem
           return item.thumbnail
         }
-        case CONTENT_TYPES.NEWS: {
+        case NEWS: {
           return item.thumbnail
         }
         default: {
@@ -104,8 +108,8 @@ export default {
     },
     titleFor(item) {
       switch (this.typeFor(item)) {
-        case CONTENT_TYPES.IMAGE:
-        case CONTENT_TYPES.DOCUMENT: {
+        case IMAGE:
+        case DOCUMENT: {
           return ''
         }
         default: {
@@ -118,14 +122,14 @@ export default {
     },
     linkFor(item) {
       switch (this.typeFor(item)) {
-        case CONTENT_TYPES.IMAGE:
-        case CONTENT_TYPES.DOCUMENT: {
+        case IMAGE:
+        case DOCUMENT: {
           return {
             name: 'document-document_id',
             params: { document_id: item.uri }
           }
         }
-        case CONTENT_TYPES.NEWS: {
+        case NEWS: {
           return { name: 'news-slug', params: { slug: item.uri } }
         }
         default: {
