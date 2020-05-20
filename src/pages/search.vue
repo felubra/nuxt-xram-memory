@@ -6,6 +6,7 @@
       <template v-slot="{searchResults}">
         <div>
           <LocalSearchInput componentId="mainQuery" />
+          <LocalSearchDropDown componentId="keywords" searchFilter="keywords" />
           <NewsGrid :items=searchResults />
         </div>
       </template>
@@ -18,6 +19,8 @@
 import NewsGrid from '~/components/news/NewsGrid'
 import LocalSearch from '~/components/search/LocalSearch'
 import LocalSearchInput from '~/components/search/LocalSearchInput'
+import LocalSearchDropDown from '~/components/search/LocalSearchDropDown'
+
 import { mapActions } from 'vuex'
 
 export default {
@@ -25,7 +28,8 @@ export default {
   components: {
     NewsGrid,
     LocalSearch,
-    LocalSearchInput
+    LocalSearchInput,
+    LocalSearchDropDown
   },
   data() {
     return {
