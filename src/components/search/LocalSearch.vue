@@ -30,7 +30,35 @@ export default {
     return {
       indexStatus: EMPTY,
       searchState: {},
-      searchResults: []
+      searchResults: [],
+      index: null
+    }
+  },
+  computed: {
+    /**
+     * Retorne os campos documentStore que são vetores, para serem utilizados por componentes filhos
+     * como filtros para os resultados de pesquisa.
+     */
+    availableFilters() {
+      try {
+        return Object.entries(this.index.documentStore.docs).reduce(
+          (filters, [_, document]) => {
+            Object.entries(document).forEach(([key, value]) => {
+              if (Array.isArray(value)) {
+                if (filters[key]) {
+                  value.forEach(filters[key].add, filters[key])
+                } else {
+                  filters[key] = new Set(value)
+                }
+              }
+            })
+            return filters
+          },
+          {}
+        )
+      } catch (e) {
+        return {}
+      }
     }
   },
   watch: {
@@ -69,14 +97,7 @@ export default {
     },
     search(searchState) {
       try {
-        /* Filtre a lista de campos do estado, mas que são pesquisáveis no índice
-        TODO: Faça a pesquisa utilizando uma configuração específica, onde estão definidos os campos e seus pesos
-        /*const indexedFields = this.index.getFields()
-        const searcheableFields = Object.keys(searchState).filter(field =>
-          indexedFields.includes(field)
-        )
-        // Concatene o valor de todos os campos de pesquisa numa string
-        */
+        //TODO: fazer pesquisa conjunta com os filtros selecionados (é possível?)
         const searchQuery = Object.values(searchState).join(' ')
         return this.index
           .search(searchQuery, {
@@ -87,8 +108,8 @@ export default {
             bool: 'OR'
           })
           .map(result => result.ref)
-          .map(ref => this.index.documentStore.getDoc(ref))
-      } catch {
+          .map(this.index.documentStore.getDoc, this.index.documentStore)
+      } catch (e) {
         return []
       }
     }
@@ -97,7 +118,8 @@ export default {
     return {
       localSearch: {
         indexStatus: this.indexStatus,
-        searchState: this.searchState
+        searchState: this.searchState,
+        availableFilters: this.availableFilters
       }
     }
   },
