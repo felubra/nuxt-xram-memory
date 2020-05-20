@@ -28,51 +28,28 @@ export default {
   },
   data() {
     return {
-      indexStatus: EMPTY,
-      searchState: {},
       searchResults: [],
-      index: null
-    }
-  },
-  computed: {
-    /**
-     * Retorne os campos documentStore que são vetores, para serem utilizados por componentes filhos
-     * como filtros para os resultados de pesquisa.
-     */
-    availableFilters() {
-      try {
-        return Object.entries(this.index.documentStore.docs).reduce(
-          (filters, [_, document]) => {
-            Object.entries(document).forEach(([key, value]) => {
-              if (Array.isArray(value)) {
-                if (filters[key]) {
-                  value.forEach(filters[key].add, filters[key])
-                } else {
-                  filters[key] = new Set(value)
-                }
-              }
-            })
-            return filters
-          },
-          {}
-        )
-      } catch (e) {
-        return {}
+      localSearch: {
+        indexStatus: EMPTY,
+        searchState: {},
+        availableFilters: {}
       }
     }
   },
+  computed: {},
   watch: {
-    searchState: {
+    'localSearch.searchState': {
       immediate: true,
       deep: true,
       handler(searchState) {
         this.searchResults = this.search(searchState)
       }
     },
-    indexStatus: {
+    'localSearch.indexStatus': {
       immediate: true,
       handler(v) {
         this.$emit('indexStatusChange', v)
+        this.setAvailableFilters()
       }
     }
   },
@@ -82,17 +59,46 @@ export default {
   methods: {
     async fetchAndLoadIndex() {
       try {
-        this.indexStatus = DOWNLOADING
+        this.localSearch.indexStatus = DOWNLOADING
         const serializedIndex = await this.$axios.$get(this.indexURL)
         try {
-          this.indexStatus = LOADING
+          this.localSearch.indexStatus = LOADING
           this.index = lunr.Index.load(serializedIndex)
-          this.indexStatus = LOADED
+          this.localSearch.indexStatus = LOADED
         } catch (e) {
-          this.indexStatus = LOAD_ERROR
+          this.localSearch.indexStatus = LOAD_ERROR
         }
       } catch (e) {
-        this.indexStatus = DOWNLOAD_ERROR
+        this.localSearch.indexStatus = DOWNLOAD_ERROR
+      }
+    },
+    /**
+     * Retorne os campos documentStore que são vetores, para serem utilizados por componentes filhos
+     * como filtros para os resultados de pesquisa.
+     */
+    setAvailableFilters() {
+      try {
+        this.$set(
+          this.localSearch,
+          'availableFilters',
+          Object.entries(this.index.documentStore.docs).reduce(
+            (filters, [_, document]) => {
+              Object.entries(document).forEach(([key, value]) => {
+                if (Array.isArray(value)) {
+                  if (filters[key]) {
+                    value.forEach(filters[key].add, filters[key])
+                  } else {
+                    filters[key] = new Set(value)
+                  }
+                }
+              })
+              return filters
+            },
+            {}
+          )
+        )
+      } catch (e) {
+        this.$set(this.localSearch, 'availableFilters', {})
       }
     },
     search(searchState) {
@@ -116,16 +122,12 @@ export default {
   },
   provide() {
     return {
-      localSearch: {
-        indexStatus: this.indexStatus,
-        searchState: this.searchState,
-        availableFilters: this.availableFilters
-      }
+      localSearch: this.localSearch
     }
   },
   render() {
     return this.$scopedSlots.default({
-      indexStatus: this.indexStatus,
+      indexStatus: this.localSearch.indexStatus,
       searchResults: this.searchResults
     })
   }
