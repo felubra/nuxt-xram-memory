@@ -31,18 +31,18 @@ export default {
   },
   computed: {
     options() {
-      return this.localSearch.availableFilters[this.searchFilter]
+      return this.localSearchState.availableFilters[this.searchFilter]
     }
   },
   watch: {
     selectedValues: {
       immediate: true,
       handler(val) {
-        this.$set(this.localSearch.searchState, this.componentId, val)
+        this.setFieldValue(this.componentId, val)
       }
     }
   },
-  inject: ['localSearch']
+  inject: ['localSearchState', 'setFieldValue']
 }
 </script>
 

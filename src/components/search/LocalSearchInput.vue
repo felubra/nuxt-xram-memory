@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  inject: ['localSearch'],
+  inject: ['setFieldValue'],
   name: 'LocalSearchInput',
   props: {
     componentId: {
@@ -20,13 +20,12 @@ export default {
     searchQuery: {
       immediate: true,
       handler(val) {
-        this.$set(this.localSearch.searchState, this.componentId, val)
+        this.setFieldValue(this.componentId, val)
       }
     }
   },
   created() {
-    this.localSearch.searchState[this.componentId] =
-      this.localSearch.searchState[this.componentId] || ''
+    this.setFieldValue(this.componentId, '')
   }
 }
 </script>
