@@ -1,22 +1,20 @@
 <script>
-// TODO: suporte a SSR
 import {
   EMPTY,
   DOWNLOADING,
   LOADING,
   LOADED,
   LOAD_ERROR,
-  DOWNLOAD_ERROR,
-  LUNR_INDEX_STATUSES
+  DOWNLOAD_ERROR
 } from '~/config/constants'
 
 import lunr from 'elasticlunr'
+// TODO: suporte a SSR
 // TODO: readicionar suporte à linguagens
 // TODO: computed prop com a contagem
 // TODO: timer?
 // TODO: suporte à ordenação
 // TODO: renderizar uma tag customizável?
-import Vue from 'vue'
 
 export default {
   name: 'LocalSearch',
@@ -28,83 +26,109 @@ export default {
   },
   data() {
     return {
+      // Os resultados de busca obtidos a partir do estado atual
       searchResults: [],
-      localSearch: {
-        indexStatus: EMPTY,
-        searchState: {},
-        availableFilters: {}
-      }
+      // O estado atual dos componentes filhos
+      fieldValues: {},
+      // O estado de carregamento do índice
+      indexStatus: EMPTY,
+      // Filtros e seus valores
+      availableFilters: {}
     }
   },
   computed: {},
   watch: {
-    'localSearch.searchState': {
+    /**
+     * Faça uma pesquisa imediatamente se o valor de um dos campos mudar
+     */
+    fieldValues: {
       immediate: true,
       deep: true,
-      handler(searchState) {
-        this.searchResults = this.search(searchState)
+      handler(fieldValues) {
+        this.searchResults = this.search(this.flattern(fieldValues))
       }
     },
-    'localSearch.indexStatus': {
+    /**
+     * 1. Emita um evento no caso de mudança do estado do índice
+     * 2. Quando o índice carregar, obtenha e disponibilize os filtros de pesquisa
+     */
+    indexStatus: {
       immediate: true,
       handler(v) {
         this.$emit('indexStatusChange', v)
-        this.setAvailableFilters()
+        if (LOADED == v) {
+          this.getAvailableFilters()
+        }
       }
     }
   },
+  /**
+   * Carregue imediatamente o índice
+   */
   async created() {
     await this.fetchAndLoadIndex()
   },
   methods: {
+    /**
+     * Baixa e carrega o arquivo do índice
+     */
     async fetchAndLoadIndex() {
       try {
-        this.localSearch.indexStatus = DOWNLOADING
+        this.indexStatus = DOWNLOADING
         const serializedIndex = await this.$axios.$get(this.indexURL)
         try {
-          this.localSearch.indexStatus = LOADING
+          this.indexStatus = LOADING
           this.index = lunr.Index.load(serializedIndex)
-          this.localSearch.indexStatus = LOADED
+          this.indexStatus = LOADED
         } catch (e) {
-          this.localSearch.indexStatus = LOAD_ERROR
+          this.indexStatus = LOAD_ERROR
         }
       } catch (e) {
-        this.localSearch.indexStatus = DOWNLOAD_ERROR
+        this.indexStatus = DOWNLOAD_ERROR
       }
+    },
+    /**
+     * Defina o valor de um campo no estado
+     */
+    setFieldValue(fieldName, value) {
+      this.$set(this.fieldValues, fieldName, value)
     },
     /**
      * Retorne os campos documentStore que são vetores, para serem utilizados por componentes filhos
      * como filtros para os resultados de pesquisa.
      */
-    setAvailableFilters() {
+    getAvailableFilters() {
       try {
-        this.$set(
-          this.localSearch,
-          'availableFilters',
-          Object.entries(this.index.documentStore.docs).reduce(
-            (filters, [_, document]) => {
-              Object.entries(document).forEach(([key, value]) => {
-                if (Array.isArray(value)) {
-                  if (filters[key]) {
-                    value.forEach(filters[key].add, filters[key])
-                  } else {
-                    filters[key] = new Set(value)
-                  }
-                }
-              })
-              return filters
-            },
-            {}
-          )
-        )
+        this.availableFilters = Object.entries(
+          this.index.documentStore.docs
+        ).reduce((filters, [_, document]) => {
+          Object.entries(document).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+              if (filters[key]) {
+                value.forEach(filters[key].add, filters[key])
+              } else {
+                filters[key] = new Set(value)
+              }
+            }
+          })
+          return filters
+        }, {})
       } catch (e) {
-        this.$set(this.localSearch, 'availableFilters', {})
+        this.availableFilters = {}
       }
     },
-    search(searchState) {
+    /**
+     * Compacta os valores de um objeto numa única string
+     */
+    flattern(fieldValues) {
+      return Object.values(fieldValues).join(' ')
+    },
+    /**
+     * Faz uma busca por texto completo no índice
+     */
+    search(searchQuery) {
       try {
         //TODO: fazer pesquisa conjunta com os filtros selecionados (é possível?)
-        const searchQuery = Object.values(searchState).join(' ')
         return this.index
           .search(searchQuery, {
             fields: {
@@ -121,13 +145,31 @@ export default {
     }
   },
   provide() {
+    const localSearchState = {}
+    Object.defineProperties(localSearchState, {
+      indexStatus: {
+        enumerable: true,
+        get: () => this.indexStatus
+      },
+      fieldValues: {
+        enumerable: true,
+        get: () => this.fieldValues
+      },
+      availableFilters: {
+        enumerable: true,
+        get: () => this.availableFilters
+      }
+    })
     return {
-      localSearch: this.localSearch
+      // O estado do índice, dos componentes e dos filtros
+      localSearchState,
+      // Funções para manipulação do estado
+      setFieldValue: this.setFieldValue
     }
   },
   render() {
     return this.$scopedSlots.default({
-      indexStatus: this.localSearch.indexStatus,
+      indexStatus: this.indexStatus,
       searchResults: this.searchResults
     })
   }
