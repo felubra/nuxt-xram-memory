@@ -5,8 +5,9 @@
     <LocalSearch indexURL="media/lunr_index/index.json">
       <template v-slot="{searchResults}">
         <div>
-          <LocalSearchInput componentId="mainQuery" />
-          <LocalSearchDropDown componentId="keywords" searchFilter="keywords" />
+          <LocalSearchInput componentId="mainQuery" :data-fields="{title: {boost: 2}, teaser: {boost: 1}}" />
+          <LocalSearchDropDown componentId="keywords" dataField="keywords" />
+          <LocalSearchDropDown componentId="subjects" dataField="subjects" />
           <NewsGrid :items=searchResults />
         </div>
       </template>
