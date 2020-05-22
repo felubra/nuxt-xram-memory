@@ -46,12 +46,12 @@ export default {
             .filter(([key, value]) => value)
             .reduce((isResult, [filterName, value]) => {
               if (Array.isArray(result[filterName])) {
-                return result[filterName].includes(value) && isResult
+                return result[filterName].includes(value.toString()) && isResult
               }
-              return result[filterName] === value && isResult
+              return result[filterName] === value.toString() && isResult
             }, true)
         })
-      } catch {
+      } catch (e) {
         return this.unfilteredResults
       }
     },
@@ -61,15 +61,23 @@ export default {
     availableFilters() {
       try {
         return this.searchResults.reduce((filters, document) => {
-          Object.entries(document).forEach(([key, value]) => {
-            if (Array.isArray(value)) {
-              if (filters[key]) {
-                value.forEach(filters[key].add, filters[key])
+          Object.entries(document)
+            .filter(([key, value]) => value !== null) // filtre valores nulos
+            .forEach(([propName, value]) => {
+              if (Array.isArray(value)) {
+                if (filters[propName]) {
+                  value.forEach(v => filters[propName].add(v.toString()))
+                } else {
+                  filters[propName] = new Set(
+                    value.filter(v => v !== null).map(v => v.toString())
+                  )
+                }
               } else {
-                filters[key] = new Set(value)
+                filters[propName] = filters[propName]
+                  ? filters[propName].add(value.toString())
+                  : new Set([value.toString()])
               }
-            }
-          })
+            })
           return filters
         }, {})
       } catch (e) {
