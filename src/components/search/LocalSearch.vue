@@ -26,44 +26,70 @@ export default {
   },
   data() {
     return {
-      // Os resultados de busca obtidos a partir do estado atual
-      searchResults: [],
-      // O estado atual dos componentes filhos
-      fieldValues: {},
+      // Os resultados de busca antes da aplicação dos filtros
+      unfilteredResults: [],
+      // Os filtros ativos e seus valores
+      activeFilters: {},
       // O estado de carregamento do índice
-      indexStatus: EMPTY,
-      // Filtros e seus valores
-      availableFilters: {}
+      indexStatus: EMPTY
     }
   },
-  computed: {},
-  watch: {
+  computed: {
     /**
-     * Faça uma pesquisa imediatamente se o valor de um dos campos mudar
+     * Retorna os resultados de busca, restritos aos filtros ativos.
      */
-    fieldValues: {
-      immediate: true,
-      deep: true,
-      handler(fieldValues) {
-        this.searchResults = this.search(this.flattern(fieldValues))
+    searchResults() {
+      // TODO: suporte a múltiplos valores por filtro
+      try {
+        return this.unfilteredResults.filter(result => {
+          return Object.entries(this.activeFilters)
+            .filter(([key, value]) => value)
+            .reduce((isResult, [filterName, value]) => {
+              if (Array.isArray(result[filterName])) {
+                return result[filterName].includes(value) && isResult
+              }
+              return result[filterName] === value && isResult
+            }, true)
+        })
+      } catch {
+        return this.unfilteredResults
       }
     },
     /**
-     * 1. Emita um evento no caso de mudança do estado do índice
-     * 2. Quando o índice carregar, obtenha e disponibilize os filtros de pesquisa
+     * Com base nos resultados de busca, retorna objeto com os filtros e seus valores disponíveis.
+     */
+    availableFilters() {
+      try {
+        return this.searchResults.reduce((filters, document) => {
+          Object.entries(document).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+              if (filters[key]) {
+                value.forEach(filters[key].add, filters[key])
+              } else {
+                filters[key] = new Set(value)
+              }
+            }
+          })
+          return filters
+        }, {})
+      } catch (e) {
+        return {}
+      }
+    }
+  },
+  watch: {
+    /**
+     * Emite um evento indicando mudança no status do índice
      */
     indexStatus: {
       immediate: true,
       handler(v) {
         this.$emit('indexStatusChange', v)
-        if (LOADED == v) {
-          this.getAvailableFilters()
-        }
       }
     }
   },
   /**
-   * Carregue imediatamente o índice
+   * Carregue imediatamente o índice na criação do componente.
    */
   async created() {
     await this.fetchAndLoadIndex()
@@ -88,59 +114,27 @@ export default {
       }
     },
     /**
-     * Defina o valor de um campo no estado
+     * Defina o valor de um filtro
      */
-    setFieldValue(fieldName, value) {
-      this.$set(this.fieldValues, fieldName, value)
+    filterBy(filterName, value) {
+      this.$set(this.activeFilters, filterName, value)
     },
     /**
      * Retorne os campos documentStore que são vetores, para serem utilizados por componentes filhos
      * como filtros para os resultados de pesquisa.
      */
-    getAvailableFilters() {
-      try {
-        this.availableFilters = Object.entries(
-          this.index.documentStore.docs
-        ).reduce((filters, [_, document]) => {
-          Object.entries(document).forEach(([key, value]) => {
-            if (Array.isArray(value)) {
-              if (filters[key]) {
-                value.forEach(filters[key].add, filters[key])
-              } else {
-                filters[key] = new Set(value)
-              }
-            }
-          })
-          return filters
-        }, {})
-      } catch (e) {
-        this.availableFilters = {}
-      }
-    },
-    /**
-     * Compacta os valores de um objeto numa única string
-     */
-    flattern(fieldValues) {
-      return Object.values(fieldValues).join(' ')
-    },
+
     /**
      * Faz uma busca por texto completo no índice
      */
-    search(searchQuery) {
+    search(searchQuery, fieldConfiguration = {}) {
       try {
-        //TODO: fazer pesquisa conjunta com os filtros selecionados (é possível?)
-        return this.index
-          .search(searchQuery, {
-            fields: {
-              title: { boost: 2 },
-              teaser: { boost: 1 }
-            },
-            bool: 'OR'
-          })
+        this.unfilteredResults = this.index
+          .search(searchQuery, fieldConfiguration)
           .map(result => result.ref)
           .map(this.index.documentStore.getDoc, this.index.documentStore)
       } catch (e) {
-        return []
+        this.unfilteredResults = []
       }
     }
   },
@@ -164,7 +158,9 @@ export default {
       // O estado do índice, dos componentes e dos filtros
       localSearchState,
       // Funções para manipulação do estado
-      setFieldValue: this.setFieldValue
+      filterBy: this.filterBy,
+      // A função para busca
+      search: this.search
     }
   },
   render() {
