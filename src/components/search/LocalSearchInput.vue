@@ -1,13 +1,17 @@
 <template>
-  <el-input v-model="searchQuery" placeholder="Pesquisar no acervo"></el-input>
+  <el-input v-model="searchQuery" placeholder="Pesquisar no acervo" @input="doSearch"></el-input>
 </template>
 <script>
 export default {
-  inject: ['setFieldValue'],
+  inject: ['search'],
   name: 'LocalSearchInput',
   props: {
     componentId: {
       type: String,
+      required: true
+    },
+    dataFields: {
+      type: [Array, Object],
       required: true
     }
   },
@@ -16,16 +20,24 @@ export default {
       searchQuery: ''
     }
   },
-  watch: {
-    searchQuery: {
-      immediate: true,
-      handler(val) {
-        this.setFieldValue(this.componentId, val)
+  computed: {
+    fieldConfiguration() {
+      if (Array.isArray(this.dataFields)) {
+        return this.dataFields.reduce((config, field) => {
+          config[field] = { boost: 1 }
+          return config
+        }, {})
       }
+      return this.dataFields
     }
   },
-  created() {
-    this.setFieldValue(this.componentId, '')
+  methods: {
+    /***
+     * Faça uma busca com a configuração definida para os campos.
+     */
+    doSearch(query) {
+      this.search(query, this.fieldConfiguration)
+    }
   }
 }
 </script>
