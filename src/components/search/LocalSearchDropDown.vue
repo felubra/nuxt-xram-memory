@@ -1,11 +1,12 @@
 <template>
-  <el-select v-model="selectedValues" placeholder="Select">
+  <el-select v-model="selectedValues" :clearable="true" placeholder="Select" @change="doFilterBy">
     <el-option
       v-for="item in options"
       :key="item"
       :multiple="true"
       :label="item"
-      :value="item">
+      :value="item"
+      >
     </el-option>
   </el-select>
 
@@ -15,7 +16,7 @@
 export default {
   name: 'LocalSearchDropDown',
   props: {
-    searchFilter: {
+    dataField: {
       type: String,
       required: true
     },
@@ -31,18 +32,31 @@ export default {
   },
   computed: {
     options() {
-      return this.localSearchState.availableFilters[this.searchFilter]
+      return this.localSearchState.availableFilters[this.dataField]
     }
   },
   watch: {
-    selectedValues: {
+    options: {
+      deep: true,
       immediate: true,
       handler(val) {
-        this.setFieldValue(this.componentId, val)
+        /**
+         * Se houve mudança nos valores disponíveis para este campo e o valor selecionado
+         * antriormente não está no rol dos novos valores, limpe o valor deste campo.
+         */
+        if (!val || !val.has(this.selectedValues)) {
+          this.selectedValues = ''
+          this.$nextTick(() => this.doFilterBy(''))
+        }
       }
     }
   },
-  inject: ['localSearchState', 'setFieldValue']
+  methods: {
+    doFilterBy(value) {
+      this.filterBy(this.dataField, value)
+    }
+  },
+  inject: ['localSearchState', 'filterBy']
 }
 </script>
 
