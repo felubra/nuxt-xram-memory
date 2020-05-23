@@ -43,7 +43,7 @@ export default {
       try {
         return this.unfilteredResults.filter(result => {
           return Object.entries(this.activeFilters)
-            .filter(([key, value]) => value)
+            .filter(([, value]) => value)
             .reduce((isResult, [filterName, value]) => {
               if (Array.isArray(result[filterName])) {
                 return result[filterName].includes(value.toString()) && isResult
@@ -62,7 +62,7 @@ export default {
       try {
         return this.searchResults.reduce((filters, document) => {
           Object.entries(document)
-            .filter(([key, value]) => value !== null) // filtre valores nulos
+            .filter(([, value]) => value !== null) // filtre valores nulos
             .forEach(([propName, value]) => {
               if (Array.isArray(value)) {
                 if (filters[propName]) {
