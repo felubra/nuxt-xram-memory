@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import './element-variables.scss'
+import lang from 'element-ui/lib/locale/lang/pt-br'
+import locale from 'element-ui/lib/locale'
+// configure language
+locale.use(lang)
 
 import {
   Pagination,
