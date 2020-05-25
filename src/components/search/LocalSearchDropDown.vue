@@ -1,9 +1,8 @@
 <template>
-  <el-select v-model="selectedValues" :clearable="true" placeholder="Select" @change="doFilterBy">
+  <el-select v-model="selectedValues" :clearable="true" placeholder="Select" :multiple="true" @change="doFilterBy">
     <el-option
       v-for="item in options"
       :key="item"
-      :multiple="true"
       :label="item"
       :value="item"
       >
@@ -27,7 +26,7 @@ export default {
   },
   data() {
     return {
-      selectedValues: ''
+      selectedValues: []
     }
   },
   computed: {
@@ -44,19 +43,24 @@ export default {
          * Se houve mudança nos valores disponíveis para este campo e o valor selecionado
          * antriormente não está no rol dos novos valores, limpe o valor deste campo.
          */
-        if (!val || !val.has(this.selectedValues)) {
-          this.selectedValues = ''
-          this.$nextTick(() => this.doFilterBy(''))
+        this.selectedValues =
+          (val && this.selectedValues.filter(v => val.has(v))) || []
+        if (!this.selectedValues.length) {
+          this.removeFilter(this.dataField)
         }
       }
     }
   },
   methods: {
     doFilterBy(value) {
-      this.filterBy(this.dataField, value)
+      if (value.length > 0) {
+        this.filterBy(this.dataField, value)
+      } else {
+        this.removeFilter(this.dataField)
+      }
     }
   },
-  inject: ['localSearchState', 'filterBy']
+  inject: ['localSearchState', 'filterBy', 'removeFilter']
 }
 </script>
 

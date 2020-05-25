@@ -9,6 +9,7 @@ import {
 } from '~/config/constants'
 
 import lunr from 'elasticlunr'
+const searchJS = require('searchjs')
 // TODO: suporte a SSR
 // TODO: readicionar suporte à linguagens
 // TODO: computed prop com a contagem
@@ -39,18 +40,11 @@ export default {
      * Retorna os resultados de busca, restritos aos filtros ativos.
      */
     searchResults() {
-      // TODO: suporte a múltiplos valores por filtro
       try {
-        return this.unfilteredResults.filter(result => {
-          return Object.entries(this.activeFilters)
-            .filter(([, value]) => value)
-            .reduce((isResult, [filterName, value]) => {
-              if (Array.isArray(result[filterName])) {
-                return result[filterName].includes(value.toString()) && isResult
-              }
-              return result[filterName] === value.toString() && isResult
-            }, true)
-        })
+        if (Object.keys(this.activeFilters).length) {
+          return searchJS.matchArray(this.unfilteredResults, this.activeFilters)
+        }
+        return this.unfilteredResults
       } catch (e) {
         return this.unfilteredResults
       }
@@ -101,6 +95,9 @@ export default {
    */
   async created() {
     await this.fetchAndLoadIndex()
+    searchJS.setDefaults({
+      join: 'OR'
+    })
   },
   methods: {
     /**
@@ -120,6 +117,9 @@ export default {
       } catch (e) {
         this.indexStatus = DOWNLOAD_ERROR
       }
+    },
+    removeFilter(filterName) {
+      this.$delete(this.activeFilters, filterName)
     },
     /**
      * Defina o valor de um filtro
@@ -168,7 +168,9 @@ export default {
       // Funções para manipulação do estado
       filterBy: this.filterBy,
       // A função para busca
-      search: this.search
+      search: this.search,
+      // Função para remover um filtro
+      removeFilter: this.removeFilter
     }
   },
   render() {
