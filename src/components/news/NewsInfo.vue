@@ -73,16 +73,6 @@
         </li>
       </ul>
     </div>
-    <div v-if="keywords.length" class="FieldList__Field">
-      <h2>Palavras-chave</h2>
-      <ul class="taxonomy-list">
-        <li v-for="keyword in keywords" :key="keyword.slug">
-          <nuxt-link
-            :to="{name:'search', query:{ keywords: JSON.stringify([keyword.name])} }"
-          >{{keyword.name}}</nuxt-link>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 

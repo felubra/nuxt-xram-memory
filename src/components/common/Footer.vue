@@ -6,7 +6,7 @@
         &copy; 2019-20
         <strong>xraM-Memory</strong>
       </p>
-      <p class="version">Versão 0.5.3</p>
+      <p class="version">Versão 0.5.5</p>
       <p class="by">
         <a href="https://br.linkedin.com/in/felubra">Desenvolvido por Felipe Lube Bragança</a>
       </p>
