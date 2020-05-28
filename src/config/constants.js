@@ -49,3 +49,11 @@ export const CONTENT_TYPES = {
   DOCUMENT: 'Documento',
   IMAGE: 'Imagem'
 }
+
+/** Estados de carregamento do índice */
+export const EMPTY = 'EMPTY'
+export const DOWNLOADING = 'DOWNLOADING'
+export const LOADING = 'LOADING'
+export const LOADED = 'LOADED'
+export const LOAD_ERROR = 'LOAD_ERROR'
+export const DOWNLOAD_ERROR = 'DOWNLOAD_ERROR'

@@ -1,15 +1,52 @@
 <script>
+import {
+  EMPTY,
+  DOWNLOADING,
+  LOADING,
+  LOADED,
+  LOAD_ERROR,
+  DOWNLOAD_ERROR
+} from '~/config/constants'
+import lunr from 'elasticlunr'
+
 export default {
   name: 'LocalSearchBase',
+  props: {
+    indexURL: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      //TODO: indexState: EMPTY,
+      indexState: EMPTY,
       //TODO: results: [],
       searchState: {},
       filterState: {}
     }
   },
+  async created() {
+    await this.fetchAndLoadIndex()
+  },
   methods: {
+    /**
+     * Baixa e carrega o arquivo do índice
+     */
+    async fetchAndLoadIndex() {
+      try {
+        this.indexState = DOWNLOADING
+        const serializedIndex = await this.$axios.$get(this.indexURL)
+        try {
+          this.indexState = LOADING
+          this.index = lunr.Index.load(serializedIndex)
+          this.indexState = LOADED
+        } catch (e) {
+          this.indexState = LOAD_ERROR
+        }
+      } catch (e) {
+        this.indexState = DOWNLOAD_ERROR
+      }
+    },
     searchBy(componentId, value) {
       if (value) {
         this.$set(this.searchState, componentId, value)
