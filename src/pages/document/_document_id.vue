@@ -27,7 +27,6 @@
 
     <aside class="FieldList">
       <header>
-        <h1>{{document.document_id || document.name}}</h1>
         <div class="microtext download-area">
           <v-btn text download fab :href="documentOriginalURL" target="_blank">
             <v-icon>mdi-download</v-icon>
