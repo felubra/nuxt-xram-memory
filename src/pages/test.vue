@@ -2,7 +2,7 @@
   <div>
     <LocalSearchBase index-u-r-l="media/lunr_index/index.json">
       <LocalSearchInput component-id="mainQuery" />
-      <LocalSearchDropDown component-id="mainFilter" />
+      <LocalSearchDropDown field-name="keywords" component-id="mainFilter" />
     </LocalSearchBase>
   </div>
 </template>

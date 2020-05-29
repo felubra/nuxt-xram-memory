@@ -8,6 +8,7 @@ import {
   DOWNLOAD_ERROR
 } from '~/config/constants'
 import lunr from 'elasticlunr'
+const searchJS = require('searchjs')
 
 export default {
   name: 'LocalSearchBase',
@@ -23,6 +24,25 @@ export default {
       //TODO: results: [],
       searchState: {},
       filterState: {}
+    }
+  },
+  computed: {
+    searchResults() {
+      const searchQuery = Object.values(this.searchState).reduce(
+        (str, value) => `${str} ${value}`,
+        ''
+      )
+      try {
+        return searchJS.matchArray(
+          this.index
+            .search(searchQuery)
+            .map(result => result.ref)
+            .map(this.index.documentStore.getDoc, this.index.documentStore),
+          this.filterState
+        )
+      } catch {
+        return []
+      }
     }
   },
   async created() {
