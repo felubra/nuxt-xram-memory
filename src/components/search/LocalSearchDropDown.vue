@@ -1,9 +1,7 @@
 <template>
   <select v-model="selected">
-    <option disabled value="">Please select one</option>
-    <option>justiça</option>
-    <option>sítio</option>
-    <option>corrupção</option>
+    <option disabled value="">Selecione</option>
+    <option v-for="option in options" :key="option">{{option}}</option>
   </select>
 </template>
 
@@ -22,7 +20,8 @@ export default {
   },
   data() {
     return {
-      selected: ''
+      selected: '',
+      options: []
     }
   },
   watch: {
@@ -33,7 +32,10 @@ export default {
       }
     }
   },
-  inject: ['filterBy']
+  created() {
+    this.options = this.registerFilter(this.fieldName)
+  },
+  inject: ['filterBy', 'registerFilter']
 }
 </script>
 

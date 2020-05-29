@@ -23,7 +23,8 @@ export default {
       indexState: EMPTY,
       //TODO: results: [],
       searchState: {},
-      filterState: {}
+      filterState: {},
+      filterDataSources: {}
     }
   },
   computed: {
@@ -80,12 +81,16 @@ export default {
       } else {
         this.$delete(this.filterState, componentId)
       }
+    },
+    registerFilter(fieldName) {
+      return this.$set(this.filterDataSources, fieldName, [])
     }
   },
   provide() {
     return {
       searchBy: this.searchBy,
-      filterBy: this.filterBy
+      filterBy: this.filterBy,
+      registerFilter: this.registerFilter
     }
   },
   render(h) {
