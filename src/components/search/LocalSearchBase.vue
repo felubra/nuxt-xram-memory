@@ -122,7 +122,7 @@ export default {
         (filtersData, fieldName) => {
           filtersData[fieldName] = Array.from(
             new Set(
-              groups(this.unfilteredSearchResults, d =>
+              groups(this.searchResults, d =>
                 objectPath.get(d, fieldName)
               ).reduce((allFieldData, [fieldData]) => {
                 return allFieldData.concat(fieldData)
