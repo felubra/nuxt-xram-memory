@@ -41,6 +41,12 @@ export default {
           this.options = []
         }
       }
+    },
+    options(v) {
+      // remova uma seleção para uma opção que já não existe mais
+      if (!v.includes(this.selected)) {
+        this.selected = ''
+      }
     }
   },
   created() {
