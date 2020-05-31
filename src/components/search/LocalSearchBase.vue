@@ -11,6 +11,7 @@ import lunr from 'elasticlunr'
 import { groups } from 'd3-array'
 import objectPath from 'object-path'
 const searchJS = require('searchjs')
+import isEmpty from 'lodash/isEmpty'
 
 export default {
   name: 'LocalSearchBase',
@@ -30,15 +31,24 @@ export default {
     }
   },
   computed: {
+    isEmpty() {
+      return isEmpty(this.searchState) && isEmpty(this.filterState)
+    },
     searchResults() {
       try {
+        if (this.isEmpty && this.indexState === LOADED) {
+          return this.allDocuments
+        }
         return searchJS.matchArray(
           this.unfilteredSearchResults,
           this.filterState
         )
-      } catch {
+      } catch (e) {
         return []
       }
+    },
+    allDocuments() {
+      return Object.values(this.index.documentStore.docs)
     },
     unfilteredSearchResults() {
       const searchQuery = Object.values(this.searchState).reduce(
