@@ -4,6 +4,7 @@
       <LocalSearchInput component-id="mainQuery" />
       <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
       <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
+      <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
     </LocalSearchBase>
   </div>
 </template>

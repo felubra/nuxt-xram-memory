@@ -8,8 +8,9 @@ import {
   DOWNLOAD_ERROR
 } from '~/config/constants'
 import lunr from 'elasticlunr'
-const searchJS = require('searchjs')
 import { groups } from 'd3-array'
+import objectPath from 'object-path'
+const searchJS = require('searchjs')
 
 export default {
   name: 'LocalSearchBase',
@@ -111,13 +112,11 @@ export default {
         (filtersData, fieldName) => {
           filtersData[fieldName] = Array.from(
             new Set(
-              // TODO: suporte à campos-filho, com notação de ponto
-              groups(this.unfilteredSearchResults, d => d[fieldName]).reduce(
-                (allFieldData, [fieldData]) => {
-                  return allFieldData.concat(fieldData)
-                },
-                []
-              )
+              groups(this.unfilteredSearchResults, d =>
+                objectPath.get(d, fieldName)
+              ).reduce((allFieldData, [fieldData]) => {
+                return allFieldData.concat(fieldData)
+              }, [])
             )
           )
           return filtersData
