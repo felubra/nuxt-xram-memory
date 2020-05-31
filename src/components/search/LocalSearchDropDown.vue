@@ -30,12 +30,24 @@ export default {
       handler(v) {
         this.filterBy(this.fieldName, v)
       }
+    },
+    'state.filterDataSources': {
+      immediate: true,
+      deep: true,
+      handler(v) {
+        try {
+          this.options = v[this.fieldName]
+        } catch {
+          this.options = []
+        }
+      }
     }
   },
   created() {
-    this.options = this.registerFilter(this.fieldName)
+    // Fazer uma função para registrar o valor selecionado e os disponóveis
+    this.registerFilter(this.fieldName)
   },
-  inject: ['filterBy', 'registerFilter']
+  inject: ['filterBy', 'registerFilter', 'state']
 }
 </script>
 

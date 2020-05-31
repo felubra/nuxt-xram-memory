@@ -1,5 +1,5 @@
 <template>
-  <input type="text" @change="(e) => searchBy(componentId, e.target.value)" />
+  <input v-model="value" type="text" />
 </template>
 
 <script>
@@ -9,6 +9,19 @@ export default {
     componentId: {
       type: String,
       required: true
+    }
+  },
+  data() {
+    return {
+      value: ''
+    }
+  },
+  watch: {
+    value: {
+      immediate: true,
+      handler(v) {
+        this.searchBy(this.componentId, v)
+      }
     }
   },
   inject: ['searchBy']

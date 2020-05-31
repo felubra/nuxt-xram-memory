@@ -9,6 +9,7 @@ import {
 } from '~/config/constants'
 import lunr from 'elasticlunr'
 const searchJS = require('searchjs')
+import { groups } from 'd3-array'
 
 export default {
   name: 'LocalSearchBase',
@@ -21,28 +22,44 @@ export default {
   data() {
     return {
       indexState: EMPTY,
-      //TODO: results: [],
       searchState: {},
       filterState: {},
+      registeredFilters: [],
       filterDataSources: {}
     }
   },
   computed: {
     searchResults() {
+      try {
+        return searchJS.matchArray(
+          this.unfilteredSearchResults,
+          this.filterState
+        )
+      } catch {
+        return []
+      }
+    },
+    unfilteredSearchResults() {
       const searchQuery = Object.values(this.searchState).reduce(
         (str, value) => `${str} ${value}`,
         ''
       )
       try {
-        return searchJS.matchArray(
-          this.index
-            .search(searchQuery)
-            .map(result => result.ref)
-            .map(this.index.documentStore.getDoc, this.index.documentStore),
-          this.filterState
-        )
+        return this.index
+          .search(searchQuery)
+          .map(result => result.ref)
+          .map(this.index.documentStore.getDoc, this.index.documentStore)
       } catch {
         return []
+      }
+    }
+  },
+  watch: {
+    unfilteredSearchResults: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.updateFilterDataSources()
       }
     }
   },
@@ -83,11 +100,40 @@ export default {
       }
     },
     registerFilter(fieldName) {
-      return this.$set(this.filterDataSources, fieldName, [])
+      if (!this.registeredFilters.includes(fieldName)) {
+        this.registeredFilters.push(fieldName)
+      }
+      this.updateFilterDataSources()
+    },
+    // TODO: pode ser computed prop
+    updateFilterDataSources() {
+      this.filterDataSources = this.registeredFilters.reduce(
+        (filtersData, fieldName) => {
+          filtersData[fieldName] = Array.from(
+            new Set(
+              // TODO: suporte à campos-filho, com notação de ponto
+              groups(this.unfilteredSearchResults, d => d[fieldName]).reduce(
+                (allFieldData, [fieldData]) => {
+                  return allFieldData.concat(fieldData)
+                },
+                []
+              )
+            )
+          )
+          return filtersData
+        },
+        {}
+      )
     }
   },
   provide() {
+    const state = {}
+    Object.defineProperty(state, 'filterDataSources', {
+      get: () => this.filterDataSources,
+      enumerable: true
+    })
     return {
+      state,
       searchBy: this.searchBy,
       filterBy: this.filterBy,
       registerFilter: this.registerFilter
