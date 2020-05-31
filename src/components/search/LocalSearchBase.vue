@@ -141,7 +141,7 @@ export default {
   render(h) {
     return h('div', [
       this.$scopedSlots.default({
-        text: this.message
+        results: this.searchResults
       })
     ])
   }
