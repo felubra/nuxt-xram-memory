@@ -1,5 +1,5 @@
 <template>
-  <el-input v-model="value" type="text" suffix-icon="el-icon-search" :placeholder="placeholder" />
+  <el-input v-model="state.searchState[componentId]" type="text" suffix-icon="el-icon-search" :placeholder="placeholder" />
 </template>
 
 <script>
@@ -15,20 +15,7 @@ export default {
       default: ''
     }
   },
-  data() {
-    return {
-      value: ''
-    }
-  },
-  watch: {
-    value: {
-      immediate: true,
-      handler(v) {
-        this.searchBy(this.componentId, v)
-      }
-    }
-  },
-  inject: ['searchBy']
+  inject: ['state']
 }
 </script>
 

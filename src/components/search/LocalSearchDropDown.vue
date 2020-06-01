@@ -1,7 +1,7 @@
 <template>
-  <el-select v-model="selected" placeholder="Select" :multiple="true" :collapse-tags="true" :filterable="true">
+  <el-select v-model="state.filterState[fieldName]" placeholder="Select" :multiple="true" :collapse-tags="true" :filterable="true">
     <el-option
-      v-for="option in options" :key="option"
+      v-for="option in state.filterDataSources[fieldName]" :key="option"
       :label="option"
       :value="option">
     </el-option>
@@ -23,28 +23,10 @@ export default {
   },
   data() {
     return {
-      selected: '',
       options: []
     }
   },
   watch: {
-    selected: {
-      immediate: true,
-      handler(v) {
-        this.filterBy(this.fieldName, v)
-      }
-    },
-    'state.filterDataSources': {
-      immediate: true,
-      deep: true,
-      handler(v) {
-        try {
-          this.options = v[this.fieldName]
-        } catch {
-          this.options = []
-        }
-      }
-    },
     options(v) {
       // remova uma seleção para uma opção que já não existe mais
       if (!v.includes(this.selected)) {
@@ -56,7 +38,7 @@ export default {
     // Fazer uma função para registrar o valor selecionado e os disponóveis
     this.registerFilter(this.fieldName)
   },
-  inject: ['filterBy', 'registerFilter', 'state']
+  inject: ['registerFilter', 'state']
 }
 </script>
 

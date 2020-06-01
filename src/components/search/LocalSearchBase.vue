@@ -41,6 +41,17 @@ export default {
         return 0
       }
     },
+    selectedFilters() {
+      return Object.entries(this.filterState).reduce(
+        (selected, [key, value]) => {
+          if (!isEmpty(value)) {
+            selected[key] = value
+          }
+          return selected
+        },
+        {}
+      )
+    },
     searchResults() {
       try {
         if (this.isEmpty && this.indexState === LOADED) {
@@ -48,7 +59,7 @@ export default {
         }
         return searchJS.matchArray(
           this.unfilteredSearchResults,
-          this.filterState
+          this.selectedFilters
         )
       } catch (e) {
         return []
@@ -103,20 +114,6 @@ export default {
         this.indexState = DOWNLOAD_ERROR
       }
     },
-    searchBy(componentId, value) {
-      if (value) {
-        this.$set(this.searchState, componentId, value)
-      } else {
-        this.$delete(this.searchState, componentId)
-      }
-    },
-    filterBy(componentId, value) {
-      if (value) {
-        this.$set(this.filterState, componentId, value)
-      } else {
-        this.$delete(this.filterState, componentId)
-      }
-    },
     registerFilter(fieldName) {
       if (!this.registeredFilters.includes(fieldName)) {
         this.registeredFilters.push(fieldName)
@@ -144,14 +141,24 @@ export default {
   },
   provide() {
     const state = {}
-    Object.defineProperty(state, 'filterDataSources', {
-      get: () => this.filterDataSources,
-      enumerable: true
+    Object.defineProperties(state, {
+      filterDataSources: {
+        get: () => this.filterDataSources,
+        enumerable: true
+      },
+      searchState: {
+        get: () => this.searchState,
+        set: v => (this.searchState = v),
+        enumerable: true
+      },
+      filterState: {
+        get: () => this.filterState,
+        set: v => (this.filterState = v),
+        enumerable: true
+      }
     })
     return {
       state,
-      searchBy: this.searchBy,
-      filterBy: this.filterBy,
       registerFilter: this.registerFilter
     }
   },
