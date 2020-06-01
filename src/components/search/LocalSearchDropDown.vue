@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="selected" placeholder="Select" :multiple="true" :collapse-tags="true">
+  <el-select v-model="selected" placeholder="Select" :multiple="true" :collapse-tags="true" :filterable="true">
     <el-option
       v-for="option in options" :key="option"
       :label="option"
