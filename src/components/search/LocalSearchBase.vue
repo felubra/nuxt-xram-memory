@@ -30,6 +30,10 @@ export default {
     }
   },
   computed: {
+    /**
+     * Para cada filtro registrado, retorna os valores disponíveis de acordo com a pesquisa atual e o valor dos outros
+     * filtros.
+     */
     filterDataSources() {
       return this.registeredFilters.reduce((filtersData, fieldName) => {
         filtersData[fieldName] = Array.from(
@@ -54,6 +58,9 @@ export default {
         return 0
       }
     },
+    /**
+     * Retorna objeto com os filtros que tem algum valor selecionado.
+     */
     selectedFilters() {
       return Object.entries(this.filterState).reduce(
         (selected, [key, value]) => {
@@ -65,6 +72,9 @@ export default {
         {}
       )
     },
+    /**
+     * Os resultados de busca de acordo com o valor nos filtros selecionados.
+     */
     searchResults() {
       try {
         return searchJS.matchArray(
@@ -75,6 +85,9 @@ export default {
         return []
       }
     },
+    /**
+     * Todos os documentos indexados.
+     */
     allDocuments() {
       return (
         (this.indexState === LOADED &&
@@ -82,6 +95,9 @@ export default {
         []
       )
     },
+    /**
+     * O valor do texto de busca, concatenado de todos os componentes de busca full-text.
+     */
     searchQuery() {
       try {
         const values = Object.values(this.searchState)
@@ -90,6 +106,9 @@ export default {
         return ''
       }
     },
+    /**
+     * Os resultados da busca full-text no índice ou todos os documentos, se nenhuma string de busca foi fornecida.
+     */
     unfilteredSearchResults() {
       try {
         if (this.searchQuery) {
@@ -109,7 +128,8 @@ export default {
   },
   methods: {
     /**
-     * Baixa e carrega o arquivo do índice
+     * Baixa e carrega o arquivo do índice.
+     * Define o status do carregamento de acordo com fases.
      */
     async fetchAndLoadIndex() {
       try {
@@ -126,11 +146,18 @@ export default {
         this.indexState = DOWNLOAD_ERROR
       }
     },
+    /**
+     * Registra um filtro
+     * TODO: remover
+     */
     registerFilter(fieldName) {
       if (!this.registeredFilters.includes(fieldName)) {
         this.registeredFilters.push(fieldName)
       }
     },
+    /**
+     * Limpa todos o estado dos componentes de busca.
+     */
     clear() {
       for (let collection of [this.searchState, this.filterState]) {
         for (let key in collection) {
