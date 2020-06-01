@@ -137,6 +137,13 @@ export default {
         },
         {}
       )
+    },
+    clear() {
+      for (let collection of [this.searchState, this.filterState]) {
+        for (let key in collection) {
+          this.$set(collection, key, null)
+        }
+      }
     }
   },
   provide() {
@@ -166,7 +173,8 @@ export default {
     return h('div', [
       this.$scopedSlots.default({
         results: this.searchResults,
-        resultCount: this.resultCount
+        resultCount: this.resultCount,
+        clear: this.clear
       })
     ])
   }

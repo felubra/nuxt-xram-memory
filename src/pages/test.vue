@@ -1,11 +1,12 @@
 <template>
   <div>
-    <LocalSearchBase v-slot:default="{results}" index-u-r-l="media/lunr_index/index.json">
+    <LocalSearchBase v-slot:default="{results, clear}" index-u-r-l="media/lunr_index/index.json">
       <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
       <LocalSearchDropDown field-name="type" component-id="typeFilter" />
       <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
       <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
       <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
+      <el-button @click=clear>Limpar</el-button>
       <NewsGrid :items='results' />
     </LocalSearchBase>
   </div>
