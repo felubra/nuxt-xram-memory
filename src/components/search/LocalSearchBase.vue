@@ -34,6 +34,13 @@ export default {
     isEmpty() {
       return isEmpty(this.searchState) && isEmpty(this.filterState)
     },
+    resultCount() {
+      try {
+        return this.searchResults.length
+      } catch {
+        return 0
+      }
+    },
     searchResults() {
       try {
         if (this.isEmpty && this.indexState === LOADED) {
@@ -151,7 +158,8 @@ export default {
   render(h) {
     return h('div', [
       this.$scopedSlots.default({
-        results: this.searchResults
+        results: this.searchResults,
+        resultCount: this.resultCount
       })
     ])
   }
