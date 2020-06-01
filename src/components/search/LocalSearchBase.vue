@@ -26,11 +26,24 @@ export default {
       indexState: EMPTY,
       searchState: {},
       filterState: {},
-      registeredFilters: [],
-      filterDataSources: {}
+      registeredFilters: []
     }
   },
   computed: {
+    filterDataSources() {
+      return this.registeredFilters.reduce((filtersData, fieldName) => {
+        filtersData[fieldName] = Array.from(
+          new Set(
+            groups(this.searchResults, d =>
+              objectPath.get(d, fieldName)
+            ).reduce((allFieldData, [fieldData]) => {
+              return allFieldData.concat(fieldData)
+            }, [])
+          )
+        )
+        return filtersData
+      }, {})
+    },
     isEmpty() {
       return isEmpty(this.searchState) && isEmpty(this.filterState)
     },
@@ -54,9 +67,6 @@ export default {
     },
     searchResults() {
       try {
-        if (this.isEmpty && this.indexState === LOADED) {
-          return this.allDocuments
-        }
         return searchJS.matchArray(
           this.unfilteredSearchResults,
           this.selectedFilters
@@ -66,29 +76,31 @@ export default {
       }
     },
     allDocuments() {
-      return Object.values(this.index.documentStore.docs)
+      return (
+        (this.indexState === LOADED &&
+          Object.values(this.index.documentStore.docs)) ||
+        []
+      )
+    },
+    searchQuery() {
+      try {
+        const values = Object.values(this.searchState)
+        return (values.length && values.join(' ')) || ''
+      } catch {
+        return ''
+      }
     },
     unfilteredSearchResults() {
-      const searchQuery = Object.values(this.searchState).reduce(
-        (str, value) => `${str} ${value}`,
-        ''
-      )
       try {
-        return this.index
-          .search(searchQuery)
-          .map(result => result.ref)
-          .map(this.index.documentStore.getDoc, this.index.documentStore)
+        if (this.searchQuery) {
+          return this.index
+            .search(this.searchQuery)
+            .map(result => result.ref)
+            .map(this.index.documentStore.getDoc, this.index.documentStore)
+        }
+        return this.allDocuments
       } catch {
         return []
-      }
-    }
-  },
-  watch: {
-    unfilteredSearchResults: {
-      deep: true,
-      immediate: true,
-      handler() {
-        this.updateFilterDataSources()
       }
     }
   },
@@ -118,25 +130,6 @@ export default {
       if (!this.registeredFilters.includes(fieldName)) {
         this.registeredFilters.push(fieldName)
       }
-      this.updateFilterDataSources()
-    },
-    // TODO: pode ser computed prop
-    updateFilterDataSources() {
-      this.filterDataSources = this.registeredFilters.reduce(
-        (filtersData, fieldName) => {
-          filtersData[fieldName] = Array.from(
-            new Set(
-              groups(this.searchResults, d =>
-                objectPath.get(d, fieldName)
-              ).reduce((allFieldData, [fieldData]) => {
-                return allFieldData.concat(fieldData)
-              }, [])
-            )
-          )
-          return filtersData
-        },
-        {}
-      )
     },
     clear() {
       for (let collection of [this.searchState, this.filterState]) {
