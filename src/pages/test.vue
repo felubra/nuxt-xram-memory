@@ -1,7 +1,7 @@
 <template>
   <div>
     <LocalSearchBase v-slot:default="{results}" index-u-r-l="media/lunr_index/index.json">
-      <LocalSearchInput component-id="mainQuery" />
+      <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
       <LocalSearchDropDown field-name="type" component-id="typeFilter" />
       <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
       <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />

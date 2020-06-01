@@ -1,5 +1,5 @@
 <template>
-  <input v-model="value" type="text" />
+  <el-input v-model="value" type="text" suffix-icon="el-icon-search" :placeholder="placeholder" />
 </template>
 
 <script>
@@ -9,6 +9,10 @@ export default {
     componentId: {
       type: String,
       required: true
+    },
+    placeholder: {
+      type: String,
+      default: ''
     }
   },
   data() {
