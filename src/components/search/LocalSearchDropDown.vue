@@ -1,8 +1,11 @@
 <template>
-  <select v-model="selected">
-    <option disabled value="">Selecione</option>
-    <option v-for="option in options" :key="option">{{option}}</option>
-  </select>
+  <el-select v-model="selected" placeholder="Select" :multiple="true" :collapse-tags="true">
+    <el-option
+      v-for="option in options" :key="option"
+      :label="option"
+      :value="option">
+    </el-option>
+  </el-select>
 </template>
 
 <script>
