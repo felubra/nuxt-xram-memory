@@ -19,6 +19,10 @@ export default {
     indexURL: {
       type: String,
       required: true
+    },
+    initialState: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
@@ -125,8 +129,31 @@ export default {
   },
   async created() {
     await this.fetchAndLoadIndex()
+    this.processInitialState()
   },
   methods: {
+    /**
+     * Define o estado dos componentes com base na prop initialState
+     */
+    processInitialState() {
+      // Preencha o estado dos filtros com as informações passadas à prop initialstate
+      if (this.initialState && this.initialState.filterState) {
+        this.filterState = Object.assign(
+          {},
+          Object.entries(this.initialState.filterState)
+            // Somente considere os campos registrados pelos componentes-filho
+            .filter(([key]) => this.registeredFilters.includes(key))
+            // Reconstrua o objeto, cujos valores deverão ser sempre arrays
+            .reduce(
+              (obj, [key, value]) => ({
+                ...obj,
+                [key]: Array.isArray(value) ? value : [value]
+              }),
+              {}
+            )
+        )
+      }
+    },
     /**
      * Baixa e carrega o arquivo do índice.
      * Define o status do carregamento de acordo com fases.
