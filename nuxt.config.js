@@ -116,7 +116,16 @@ module.exports = {
     ELASTIC_SEARCH_CREDENTIALS: process.env.ELASTIC_SEARCH_CREDENTIALS
   },
   router: {
-    middleware: ['collapseMenu', 'fetchMenuItems']
+    middleware: ['collapseMenu', 'fetchMenuItems'],
+    parseQuery: qs => {
+      // FIXME: não importe 'query-string' aqui
+      const queryString = require('query-string')
+      const parsed = queryString.parse(qs)
+      if (parsed) {
+        return parsed
+      }
+      return {}
+    }
   },
   /*
   ** Build configuration
