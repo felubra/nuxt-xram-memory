@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LocalSearchBase v-slot:default="{results, clear}" index-u-r-l="media/lunr_index/index.json">
+    <LocalSearchBase v-slot:default="{results, clear}" :initial-state="initialState" index-u-r-l="media/lunr_index/index.json">
       <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
       <LocalSearchDropDown field-name="type" component-id="typeFilter" />
       <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
@@ -25,6 +25,18 @@ export default {
     LocalSearchInput,
     LocalSearchDropDown,
     NewsGrid
+  },
+  data() {
+    return {
+      initialState: {}
+    }
+  },
+  asyncData({ route }) {
+    return {
+      initialState: {
+        filterState: route.query
+      }
+    }
   }
 }
 </script>
