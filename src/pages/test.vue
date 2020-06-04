@@ -1,15 +1,29 @@
 <template>
-  <div>
-    <LocalSearchBase v-slot:default="{searchResults, clear}" :initial-state="initialState" index-u-r-l="media/lunr_index/index.json">
-      <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
-      <LocalSearchDropDown field-name="type" component-id="typeFilter" />
-      <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
-      <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
-      <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
-      <el-button @click=clear>Limpar</el-button>
-      <NewsGrid :items='searchResults' />
-    </LocalSearchBase>
-  </div>
+  <LocalSearchBase
+    v-slot:default="{searchResults, clear, isLoading, hasError}"
+    class="TestPage"
+    :initial-state="initialState"
+    index-u-r-l="media/lunr_index/index.json">
+    <transition appear name="fade" mode="out-in">
+      <div v-if="hasError" key="error" class="Error" >
+        Erro!
+      </div>
+      <div v-else key="loaded" >
+        <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
+        <LocalSearchDropDown field-name="type" component-id="typeFilter" />
+        <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
+        <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
+        <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
+        <el-button @click=clear>Limpar</el-button>
+        <NewsGrid
+          v-loading="isLoading"
+          :items='searchResults'
+          element-loading-text="Carregando..."
+          element-loading-background="transparent"
+        />
+      </div>
+    </transition>
+  </LocalSearchBase>
 </template>
 
 <script>
@@ -42,4 +56,13 @@ export default {
 </script>
 
 <style>
+.TestPage {
+  flex: 1;
+  display: flex;
+  position: relative;
+}
+
+.NewsGrid {
+  min-height: 10vh;
+}
 </style>
