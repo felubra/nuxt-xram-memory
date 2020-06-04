@@ -1,3 +1,9 @@
+<template>
+  <div>
+    <slot v-bind="{searchResults, resultCount, clear}">
+    </slot>
+  </div>
+</template>
 <script>
 import {
   EMPTY,
@@ -215,15 +221,6 @@ export default {
       state,
       registerFilter: this.registerFilter
     }
-  },
-  render(h) {
-    return h('div', [
-      this.$scopedSlots.default({
-        results: this.searchResults,
-        resultCount: this.resultCount,
-        clear: this.clear
-      })
-    ])
   }
 }
 </script>
