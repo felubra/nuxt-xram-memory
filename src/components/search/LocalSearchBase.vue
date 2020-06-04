@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot v-bind="{searchResults, resultCount, clear}">
+    <slot v-bind="{searchResults, resultCount, clear, isLoaded, hasError, isLoading}">
     </slot>
   </div>
 </template>
@@ -40,6 +40,17 @@ export default {
     }
   },
   computed: {
+    isLoading() {
+      return this.indexState === DOWNLOADING || this.indexState === LOADING
+    },
+    isLoaded() {
+      return this.indexState === LOADED
+    },
+    hasError() {
+      return (
+        this.indexState === DOWNLOAD_ERROR || this.indexState === LOAD_ERROR
+      )
+    },
     /**
      * Para cada filtro registrado, retorna os valores disponíveis de acordo com a pesquisa atual e o valor dos outros
      * filtros.
@@ -171,7 +182,9 @@ export default {
         try {
           this.indexState = LOADING
           this.index = lunr.Index.load(serializedIndex)
-          this.indexState = LOADED
+          setTimeout(() => {
+            this.indexState = LOADED
+          }, 5000)
         } catch (e) {
           this.indexState = LOAD_ERROR
         }
