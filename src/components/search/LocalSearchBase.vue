@@ -182,9 +182,7 @@ export default {
         try {
           this.indexState = LOADING
           this.index = lunr.Index.load(serializedIndex)
-          setTimeout(() => {
-            this.indexState = LOADED
-          }, 5000)
+          this.indexState = LOADED
         } catch (e) {
           this.indexState = LOAD_ERROR
         }
