@@ -1,17 +1,8 @@
 <template>
   <div class="ResultStats">
-    <Microtext
-      class-name="ResultsCounter"
-      arrow="down"
-      arrow-position="before"
-    >{{totalResults}} {{totalResults > 1 ? 'resultados' : 'resultado'}} em {{time}}ms</Microtext>
-    <selected-filters
-      class-name="SelectedFilters"
-      clear-all-label="Limpar filtros"
-      :inner-class="{
-                button:'SelectedFilters__Filter'
-              }"
-    />
+    <Microtext class-name="ResultsCounter" arrow="down" arrow-position="before">
+      {{resultStats}}
+    </Microtext>
   </div>
 </template>
 <script>
@@ -30,6 +21,17 @@ export default {
     time: {
       type: Number,
       default: 0
+    }
+  },
+  computed: {
+    resultStats() {
+      try {
+        return `${this.totalResults} ${
+          this.totalResults > 1 ? 'resultados' : 'resultado'
+        } em ${this.time}ms`
+      } catch {
+        return ''
+      }
     }
   }
 }
@@ -50,47 +52,5 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
-
-.SelectedFilters {
-  margin: 1rem auto !important;
-  align-content: center;
-  align-items: center;
-  justify-items: center;
-  justify-content: center;
-
-}
-
-.SelectedFilters__Filter {
-  background: #dcdbdb !important;
-  color: #909399;
-  font-size: 12px !important;
-  /* text-transform: none; */
-}
-
-.SelectedFilters__Filter:hover {
-  background: $link-color !important;
-  color: #fff !important;
-  /* text-transform: none; */
-}
-
-.ResultCount {
-  display: block;
-  text-align: center;
-}
-
-@media only screen and (min-width: 768px) {
-  .ResultStats {
-    flex-direction: row;
-  }
-
-  .ResultCount {
-    display: flex;
-    font-weight: 500;
-    align-items: center;
-  }
-  .ResultsCounter {
-    order: -1;
-  }
 }
 </style>
