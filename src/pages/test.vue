@@ -17,6 +17,7 @@
         <el-button @click=clear>Limpar</el-button>
         <NewsGrid
           v-loading="isLoading"
+          class="NewsGrid"
           :items='searchResults'
           element-loading-text="Carregando..."
           element-loading-background="transparent"
@@ -62,7 +63,9 @@ export default {
   position: relative;
 }
 
-.NewsGrid {
+.NewsGrid,
+.TestPage > div {
   min-height: 10vh;
+  width: 100%;
 }
 </style>
