@@ -9,13 +9,21 @@
         Desculpe-nos, mas um erro aconteceu. Tente recarregar esta página mais tarde.
       </div>
       <div v-else key="loaded" >
-        <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
-        <LocalSearchDropDown field-name="type" component-id="typeFilter" />
-        <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
-        <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
-        <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
-        <el-button @click=clear>Limpar</el-button>
-        <ResultStats :total-results="resultCount" />
+        <div>
+          <div class="SearchBar">
+            <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
+          </div>
+          <div class="Filters">
+            <LocalSearchDropDown field-name="type" component-id="typeFilter" />
+            <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
+            <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
+            <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
+          </div>
+        </div>
+        <div>
+          <ResultStats :total-results="resultCount" />
+          <el-button @click=clear>Limpar</el-button>
+        </div>
         <NewsGrid
           v-loading="isLoading"
           class="NewsGrid"
@@ -59,7 +67,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .TestPage {
   flex: 1;
   display: flex;
@@ -70,5 +78,20 @@ export default {
 .TestPage > div {
   min-height: 10vh;
   width: 100%;
+}
+.Filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0 2rem;
+}
+
+.Filters > .el-select {
+  margin: 0 2rem;
+}
+
+.SearchBar {
+  max-width: 53rem;
+  margin: 3rem auto 0;
 }
 </style>

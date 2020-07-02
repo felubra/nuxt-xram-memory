@@ -35,10 +35,6 @@ export default {
 </script>
 
 <style lang="stylus">
-.SearchBar {
-  max-width: 730px;
-}
-
 .SearchBar input {
   transition: border-color 0.25s ease;
   font-size: 16px;
