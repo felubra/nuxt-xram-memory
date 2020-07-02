@@ -22,7 +22,6 @@
         </div>
         <div>
           <ResultStats :total-results="resultCount" />
-          <el-button @click=clear>Limpar</el-button>
         </div>
         <NewsGrid
           v-loading="isLoading"
@@ -74,7 +73,6 @@ export default {
   position: relative;
 }
 
-.NewsGrid,
 .TestPage > div {
   min-height: 10vh;
   width: 100%;
