@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import './element-variables.scss'
+import lang from 'element-ui/lib/locale/lang/pt-br'
+import locale from 'element-ui/lib/locale'
 
 import {
   Pagination,
@@ -82,6 +84,7 @@ import {
 } from 'element-ui'
 
 export default () => {
+  locale.use(lang)
   Vue.use(Pagination)
   Vue.use(Dialog)
   Vue.use(Autocomplete)
