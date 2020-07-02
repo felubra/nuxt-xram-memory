@@ -14,10 +14,22 @@
             <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
           </div>
           <div class="Filters">
-            <LocalSearchDropDown field-name="type" component-id="typeFilter" />
-            <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
-            <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
-            <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
+            <div>
+              <label for="typeFilter"><Microtext>Tipo</Microtext></label>
+              <LocalSearchDropDown field-name="type" component-id="typeFilter" />
+            </div>
+            <div>
+              <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
+              <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
+            </div>
+            <div>
+              <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
+              <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
+            </div>
+            <div>
+              <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
+              <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
+            </div>
           </div>
         </div>
         <div>
@@ -79,17 +91,31 @@ export default {
 }
 .Filters {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 4rem 0 2rem;
 }
-
-.Filters > .el-select {
+.Filters > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   margin: 0 2rem;
 }
 
 .SearchBar {
   max-width: 53rem;
   margin: 3rem auto 0;
+}
+
+@media only screen and (min-width: 768px) {
+  .Filters {
+    flex-direction: row;
+  }
+  .Filters > div {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+  }
 }
 </style>
