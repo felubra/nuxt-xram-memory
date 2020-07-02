@@ -62,7 +62,15 @@ export default {
             groups(this.searchResults, d =>
               objectPath.get(d, fieldName)
             ).reduce((allFieldData, [fieldData]) => {
-              return allFieldData.concat(fieldData)
+              // Filtre itens vazios
+              if (Array.isArray(fieldData)) {
+                allFieldData.concat(fieldData.filter(i => i))
+              } else {
+                if (fieldData) {
+                  allFieldData.push(fieldData)
+                }
+              }
+              return allFieldData
             }, [])
           )
         )
@@ -182,6 +190,9 @@ export default {
         try {
           this.indexState = LOADING
           this.index = lunr.Index.load(serializedIndex)
+          /**setTimeout(() => {
+            this.indexState = LOADED
+          }, 15000)*/
           this.indexState = LOADED
         } catch (e) {
           this.indexState = LOAD_ERROR
