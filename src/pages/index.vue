@@ -60,7 +60,7 @@ export default {
         this.$router.push({
           name: 'search',
           query: {
-            text: JSON.stringify(target.value)
+            text: target.value
           }
         })
       }

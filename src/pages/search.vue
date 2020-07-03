@@ -11,7 +11,7 @@
       <div v-else key="loaded" >
         <div>
           <div class="SearchBar">
-            <LocalSearchInput component-id="mainQuery" placeholder="Pesquisar no acervo" />
+            <LocalSearchInput component-id="query" placeholder="Pesquisar no acervo" />
           </div>
           <div class="Filters">
             <div>
@@ -71,7 +71,10 @@ export default {
   asyncData({ route }) {
     return {
       initialState: {
-        filterState: route.query
+        filterState: route.query,
+        searchState: {
+          query: route.query.text
+        }
       }
     }
   }
