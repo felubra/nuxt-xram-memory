@@ -169,6 +169,7 @@ export default {
               {}
             )
         )
+        this.searchState = Object.assign({}, this.initialState.searchState)
       }
     },
     /**
