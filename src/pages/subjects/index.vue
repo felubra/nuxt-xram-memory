@@ -83,7 +83,7 @@ export default {
           `api/v1/subjects/initial/${initialSelectedInitial}`
         )
       } else {
-        initialSubjects = ''
+        initialSubjects = []
       }
     } catch {
       subjectInitials = []
