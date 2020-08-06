@@ -1,10 +1,9 @@
 <template>
-  <client-only>
-    <DefaultReactiveBase class-name="Page PageIndex">
+  <div class="Page PageIndex">
       <h1 class="offscreen">Início</h1>
       <Logo class="Home__Logo" :big="true" />
 
-      <HomeSearchInput @keyDown.enter="handleSearch" />
+      <!--<HomeSearchInput @keyDown.enter="handleSearch" />-->
 
       <TeaserBlock
         v-if="featuredPage"
@@ -14,8 +13,7 @@
       ></TeaserBlock>
 
       <HomeTagCloud class="HomeTagCloud" />
-    </DefaultReactiveBase>
-  </client-only>
+</div>
 </template>
 
 <script>
