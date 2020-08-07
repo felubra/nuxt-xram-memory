@@ -18,6 +18,7 @@ import { groups } from 'd3-array'
 import objectPath from 'object-path'
 const searchJS = require('searchjs')
 import isEmpty from 'lodash/isEmpty'
+import SWorker from 'simple-web-worker'
 
 export default {
   name: 'LocalSearchBase',
@@ -182,9 +183,17 @@ export default {
         const serializedIndex = await this.$axios.$get(this.indexURL)
         try {
           this.indexState = LOADING
-          this.index = lunr.Index.load(serializedIndex)
-          this.indexState = LOADED
+          const worker = this.$worker.createWorker()
+          worker.addEventListener('message', ({ data }) => {
+            if (data === 'OK') {
+              this.indexState = LOADED
+            } else {
+              this.indexState = LOAD_ERROR
+            }
+          })
+          worker.postMessage({ name: 'loadIndex', data: serializedIndex })
         } catch (e) {
+          console.error(e)
           this.indexState = LOAD_ERROR
         }
       } catch (e) {

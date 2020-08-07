@@ -80,6 +80,7 @@ module.exports = {
     { src: '@/plugins/reactive-search', ssr: false },
     { src: '@/plugins/element-ui', ssr: false },
     { src: '@/plugins/drag-scroll', ssr: false },
+    { src: '@/plugins/lunr-worker.js', ssr: false },
     '@/plugins/axios',
     '@/plugins/essential-content.js'
   ],
@@ -159,6 +160,13 @@ module.exports = {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.devtool = 'source-map'
+      }
+      if (ctx.isClient) {
+        config.module.rules.push({
+          test: /\.worker\.js$/,
+          loader: 'worker-loader',
+          exclude: /(node_modules)/
+        })
       }
       config.module.rules.forEach(rule => {
         if (String(rule.test) === String(/\.(png|jpe?g|gif|svg|webp)$/)) {
