@@ -1,5 +1,6 @@
 const pkg = require('./package')
 import axios from 'axios'
+const WorkerPlugin = require('worker-plugin')
 
 module.exports = {
   mode: 'universal',
@@ -146,6 +147,12 @@ module.exports = {
       ]
     },
     extend(config, ctx) {
+      config.output.globalObject = 'this'
+      // suporte para webworkers
+      if (ctx.isClient) {
+        config.plugins.push(new WorkerPlugin())
+      }
+
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.devtool = 'source-map'

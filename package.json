@@ -21,6 +21,7 @@
     "@nuxtjs/style-resources": "^0.1.2",
     "axios-cache-adapter": "^2.5.0",
     "chroma-js": "^2.0.2",
+    "comlink": "^4.3.0",
     "cross-env": "^5.2.0",
     "d3": "^5.9.1",
     "d3-array": "^2.4.0",
@@ -81,6 +82,7 @@
     "require-extension-hooks-babel": "^0.1.1",
     "require-extension-hooks-vue": "^2.0.0",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2"
+    "stylus-loader": "^3.0.2",
+    "worker-plugin": "^4.0.3"
   }
 }

@@ -18,6 +18,7 @@ import { groups } from 'd3-array'
 import objectPath from 'object-path'
 const searchJS = require('searchjs')
 import isEmpty from 'lodash/isEmpty'
+import * as Comlink from 'comlink'
 
 export default {
   name: 'LocalSearchBase',
@@ -178,11 +179,14 @@ export default {
      */
     async fetchAndLoadIndex() {
       try {
+        const worker = new Worker('./lunr.worker', { type: 'module' })
+        const obj = Comlink.wrap(worker)
         this.indexState = DOWNLOADING
         const serializedIndex = await this.$axios.$get(this.indexURL)
         try {
           this.indexState = LOADING
-          this.index = lunr.Index.load(serializedIndex)
+          await obj.load(serializedIndex)
+          this.index = Comlink.proxy(obj.index)
           this.indexState = LOADED
         } catch (e) {
           this.indexState = LOAD_ERROR
