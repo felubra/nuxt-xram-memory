@@ -3,7 +3,7 @@
     v-slot:default="{searchResults, resultCount, clear, isLoading, hasError}"
     class="TestPage"
     :initial-state="initialState"
-    index-u-r-l="media/lunr_index/index.json">
+    index-u-r-l="media/lunr_index/index-lunr.json">
     <transition appear name="fade" mode="out-in">
       <div v-if="hasError" key="error" class="Error" >
         Desculpe-nos, mas um erro aconteceu. Tente recarregar esta página mais tarde.

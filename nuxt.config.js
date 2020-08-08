@@ -81,6 +81,7 @@ module.exports = {
     { src: '@/plugins/reactive-search', ssr: false },
     { src: '@/plugins/element-ui', ssr: false },
     { src: '@/plugins/drag-scroll', ssr: false },
+    { src: '@/plugins/async-computed', ssr: false },
     '@/plugins/axios',
     '@/plugins/essential-content.js'
   ],

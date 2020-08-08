@@ -13,7 +13,6 @@ import {
   LOAD_ERROR,
   DOWNLOAD_ERROR
 } from '~/config/constants'
-import lunr from 'elasticlunr'
 import { groups } from 'd3-array'
 import objectPath from 'object-path'
 const searchJS = require('searchjs')
@@ -38,6 +37,41 @@ export default {
       searchState: {},
       filterState: {},
       registeredFilters: []
+    }
+  },
+  asyncComputed: {
+    /**
+     * Os resultados da busca full-text no índice ou todos os documentos, se nenhuma string de busca foi fornecida.
+     */
+    unfilteredSearchResults: {
+      default: [],
+      async get() {
+        try {
+          if (this.searchQuery) {
+            return await Promise.all(
+              (await this.index.search(this.searchQuery)).map(async result => {
+                return await this.index.documentStore.getDoc(result.ref)
+              })
+            )
+          }
+          return this.allDocuments
+        } catch {
+          return []
+        }
+      }
+    },
+    /**
+     * Todos os documentos indexados.
+     */
+    allDocuments: {
+      default: [],
+      async get() {
+        return (
+          (this.indexState === LOADED &&
+            Object.values(await this.index.documentStore.docs)) ||
+          []
+        )
+      }
     }
   },
   computed: {
@@ -108,16 +142,6 @@ export default {
       }
     },
     /**
-     * Todos os documentos indexados.
-     */
-    allDocuments() {
-      return (
-        (this.indexState === LOADED &&
-          Object.values(this.index.documentStore.docs)) ||
-        []
-      )
-    },
-    /**
      * O valor do texto de busca, concatenado de todos os componentes de busca full-text.
      */
     searchQuery() {
@@ -126,22 +150,6 @@ export default {
         return (values.length && values.join(' ')) || ''
       } catch {
         return ''
-      }
-    },
-    /**
-     * Os resultados da busca full-text no índice ou todos os documentos, se nenhuma string de busca foi fornecida.
-     */
-    unfilteredSearchResults() {
-      try {
-        if (this.searchQuery) {
-          return this.index
-            .search(this.searchQuery)
-            .map(result => result.ref)
-            .map(this.index.documentStore.getDoc, this.index.documentStore)
-        }
-        return this.allDocuments
-      } catch {
-        return []
       }
     }
   },

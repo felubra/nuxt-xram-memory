@@ -44,6 +44,7 @@
     "smart-truncate": "^1.0.1",
     "tiny-cookie": "^2.3.1",
     "v-viewer": "^1.4.0",
+    "vue-async-computed": "^3.8.2",
     "vue-click-outside": "^1.0.7",
     "vue-dragscroll": "^1.8.3",
     "vue-fixed-header": "^2.0.2",
