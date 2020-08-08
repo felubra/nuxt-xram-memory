@@ -48,10 +48,14 @@ export default {
       async get() {
         try {
           if (this.searchQuery) {
-            return await Promise.all(
-              (await this.index.search(this.searchQuery)).map(async result => {
-                return await this.index.documentStore.getDoc(result.ref)
-              })
+            return Object.freeze(
+              await Promise.all(
+                (await this.index.search(this.searchQuery)).map(
+                  async result => {
+                    return await this.index.documentStore.getDoc(result.ref)
+                  }
+                )
+              )
             )
           }
           return this.allDocuments
@@ -91,18 +95,20 @@ export default {
      * filtros.
      */
     filterDataSources() {
-      return this.registeredFilters.reduce((filtersData, fieldName) => {
-        filtersData[fieldName] = Array.from(
-          new Set(
-            groups(this.searchResults, d =>
-              objectPath.get(d, fieldName)
-            ).reduce((allFieldData, [fieldData]) => {
-              return allFieldData.concat(fieldData)
-            }, [])
+      return Object.freeze(
+        this.registeredFilters.reduce((filtersData, fieldName) => {
+          filtersData[fieldName] = Array.from(
+            new Set(
+              groups(this.searchResults, d =>
+                objectPath.get(d, fieldName)
+              ).reduce((allFieldData, [fieldData]) => {
+                return allFieldData.concat(fieldData)
+              }, [])
+            )
           )
-        )
-        return filtersData
-      }, {})
+          return filtersData
+        }, {})
+      )
     },
     isEmpty() {
       return isEmpty(this.searchState) && isEmpty(this.filterState)
@@ -118,14 +124,13 @@ export default {
      * Retorna objeto com os filtros que tem algum valor selecionado.
      */
     selectedFilters() {
-      return Object.entries(this.filterState).reduce(
-        (selected, [key, value]) => {
+      return Object.freeze(
+        Object.entries(this.filterState).reduce((selected, [key, value]) => {
           if (!isEmpty(value)) {
             selected[key] = value
           }
           return selected
-        },
-        {}
+        }, {})
       )
     },
     /**
@@ -133,9 +138,11 @@ export default {
      */
     searchResults() {
       try {
-        return searchJS.matchArray(
-          this.unfilteredSearchResults,
-          this.selectedFilters
+        return Object.freeze(
+          searchJS.matchArray(
+            this.unfilteredSearchResults,
+            this.selectedFilters
+          )
         )
       } catch (e) {
         return []
