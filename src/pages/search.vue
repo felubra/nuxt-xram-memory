@@ -9,29 +9,22 @@
         Desculpe-nos, mas um erro aconteceu. Tente recarregar esta página mais tarde.
       </div>
       <div v-else key="loaded" >
-        <div>
           <div class="SearchBar">
             <LocalSearchInput component-id="query" placeholder="Pesquisar no acervo" />
           </div>
-          <div class="Filters">
-            <div>
+          <CollapsibleContainer class="Filters">
               <label for="typeFilter"><Microtext>Tipo</Microtext></label>
-              <LocalSearchDropDown field-name="type" component-id="typeFilter" />
-            </div>
-            <div>
+              <LocalSearchDropDown class="Filter" field-name="type" component-id="typeFilter" />
+
               <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
-              <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
-            </div>
-            <div>
+              <LocalSearchDropDown class="Filter" field-name="newspaper.title" component-id="newspaperFilter" />
+
               <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
-              <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
-            </div>
-            <div>
+              <LocalSearchDropDown class="Filter" field-name="keywords" component-id="keywordsFilter" />
+
               <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
-              <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
-            </div>
-          </div>
-        </div>
+              <LocalSearchDropDown class="Filter" field-name="subjects" component-id="subjectsFilter" />
+          </CollapsibleContainer>
         <div>
           <ResultStats :total-results="resultCount" />
         </div>
@@ -53,6 +46,7 @@ import LocalSearchInput from '@/components/search/LocalSearchInput'
 import LocalSearchDropDown from '@/components/search/LocalSearchDropDown'
 import NewsGrid from '@/components/news/NewsGrid'
 import ResultStats from '@/components/home/ResultStats.vue'
+import CollapsibleContainer from '@/components/common/CollapsibleContainer'
 
 export default {
   name: 'TestPage',
@@ -61,7 +55,8 @@ export default {
     LocalSearchInput,
     LocalSearchDropDown,
     NewsGrid,
-    ResultStats
+    ResultStats,
+    CollapsibleContainer
   },
   data() {
     return {
@@ -92,33 +87,21 @@ export default {
   min-height: 10vh;
   width: 100%;
 }
-.Filters {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 0 2rem;
-}
-.Filters > div {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 0 2rem;
-}
-
 .SearchBar {
   max-width: 53rem;
   margin: 3rem auto 0;
 }
+.Filters {
+  margin-top: 1rem;
+}
+.Filter {
+  margin-bottom: 1rem;
+}
 
 @media only screen and (min-width: 768px) {
-  .Filters {
-    flex-direction: row;
-  }
-  .Filters > div {
-    display: flex;
-    flex-direction: column;
+  .Filter {
     width: auto;
+    min-width: 250px;
   }
 }
 </style>
