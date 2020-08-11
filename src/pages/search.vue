@@ -13,17 +13,22 @@
             <LocalSearchInput component-id="query" placeholder="Pesquisar no acervo" />
           </div>
           <CollapsibleContainer class="Filters">
+            <div class="Filter">
               <label for="typeFilter"><Microtext>Tipo</Microtext></label>
-              <LocalSearchDropDown class="Filter" field-name="type" component-id="typeFilter" />
-
+              <LocalSearchDropDown class="" field-name="type" component-id="typeFilter" />
+            </div>
+            <div class="Filter">
               <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
-              <LocalSearchDropDown class="Filter" field-name="newspaper.title" component-id="newspaperFilter" />
-
+              <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
+            </div>
+            <div class="Filter">
               <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
-              <LocalSearchDropDown class="Filter" field-name="keywords" component-id="keywordsFilter" />
-
+              <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
+            </div>
+            <div class="Filter">
               <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
-              <LocalSearchDropDown class="Filter" field-name="subjects" component-id="subjectsFilter" />
+              <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
+            </div>
           </CollapsibleContainer>
         <div>
           <ResultStats :total-results="resultCount" />
@@ -95,13 +100,17 @@ export default {
   margin-top: 1rem;
 }
 .Filter {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (min-width: 768px) {
   .Filter {
     width: auto;
     min-width: 250px;
+    margin: 1rem 2rem;
   }
 }
 </style>

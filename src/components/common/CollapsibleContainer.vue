@@ -52,7 +52,7 @@ export default {
 }
 
 .CollapsibleContainer > section.visible {
-  max-height: 100vh;
+  max-height: 1000px;
   overflow-y: auto;
 }
 
@@ -69,7 +69,7 @@ export default {
   .CollapsibleContainer > section {
     flex-direction: row;
     margin-top: 2rem;
-    max-height: 100vh;
+    max-height: 1000px;
     overflow: visible;
   }
 }
