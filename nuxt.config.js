@@ -1,5 +1,6 @@
 const pkg = require('./package')
 import axios from 'axios'
+const WorkerPlugin = require('worker-plugin')
 
 module.exports = {
   mode: 'universal',
@@ -80,6 +81,7 @@ module.exports = {
     { src: '@/plugins/reactive-search', ssr: false },
     { src: '@/plugins/element-ui', ssr: false },
     { src: '@/plugins/drag-scroll', ssr: false },
+    { src: '@/plugins/async-computed', ssr: false },
     '@/plugins/axios',
     '@/plugins/essential-content.js'
   ],
@@ -156,6 +158,12 @@ module.exports = {
       ]
     },
     extend(config, ctx) {
+      config.output.globalObject = 'this'
+      // suporte para webworkers
+      if (ctx.isClient) {
+        config.plugins.push(new WorkerPlugin())
+      }
+
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.devtool = 'source-map'

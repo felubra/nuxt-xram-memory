@@ -22,6 +22,7 @@
     "@nuxtjs/vuetify": "^1.9.1",
     "axios-cache-adapter": "^2.5.0",
     "chroma-js": "^2.0.2",
+    "comlink": "^4.3.0",
     "cross-env": "^5.2.0",
     "d3": "^5.9.1",
     "d3-array": "^2.4.0",
@@ -31,8 +32,10 @@
     "elasticlunr": "^0.9.5",
     "element-ui": "^2.4.11",
     "email-validator": "^2.0.4",
+    "fold-to-ascii": "^5.0.0",
     "human-size": "^1.1.0",
     "lodash": "^4.17.15",
+    "lunr-languages": "git+https://github.com/weixsong/lunr-languages.git",
     "nuxt": "^2.4.3",
     "nuxt-device-detect": "^1.1.5",
     "object-path": "^0.11.4",
@@ -44,6 +47,7 @@
     "smart-truncate": "^1.0.1",
     "tiny-cookie": "^2.3.1",
     "v-viewer": "^1.4.0",
+    "vue-async-computed": "^3.8.2",
     "vue-click-outside": "^1.0.7",
     "vue-dragscroll": "^1.8.3",
     "vue-fixed-header": "^2.0.2",
@@ -81,6 +85,7 @@
     "require-extension-hooks-babel": "^0.1.1",
     "require-extension-hooks-vue": "^2.0.0",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2"
+    "stylus-loader": "^3.0.2",
+    "worker-plugin": "^4.0.3"
   }
 }

@@ -13,11 +13,11 @@ import {
   LOAD_ERROR,
   DOWNLOAD_ERROR
 } from '~/config/constants'
-import lunr from 'elasticlunr'
 import { groups } from 'd3-array'
 import objectPath from 'object-path'
 const searchJS = require('searchjs')
 import isEmpty from 'lodash/isEmpty'
+import * as Comlink from 'comlink'
 
 export default {
   name: 'LocalSearchBase',
@@ -39,6 +39,45 @@ export default {
       registeredFilters: []
     }
   },
+  asyncComputed: {
+    /**
+     * Os resultados da busca full-text no índice ou todos os documentos, se nenhuma string de busca foi fornecida.
+     */
+    unfilteredSearchResults: {
+      default: [],
+      async get() {
+        try {
+          if (this.searchQuery) {
+            return Object.freeze(
+              await Promise.all(
+                (await this.index.search(this.searchQuery)).map(
+                  async result => {
+                    return await this.index.documentStore.getDoc(result.ref)
+                  }
+                )
+              )
+            )
+          }
+          return this.allDocuments
+        } catch {
+          return []
+        }
+      }
+    },
+    /**
+     * Todos os documentos indexados.
+     */
+    allDocuments: {
+      default: [],
+      async get() {
+        return (
+          (this.indexState === LOADED &&
+            Object.values(await this.index.documentStore.docs)) ||
+          []
+        )
+      }
+    }
+  },
   computed: {
     isLoading() {
       return this.indexState === DOWNLOADING || this.indexState === LOADING
@@ -56,18 +95,20 @@ export default {
      * filtros.
      */
     filterDataSources() {
-      return this.registeredFilters.reduce((filtersData, fieldName) => {
-        filtersData[fieldName] = Array.from(
-          new Set(
-            groups(this.searchResults, d =>
-              objectPath.get(d, fieldName)
-            ).reduce((allFieldData, [fieldData]) => {
-              return allFieldData.concat(fieldData)
-            }, [])
+      return Object.freeze(
+        this.registeredFilters.reduce((filtersData, fieldName) => {
+          filtersData[fieldName] = Array.from(
+            new Set(
+              groups(this.searchResults, d =>
+                objectPath.get(d, fieldName)
+              ).reduce((allFieldData, [fieldData]) => {
+                return allFieldData.concat(fieldData)
+              }, [])
+            )
           )
-        )
-        return filtersData
-      }, {})
+          return filtersData
+        }, {})
+      )
     },
     isEmpty() {
       return isEmpty(this.searchState) && isEmpty(this.filterState)
@@ -83,14 +124,13 @@ export default {
      * Retorna objeto com os filtros que tem algum valor selecionado.
      */
     selectedFilters() {
-      return Object.entries(this.filterState).reduce(
-        (selected, [key, value]) => {
+      return Object.freeze(
+        Object.entries(this.filterState).reduce((selected, [key, value]) => {
           if (!isEmpty(value)) {
             selected[key] = value
           }
           return selected
-        },
-        {}
+        }, {})
       )
     },
     /**
@@ -98,23 +138,15 @@ export default {
      */
     searchResults() {
       try {
-        return searchJS.matchArray(
-          this.unfilteredSearchResults,
-          this.selectedFilters
+        return Object.freeze(
+          searchJS.matchArray(
+            this.unfilteredSearchResults,
+            this.selectedFilters
+          )
         )
       } catch (e) {
         return []
       }
-    },
-    /**
-     * Todos os documentos indexados.
-     */
-    allDocuments() {
-      return (
-        (this.indexState === LOADED &&
-          Object.values(this.index.documentStore.docs)) ||
-        []
-      )
     },
     /**
      * O valor do texto de busca, concatenado de todos os componentes de busca full-text.
@@ -125,22 +157,6 @@ export default {
         return (values.length && values.join(' ')) || ''
       } catch {
         return ''
-      }
-    },
-    /**
-     * Os resultados da busca full-text no índice ou todos os documentos, se nenhuma string de busca foi fornecida.
-     */
-    unfilteredSearchResults() {
-      try {
-        if (this.searchQuery) {
-          return this.index
-            .search(this.searchQuery)
-            .map(result => result.ref)
-            .map(this.index.documentStore.getDoc, this.index.documentStore)
-        }
-        return this.allDocuments
-      } catch {
-        return []
       }
     }
   },
@@ -178,11 +194,14 @@ export default {
      */
     async fetchAndLoadIndex() {
       try {
+        const worker = new Worker('./lunr.worker', { type: 'module' })
+        const obj = Comlink.wrap(worker)
         this.indexState = DOWNLOADING
         const serializedIndex = await this.$axios.$get(this.indexURL)
         try {
           this.indexState = LOADING
-          this.index = lunr.Index.load(serializedIndex)
+          await obj.load(serializedIndex)
+          this.index = Comlink.proxy(obj.index)
           this.indexState = LOADED
         } catch (e) {
           this.indexState = LOAD_ERROR
