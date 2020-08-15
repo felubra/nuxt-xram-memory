@@ -11,31 +11,7 @@
       </section>
     </section>
     <section class="SubjectItems">
-      <DefaultReactiveBase>
-        <ReactiveList
-          component-id="SubjectItemsList"
-          :pagination="false"
-          data-field="title.raw"
-          :default-query="subjectQuery"
-          class-name="SubjectItemsList"
-          loader="Carregando..."
-          render-error="Oops, infelizmente um erro aconteceu, tente novamente mais tarde."
-          :inner-class="{
-            resultsInfo: 'SubjectItemsList__ResultsInfo microtext',
-            list: 'SubjectItemsList__List'
-          }"
-          :from="0"
-          :size="20"
-        >
-          <template v-slot:renderResultStats="{ numberOfResults, time }">
-            <ResultStats :total-results="numberOfResults" :time="time" />
-          </template>
-          <div slot="renderNoResults" class="NoResults">Nenhum item encontrado.</div>
-          <template v-slot:render="{ data }">
-            <NewsGrid id="SubjectsMasonryGrid" :items="data"></NewsGrid>
-          </template>
-        </ReactiveList>
-      </DefaultReactiveBase>
+      <NewsGrid id="SubjectsMasonryGrid" :items="subjectItems"></NewsGrid>
     </section>
   </section>
 </template>
@@ -44,20 +20,17 @@
 import { sanitize, getMediaUrl } from '@/utils'
 import Microtext from '@/components/common/Microtext'
 import NewsGrid from '~/components/news/NewsGrid'
-import DefaultReactiveBase from '@/components/DefaultReactiveBase'
-import ResultStats from '~/components/home/ResultStats'
 
 export default {
   name: 'SubjectPage',
   components: {
     Microtext,
-    NewsGrid,
-    DefaultReactiveBase,
-    ResultStats
+    NewsGrid
   },
   data() {
     return {
-      subject: {}
+      subject: {},
+      subjectItems: []
     }
   },
   head() {
@@ -79,43 +52,14 @@ export default {
     if (slug) {
       try {
         const subject = await $axios.$get(`api/v1/subject/${slug}`)
-        return { subject }
+        const subjectItems = await $axios.$get(`api/v1/subject/${slug}/items`)
+        return { subject, subjectItems }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500
         return error({ statusCode })
       }
     }
     return error({ statusCode: 400 })
-  },
-
-  methods: {
-    subjectQuery() {
-      return {
-        query: {
-          bool: {
-            must: [
-              {
-                bool: {
-                  must: [
-                    {
-                      nested: {
-                        path: 'subjects',
-                        query: {
-                          terms: { 'subjects.name': [this.subject.name] }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        size: 20,
-        _source: { includes: ['*'], excludes: [] },
-        from: 0
-      }
-    }
   }
 }
 </script>
