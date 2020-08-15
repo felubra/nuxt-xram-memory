@@ -1,21 +1,13 @@
 <template>
-  <ReactiveComponent
-    class="ReactiveD3TagCloud--home"
-    component-id="ReactiveD3TagCloud"
-    :default-query="tagCloudQuery"
-  >
-    <template v-slot:default="{ aggregations, error }">
-      <div>
-        <D3TagCloud v-if="!error" :keywords="keywords(aggregations)" />
-      </div>
-    </template>
-  </ReactiveComponent>
+  <div class="">
+    <D3TagCloud :keywords="keywords(aggregations)" />
+  </div>
 </template>
 
 
 <script>
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
-import { TAGCLOUD_QUERY } from '~/config/constants'
+import { TAGCLOUD_NUM_KEYWORDS } from '~/config/constants'
 
 export default {
   name: 'HomeTagCloud',
@@ -28,11 +20,18 @@ export default {
       default: 16
     }
   },
-  computed: {
-    tagCloudQuery() {
-      return function() {
-        return TAGCLOUD_QUERY
-      }
+  data() {
+    return {
+      aggregations: null
+    }
+  },
+  async mounted() {
+    try {
+      this.aggregations = await this.$axios.$get(
+        `/api/v1/keywords/top?max=${TAGCLOUD_NUM_KEYWORDS}`
+      )
+    } catch {
+      this.aggregations = null
     }
   },
   methods: {
@@ -42,11 +41,11 @@ export default {
       }
       const keywordsStdDeviation = this.keywordsStdDeviation(aggregations)
       try {
-        return aggregations.keywords.names.buckets.map(keyword => {
+        return aggregations.map(keyword => {
           return {
-            text: keyword.key,
-            slug: keyword.slug.buckets[0].key,
-            size: (keyword.doc_count / keywordsStdDeviation) * this.sizeDelta
+            text: keyword.name,
+            slug: keyword.slug,
+            size: (keyword.news_count / keywordsStdDeviation) * this.sizeDelta
           }
         })
       } catch {
@@ -74,12 +73,12 @@ export default {
           return sum + value
         }, 0)
 
-        const avg = sum / data.length
+        const avg = sum / data.news_count
         return avg
       }
       try {
         return standardDeviation(
-          aggregations.keywords.names.buckets.map(keyword => keyword.doc_count)
+          aggregations.keywords.names.buckets.map(keyword => keyword.news_count)
         )
       } catch {
         return 1

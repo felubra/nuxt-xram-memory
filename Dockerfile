@@ -1,4 +1,4 @@
-FROM node:latest as builder
+FROM node:lts-alpine as builder
 
 WORKDIR /src
 
@@ -18,6 +18,7 @@ ARG MEDIA_URL
 ARG API_URL
 
 ENV NODE_ENV=production
+ENV NUXT_TELEMETRY_DISABLED=1
 
 COPY . .
 
@@ -30,7 +31,7 @@ RUN rm -rf node_modules && \
   --non-interactive \
   --production=true
 
-FROM node:alpine
+FROM node:lts-alpine as production
 
 WORKDIR /src
 
@@ -43,3 +44,30 @@ EXPOSE 3000
 USER 33
 
 CMD [ "yarn", "start" ]
+
+FROM node:lts-alpine as development
+
+WORKDIR /home/node
+
+USER 1000
+
+COPY package.json yarn.lock ./
+
+ARG ELASTIC_SEARCH_SERVER
+ARG ELASTIC_SEARCH_CREDENTIALS
+ARG CONTACT_MESSAGE_RELAY_URL
+ARG RECAPTCHA_KEY
+ARG MEDIA_URL
+ARG API_URL
+
+RUN NODE_ENV=development yarn install \
+  --prefer-offline \
+  --pure-lockfile \
+  --non-interactive \
+  --production=false
+
+COPY . .
+
+EXPOSE 3000
+
+CMD [ "yarn", "dev" ]

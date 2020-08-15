@@ -22,7 +22,7 @@
           :to="d.link || {
             name: 'search',
             query: {
-              keywords: JSON.stringify([d.text])
+              keywords: d.text
             }
           }"
         >
