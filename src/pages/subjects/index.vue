@@ -30,15 +30,12 @@
       <header>
         <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
       </header>
-      <DefaultReactiveBase>
-        <HomeTagCloud :size-delta="10" />
-      </DefaultReactiveBase>
+      <HomeTagCloud :size-delta="10" />
     </section>
   </section>
 </template>
 
 <script>
-import DefaultReactiveBase from '@/components/DefaultReactiveBase'
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import Microtext from '~/components/common/Microtext'
 import SubjectPicker from '~/components/SubjectPicker'
@@ -52,7 +49,6 @@ export default {
     Microtext,
     HomeTagCloud,
     Card,
-    DefaultReactiveBase,
     SubjectPicker
   },
   head: {

@@ -1,48 +1,50 @@
 <template>
-  <LocalSearchBase
-    v-slot:default="{searchResults, resultCount, clear, isLoading, hasError}"
-    class="TestPage"
-    :initial-state="initialState"
-    index-u-r-l="media/lunr_index/index.json">
-    <transition appear name="fade" mode="out-in">
-      <div v-if="hasError" key="error" class="Error" >
-        Desculpe-nos, mas um erro aconteceu. Tente recarregar esta página mais tarde.
-      </div>
-      <div v-else key="loaded" >
-          <div class="SearchBar">
-            <LocalSearchInput component-id="query" placeholder="Pesquisar no acervo" />
-          </div>
-          <CollapsibleContainer class="Filters">
-            <div class="Filter">
-              <label for="typeFilter"><Microtext>Tipo</Microtext></label>
-              <LocalSearchDropDown class="" field-name="type" component-id="typeFilter" />
-            </div>
-            <div class="Filter">
-              <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
-              <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
-            </div>
-            <div class="Filter">
-              <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
-              <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
-            </div>
-            <div class="Filter">
-              <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
-              <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
-            </div>
-          </CollapsibleContainer>
-        <div>
-          <ResultStats :total-results="resultCount" />
+  <client-only>
+    <LocalSearchBase
+      v-slot:default="{searchResults, resultCount, clear, isLoading, hasError}"
+      class="TestPage"
+      :initial-state="initialState"
+      index-u-r-l="media/lunr_index/index.json">
+      <transition appear name="fade" mode="out-in">
+        <div v-if="hasError" key="error" class="Error" >
+          Desculpe-nos, mas um erro aconteceu. Tente recarregar esta página mais tarde.
         </div>
-        <NewsGrid
-          v-loading="isLoading"
-          class="NewsGrid"
-          :items='searchResults'
-          element-loading-text="Carregando..."
-          element-loading-background="transparent"
-        />
-      </div>
-    </transition>
-  </LocalSearchBase>
+        <div v-else key="loaded" >
+            <div class="SearchBar">
+              <LocalSearchInput component-id="query" placeholder="Pesquisar no acervo" />
+            </div>
+            <CollapsibleContainer class="Filters">
+              <div class="Filter">
+                <label for="typeFilter"><Microtext>Tipo</Microtext></label>
+                <LocalSearchDropDown class="" field-name="type" component-id="typeFilter" />
+              </div>
+              <div class="Filter">
+                <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
+                <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
+              </div>
+              <div class="Filter">
+                <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
+                <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
+              </div>
+              <div class="Filter">
+                <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
+                <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
+              </div>
+            </CollapsibleContainer>
+          <div>
+            <ResultStats :total-results="resultCount" />
+          </div>
+          <NewsGrid
+            v-loading="isLoading"
+            class="NewsGrid"
+            :items='searchResults'
+            element-loading-text="Carregando..."
+            element-loading-background="transparent"
+          />
+        </div>
+      </transition>
+    </LocalSearchBase>
+  </client-only>
 </template>
 
 <script>

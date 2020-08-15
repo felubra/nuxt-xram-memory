@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import DefaultReactiveBase from '@/components/DefaultReactiveBase'
-import HomeSearchInput from '~/components/home/HomeSearchInput'
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import TeaserBlock from '~/components/home/TeaserBlock'
 import Logo from '@/components/nav/Logo'
