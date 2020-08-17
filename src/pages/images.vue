@@ -25,7 +25,7 @@
           <Microtext tag="h2" arrow="down">Sem dados</Microtext>
         </header>
         <main>
-          <p>Não existem álbuns a exibir no momento, por-favor, volte mais tarde.</p>
+          <p>Não existem álbuns para exibir no momento, por-favor, volte mais tarde.</p>
         </main>
       </section>
     </template>
