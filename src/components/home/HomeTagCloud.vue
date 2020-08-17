@@ -1,13 +1,10 @@
 <template>
-  <div class="">
-    <D3TagCloud :keywords="keywords(aggregations)" />
-  </div>
+  <D3TagCloud v-if="hasData" :keywords="keywords(aggregations)" />
 </template>
 
 
 <script>
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
-import { TAGCLOUD_NUM_KEYWORDS } from '~/config/constants'
 
 export default {
   name: 'HomeTagCloud',
@@ -18,20 +15,15 @@ export default {
     sizeDelta: {
       type: Number,
       default: 16
+    },
+    aggregations: {
+      type: Array,
+      default: () => []
     }
   },
-  data() {
-    return {
-      aggregations: null
-    }
-  },
-  async mounted() {
-    try {
-      this.aggregations = await this.$axios.$get(
-        `/api/v1/keywords/top?max=${TAGCLOUD_NUM_KEYWORDS}`
-      )
-    } catch {
-      this.aggregations = null
+  computed: {
+    hasData() {
+      return this.aggregations && this.aggregations.length
     }
   },
   methods: {
@@ -87,7 +79,3 @@ export default {
   }
 }
 </script>
-
-
-<style scoped>
-</style>
