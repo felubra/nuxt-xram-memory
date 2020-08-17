@@ -30,8 +30,7 @@
       <header>
         <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
       </header>
-      <HomeTagCloud :size-delta="10" />
-    </section>
+        <HomeTagCloud :size-delta="10" :aggregations="tagCloudAggregations" />
   </section>
 </template>
 
@@ -42,6 +41,7 @@ import SubjectPicker from '~/components/SubjectPicker'
 import Card from '~/components/common/Card'
 import { getMediaUrl } from '~/utils'
 const smartTruncate = require('smart-truncate')
+import { TAGCLOUD_NUM_KEYWORDS } from '~/config/constants'
 
 export default {
   name: 'SubjectsPage',
@@ -58,10 +58,17 @@ export default {
     return {
       featuredSubjects: [],
       subjectInitials: [],
-      initialSubjects: []
+      initialSubjects: [],
+      tagCloudAggregations: []
     }
   },
   computed: {
+    hasData() {
+      return this.subjectInitials.length || this.tagCloudAggregations.length
+    },
+    showTagCloud() {
+      return this.tagCloudAggregations.length
+    },
     hasFeaturedSubjects() {
       return this.featuredSubjects.length > 0
     }
@@ -71,6 +78,7 @@ export default {
     let subjectInitials
     let initialSubjects
     let initialSelectedInitial
+    let tagCloudAggregations
     try {
       subjectInitials = await $axios.$get(`api/v1/subjects/initials`)
       initialSelectedInitial = subjectInitials[0] || ''
@@ -87,6 +95,14 @@ export default {
     }
 
     try {
+      tagCloudAggregations = await $axios.$get(
+        `/api/v1/keywords/top?max=${TAGCLOUD_NUM_KEYWORDS}`
+      )
+    } catch {
+      tagCloudAggregations = []
+    }
+
+    try {
       featuredSubjects = await $axios.$get(`api/v1/subjects/featured?limit=5`)
     } catch {
       featuredSubjects = []
@@ -96,7 +112,8 @@ export default {
       featuredSubjects,
       subjectInitials,
       initialSubjects,
-      initialSelectedInitial
+      initialSelectedInitial,
+      tagCloudAggregations
     }
   },
   methods: {

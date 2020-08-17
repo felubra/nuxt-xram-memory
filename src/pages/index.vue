@@ -18,7 +18,7 @@
         :page-item="featuredPage"
       ></TeaserBlock>
 
-      <HomeTagCloud class="HomeTagCloud" />
+      <HomeTagCloud :aggregations="tagCloudAggregations" class="HomeTagCloud" />
 </div>
 </template>
 
@@ -27,6 +27,7 @@ import HomeTagCloud from '~/components/home/HomeTagCloud'
 import TeaserBlock from '~/components/home/TeaserBlock'
 import Logo from '@/components/nav/Logo'
 import { mapGetters } from 'vuex'
+import { TAGCLOUD_NUM_KEYWORDS } from '~/config/constants'
 
 export default {
   name: 'IndexPage',
@@ -37,7 +38,8 @@ export default {
   },
   data() {
     return {
-      searchQuery: ''
+      searchQuery: '',
+      tagCloudAggregations: []
     }
   },
   head: {
@@ -50,6 +52,20 @@ export default {
     ...mapGetters(['featuredPages']),
     featuredPage() {
       return this.featuredPages.length > 0 && this.featuredPages[0]
+    }
+  },
+  async asyncData({ $axios }) {
+    try {
+      const tagCloudAggregations = await $axios.$get(
+        `/api/v1/keywords/top?max=${TAGCLOUD_NUM_KEYWORDS}`
+      )
+      return {
+        tagCloudAggregations
+      }
+    } catch {
+      return {
+        tagCloudAggregations: []
+      }
     }
   },
   async fetch({ store }) {
