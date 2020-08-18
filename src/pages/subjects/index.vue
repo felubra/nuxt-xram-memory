@@ -1,36 +1,49 @@
 <template>
   <section class="Page SubjectsPage">
-    <h1 class="offscreen">Assuntos</h1>
-    <section v-if="hasFeaturedSubjects" class="SubjectsPage__Featured">
-      <header>
-        <Microtext tag="h2" arrow="down">Em destaque</Microtext>
-      </header>
-      <div class="SubjectsList">
-        <Card
-          v-for="subject in featuredSubjects"
-          :key="subject.slug"
-          class="SubjectCard"
-          :item-link="linkFor(subject)"
-          :label="labelFor(subject)"
-        >
-          <h3 slot="title">{{titleFor(subject)}}</h3>
-          <Microtext slot="label">{{ labelFor(subject) }}</Microtext>
-          <img slot="image" :src="imageFor(subject)" />
-        </Card>
-      </div>
-    </section>
-    <section class="AllSubjects">
-      <SubjectPicker
-        :initial-selected-initial="initialSelectedInitial"
-        :initial-subjects="initialSubjects"
-        :initials="subjectInitials"
-      ></SubjectPicker>
-    </section>
-    <section class="SubjectsPage__TagCloud">
-      <header>
-        <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
-      </header>
+    <template v-if="hasData">
+      <h1 class="offscreen">Assuntos</h1>
+      <section v-if="hasFeaturedSubjects" class="SubjectsPage__Featured">
+        <header>
+          <Microtext tag="h2" arrow="down">Em destaque</Microtext>
+        </header>
+        <div class="SubjectsList">
+          <Card
+            v-for="subject in featuredSubjects"
+            :key="subject.slug"
+            class="SubjectCard"
+            :item-link="linkFor(subject)"
+            :label="labelFor(subject)"
+          >
+            <h3 slot="title">{{titleFor(subject)}}</h3>
+            <Microtext slot="label">{{ labelFor(subject) }}</Microtext>
+            <img slot="image" :src="imageFor(subject)" />
+          </Card>
+        </div>
+      </section>
+      <section class="AllSubjects">
+        <SubjectPicker
+          :initial-selected-initial="initialSelectedInitial"
+          :initial-subjects="initialSubjects"
+          :initials="subjectInitials"
+        ></SubjectPicker>
+      </section>
+      <section v-if="showTagCloud" class="SubjectsPage__TagCloud">
+        <header>
+          <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
+        </header>
         <HomeTagCloud :size-delta="10" :aggregations="tagCloudAggregations" />
+      </section>
+    </template>
+    <template v-else>
+      <section>
+        <header>
+          <Microtext tag="h2" arrow="down">Sem dados</Microtext>
+        </header>
+        <main>
+          <p>Não existem assuntos para exibir no momento, por-favor, volte mais tarde.</p>
+        </main>
+      </section>
+    </template>
   </section>
 </template>
 
