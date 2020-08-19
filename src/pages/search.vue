@@ -103,7 +103,7 @@ export default {
   min-height: 10vh;
   width: 100%;
 }
-.SearchBar {
+.SearchPage .SearchBar {
   max-width: 53rem;
   margin: 3rem auto 0;
 }
@@ -123,5 +123,76 @@ export default {
     min-width: 250px;
     margin: 1rem 2rem;
   }
+}
+</style>
+
+<style lang="stylus">
+.Filter .el-input__inner,
+.SearchPage .SearchBar .el-input__inner {
+  border: none;
+  background: transparent;
+  color: rgb(60, 60, 60);
+  border: none;
+  border-bottom: 3px solid #e1dada;
+  border-radius: 0;
+}
+
+.SearchPage .SearchBar .el-input__inner {
+  padding: .5rem;
+}
+
+.Filter label .microtext {
+  color: #a1a1a1;
+}
+
+.Filter .el-input.el-input--suffix > input {
+  padding-left: .5rem;
+}
+
+
+.Filter div.el-select__tags > input {
+  margin-left: .5rem;
+}
+
+.Filter:focus-within label .microtext {
+  color: $link-color;
+}
+
+.Filter .el-input__suffix-inner i {
+  color: #a1a1a1 !important;
+}
+
+.SearchPage .SearchBar .el-input__inner {
+  font-size: 1.2rem;
+}
+
+.Filter .el-input__inner::placeholder,
+.SearchPage .SearchBar input.el-input__inner::placeholder {
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.Filter:focus-within .el-input__inner::placeholder,
+.Filter:focus .el-input__inner::placeholder,
+.Filter:active .el-input__inner::placeholder,
+.Filter:hover .el-input__inner::placeholder,
+.SearchPage .SearchBar input.el-input__inner:active::placeholder,
+.SearchPage .SearchBar input.el-input__inner:hover::placeholder,
+.SearchPage .SearchBar input.el-input__inner:focus::placeholder {
+  color: #333;
+}
+
+.SearchPage .SearchBar .el-input__inner::placeholder {
+  color: #aaa;
+}
+
+.Filter .el-input__inner::placeholder {
+  padding: 0;
+}
+
+.SearchPage .SearchBar i.el-icon-search {
+  color: $link-color;
+}
+
+.SearchBar .el-input__inner:focus {
+  border-color: $link-color-active;
 }
 </style>

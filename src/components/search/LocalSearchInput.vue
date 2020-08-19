@@ -18,6 +18,3 @@ export default {
   inject: ['state']
 }
 </script>
-
-<style>
-</style>
