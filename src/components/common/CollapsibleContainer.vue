@@ -72,5 +72,8 @@ export default {
     max-height: 1000px;
     overflow: visible;
   }
+  .ShowFilters {
+    display: none;
+  }
 }
 </style>
