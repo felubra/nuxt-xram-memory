@@ -1,8 +1,9 @@
 <template>
   <el-select v-model="state.filterState[fieldName]" :multiple="true" :collapse-tags="true" :filterable="true">
     <el-option
-      v-for="option in state.filterDataSources[fieldName]" :key="option"
-      :label="option"
+      v-for="option in state.filterDataSources[fieldName]"
+      :key="option"
+      :label="(labelFn && labelFn(option)) || option"
       :value="option">
     </el-option>
   </el-select>
@@ -15,6 +16,10 @@ export default {
     componentId: {
       type: String,
       required: true
+    },
+    labelFn: {
+      type: Function,
+      default: null
     },
     fieldName: {
       type: String,

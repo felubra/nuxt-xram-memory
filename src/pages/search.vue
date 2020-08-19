@@ -28,7 +28,7 @@
               <CollapsibleContainer class="Filters">
                 <div class="Filter">
                   <label for="typeFilter"><Microtext>Tipo</Microtext></label>
-                  <LocalSearchDropDown class="" field-name="type" component-id="typeFilter" />
+                  <LocalSearchDropDown :label-fn="getLabelForType" field-name="type" component-id="typeFilter" />
                 </div>
                 <div class="Filter">
                   <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
@@ -67,6 +67,7 @@ import LocalSearchDropDown from '@/components/search/LocalSearchDropDown'
 import NewsGrid from '@/components/news/NewsGrid'
 import ResultStats from '@/components/home/ResultStats.vue'
 import CollapsibleContainer from '@/components/common/CollapsibleContainer'
+import { CONTENT_TYPE_LABELS } from '@/config/constants'
 
 export default {
   name: 'TestPage',
@@ -90,6 +91,15 @@ export default {
         searchState: {
           query: route.query.text
         }
+      }
+    }
+  },
+  methods: {
+    getLabelForType(machineName) {
+      try {
+        return CONTENT_TYPE_LABELS[machineName]
+      } catch {
+        return machineName
       }
     }
   }
