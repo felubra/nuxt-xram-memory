@@ -1,5 +1,7 @@
 <template>
-  <el-input v-model="state.searchState[componentId]" type="text" suffix-icon="el-icon-search" :placeholder="placeholder" />
+  <el-input v-model="state.searchState[componentId]" type="text" :placeholder="placeholder">
+    <slot v-for="(_, name) in $slots" :slot="name" :name="name" />
+  </el-input>
 </template>
 
 <script>
