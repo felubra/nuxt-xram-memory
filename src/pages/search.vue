@@ -19,7 +19,11 @@
           </div>
           <div v-else key="loaded" >
               <div class="SearchBar">
-                <LocalSearchInput component-id="query" placeholder="Pesquisar no acervo" />
+                <LocalSearchInput component-id="query" placeholder="Pesquisar no acervo" >
+                  <template v-slot:suffix>
+                    <i class="material-icons">search</i>
+                  </template>
+                </LocalSearchInput>
               </div>
               <CollapsibleContainer class="Filters">
                 <div class="Filter">
@@ -188,7 +192,7 @@ export default {
   padding: 0;
 }
 
-.SearchPage .SearchBar i.el-icon-search {
+.SearchPage .SearchBar i.material-icons {
   color: $link-color;
 }
 

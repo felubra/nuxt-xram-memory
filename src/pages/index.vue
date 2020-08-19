@@ -7,9 +7,21 @@
       v-model="searchQuery"
       class="SearchBar"
       type="text"
-      suffix-icon="el-icon-search"
       placeholder="Pesquisar no acervo"
-      @change="handleSearch" />
+      @change="handleSearch" >
+        <template v-slot:suffix>
+          <nuxt-link
+            :to="{
+              name: 'search',
+              query: {
+                text: searchQuery
+              }
+            }"
+          >
+          <i class="material-icons">search</i>
+          </nuxt-link>
+        </template>
+      </el-input>
 
       <TeaserBlock
         v-if="featuredPage"
@@ -158,6 +170,19 @@ export default {
   color: $link-color;
 }
 
+.PageIndex .SearchBar .el-input__suffix {
+  display: flex;
+  align-items: center;
+  cursor: hand;
+}
+
+.PageIndex .SearchBar .el-input__suffix a {
+  display: flex;
+}
+
+.PageIndex .SearchBar .el-input__suffix .material-icons {
+  font-size: 18px;
+}
 
 .PageIndex .SearchBar input.el-input__inner:active::placeholder,
 .PageIndex .SearchBar input.el-input__inner:hover::placeholder,
