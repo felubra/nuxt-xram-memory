@@ -133,6 +133,7 @@ export default {
      */
     async fetchAndLoadIndex() {
       try {
+        // TODO: mover o download do índice para a webworker
         this.indexState = DOWNLOADING
         const serializedIndex = await this.$axios.$get(this.indexURL)
         try {

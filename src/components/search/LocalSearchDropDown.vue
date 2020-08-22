@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="state.filterState[fieldName]" :multiple="true" :collapse-tags="true" :filterable="true">
+  <el-select v-model="state.filterState[fieldName]" :multiple="true" :collapse-tags="true">
     <el-option
       v-for="option in state.filterDataSources[fieldName]"
       :key="option"
