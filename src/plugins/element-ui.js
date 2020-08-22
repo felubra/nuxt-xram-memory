@@ -11,6 +11,8 @@ export default () => {
   Vue.use(Option)
   Vue.use(Input)
 
+  Vue.use(Loading.directive)
+
   Vue.prototype.$loading = Loading.service
   Vue.prototype.$notify = Notification
 }
