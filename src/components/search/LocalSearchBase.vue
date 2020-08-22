@@ -35,6 +35,7 @@ export default {
       searchState: {},
       filterState: {},
       registeredFilters: [],
+      filterDataSources: {},
       searchResults: []
     }
   },
@@ -62,12 +63,20 @@ export default {
     }
   },
   watch: {
+    registeredFilters: {
+      deep: true,
+      async handler(val) {
+        this.$worker.registeredFilters = val
+        this.filterDataSources = await this.$worker.filterDataSources
+      }
+    },
     searchState: {
       deep: true,
       async handler(val) {
         this.$worker.searchState = val
         this.$worker.filterState = this.filterState
         this.searchResults = await this.$worker.searchResults
+        this.filterDataSources = await this.$worker.filterDataSources
       }
     },
     filterState: {
@@ -76,12 +85,18 @@ export default {
         this.$worker.filterState = val
         this.$worker.searchState = this.searchState
         this.searchResults = await this.$worker.searchResults
+        this.filterDataSources = await this.$worker.filterDataSources
       }
     }
   },
   async created() {
     await this.fetchAndLoadIndex()
     this.processInitialState()
+  },
+  beforeMount() {
+    const worker = new Worker('./lunr.worker', { type: 'module' })
+    const obj = Comlink.wrap(worker)
+    this.$worker = Comlink.proxy(obj)
   },
   methods: {
     /**
@@ -113,14 +128,11 @@ export default {
      */
     async fetchAndLoadIndex() {
       try {
-        const worker = new Worker('./lunr.worker', { type: 'module' })
-        const obj = Comlink.wrap(worker)
         this.indexState = DOWNLOADING
         const serializedIndex = await this.$axios.$get(this.indexURL)
         try {
           this.indexState = LOADING
-          await obj.load(serializedIndex)
-          this.$worker = Comlink.proxy(obj)
+          await this.$worker.load(serializedIndex)
           this.indexState = LOADED
         } catch (e) {
           this.indexState = LOAD_ERROR

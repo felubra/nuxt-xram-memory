@@ -15,7 +15,8 @@ const obj = new Vue({
   data: {
     index: null,
     searchState: {},
-    filterState: {}
+    filterState: {},
+    registeredFilters: []
   },
   computed: {
     unfilteredSearchResults() {
@@ -47,20 +48,18 @@ const obj = new Vue({
      * filtros.
      */
     filterDataSources() {
-      return Object.freeze(
-        this.registeredFilters.reduce((filtersData, fieldName) => {
-          filtersData[fieldName] = Array.from(
-            new Set(
-              groups(this.searchResults, d =>
-                objectPath.get(d, fieldName)
-              ).reduce((allFieldData, [fieldData]) => {
-                return allFieldData.concat(fieldData)
-              }, [])
-            )
+      return this.registeredFilters.reduce((filtersData, fieldName) => {
+        filtersData[fieldName] = Array.from(
+          new Set(
+            groups(this.searchResults, d =>
+              objectPath.get(d, fieldName)
+            ).reduce((allFieldData, [fieldData]) => {
+              return allFieldData.concat(fieldData)
+            }, [])
           )
-          return filtersData
-        }, {})
-      )
+        )
+        return filtersData
+      }, {})
     },
     /**
      * Retorna objeto com os filtros que tem algum valor selecionado.

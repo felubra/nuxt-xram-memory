@@ -25,7 +25,7 @@
                   </template>
                 </LocalSearchInput>
               </div>
-              <!--
+
               <CollapsibleContainer class="Filters">
                 <div class="Filter">
                   <label for="typeFilter"><Microtext>Tipo</Microtext></label>
@@ -44,7 +44,7 @@
                   <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
                 </div>
               </CollapsibleContainer>
-              -->
+
             <div>
               <ResultStats :total-results="resultCount" />
             </div>
