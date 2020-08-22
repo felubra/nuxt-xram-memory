@@ -94,9 +94,14 @@ export default {
     this.processInitialState()
   },
   beforeMount() {
-    const worker = new Worker('./lunr.worker', { type: 'module' })
-    const obj = Comlink.wrap(worker)
-    this.$worker = Comlink.proxy(obj)
+    this._worker = new Worker('./lunr.worker', { type: 'module' })
+    this.$worker = Comlink.wrap(this._worker)
+  },
+  beforeDestroy() {
+    // libere o proxy
+    this.$worker[Comlink.releaseProxy]()
+    // descarte o worker quando este componente estiver prestes a ser destruído
+    this._worker.terminate()
   },
   methods: {
     /**

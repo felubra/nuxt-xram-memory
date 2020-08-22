@@ -109,7 +109,7 @@ const obj = new Vue({
       this.searchState = searchState
     },
     load(serializedIndex) {
-      this.index = lunr.Index.load(serializedIndex)
+      this.index = Object.freeze(lunr.Index.load(serializedIndex))
     }
   }
 })
