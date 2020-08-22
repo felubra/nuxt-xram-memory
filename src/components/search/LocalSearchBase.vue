@@ -13,9 +13,7 @@ import {
   LOAD_ERROR,
   DOWNLOAD_ERROR
 } from '~/config/constants'
-import { groups } from 'd3-array'
-import objectPath from 'object-path'
-const searchJS = require('searchjs')
+
 import isEmpty from 'lodash/isEmpty'
 import * as Comlink from 'comlink'
 
@@ -36,46 +34,8 @@ export default {
       indexState: EMPTY,
       searchState: {},
       filterState: {},
-      registeredFilters: []
-    }
-  },
-  asyncComputed: {
-    /**
-     * Os resultados da busca full-text no índice ou todos os documentos, se nenhuma string de busca foi fornecida.
-     */
-    unfilteredSearchResults: {
-      default: [],
-      async get() {
-        try {
-          if (this.searchQuery) {
-            return Object.freeze(
-              await Promise.all(
-                (await this.index.search(this.searchQuery)).map(
-                  async result => {
-                    return await this.index.documentStore.getDoc(result.ref)
-                  }
-                )
-              )
-            )
-          }
-          return this.allDocuments
-        } catch {
-          return []
-        }
-      }
-    },
-    /**
-     * Todos os documentos indexados.
-     */
-    allDocuments: {
-      default: [],
-      async get() {
-        return (
-          (this.indexState === LOADED &&
-            Object.values(await this.index.documentStore.docs)) ||
-          []
-        )
-      }
+      registeredFilters: [],
+      searchResults: []
     }
   },
   computed: {
@@ -90,26 +50,6 @@ export default {
         this.indexState === DOWNLOAD_ERROR || this.indexState === LOAD_ERROR
       )
     },
-    /**
-     * Para cada filtro registrado, retorna os valores disponíveis de acordo com a pesquisa atual e o valor dos outros
-     * filtros.
-     */
-    filterDataSources() {
-      return Object.freeze(
-        this.registeredFilters.reduce((filtersData, fieldName) => {
-          filtersData[fieldName] = Array.from(
-            new Set(
-              groups(this.searchResults, d =>
-                objectPath.get(d, fieldName)
-              ).reduce((allFieldData, [fieldData]) => {
-                return allFieldData.concat(fieldData)
-              }, [])
-            )
-          )
-          return filtersData
-        }, {})
-      )
-    },
     isEmpty() {
       return isEmpty(this.searchState) && isEmpty(this.filterState)
     },
@@ -119,44 +59,23 @@ export default {
       } catch {
         return 0
       }
-    },
-    /**
-     * Retorna objeto com os filtros que tem algum valor selecionado.
-     */
-    selectedFilters() {
-      return Object.freeze(
-        Object.entries(this.filterState).reduce((selected, [key, value]) => {
-          if (!isEmpty(value)) {
-            selected[key] = value
-          }
-          return selected
-        }, {})
-      )
-    },
-    /**
-     * Os resultados de busca de acordo com o valor nos filtros selecionados.
-     */
-    searchResults() {
-      try {
-        return Object.freeze(
-          searchJS.matchArray(
-            this.unfilteredSearchResults,
-            this.selectedFilters
-          )
-        )
-      } catch (e) {
-        return []
+    }
+  },
+  watch: {
+    searchState: {
+      deep: true,
+      async handler(val) {
+        this.$worker.searchState = val
+        this.$worker.filterState = this.filterState
+        this.searchResults = await this.$worker.searchResults
       }
     },
-    /**
-     * O valor do texto de busca, concatenado de todos os componentes de busca full-text.
-     */
-    searchQuery() {
-      try {
-        const values = Object.values(this.searchState)
-        return (values.length && values.join(' ')) || ''
-      } catch {
-        return ''
+    filterState: {
+      deep: true,
+      async handler(val) {
+        this.$worker.filterState = val
+        this.$worker.searchState = this.searchState
+        this.searchResults = await this.$worker.searchResults
       }
     }
   },
@@ -201,7 +120,7 @@ export default {
         try {
           this.indexState = LOADING
           await obj.load(serializedIndex)
-          this.index = Comlink.proxy(obj.index)
+          this.$worker = Comlink.proxy(obj)
           this.indexState = LOADED
         } catch (e) {
           this.indexState = LOAD_ERROR
