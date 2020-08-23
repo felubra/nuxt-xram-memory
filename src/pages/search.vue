@@ -1,14 +1,14 @@
 <template>
-  <section class="Page SearchPage">
+
     <client-only>
       <LocalSearchBase
         v-slot:default="{searchResults, resultCount, clear, isLoading, hasError}"
-        class="TestPage"
+        class="Page SearchPage"
         :initial-state="initialState"
         index-u-r-l="media/lunr_index/index.json">
         <transition appear name="fade" mode="out-in">
           <div v-if="hasError">
-            <section>
+            <section class="CenteredPage">
               <header>
                 <Microtext tag="h2" arrow="down">Sem dados</Microtext>
               </header>
@@ -59,7 +59,7 @@
         </transition>
       </LocalSearchBase>
     </client-only>
-  </section>
+
 </template>
 
 <script>
