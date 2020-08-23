@@ -3,7 +3,7 @@ import '@/assets/styles/element-variables.scss'
 import lang from 'element-ui/lib/locale/lang/pt-br'
 import locale from 'element-ui/lib/locale'
 
-import { Select, Option, Input, Loading } from 'element-ui'
+import { Select, Option, Input, Loading, Notification } from 'element-ui'
 
 export default () => {
   locale.use(lang)
