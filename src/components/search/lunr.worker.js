@@ -1,15 +1,11 @@
 import * as Comlink from 'comlink'
 import isEmpty from 'lodash/isEmpty'
 import { groups } from 'd3-array'
-import objectPath from 'object-path'
-const searchJS = require('searchjs')
+import { get } from 'object-path'
+import { matchArray } from 'searchjs'
 import Vue from 'vue'
 import lunr from 'elasticlunr'
-require('lunr-languages/lunr.stemmer.support')(lunr)
-require('lunr-languages/lunr.pt')(lunr)
-const asciiFolder = require('fold-to-ascii')
-const replaceDiacritics = token => asciiFolder.foldReplacing(token)
-lunr.Pipeline.registerFunction(replaceDiacritics, 'replaceDiacritics')
+import asciiFolder from 'fold-to-ascii'
 
 const obj = new Vue({
   data: {
@@ -51,11 +47,12 @@ const obj = new Vue({
       return this.registeredFilters.reduce((filtersData, fieldName) => {
         filtersData[fieldName] = Array.from(
           new Set(
-            groups(this.searchResults, d =>
-              objectPath.get(d, fieldName)
-            ).reduce((allFieldData, [fieldData]) => {
-              return allFieldData.concat(fieldData)
-            }, [])
+            groups(this.searchResults, d => get(d, fieldName)).reduce(
+              (allFieldData, [fieldData]) => {
+                return allFieldData.concat(fieldData)
+              },
+              []
+            )
           )
         )
         return filtersData
@@ -75,15 +72,12 @@ const obj = new Vue({
       )
     },
     /**
-     * Os resultados de busca de acordo com o valor nos filtros selecionados.
+     * Os resultados de busca filtrados de acordo com o valor nos filtros selecionados.
      */
     searchResults() {
       try {
         return Object.freeze(
-          searchJS.matchArray(
-            this.unfilteredSearchResults,
-            this.selectedFilters
-          )
+          matchArray(this.unfilteredSearchResults, this.selectedFilters)
         )
       } catch (e) {
         return []
@@ -100,6 +94,14 @@ const obj = new Vue({
         return ''
       }
     }
+  },
+  created() {
+    // dê suporte à linguagem portuguesa no elasticlunr
+    require('lunr-languages/lunr.stemmer.support')(lunr)
+    require('lunr-languages/lunr.pt')(lunr)
+    // adicione no pipline uma função para remover os acentos ao pesquisar
+    const replaceDiacritics = token => asciiFolder.foldReplacing(token)
+    lunr.Pipeline.registerFunction(replaceDiacritics, 'replaceDiacritics')
   },
   methods: {
     setFilterState(filterState) {
