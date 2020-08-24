@@ -5,7 +5,7 @@
         v-slot:default="{searchResults, resultCount, clear, isLoading, hasError}"
         class="Page SearchPage"
         :initial-state="initialState"
-        index-u-r-l="media/lunr_index/index.json">
+        :index-u-r-l="$config.lunrIndexUrl">
         <transition appear name="fade" mode="out-in">
           <div v-if="hasError">
             <section class="CenteredPage">

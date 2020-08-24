@@ -90,7 +90,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/dotenv',
+    '@nuxtjs/dotenv', // TODO: remover
     '@nuxtjs/axios',
     'nuxt-device-detect',
     '@nuxtjs/style-resources'
@@ -109,7 +109,10 @@ module.exports = {
   publicRuntimeConfig: {
     axios: {
       browserBaseURL: process.env.BROWSER_API_URL || process.env.API_URL
-    }
+    },
+    lunrIndexUrl:
+      process.env.LUNR_INDEX_URL ||
+      'http://localhost:8000/media/lunr_index/index.json'
   },
   privateRuntimeConfig: {
     axios: {
