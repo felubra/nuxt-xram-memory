@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot v-bind="{searchResults, resultCount, clear, isLoaded, hasError, isLoading}">
+    <slot v-bind="{searchResults, resultCount, clear, isLoaded, hasError, isLoading, lastSearchTime}">
     </slot>
   </div>
 </template>
@@ -36,7 +36,8 @@ export default {
       filterState: {},
       registeredFilters: [],
       filterDataSources: {},
-      searchResults: []
+      searchResults: [],
+      lastSearchTime: 0
     }
   },
   computed: {
@@ -75,7 +76,7 @@ export default {
       async handler(val) {
         this.$worker.searchState = val
         this.$worker.filterState = this.filterState
-        this.searchResults = await this.$worker.searchResults
+        await this.getResultsFromWorker()
         this.filterDataSources = await this.$worker.filterDataSources
       }
     },
@@ -84,7 +85,7 @@ export default {
       async handler(val) {
         this.$worker.filterState = val
         this.$worker.searchState = this.searchState
-        this.searchResults = await this.$worker.searchResults
+        await this.getResultsFromWorker()
         this.filterDataSources = await this.$worker.filterDataSources
       }
     }
@@ -104,6 +105,28 @@ export default {
     this._worker.terminate()
   },
   methods: {
+    /**
+     * Método de conveniência para pegar informações da worker e cronometrar o tempo
+     * TODO: fazer uma função genérica que aceite várias promessas para poder cronometrar
+     * não apenas o retorno dos resultados, mas outras operações feitas pela worker, como
+     * obter os dados para os filtros etc
+     */
+    async getResultsFromWorker() {
+      try {
+        const t0 = (performance && performance.now()) || 0
+        this.searchResults = await this.$worker.searchResults
+        await this.$nextTick()
+        // só cronometre se o índice estiver carregado
+        if (this.indexState === LOADED) {
+          this.lastSearchTime = (performance && performance.now() - t0) || 0
+        } else {
+          this.lastSearchTime = 0
+        }
+      } catch {
+        this.lastSearchTime = 0
+        return []
+      }
+    },
     /**
      * Define o estado dos componentes com base na prop initialState
      */

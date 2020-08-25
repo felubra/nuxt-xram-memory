@@ -2,7 +2,7 @@
 
     <client-only>
       <LocalSearchBase
-        v-slot:default="{searchResults, resultCount, clear, isLoading, hasError}"
+        v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
         class="Page SearchPage"
         :initial-state="initialState"
         :index-u-r-l="$config.lunrIndexUrl">
@@ -46,7 +46,7 @@
               </CollapsibleContainer>
 
             <div>
-              <ResultStats :total-results="resultCount" />
+              <ResultStats :time="lastSearchTime" :total-results="resultCount" />
             </div>
             <NewsGrid
               v-loading="isLoading"
