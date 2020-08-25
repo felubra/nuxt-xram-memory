@@ -31,7 +31,7 @@
         <header>
           <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
         </header>
-        <HomeTagCloud :size-delta="10" :aggregations="tagCloudAggregations" />
+        <HomeTagCloud :size-delta="32" :aggregations="tagCloudAggregations" />
       </section>
     </template>
     <template v-else>
