@@ -178,6 +178,16 @@ export default {
   color: #a1a1a1 !important;
 }
 
+.Filter .el-tag {
+  font-size: 14px;
+  color: $micro-text-color;
+  border-color: $micro-text-color;
+}
+
+.Filter .el-tag .el-tag__close {
+  color: $text-color;
+}
+
 .SearchPage .SearchBar .el-input__inner {
   font-size: 1.2rem;
 }
