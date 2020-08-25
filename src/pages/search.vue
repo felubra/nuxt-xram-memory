@@ -1,14 +1,14 @@
 <template>
-  <section class="Page SearchPage">
+
     <client-only>
       <LocalSearchBase
-        v-slot:default="{searchResults, resultCount, clear, isLoading, hasError}"
-        class="TestPage"
+        v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
+        class="Page SearchPage"
         :initial-state="initialState"
-        index-u-r-l="media/lunr_index/index.json">
+        :index-u-r-l="$config.lunrIndexUrl">
         <transition appear name="fade" mode="out-in">
           <div v-if="hasError">
-            <section>
+            <section class="CenteredPage">
               <header>
                 <Microtext tag="h2" arrow="down">Sem dados</Microtext>
               </header>
@@ -25,6 +25,7 @@
                   </template>
                 </LocalSearchInput>
               </div>
+
               <CollapsibleContainer class="Filters">
                 <div class="Filter">
                   <label for="typeFilter"><Microtext>Tipo</Microtext></label>
@@ -43,8 +44,9 @@
                   <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
                 </div>
               </CollapsibleContainer>
+
             <div>
-              <ResultStats :total-results="resultCount" />
+              <ResultStats :time="lastSearchTime" :total-results="resultCount" />
             </div>
             <NewsGrid
               v-loading="isLoading"
@@ -57,7 +59,7 @@
         </transition>
       </LocalSearchBase>
     </client-only>
-  </section>
+
 </template>
 
 <script>
@@ -174,6 +176,16 @@ export default {
 
 .Filter .el-input__suffix-inner i {
   color: #a1a1a1 !important;
+}
+
+.Filter .el-tag {
+  font-size: 14px;
+  color: $micro-text-color;
+  border-color: $micro-text-color;
+}
+
+.Filter .el-tag .el-tag__close {
+  color: $text-color;
 }
 
 .SearchPage .SearchBar .el-input__inner {

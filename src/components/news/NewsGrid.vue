@@ -1,24 +1,27 @@
 <template>
-  <transition-group class="NewsGrid" name="list-complete" tag="div">
-    <Card
-      v-for="item in items"
-      :key="idFor(item)"
-      class="item"
-      :item-link="linkFor(item)"
-      :label="labelFor(item)"
-      :image="imageFor(item)"
-      :teaser="teaserFor(item)"
-      :title="titleFor(item)"
-    >
-      <NewspaperInfo v-if="newspaperFor(item)" slot="footer" :newspaper="newspaperFor(item)" />
-    </Card>
-  </transition-group>
+  <div class="infinite-list-wrapper">
+    <transition-group v-infinite-scroll="loadMore" :infinite-scroll-disabled="!infiniteScroll" class="NewsGrid" name="list-complete" tag="div" infinite-scroll-immediate-check="false">
+      <Card
+        v-for="item in itemsDisplayed"
+        :key="idFor(item)"
+        class="item"
+        :item-link="linkFor(item)"
+        :label="labelFor(item)"
+        :image="imageFor(item)"
+        :teaser="teaserFor(item)"
+        :title="titleFor(item)"
+      >
+        <NewspaperInfo v-if="newspaperFor(item)" slot="footer" :newspaper="newspaperFor(item)" />
+      </Card>
+    </transition-group>
+  </div>
 </template>
 
 <script>
 import Card from '@/components/common/Card'
 import NewspaperInfo from './NewspaperInfo'
 import { NEWS, DOCUMENT, IMAGE, CONTENT_TYPE_LABELS } from '@/config/constants'
+import infiniteScroll from 'vue-infinite-scroll'
 
 const dayJs = require('dayjs')
 const smartTruncate = require('smart-truncate')
@@ -29,13 +32,57 @@ export default {
     Card,
     NewspaperInfo
   },
+  directives: {
+    infiniteScroll
+  },
   props: {
+    /** Items a serem exibidos na lista */
     items: {
       type: Array,
       default: () => []
+    },
+    /** Se a rolagem infinita está habilitada */
+    infiniteScroll: {
+      type: Boolean,
+      default: true
+    },
+    /** Quantidade de items a ser incrementada, usando a rolagem infinita,
+     * quando o usuário chegar ao final da página */
+    infiniteScollStepItems: {
+      type: Number,
+      default: 10,
+      validator(value) {
+        return value && Number.isInteger(value) && value > 0
+      }
+    }
+  },
+  data: function() {
+    return {
+      maxItemsDisplayed: 0
+    }
+  },
+  computed: {
+    itemsDisplayed() {
+      return this.infiniteScroll
+        ? this.items.slice(0, this.maxItemsDisplayed)
+        : this.items
+    }
+  },
+  watch: {
+    items: {
+      deep: true,
+      immediate: true,
+      handler() {
+        // quando os items forem carregados, (re)inicie o número máximo de items exibidos
+        this.maxItemsDisplayed = this.infiniteScollStepItems
+      }
     }
   },
   methods: {
+    loadMore() {
+      this.maxItemsDisplayed =
+        this.maxItemsDisplayed + this.infiniteScollStepItems
+    },
     idFor(item) {
       const type = this.typeFor(item)
       return type + item.id

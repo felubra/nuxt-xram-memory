@@ -28,7 +28,7 @@ export default {
       try {
         return `${this.totalResults} ${
           this.totalResults > 1 ? 'resultados' : 'resultado'
-        } em ${this.time}ms`
+        } em ${this.time.toFixed(2)}ms`
       } catch {
         return ''
       }

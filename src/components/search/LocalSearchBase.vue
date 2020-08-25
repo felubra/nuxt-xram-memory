@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot v-bind="{searchResults, resultCount, clear, isLoaded, hasError, isLoading}">
+    <slot v-bind="{searchResults, resultCount, clear, isLoaded, hasError, isLoading, lastSearchTime}">
     </slot>
   </div>
 </template>
@@ -13,9 +13,7 @@ import {
   LOAD_ERROR,
   DOWNLOAD_ERROR
 } from '~/config/constants'
-import { groups } from 'd3-array'
-import objectPath from 'object-path'
-const searchJS = require('searchjs')
+
 import isEmpty from 'lodash/isEmpty'
 import * as Comlink from 'comlink'
 
@@ -36,46 +34,10 @@ export default {
       indexState: EMPTY,
       searchState: {},
       filterState: {},
-      registeredFilters: []
-    }
-  },
-  asyncComputed: {
-    /**
-     * Os resultados da busca full-text no índice ou todos os documentos, se nenhuma string de busca foi fornecida.
-     */
-    unfilteredSearchResults: {
-      default: [],
-      async get() {
-        try {
-          if (this.searchQuery) {
-            return Object.freeze(
-              await Promise.all(
-                (await this.index.search(this.searchQuery)).map(
-                  async result => {
-                    return await this.index.documentStore.getDoc(result.ref)
-                  }
-                )
-              )
-            )
-          }
-          return this.allDocuments
-        } catch {
-          return []
-        }
-      }
-    },
-    /**
-     * Todos os documentos indexados.
-     */
-    allDocuments: {
-      default: [],
-      async get() {
-        return (
-          (this.indexState === LOADED &&
-            Object.values(await this.index.documentStore.docs)) ||
-          []
-        )
-      }
+      registeredFilters: [],
+      filterDataSources: {},
+      searchResults: [],
+      lastSearchTime: 0
     }
   },
   computed: {
@@ -90,26 +52,6 @@ export default {
         this.indexState === DOWNLOAD_ERROR || this.indexState === LOAD_ERROR
       )
     },
-    /**
-     * Para cada filtro registrado, retorna os valores disponíveis de acordo com a pesquisa atual e o valor dos outros
-     * filtros.
-     */
-    filterDataSources() {
-      return Object.freeze(
-        this.registeredFilters.reduce((filtersData, fieldName) => {
-          filtersData[fieldName] = Array.from(
-            new Set(
-              groups(this.searchResults, d =>
-                objectPath.get(d, fieldName)
-              ).reduce((allFieldData, [fieldData]) => {
-                return allFieldData.concat(fieldData)
-              }, [])
-            )
-          )
-          return filtersData
-        }, {})
-      )
-    },
     isEmpty() {
       return isEmpty(this.searchState) && isEmpty(this.filterState)
     },
@@ -119,44 +61,32 @@ export default {
       } catch {
         return 0
       }
-    },
-    /**
-     * Retorna objeto com os filtros que tem algum valor selecionado.
-     */
-    selectedFilters() {
-      return Object.freeze(
-        Object.entries(this.filterState).reduce((selected, [key, value]) => {
-          if (!isEmpty(value)) {
-            selected[key] = value
-          }
-          return selected
-        }, {})
-      )
-    },
-    /**
-     * Os resultados de busca de acordo com o valor nos filtros selecionados.
-     */
-    searchResults() {
-      try {
-        return Object.freeze(
-          searchJS.matchArray(
-            this.unfilteredSearchResults,
-            this.selectedFilters
-          )
-        )
-      } catch (e) {
-        return []
+    }
+  },
+  watch: {
+    registeredFilters: {
+      deep: true,
+      async handler(val) {
+        this.$worker.registeredFilters = val
+        this.filterDataSources = await this.$worker.filterDataSources
       }
     },
-    /**
-     * O valor do texto de busca, concatenado de todos os componentes de busca full-text.
-     */
-    searchQuery() {
-      try {
-        const values = Object.values(this.searchState)
-        return (values.length && values.join(' ')) || ''
-      } catch {
-        return ''
+    searchState: {
+      deep: true,
+      async handler(val) {
+        this.$worker.searchState = val
+        this.$worker.filterState = this.filterState
+        await this.getResultsFromWorker()
+        this.filterDataSources = await this.$worker.filterDataSources
+      }
+    },
+    filterState: {
+      deep: true,
+      async handler(val) {
+        this.$worker.filterState = val
+        this.$worker.searchState = this.searchState
+        await this.getResultsFromWorker()
+        this.filterDataSources = await this.$worker.filterDataSources
       }
     }
   },
@@ -164,7 +94,39 @@ export default {
     await this.fetchAndLoadIndex()
     this.processInitialState()
   },
+  beforeMount() {
+    this._worker = new Worker('./lunr.worker', { type: 'module' })
+    this.$worker = Comlink.wrap(this._worker)
+  },
+  beforeDestroy() {
+    // libere o proxy
+    this.$worker[Comlink.releaseProxy]()
+    // descarte o worker quando este componente estiver prestes a ser destruído
+    this._worker.terminate()
+  },
   methods: {
+    /**
+     * Método de conveniência para pegar informações da worker e cronometrar o tempo
+     * TODO: fazer uma função genérica que aceite várias promessas para poder cronometrar
+     * não apenas o retorno dos resultados, mas outras operações feitas pela worker, como
+     * obter os dados para os filtros etc
+     */
+    async getResultsFromWorker() {
+      try {
+        const t0 = (performance && performance.now()) || 0
+        this.searchResults = await this.$worker.searchResults
+        await this.$nextTick()
+        // só cronometre se o índice estiver carregado
+        if (this.indexState === LOADED) {
+          this.lastSearchTime = (performance && performance.now() - t0) || 0
+        } else {
+          this.lastSearchTime = 0
+        }
+      } catch {
+        this.lastSearchTime = 0
+        return []
+      }
+    },
     /**
      * Define o estado dos componentes com base na prop initialState
      */
@@ -194,14 +156,12 @@ export default {
      */
     async fetchAndLoadIndex() {
       try {
-        const worker = new Worker('./lunr.worker', { type: 'module' })
-        const obj = Comlink.wrap(worker)
+        // TODO: mover o download do índice para a webworker
         this.indexState = DOWNLOADING
         const serializedIndex = await this.$axios.$get(this.indexURL)
         try {
           this.indexState = LOADING
-          await obj.load(serializedIndex)
-          this.index = Comlink.proxy(obj.index)
+          await this.$worker.load(serializedIndex)
           this.indexState = LOADED
         } catch (e) {
           this.indexState = LOAD_ERROR
