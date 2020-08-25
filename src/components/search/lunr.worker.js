@@ -40,14 +40,13 @@ const obj = new Vue({
       }
     },
     /**
-     * Para cada filtro registrado, retorna os valores disponíveis de acordo com a pesquisa atual e o valor dos outros
-     * filtros.
+     * Para cada filtro registrado, retorna os valores disponíveis de acordo com a pesquisa atual.
      */
     filterDataSources() {
       return this.registeredFilters.reduce((filtersData, fieldName) => {
         filtersData[fieldName] = Array.from(
           new Set(
-            groups(this.searchResults, d => get(d, fieldName)).reduce(
+            groups(this.unfilteredSearchResults, d => get(d, fieldName)).reduce(
               (allFieldData, [fieldData]) => {
                 return allFieldData.concat(fieldData)
               },
