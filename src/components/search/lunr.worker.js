@@ -6,13 +6,18 @@ import { matchArray } from 'searchjs'
 import Vue from 'vue'
 import lunr from 'elasticlunr'
 import asciiFolder from 'fold-to-ascii'
+import natsort from 'natsort'
 
 const obj = new Vue({
   data: {
     index: null,
     searchState: {},
     filterState: {},
-    registeredFilters: []
+    registeredFilters: [],
+    orderBy: {
+      field: 'published_date',
+      desc: true
+    }
   },
   computed: {
     unfilteredSearchResults () {
@@ -75,9 +80,24 @@ const obj = new Vue({
      */
     searchResults () {
       try {
+        const sortFn = natsort({ insensitive: true, desc: this.orderBy.desc })
         return Object.freeze(
           matchArray(this.unfilteredSearchResults, this.selectedFilters)
-        )
+            .sort((a, b) => {
+              try {
+                switch (this.orderBy.field) {
+                  case 'title': {
+                    return sortFn(a.uri, b.uri)
+                  }
+                  default: {
+                    return sortFn(a[this.orderBy.field], b[this.orderBy.field])
+                  }
+                }
+              } catch (e) {
+                console.log(e)
+                return 0
+              }
+            }))
       } catch (e) {
         return []
       }

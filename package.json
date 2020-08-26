@@ -35,6 +35,7 @@
     "human-size": "^1.1.0",
     "lodash": "^4.17.15",
     "lunr-languages": "git+https://github.com/weixsong/lunr-languages.git",
+    "natsort": "^2.0.2",
     "nuxt": "^2.4.3",
     "nuxt-device-detect": "^1.1.5",
     "object-path": "^0.11.4",

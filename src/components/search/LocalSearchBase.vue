@@ -140,6 +140,9 @@ export default {
         return []
       }
     },
+    async orderBy (field) {
+      this.$worker.orderBy = field
+    },
     /**
      * Define o estado dos componentes com base na prop initialState
      */
