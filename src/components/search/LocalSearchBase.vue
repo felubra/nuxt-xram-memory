@@ -32,7 +32,11 @@ export default {
   props: {
     indexURL: {
       type: String,
-      required: true
+      default: ''
+    },
+    serializedIndex: {
+      type: Object,
+      default: null
     },
     initialState: {
       type: Object,
@@ -171,17 +175,26 @@ export default {
         const onDownloadProgress = progress => {
           this.indexDownloadProgress = (progress.loaded / progress.total) * 100
         }
-        const serializedIndex = await this.$axios.$get(this.indexURL, {
-          onDownloadProgress
-        })
-        try {
+        if (this.indexURL) {
+          const serializedIndex = await this.$axios.$get(this.indexURL, {
+            onDownloadProgress
+          })
+          try {
+            this.indexState = LOADING
+            await this.$worker.load(serializedIndex)
+            this.indexState = LOADED
+          } catch (e) {
+            this.indexState = LOAD_ERROR
+          }
+        } else if (this.serializedIndex) {
           this.indexState = LOADING
-          await this.$worker.load(serializedIndex)
+          await this.$worker.load(this.serializedIndex)
           this.indexState = LOADED
-        } catch (e) {
-          this.indexState = LOAD_ERROR
+        } else {
+          throw new Error('Nenhuma forma de obter o índice foi definida')
         }
       } catch (e) {
+        console.log(e)
         this.indexState = DOWNLOAD_ERROR
       }
     },

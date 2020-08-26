@@ -4,7 +4,7 @@
       v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
       class="Page SearchPage"
       :initial-state="initialState"
-      :index-u-r-l="$config.lunrIndexUrl"
+      :serialized-index="serializedIndex"
     >
       <transition
         appear
@@ -111,8 +111,10 @@ export default {
     ResultStats,
     CollapsibleContainer
   },
-  asyncData ({ route }) {
+  async asyncData ({ route, $axios, $config }) {
+    const serializedIndex = Object.freeze(await $axios.$get($config.lunrIndexUrl))
     return {
+      serializedIndex,
       initialState: {
         filterState: route.query,
         searchState: {
@@ -123,7 +125,8 @@ export default {
   },
   data () {
     return {
-      initialState: {}
+      initialState: {},
+      serializedIndex: null
     }
   },
   methods: {
