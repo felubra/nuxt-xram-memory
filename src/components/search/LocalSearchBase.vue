@@ -103,7 +103,7 @@ export default {
     await this.fetchAndLoadIndex()
     this.processInitialState()
   },
-  beforeMount () {
+  beforeCreate () {
     this._worker = new Worker('./lunr.worker', { type: 'module' })
     this.$worker = Comlink.wrap(this._worker)
   },
