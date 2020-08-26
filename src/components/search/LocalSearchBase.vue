@@ -1,7 +1,17 @@
 <template>
   <div>
-    <slot v-bind="{searchResults, resultCount, clear, isLoaded, hasError, isLoading, lastSearchTime}">
-    </slot>
+    <slot
+      v-bind="{
+        searchResults,
+        resultCount,
+        clear,
+        isLoaded,
+        hasError,
+        isLoading,
+        lastSearchTime,
+        indexDownloadProgress
+      }"
+    />
   </div>
 </template>
 <script>
@@ -29,7 +39,7 @@ export default {
       default: () => {}
     }
   },
-  data() {
+  data () {
     return {
       indexState: EMPTY,
       searchState: {},
@@ -37,23 +47,24 @@ export default {
       registeredFilters: [],
       filterDataSources: {},
       searchResults: [],
+      indexDownloadProgress: 0,
       lastSearchTime: 0
     }
   },
   computed: {
-    isLoading() {
+    isLoading () {
       return this.indexState < LOADED
     },
-    isLoaded() {
+    isLoaded () {
       return this.indexState === LOADED
     },
-    hasError() {
+    hasError () {
       return this.indexState >= DOWNLOAD_ERROR
     },
-    isEmpty() {
+    isEmpty () {
       return isEmpty(this.searchState) && isEmpty(this.filterState)
     },
-    resultCount() {
+    resultCount () {
       try {
         return this.searchResults.length
       } catch {
@@ -64,14 +75,14 @@ export default {
   watch: {
     registeredFilters: {
       deep: true,
-      async handler(val) {
+      async handler (val) {
         this.$worker.registeredFilters = val
         this.filterDataSources = await this.$worker.filterDataSources
       }
     },
     searchState: {
       deep: true,
-      async handler(val) {
+      async handler (val) {
         this.$worker.searchState = val
         this.$worker.filterState = this.filterState
         await this.getResultsFromWorker()
@@ -80,7 +91,7 @@ export default {
     },
     filterState: {
       deep: true,
-      async handler(val) {
+      async handler (val) {
         this.$worker.filterState = val
         this.$worker.searchState = this.searchState
         await this.getResultsFromWorker()
@@ -88,15 +99,15 @@ export default {
       }
     }
   },
-  async created() {
+  async created () {
     await this.fetchAndLoadIndex()
     this.processInitialState()
   },
-  beforeMount() {
+  beforeMount () {
     this._worker = new Worker('./lunr.worker', { type: 'module' })
     this.$worker = Comlink.wrap(this._worker)
   },
-  beforeDestroy() {
+  beforeDestroy () {
     // libere o proxy
     this.$worker[Comlink.releaseProxy]()
     // descarte o worker quando este componente estiver prestes a ser destruído
@@ -109,7 +120,7 @@ export default {
      * não apenas o retorno dos resultados, mas outras operações feitas pela worker, como
      * obter os dados para os filtros etc
      */
-    async getResultsFromWorker() {
+    async getResultsFromWorker () {
       try {
         const t0 = (performance && performance.now()) || 0
         this.searchResults = await this.$worker.searchResults
@@ -128,7 +139,7 @@ export default {
     /**
      * Define o estado dos componentes com base na prop initialState
      */
-    processInitialState() {
+    processInitialState () {
       // Preencha o estado dos filtros com as informações passadas à prop initialstate
       if (this.initialState && this.initialState.filterState) {
         this.filterState = Object.assign(
@@ -152,11 +163,17 @@ export default {
      * Baixa e carrega o arquivo do índice.
      * Define o status do carregamento de acordo com fases.
      */
-    async fetchAndLoadIndex() {
+    async fetchAndLoadIndex () {
       try {
         // TODO: mover o download do índice para a webworker
         this.indexState = DOWNLOADING
-        const serializedIndex = await this.$axios.$get(this.indexURL)
+
+        const onDownloadProgress = progress => {
+          this.indexDownloadProgress = (progress.loaded / progress.total) * 100
+        }
+        const serializedIndex = await this.$axios.$get(this.indexURL, {
+          onDownloadProgress
+        })
         try {
           this.indexState = LOADING
           await this.$worker.load(serializedIndex)
@@ -172,7 +189,7 @@ export default {
      * Registra um filtro
      * TODO: remover
      */
-    registerFilter(fieldName) {
+    registerFilter (fieldName) {
       if (!this.registeredFilters.includes(fieldName)) {
         this.registeredFilters.push(fieldName)
       }
@@ -180,15 +197,15 @@ export default {
     /**
      * Limpa todos o estado dos componentes de busca.
      */
-    clear() {
-      for (let collection of [this.searchState, this.filterState]) {
-        for (let key in collection) {
+    clear () {
+      for (const collection of [this.searchState, this.filterState]) {
+        for (const key in collection) {
           this.$set(collection, key, null)
         }
       }
     }
   },
-  provide() {
+  provide () {
     const state = {}
     Object.defineProperties(state, {
       filterDataSources: {
