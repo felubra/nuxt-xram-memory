@@ -2,7 +2,10 @@
   <section class="Page AlbumPage">
     <main>
       <BackButton class="BackButton" />
-      <DocumentViewer :images="images" :show-title="true" />
+      <DocumentViewer
+        :images="images"
+        :show-title="true"
+      />
     </main>
   </section>
 </template>
@@ -17,32 +20,7 @@ export default {
     BackButton,
     DocumentViewer
   },
-  head() {
-    return {
-      title: this.album.name,
-      titleTemplate: 'xraM-Memory - Álbum: %s',
-      bodyAttrs: {
-        class: 'page--full-screen'
-      }
-    }
-  },
-  data() {
-    return {
-      album: {}
-    }
-  },
-  computed: {
-    images() {
-      return this.album.photos.map(photo => {
-        return {
-          src: getMediaUrl(photo.thumbnails.document_preview),
-          thumbnailSrc: getMediaUrl(photo.thumbnails.document_thumbnail),
-          description: photo.description || ' '
-        }
-      })
-    }
-  },
-  async asyncData({ $axios, route, error }) {
+  async asyncData ({ $axios, route, error }) {
     const albumId = route.params.album_id
     if (albumId) {
       try {
@@ -54,6 +32,31 @@ export default {
       }
     }
     return error({ statusCode: 400 })
+  },
+  data () {
+    return {
+      album: {}
+    }
+  },
+  computed: {
+    images () {
+      return this.album.photos.map(photo => {
+        return {
+          src: getMediaUrl(photo.thumbnails.document_preview),
+          thumbnailSrc: getMediaUrl(photo.thumbnails.document_thumbnail),
+          description: photo.description || ' '
+        }
+      })
+    }
+  },
+  head () {
+    return {
+      title: this.album.name,
+      titleTemplate: 'xraM-Memory - Álbum: %s',
+      bodyAttrs: {
+        class: 'page--full-screen'
+      }
+    }
   }
 }
 </script>
@@ -88,7 +91,6 @@ main {
   text-shadow: 0px 0px 5px #000;
 }
 </style>
-
 
 <style lang="stylus" scoped>
 .AlbumPage {

@@ -1,6 +1,10 @@
 <template>
   <div id="main-wrapper">
-    <div v-if="navBarFixed" class="spacer" :style="`height: ${spacerHeight}px`"></div>
+    <div
+      v-if="navBarFixed"
+      class="spacer"
+      :style="`height: ${spacerHeight}px`"
+    />
     <Menu />
 
     <fixed-header :fixed.sync="navBarFixed">
@@ -8,7 +12,7 @@
         <Navbar class="MainNavBar" />
       </header>
       <client-only>
-        <resize-sensor @resize="setSpacerHeight"></resize-sensor>
+        <resize-sensor @resize="setSpacerHeight" />
       </client-only>
     </fixed-header>
     <nuxt />
@@ -32,49 +36,48 @@ export default {
     FixedHeader,
     Menu
   },
-  head() {
-    return {
-      bodyAttrs: {
-        'menu-visible': this.menuVisible()
-      }
-    }
-  },
-  data() {
+  data () {
     return {
       navBarFixed: false,
       spacerHeight: 80,
       ...mapState(['menuVisible'])
     }
   },
-  mounted() {
+  mounted () {
     const isBot =
       navigator &&
       navigator.userAgent &&
       /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)
 
-    //Somente mostre a notificação se não for um robô a acessar a página e não houver um cookie de aceite
+    // Somente mostre a notificação se não for um robô a acessar a página e não houver um cookie de aceite
     if (!isBot && !getCookie('GDPR_cookie')) {
       this.$notify({
         title: 'Este site usa cookies',
         dangerouslyUseHTMLString: true,
-        message: `Nós usamos cookies para melhorar a sua experiência neste site. <br />Ao continuar, você concorda com isso.`,
+        message: 'Nós usamos cookies para melhorar a sua experiência neste site. <br />Ao continuar, você concorda com isso.',
         position: 'bottom-right',
         duration: 0,
         type: 'info',
-        onClose() {
+        onClose () {
           setCookie('GDPR_cookie', 'accepted', { expires: '2147483647s' })
         }
       })
     }
   },
   methods: {
-    setSpacerHeight({ height }) {
+    setSpacerHeight ({ height }) {
       this.spacerHeight = height
+    }
+  },
+  head () {
+    return {
+      bodyAttrs: {
+        'menu-visible': this.menuVisible()
+      }
     }
   }
 }
 </script>
-
 
 <style lang="stylus">
 .el-notification__content, .el-notification__title {
@@ -187,7 +190,6 @@ body.page--full-screen .MainHeader[fixed] {
   transform: scaleY(0)
 }
 
-
 .v-text-field.v-input--is-focused  > .v-input__control > .v-input__slot:after {
   transform: scaleY(1)
 }
@@ -207,7 +209,6 @@ body.page--full-screen .MainHeader[fixed] {
   transform: none;
   color: $link-color !important;
 }
-
 
 @media only screen and (min-width: $tablet) {
   .FieldList > .FieldList__Field {

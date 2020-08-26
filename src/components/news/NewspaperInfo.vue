@@ -1,8 +1,8 @@
 <template>
   <p class="NewspaperInfo">
     <a :href="newspaperURL">
-      <img :src="newspaperLogo" />
-      {{newspaper.title}}
+      <img :src="newspaperLogo">
+      {{ newspaper.title }}
     </a>
   </p>
 </template>
@@ -18,10 +18,10 @@ export default {
     }
   },
   computed: {
-    newspaperURL() {
+    newspaperURL () {
       return sanitizeOnlyText(this.newspaper.url)
     },
-    newspaperLogo() {
+    newspaperLogo () {
       if (this.newspaper.image) {
         return sanitizeOnlyText(getMediaUrl(this.newspaper.image))
       }

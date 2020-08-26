@@ -1,10 +1,17 @@
 <template>
   <section class="Page ImagesPage">
-    <h1 class="offscreen">Imagens</h1>
+    <h1 class="offscreen">
+      Imagens
+    </h1>
     <template v-if="hasAlbums">
       <section class="OtherAlbums">
         <header>
-          <Microtext tag="h2" arrow="down">Todos os álbuns</Microtext>
+          <Microtext
+            tag="h2"
+            arrow="down"
+          >
+            Todos os álbuns
+          </Microtext>
         </header>
         <div class="AlbumList">
           <Card
@@ -14,7 +21,9 @@
             :image="imageFor(album)"
             :label="labelFor(album)"
           >
-            <h3 slot="title">{{album.name}}</h3>
+            <h3 slot="title">
+              {{ album.name }}
+            </h3>
           </Card>
         </div>
       </section>
@@ -22,7 +31,12 @@
     <template v-else>
       <section>
         <header>
-          <Microtext tag="h2" arrow="down">Sem dados</Microtext>
+          <Microtext
+            tag="h2"
+            arrow="down"
+          >
+            Sem dados
+          </Microtext>
         </header>
         <main>
           <p>Não existem álbuns para exibir no momento, por-favor, volte mais tarde.</p>
@@ -44,40 +58,37 @@ export default {
     Microtext,
     Card
   },
-  head: {
-    title: 'xraM-Memory - Imagens'
+  async asyncData ({ $axios }) {
+    try {
+      const albumObjects = await $axios.$get('api/v1/albums')
+      return {
+        albumObjects
+      }
+    } catch (e) {
+      return {
+        albumObjects: []
+      }
+    }
   },
-  data() {
+  data () {
     return {
-      albums_objects: []
+      albumObjects: []
     }
   },
   computed: {
-    hasAlbums() {
+    hasAlbums () {
       return this.albums.length > 0
     },
-    albums() {
-      return this.albums_objects.map(album => {
+    albums () {
+      return this.albumObjects.map(album => {
         album.big_cover = getMediaUrl(album.big_cover)
         album.cover = getMediaUrl(album.cover)
         return album
       })
     }
   },
-  async asyncData({ $axios }) {
-    try {
-      const albums_objects = await $axios.$get(`api/v1/albums`)
-      return {
-        albums_objects
-      }
-    } catch (e) {
-      return {
-        albums_objects: []
-      }
-    }
-  },
   methods: {
-    labelFor(item) {
+    labelFor (item) {
       if (item.file_count) {
         return item.file_count > 1
           ? `${item.file_count} itens`
@@ -85,14 +96,14 @@ export default {
       }
       return ''
     },
-    imageFor(item) {
+    imageFor (item) {
       return item.cover
     },
-    titleFor(item) {
+    titleFor (item) {
       return item.name
     },
 
-    linkFor(item) {
+    linkFor (item) {
       return {
         name: 'album-album_id',
         params: {
@@ -100,6 +111,9 @@ export default {
         }
       }
     }
+  },
+  head: {
+    title: 'xraM-Memory - Imagens'
   }
 }
 </script>

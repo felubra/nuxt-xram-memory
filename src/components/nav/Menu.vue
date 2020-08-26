@@ -14,11 +14,15 @@
           :title="page.title"
           :alt="`Clique para visitar a página '${page.title}'`"
           :to="urlOrRoute(page)"
-        >{{page.title}}</nuxt-link>
+        >
+          {{ page.title }}
+        </nuxt-link>
       </li>
     </ul>
     <footer class="Menu__Footer">
-      <p class="center">Copyright © 2019 xraM-Memory</p>
+      <p class="center">
+        Copyright © 2019-20 xraM-Memory
+      </p>
       <ul class="Menu__Items Menu__Items--inline">
         <li
           v-for="(page, index) in pageLinks('menu-footer')"
@@ -29,7 +33,9 @@
             :title="page.title"
             :alt="`Clique para visitar a página '${page.title}'`"
             :to="urlOrRoute(page)"
-          >{{page.title}}</nuxt-link>
+          >
+            {{ page.title }}
+          </nuxt-link>
         </li>
       </ul>
     </footer>
@@ -55,7 +61,7 @@ export default {
   methods: {
     ...mapActions(['toggleMenu']),
     urlOrRoute,
-    keyForLink(item) {
+    keyForLink (item) {
       return typeof item.url === 'object' ? item.url.name : item.url
     }
   }

@@ -6,8 +6,16 @@
     </header>
 
     <main>
-      <v-alert v-if="alertText" :type="alertType">{{alertText}}</v-alert>
-      <v-form ref="form" @input="resetSuccess">
+      <v-alert
+        v-if="alertText"
+        :type="alertType"
+      >
+        {{ alertText }}
+      </v-alert>
+      <v-form
+        ref="form"
+        @input="resetSuccess"
+      >
         <v-text-field
           v-model="name"
           autocomplete="name"
@@ -17,7 +25,7 @@
           :error-messages="nameErrors"
           @input="$v.name.$touch()"
           @blur="$v.name.$touch()"
-        ></v-text-field>
+        />
         <v-text-field
           v-model="email"
           autocomplete="email"
@@ -28,7 +36,7 @@
           :error-messages="emailErrors"
           @input="$v.email.$touch()"
           @blur="$v.email.$touch()"
-        ></v-text-field>
+        />
         <v-textarea
           v-model="message"
           autocomplete="off"
@@ -38,7 +46,7 @@
           :error-messages="messageErrors"
           @input="$v.message.$touch()"
           @blur="$v.message.$touch()"
-        ></v-textarea>
+        />
         <vue-recaptcha
           v-if="isAvailable"
           ref="recaptcha"
@@ -46,9 +54,20 @@
           :sitekey="recaptchaKey"
           @expired="onExpired"
           @verify="onCaptchaVerify"
-        ></vue-recaptcha>
-        <v-btn :disabled="isSending || !isAvailable" color="primary" @click="onSubmit">Enviar</v-btn>
-        <v-btn :disabled="isSending || !isAvailable" @click="clearForm">Limpar</v-btn>
+        />
+        <v-btn
+          :disabled="isSending || !isAvailable"
+          color="primary"
+          @click="onSubmit"
+        >
+          Enviar
+        </v-btn>
+        <v-btn
+          :disabled="isSending || !isAvailable"
+          @click="clearForm"
+        >
+          Limpar
+        </v-btn>
       </v-form>
     </main>
   </section>
@@ -68,7 +87,17 @@ export default {
       import(/* webpackChunkName: "vue-recaptcha" */ 'vue-recaptcha')
   },
   mixins: [validationMixin],
-  data() {
+  async asyncData () {
+    // Esta página estará disponível somente se houver uma chave para o recaptcha
+    const isAvailable =
+      process.env &&
+      process.env.RECAPTCHA_KEY &&
+      process.env.CONTACT_MESSAGE_RELAY_URL
+    return {
+      isAvailable
+    }
+  },
+  data () {
     return {
       error: null,
       success: false,
@@ -80,10 +109,10 @@ export default {
     }
   },
   computed: {
-    recaptchaKey() {
+    recaptchaKey () {
       return process.env.RECAPTCHA_KEY
     },
-    nameErrors() {
+    nameErrors () {
       const errors = []
       if (!this.$v.name.$dirty) return errors
       !this.$v.name.maxLength &&
@@ -91,14 +120,14 @@ export default {
       !this.$v.name.required && errors.push('É necessário digitar um nome')
       return errors
     },
-    emailErrors() {
+    emailErrors () {
       const errors = []
       if (!this.$v.email.$dirty) return errors
       !this.$v.email.email && errors.push('E-mail inválido')
       !this.$v.email.required && errors.push('É necessário digitar um e-mail')
       return errors
     },
-    messageErrors() {
+    messageErrors () {
       const errors = []
       if (!this.$v.message.$dirty) return errors
       !this.$v.message.minLength && errors.push('Mensagem curta demais')
@@ -106,10 +135,10 @@ export default {
         errors.push('É necessário digitar uma mensagem')
       return errors
     },
-    alertType() {
+    alertType () {
       return this.error ? 'error' : 'success'
     },
-    alertText() {
+    alertText () {
       return this.error && this.error.message
         ? this.error.message
         : this.success
@@ -117,41 +146,15 @@ export default {
           : ''
     }
   },
-  async asyncData() {
-    // Esta página estará disponível somente se houver uma chave para o recaptcha
-    const isAvailable =
-      process.env &&
-      process.env.RECAPTCHA_KEY &&
-      process.env.CONTACT_MESSAGE_RELAY_URL
-    return {
-      isAvailable
-    }
-  },
-  mounted() {
+  mounted () {
     if (!this.isAvailable) {
       this.error = new ServerError(
         'Formulário indisponível, por-favor tente novamente mais tarde.'
       )
     }
   },
-  head() {
-    return {
-      title: 'Contato',
-      titleTemplate: 'xraM-Memory - %s',
-      script: [
-        {
-          type: 'text/javascript',
-          src:
-            'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit',
-          async: true,
-          defer: true,
-          body: false
-        }
-      ]
-    }
-  },
   methods: {
-    onCaptchaVerify(response) {
+    onCaptchaVerify (response) {
       this.isSending = true
       this.$axios
         .post(process.env.CONTACT_MESSAGE_RELAY_URL, {
@@ -179,10 +182,10 @@ export default {
           this.isSending = false
         })
     },
-    onExpired() {
+    onExpired () {
       this.$refs.recaptcha.reset()
     },
-    onSubmit() {
+    onSubmit () {
       if (this.$v.$invalid) {
         this.showValidationError()
       } else {
@@ -191,35 +194,49 @@ export default {
         this.$refs.recaptcha.execute()
       }
     },
-    resetSuccess() {
+    resetSuccess () {
       this.success = false
     },
-    showValidationError(message = 'Por-favor, corrija os erros abaixo:') {
+    showValidationError (message = 'Por-favor, corrija os erros abaixo:') {
       this.error = new ValidationError(message)
       this.$v.$touch()
     },
-    showUnavailabilityError() {
+    showUnavailabilityError () {
       this.error = new ServerError(
         'Formulário indisponível, por-favor tente novamente mais tarde.'
       )
       this.$v.$reset()
     },
-    showSuccess() {
+    showSuccess () {
       this.success = true
       this.$v.$reset()
       this.clearFields()
     },
-    clearFields() {
-      for (let fieldName of ['name', 'email', 'message']) {
-        this[fieldName] = ''
-      }
+    clearFields () {
+      ['name', 'email', 'message'].forEach(fieldName => { this[fieldName] = '' })
     },
-    clearForm() {
+    clearForm () {
       this.clearFields()
       this.$v.$reset()
       this.error = null
       this.success = false
       this.isSending = false
+    }
+  },
+  head () {
+    return {
+      title: 'Contato',
+      titleTemplate: 'xraM-Memory - %s',
+      script: [
+        {
+          type: 'text/javascript',
+          src:
+            'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit',
+          async: true,
+          defer: true,
+          body: false
+        }
+      ]
     }
   },
   validations: {

@@ -1,10 +1,20 @@
 <template>
   <section class="Page SubjectsPage">
     <template v-if="hasData">
-      <h1 class="offscreen">Assuntos</h1>
-      <section v-if="hasFeaturedSubjects" class="SubjectsPage__Featured">
+      <h1 class="offscreen">
+        Assuntos
+      </h1>
+      <section
+        v-if="hasFeaturedSubjects"
+        class="SubjectsPage__Featured"
+      >
         <header>
-          <Microtext tag="h2" arrow="down">Em destaque</Microtext>
+          <Microtext
+            tag="h2"
+            arrow="down"
+          >
+            Em destaque
+          </Microtext>
         </header>
         <div class="SubjectsList">
           <Card
@@ -14,9 +24,16 @@
             :item-link="linkFor(subject)"
             :label="labelFor(subject)"
           >
-            <h3 slot="title">{{titleFor(subject)}}</h3>
-            <Microtext slot="label">{{ labelFor(subject) }}</Microtext>
-            <img slot="image" :src="imageFor(subject)" />
+            <h3 slot="title">
+              {{ titleFor(subject) }}
+            </h3>
+            <Microtext slot="label">
+              {{ labelFor(subject) }}
+            </Microtext>
+            <img
+              slot="image"
+              :src="imageFor(subject)"
+            >
           </Card>
         </div>
       </section>
@@ -25,19 +42,35 @@
           :initial-selected-initial="initialSelectedInitial"
           :initial-subjects="initialSubjects"
           :initials="subjectInitials"
-        ></SubjectPicker>
+        />
       </section>
-      <section v-if="showTagCloud" class="SubjectsPage__TagCloud">
+      <section
+        v-if="showTagCloud"
+        class="SubjectsPage__TagCloud"
+      >
         <header>
-          <Microtext tag="h2" arrow="down">Nuvem de palavras-chave</Microtext>
+          <Microtext
+            tag="h2"
+            arrow="down"
+          >
+            Nuvem de palavras-chave
+          </Microtext>
         </header>
-        <HomeTagCloud :size-delta="32" :aggregations="tagCloudAggregations" />
+        <HomeTagCloud
+          :size-delta="32"
+          :aggregations="tagCloudAggregations"
+        />
       </section>
     </template>
     <template v-else>
       <section>
         <header>
-          <Microtext tag="h2" arrow="down">Sem dados</Microtext>
+          <Microtext
+            tag="h2"
+            arrow="down"
+          >
+            Sem dados
+          </Microtext>
         </header>
         <main>
           <p>Não existem assuntos para exibir no momento, por-favor, volte mais tarde.</p>
@@ -53,8 +86,8 @@ import Microtext from '~/components/common/Microtext'
 import SubjectPicker from '~/components/SubjectPicker'
 import Card from '~/components/common/Card'
 import { getMediaUrl } from '~/utils'
-const smartTruncate = require('smart-truncate')
 import { TAGCLOUD_NUM_KEYWORDS } from '~/config/constants'
+const smartTruncate = require('smart-truncate')
 
 export default {
   name: 'SubjectsPage',
@@ -64,36 +97,14 @@ export default {
     Card,
     SubjectPicker
   },
-  head: {
-    title: 'xraM-Memory - Assuntos'
-  },
-  data() {
-    return {
-      featuredSubjects: [],
-      subjectInitials: [],
-      initialSubjects: [],
-      tagCloudAggregations: []
-    }
-  },
-  computed: {
-    hasData() {
-      return this.subjectInitials.length || this.tagCloudAggregations.length
-    },
-    showTagCloud() {
-      return this.tagCloudAggregations.length
-    },
-    hasFeaturedSubjects() {
-      return this.featuredSubjects.length > 0
-    }
-  },
-  async asyncData({ $axios }) {
+  async asyncData ({ $axios }) {
     let featuredSubjects
     let subjectInitials
     let initialSubjects
     let initialSelectedInitial
     let tagCloudAggregations
     try {
-      subjectInitials = await $axios.$get(`api/v1/subjects/initials`)
+      subjectInitials = await $axios.$get('api/v1/subjects/initials')
       initialSelectedInitial = subjectInitials[0] || ''
       if (initialSelectedInitial) {
         initialSubjects = await $axios.$get(
@@ -116,7 +127,7 @@ export default {
     }
 
     try {
-      featuredSubjects = await $axios.$get(`api/v1/subjects/featured?limit=5`)
+      featuredSubjects = await $axios.$get('api/v1/subjects/featured?limit=5')
     } catch {
       featuredSubjects = []
     }
@@ -129,20 +140,39 @@ export default {
       tagCloudAggregations
     }
   },
+  data () {
+    return {
+      featuredSubjects: [],
+      subjectInitials: [],
+      initialSubjects: [],
+      tagCloudAggregations: []
+    }
+  },
+  computed: {
+    hasData () {
+      return this.subjectInitials.length || this.tagCloudAggregations.length
+    },
+    showTagCloud () {
+      return this.tagCloudAggregations.length
+    },
+    hasFeaturedSubjects () {
+      return this.featuredSubjects.length > 0
+    }
+  },
   methods: {
-    labelFor(item) {
+    labelFor (item) {
       return `${item.items_count} ${item.items_count > 1 ? 'itens' : 'item'}`
     },
-    imageFor(item) {
+    imageFor (item) {
       return getMediaUrl(item.cover)
     },
-    titleFor(item) {
+    titleFor (item) {
       return item.name
     },
-    teaserFor(item) {
+    teaserFor (item) {
       return smartTruncate(item.teaser, 180)
     },
-    linkFor(item) {
+    linkFor (item) {
       return {
         name: 'subject-slug',
         params: {
@@ -150,6 +180,9 @@ export default {
         }
       }
     }
+  },
+  head: {
+    title: 'xraM-Memory - Assuntos'
   }
 }
 </script>

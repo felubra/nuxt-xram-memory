@@ -16,7 +16,12 @@
             Infelizmente não temos uma visualização para este tipo de documento.
           </p>
           <p>
-            <a class="FileInfo_Button" download :href="documentOriginalURL" target="_blank">
+            <a
+              class="FileInfo_Button"
+              download
+              :href="documentOriginalURL"
+              target="_blank"
+            >
               <i class="material-icons">get_app</i>
               Baixar o arquivo
             </a>
@@ -28,42 +33,76 @@
     <aside class="FieldList">
       <header>
         <div class="microtext download-area">
-          <v-btn text download fab :href="documentOriginalURL" target="_blank">
+          <v-btn
+            text
+            download
+            fab
+            :href="documentOriginalURL"
+            target="_blank"
+          >
             <v-icon>mdi-download</v-icon>
           </v-btn>
           <Microtext>Baixar</Microtext>
         </div>
       </header>
 
-      <div v-if="documentHumanType" class="FieldList__Field">
-        <Microtext tag="h2">Tipo</Microtext>
-        <p>{{documentHumanType}}</p>
+      <div
+        v-if="documentHumanType"
+        class="FieldList__Field"
+      >
+        <Microtext tag="h2">
+          Tipo
+        </Microtext>
+        <p>{{ documentHumanType }}</p>
       </div>
-      <div v-if="documentSize" class="FieldList__Field">
-        <Microtext tag="h2">Tamanho</Microtext>
-        <p>{{documentSize}}</p>
+      <div
+        v-if="documentSize"
+        class="FieldList__Field"
+      >
+        <Microtext tag="h2">
+          Tamanho
+        </Microtext>
+        <p>{{ documentSize }}</p>
       </div>
-      <div v-if="documentUploadDate" class="FieldList__Field">
-        <Microtext tag="h2">Data de envio</Microtext>
-        <p>{{documentUploadDate}}</p>
+      <div
+        v-if="documentUploadDate"
+        class="FieldList__Field"
+      >
+        <Microtext tag="h2">
+          Data de envio
+        </Microtext>
+        <p>{{ documentUploadDate }}</p>
       </div>
 
-      <div v-if="document.description" class="FieldList__Field">
-        <Microtext tag="h2">Descrição</Microtext>
-        <p>{{document.description}}</p>
+      <div
+        v-if="document.description"
+        class="FieldList__Field"
+      >
+        <Microtext tag="h2">
+          Descrição
+        </Microtext>
+        <p>{{ document.description }}</p>
       </div>
 
-      <div v-if="newsRelated" class="FieldList__Field FileInfo__NewsRelated">
+      <div
+        v-if="newsRelated"
+        class="FieldList__Field FileInfo__NewsRelated"
+      >
         <h2>Notícias associadas</h2>
-        <p v-for="news in newsRelated" :key="news.slug">
+        <p
+          v-for="news in newsRelated"
+          :key="news.slug"
+        >
           <nuxt-link
             :to="{
-            name:'news-slug',
-            params: {
-              slug: news.slug
-            }
-          }"
-          >{{news.title}}</nuxt-link>
+              name:'news-slug',
+              params: {
+                slug: news.slug
+              }
+            }"
+          >
+            {{ news.title }}
+          </nuxt-link>
         </p>
       </div>
     </aside>
@@ -84,88 +123,7 @@ export default {
     DocumentViewer,
     BackButton
   },
-  data() {
-    return { document: {} }
-  },
-  head() {
-    return {
-      title: this.document.name,
-      titleTemplate: 'xraM-Memory - Documento: %s',
-      bodyAttrs: {
-        class: 'page--full-screen'
-      }
-    }
-  },
-  computed: {
-    documentIsPDF() {
-      return this.document.mime_type === 'application/pdf'
-    },
-    documentPages() {
-      if (this.documentIsPDF) {
-        try {
-          return this.document.pages.map((page, index, pages) => {
-            return {
-              src: getMediaUrl(page.thumbnails.document_preview),
-              thumbnailSrc: getMediaUrl(page.thumbnails.document_thumbnail),
-              description:
-                page.description || pages.length > 1
-                  ? `(página ${index + 1})`
-                  : '(capa)'
-            }
-          })
-        } catch {
-          return []
-        }
-      }
-      return [
-        {
-          src: getMediaUrl(this.document.canonical_url),
-          thumbnailSrc: getMediaUrl(this.document.thumbnails.thumbnail),
-          description: document.description || ''
-        }
-      ]
-    },
-    documentSize() {
-      try {
-        return humanSize(this.document.size)
-      } catch {
-        return '0KB'
-      }
-    },
-    documentOriginalURL() {
-      return getMediaUrl(this.document.canonical_url)
-    },
-    documentUploadDate() {
-      try {
-        const dateTime = dayJs(this.document.uploaded_at)
-        if (!dateTime.isValid()) {
-          throw new Error()
-        }
-        return dateTime.toDate().toLocaleDateString()
-      } catch {
-        return ''
-      }
-    },
-    documentHumanType() {
-      if (this.documentIsPDF) {
-        return this.isCapture ? 'Captura de notícia em PDF' : 'Documento PDF'
-      } else if (this.document.mime_type.includes('image/')) {
-        return this.isCapture ? 'Imagem de notícia' : 'Imagem'
-      } else {
-        return 'Documento'
-      }
-    },
-    canPreviewDocument() {
-      return (
-        this.document.mime_type === 'application/pdf' ||
-        this.document.mime_type.startsWith('image/')
-      )
-    },
-    newsRelated() {
-      return this.document.news_items.length && this.document.news_items
-    }
-  },
-  async asyncData({ $axios, route, error }) {
+  async asyncData ({ $axios, route, error }) {
     const documentId = route.params.document_id
     if (documentId) {
       try {
@@ -199,6 +157,87 @@ export default {
       }
     }
     return error({ statusCode: 400 })
+  },
+  data () {
+    return { document: {} }
+  },
+  computed: {
+    documentIsPDF () {
+      return this.document.mime_type === 'application/pdf'
+    },
+    documentPages () {
+      if (this.documentIsPDF) {
+        try {
+          return this.document.pages.map((page, index, pages) => {
+            return {
+              src: getMediaUrl(page.thumbnails.document_preview),
+              thumbnailSrc: getMediaUrl(page.thumbnails.document_thumbnail),
+              description:
+                page.description || pages.length > 1
+                  ? `(página ${index + 1})`
+                  : '(capa)'
+            }
+          })
+        } catch {
+          return []
+        }
+      }
+      return [
+        {
+          src: getMediaUrl(this.document.canonical_url),
+          thumbnailSrc: getMediaUrl(this.document.thumbnails.thumbnail),
+          description: document.description || ''
+        }
+      ]
+    },
+    documentSize () {
+      try {
+        return humanSize(this.document.size)
+      } catch {
+        return '0KB'
+      }
+    },
+    documentOriginalURL () {
+      return getMediaUrl(this.document.canonical_url)
+    },
+    documentUploadDate () {
+      try {
+        const dateTime = dayJs(this.document.uploaded_at)
+        if (!dateTime.isValid()) {
+          throw new Error()
+        }
+        return dateTime.toDate().toLocaleDateString()
+      } catch {
+        return ''
+      }
+    },
+    documentHumanType () {
+      if (this.documentIsPDF) {
+        return this.isCapture ? 'Captura de notícia em PDF' : 'Documento PDF'
+      } else if (this.document.mime_type.includes('image/')) {
+        return this.isCapture ? 'Imagem de notícia' : 'Imagem'
+      } else {
+        return 'Documento'
+      }
+    },
+    canPreviewDocument () {
+      return (
+        this.document.mime_type === 'application/pdf' ||
+        this.document.mime_type.startsWith('image/')
+      )
+    },
+    newsRelated () {
+      return this.document.news_items.length && this.document.news_items
+    }
+  },
+  head () {
+    return {
+      title: this.document.name,
+      titleTemplate: 'xraM-Memory - Documento: %s',
+      bodyAttrs: {
+        class: 'page--full-screen'
+      }
+    }
   }
 }
 </script>

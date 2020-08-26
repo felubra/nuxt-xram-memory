@@ -6,7 +6,9 @@
         &copy; 2019-20
         <strong>xraM-Memory</strong>
       </p>
-      <p class="version">Versão 0.5.6</p>
+      <p class="version">
+        Versão 0.5.6
+      </p>
       <p class="by">
         <a href="https://br.linkedin.com/in/felubra">Desenvolvido por Felipe Lube Bragança</a>
       </p>
@@ -15,7 +17,9 @@
           v-for="(page, index) in footerLinks"
           :key="index"
           :to="urlOrRoute(page)"
-        >{{page.title}}</nuxt-link>
+        >
+          {{ page.title }}
+        </nuxt-link>
       </div>
     </div>
   </footer>
@@ -30,7 +34,7 @@ export default {
     Logo
   },
   computed: {
-    footerLinks() {
+    footerLinks () {
       return this.pageLinks('menu-footer')
     },
     ...mapGetters(['pageLinks'])
@@ -80,7 +84,6 @@ export default {
   flex-direction: column;
   justify-content: center;
 }
-
 
 p.version, p.by {
   font-family: $sans-serif;

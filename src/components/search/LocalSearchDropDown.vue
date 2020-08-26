@@ -1,11 +1,15 @@
 <template>
-  <el-select v-model="state.filterState[fieldName]" :multiple="true" :collapse-tags="true">
+  <el-select
+    v-model="state.filterState[fieldName]"
+    :multiple="true"
+    :collapse-tags="true"
+  >
     <el-option
       v-for="option in state.filterDataSources[fieldName]"
       :key="option"
       :label="(labelFn && labelFn(option)) || option"
-      :value="option">
-    </el-option>
+      :value="option"
+    />
   </el-select>
 </template>
 
@@ -26,20 +30,20 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       options: []
     }
   },
   watch: {
-    options(v) {
+    options (v) {
       // remova uma seleção para uma opção que já não existe mais
       if (!v.includes(this.selected)) {
         this.selected = ''
       }
     }
   },
-  created() {
+  created () {
     // Fazer uma função para registrar o valor selecionado e os disponóveis
     this.registerFilter(this.fieldName)
   },

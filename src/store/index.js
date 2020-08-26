@@ -148,11 +148,11 @@ export const actions = {
   hideMenu: ({ commit }) => commit('hideMenu'),
   toggleSearch: ({ commit }) => commit('toggleSearch'),
   hideSearch: ({ commit }) => commit('hideSearch'),
-  async fetchPagesInMenu({ commit }) {
+  async fetchPagesInMenu ({ commit }) {
     const pagesInMenu = await this.$axios.$get('api/v1/pages/in_menu')
     commit('addPages', pagesInMenu)
   },
-  async fetchFeaturedPages({ commit }) {
+  async fetchFeaturedPages ({ commit }) {
     const featuredPages = await this.$axios.$get('api/v1/pages/featured')
     commit('addPages', featuredPages)
   }

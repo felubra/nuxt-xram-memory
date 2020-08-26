@@ -1,5 +1,10 @@
 <template>
-  <v-btn nuxt fab small @click="goBack()">
+  <v-btn
+    nuxt
+    fab
+    small
+    @click="goBack()"
+  >
     <v-icon>mdi-arrow-left</v-icon>
   </v-btn>
 </template>
@@ -8,7 +13,7 @@
 export default {
   name: 'BackButton',
   methods: {
-    goBack() {
+    goBack () {
       this.$router.go(-1)
     }
   }

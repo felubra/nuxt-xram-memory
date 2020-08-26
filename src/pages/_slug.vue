@@ -1,11 +1,11 @@
 <template>
   <Section class="Page CenteredPage">
     <header>
-      <Microtext>{{staticPage.teaser_text}}</Microtext>
-      <h1>{{staticPage.title}}</h1>
+      <Microtext>{{ staticPage.teaser_text }}</Microtext>
+      <h1>{{ staticPage.title }}</h1>
     </header>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <main v-html="theBody"></main>
+    <main v-html="theBody" />
   </Section>
 </template>
 <script>
@@ -18,21 +18,7 @@ export default {
   components: {
     Microtext
   },
-  head() {
-    return {
-      title: this.staticPage.title,
-      titleTemplate: 'xraM-Memory - %s'
-    }
-  },
-  data() {
-    return { staticPage: {} }
-  },
-  computed: {
-    theBody() {
-      return sanitize(this.staticPage.body)
-    }
-  },
-  async asyncData({ $axios, route, error }) {
+  async asyncData ({ $axios, route, error }) {
     const { slug } = route.params
     if (slug) {
       try {
@@ -44,6 +30,20 @@ export default {
       }
     }
     return error({ statusCode: 400 })
+  },
+  data () {
+    return { staticPage: {} }
+  },
+  computed: {
+    theBody () {
+      return sanitize(this.staticPage.body)
+    }
+  },
+  head () {
+    return {
+      title: this.staticPage.title,
+      titleTemplate: 'xraM-Memory - %s'
+    }
   }
 }
 </script>

@@ -6,7 +6,7 @@
       :options="getViewerOptions()"
       @inited="onViewerStarted"
     >
-      <template v-slot:default="{ images }">
+      <template>
         <img
           v-for="image in images"
           :key="image.src"
@@ -14,7 +14,7 @@
           class="hidden"
           :src="image.thumbnailSrc"
           :originalURL="image.src"
-        />
+        >
       </template>
     </Viewer>
   </div>
@@ -39,15 +39,15 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       visible: false
     }
   },
-  mounted() {
+  mounted () {
     window.addEventListener('orientationchange', this.orientationChange, false)
   },
-  beforeDestroy() {
+  beforeDestroy () {
     window.removeEventListener(
       'orientationchange',
       this.orientationChange,
@@ -58,7 +58,7 @@ export default {
     }
   },
   methods: {
-    orientationChange() {
+    orientationChange () {
       if (this.viewer) {
         if (Math.abs(window.orientation) === 90) {
           this.viewer.full()
@@ -67,14 +67,14 @@ export default {
         }
       }
     },
-    viewerReady() {
+    viewerReady () {
       this.visible = true
       this.orientationChange()
     },
-    onViewerStarted(viewer) {
+    onViewerStarted (viewer) {
       this.viewer = viewer
     },
-    getViewerOptions() {
+    getViewerOptions () {
       return {
         inline: true,
         navbar: true,

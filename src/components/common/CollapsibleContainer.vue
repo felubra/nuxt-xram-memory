@@ -1,20 +1,22 @@
 <template>
   <div class="CollapsibleContainer">
     <section :class="{'visible': visible}">
-      <slot></slot>
+      <slot />
     </section>
     <footer>
       <slot name="filterToggle">
         <Microtext class-name="ShowFilters">
-          <a href="#toggle" @click.prevent="toggleFilters">
+          <a
+            href="#toggle"
+            @click.prevent="toggleFilters"
+          >
             <i class="material-icons">filter_list</i>
-            {{visible ? 'Esconder filtros' : 'Mostrar filtros'}}
+            {{ visible ? 'Esconder filtros' : 'Mostrar filtros' }}
           </a>
         </Microtext>
       </slot>
     </footer>
   </div>
-
 </template>
 
 <script>
@@ -24,13 +26,13 @@ export default {
   components: {
     Microtext
   },
-  data() {
+  data () {
     return {
       visible: false
     }
   },
   methods: {
-    toggleFilters() {
+    toggleFilters () {
       this.visible = !this.visible
     }
   }

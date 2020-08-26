@@ -1,7 +1,11 @@
 <template>
   <div class="ResultStats">
-    <Microtext class-name="ResultsCounter" arrow="down" arrow-position="before">
-      {{resultStats}}
+    <Microtext
+      class-name="ResultsCounter"
+      arrow="down"
+      arrow-position="before"
+    >
+      {{ resultStats }}
     </Microtext>
   </div>
 </template>
@@ -24,7 +28,7 @@ export default {
     }
   },
   computed: {
-    resultStats() {
+    resultStats () {
       try {
         return `${this.totalResults} ${
           this.totalResults > 1 ? 'resultados' : 'resultado'

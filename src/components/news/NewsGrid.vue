@@ -1,6 +1,16 @@
 <template>
-  <div class="infinite-list-wrapper">
-    <transition-group v-if="hasItems" v-infinite-scroll="loadMore" :infinite-scroll-disabled="!infiniteScroll" class="NewsGrid" name="list-complete" tag="div" infinite-scroll-immediate-check="false">
+  <div
+    v-infinite-scroll="loadMore"
+    class="infinite-list-wrapper"
+    infinite-scroll-distance="10"
+    :infinite-scroll-disabled="!infiniteScroll"
+  >
+    <transition-group
+      v-if="hasItems"
+      class="NewsGrid"
+      name="list-complete"
+      tag="div"
+    >
       <Card
         v-for="item in itemsDisplayed"
         :key="idFor(item)"
@@ -11,10 +21,17 @@
         :teaser="teaserFor(item)"
         :title="titleFor(item)"
       >
-        <NewspaperInfo v-if="newspaperFor(item)" slot="footer" :newspaper="newspaperFor(item)" />
+        <NewspaperInfo
+          v-if="newspaperFor(item)"
+          slot="footer"
+          :newspaper="newspaperFor(item)"
+        />
       </Card>
     </transition-group>
-    <slot v-else name="empty">
+    <slot
+      v-else
+      name="empty"
+    >
       Sem dados.
     </slot>
   </div>
@@ -54,23 +71,23 @@ export default {
     infiniteScollStepItems: {
       type: Number,
       default: 10,
-      validator(value) {
+      validator (value) {
         return value && Number.isInteger(value) && value > 0
       }
     }
   },
-  data: function() {
+  data: function () {
     return {
       maxItemsDisplayed: 0
     }
   },
   computed: {
-    itemsDisplayed() {
+    itemsDisplayed () {
       return this.infiniteScroll
         ? this.items.slice(0, this.maxItemsDisplayed)
         : this.items
     },
-    hasItems() {
+    hasItems () {
       return this.items.length > 0
     }
   },
@@ -78,29 +95,29 @@ export default {
     items: {
       deep: true,
       immediate: true,
-      handler() {
+      handler () {
         // quando os items forem carregados, (re)inicie o número máximo de items exibidos
         this.maxItemsDisplayed = this.infiniteScollStepItems
       }
     }
   },
   methods: {
-    loadMore() {
+    loadMore () {
       this.maxItemsDisplayed =
         this.maxItemsDisplayed + this.infiniteScollStepItems
     },
-    idFor(item) {
+    idFor (item) {
       const type = this.typeFor(item)
       return type + item.id
     },
-    labelFor(item) {
+    labelFor (item) {
       const values = [
         CONTENT_TYPE_LABELS[this.typeFor(item)],
         this.dateFor(item)
       ]
       return values.filter(value => value).join(' - ')
     },
-    dateFor(item) {
+    dateFor (item) {
       try {
         const dateTime = dayJs(item.published_date)
         if (!dateTime.isValid()) {
@@ -111,7 +128,7 @@ export default {
         return ''
       }
     },
-    typeFor(item) {
+    typeFor (item) {
       try {
         let value = item.type || ''
         if (
@@ -126,7 +143,7 @@ export default {
         return ''
       }
     },
-    newspaperFor(item) {
+    newspaperFor (item) {
       try {
         if (item.newspaper) {
           return {
@@ -137,11 +154,10 @@ export default {
         }
         return null
       } catch {
-        debugger
         return null
       }
     },
-    imageFor(item) {
+    imageFor (item) {
       switch (this.typeFor(item)) {
         case IMAGE:
         case DOCUMENT: {
@@ -159,7 +175,7 @@ export default {
         }
       }
     },
-    titleFor(item) {
+    titleFor (item) {
       switch (this.typeFor(item)) {
         case IMAGE:
         case DOCUMENT: {
@@ -170,10 +186,10 @@ export default {
         }
       }
     },
-    teaserFor(item) {
+    teaserFor (item) {
       return smartTruncate(item.teaser, 180)
     },
-    linkFor(item) {
+    linkFor (item) {
       switch (this.typeFor(item)) {
         case IMAGE:
         case DOCUMENT: {

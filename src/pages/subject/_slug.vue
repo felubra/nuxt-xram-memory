@@ -2,16 +2,24 @@
   <section class="Page SubjectPage">
     <section class="SubjectInfo">
       <header>
-        <Microtext arrow="down">Assunto</Microtext>
-        <h1>{{subject.name}}</h1>
+        <Microtext arrow="down">
+          Assunto
+        </Microtext>
+        <h1>{{ subject.name }}</h1>
       </header>
-      <section v-if="description" class="Subject__Description">
+      <section
+        v-if="description"
+        class="Subject__Description"
+      >
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div v-html="description"></div>
+        <div v-html="description" />
       </section>
     </section>
     <section class="SubjectItems">
-      <NewsGrid id="SubjectsMasonryGrid" :items="subjectItems"></NewsGrid>
+      <NewsGrid
+        id="SubjectsMasonryGrid"
+        :items="subjectItems"
+      />
     </section>
   </section>
 </template>
@@ -27,27 +35,7 @@ export default {
     Microtext,
     NewsGrid
   },
-  data() {
-    return {
-      subject: {},
-      subjectItems: []
-    }
-  },
-  head() {
-    return {
-      title: this.subject.name,
-      titleTemplate: 'xraM-Memory - Assunto: %s'
-    }
-  },
-  computed: {
-    description() {
-      return sanitize(this.subject.description)
-    },
-    cover() {
-      return getMediaUrl(this.subject.big_cover)
-    }
-  },
-  async asyncData({ $axios, route, error }) {
+  async asyncData ({ $axios, route, error }) {
     const { slug } = route.params
     if (slug) {
       try {
@@ -60,6 +48,26 @@ export default {
       }
     }
     return error({ statusCode: 400 })
+  },
+  data () {
+    return {
+      subject: {},
+      subjectItems: []
+    }
+  },
+  computed: {
+    description () {
+      return sanitize(this.subject.description)
+    },
+    cover () {
+      return getMediaUrl(this.subject.big_cover)
+    }
+  },
+  head () {
+    return {
+      title: this.subject.name,
+      titleTemplate: 'xraM-Memory - Assunto: %s'
+    }
   }
 }
 </script>
@@ -74,7 +82,6 @@ export default {
   margin: 0 auto;
 }
 </style>
-
 
 <style lang="stylus" scoped >
 section > header, section > section, section > main {

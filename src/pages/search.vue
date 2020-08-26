@@ -1,65 +1,95 @@
 <template>
-
-    <client-only>
-      <LocalSearchBase
-        v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
-        class="Page SearchPage"
-        :initial-state="initialState"
-        :index-u-r-l="$config.lunrIndexUrl">
-        <transition appear name="fade" mode="out-in">
-          <div v-if="hasError">
-            <section class="CenteredPage">
-              <header>
-                <Microtext tag="h2" arrow="down">Sem dados</Microtext>
-              </header>
-              <main>
-                <p>Desculpe-nos, mas a pesquisa não está disponível no momento. Por-favor, volte mais tarde.</p>
-              </main>
-            </section>
+  <client-only>
+    <LocalSearchBase
+      v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
+      class="Page SearchPage"
+      :initial-state="initialState"
+      :index-u-r-l="$config.lunrIndexUrl"
+    >
+      <transition
+        appear
+        name="fade"
+        mode="out-in"
+      >
+        <div v-if="hasError">
+          <section class="CenteredPage">
+            <header>
+              <Microtext
+                tag="h2"
+                arrow="down"
+              >
+                Sem dados
+              </Microtext>
+            </header>
+            <main>
+              <p>Desculpe-nos, mas a pesquisa não está disponível no momento. Por-favor, volte mais tarde.</p>
+            </main>
+          </section>
+        </div>
+        <div
+          v-else
+          key="loaded"
+        >
+          <div class="SearchBar">
+            <LocalSearchInput
+              component-id="query"
+              placeholder="Pesquisar no acervo"
+            >
+              <template v-slot:suffix>
+                <i class="material-icons">search</i>
+              </template>
+            </LocalSearchInput>
           </div>
-          <div v-else key="loaded" >
-              <div class="SearchBar">
-                <LocalSearchInput component-id="query" placeholder="Pesquisar no acervo" >
-                  <template v-slot:suffix>
-                    <i class="material-icons">search</i>
-                  </template>
-                </LocalSearchInput>
-              </div>
 
-              <CollapsibleContainer class="Filters">
-                <div class="Filter">
-                  <label for="typeFilter"><Microtext>Tipo</Microtext></label>
-                  <LocalSearchDropDown :label-fn="getLabelForType" field-name="type" component-id="typeFilter" />
-                </div>
-                <div class="Filter">
-                  <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
-                  <LocalSearchDropDown field-name="newspaper.title" component-id="newspaperFilter" />
-                </div>
-                <div class="Filter">
-                  <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
-                  <LocalSearchDropDown field-name="keywords" component-id="keywordsFilter" />
-                </div>
-                <div class="Filter">
-                  <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
-                  <LocalSearchDropDown field-name="subjects" component-id="subjectsFilter" />
-                </div>
-              </CollapsibleContainer>
-
-            <div>
-              <ResultStats :time="lastSearchTime" :total-results="resultCount" />
+          <CollapsibleContainer class="Filters">
+            <div class="Filter">
+              <label for="typeFilter"><Microtext>Tipo</Microtext></label>
+              <LocalSearchDropDown
+                :label-fn="getLabelForType"
+                field-name="type"
+                component-id="typeFilter"
+              />
             </div>
-            <NewsGrid
-              v-loading="isLoading"
-              class="NewsGrid"
-              :items='searchResults'
-              element-loading-text="Carregando..."
-              element-loading-background="transparent"
+            <div class="Filter">
+              <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
+              <LocalSearchDropDown
+                field-name="newspaper.title"
+                component-id="newspaperFilter"
+              />
+            </div>
+            <div class="Filter">
+              <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
+              <LocalSearchDropDown
+                field-name="keywords"
+                component-id="keywordsFilter"
+              />
+            </div>
+            <div class="Filter">
+              <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
+              <LocalSearchDropDown
+                field-name="subjects"
+                component-id="subjectsFilter"
+              />
+            </div>
+          </CollapsibleContainer>
+
+          <div>
+            <ResultStats
+              :time="lastSearchTime"
+              :total-results="resultCount"
             />
           </div>
-        </transition>
-      </LocalSearchBase>
-    </client-only>
-
+          <NewsGrid
+            v-loading="isLoading"
+            class="NewsGrid"
+            :items="searchResults"
+            element-loading-text="Carregando..."
+            element-loading-background="transparent"
+          />
+        </div>
+      </transition>
+    </LocalSearchBase>
+  </client-only>
 </template>
 
 <script>
@@ -81,12 +111,7 @@ export default {
     ResultStats,
     CollapsibleContainer
   },
-  data() {
-    return {
-      initialState: {}
-    }
-  },
-  asyncData({ route }) {
+  asyncData ({ route }) {
     return {
       initialState: {
         filterState: route.query,
@@ -96,8 +121,13 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      initialState: {}
+    }
+  },
   methods: {
-    getLabelForType(machineName) {
+    getLabelForType (machineName) {
       try {
         return CONTENT_TYPE_LABELS[machineName]
       } catch {
@@ -164,7 +194,6 @@ export default {
 .Filter .el-input.el-input--suffix > input {
   padding-left: .5rem;
 }
-
 
 .Filter div.el-select__tags > input {
   margin-left: .5rem;

@@ -1,7 +1,12 @@
 <template>
   <div class="NavbarControls">
-    <a id="Navbar__MenuToggle" class="Navbar__Item" href="#main-menu" @click.prevent="toggleMenu">
-      <i class="material-icons">{{closeIcon}}</i>
+    <a
+      id="Navbar__MenuToggle"
+      class="Navbar__Item"
+      href="#main-menu"
+      @click.prevent="toggleMenu"
+    >
+      <i class="material-icons">{{ closeIcon }}</i>
     </a>
     <nuxt-link
       v-for="(page, index) in pageLinks('menu-controls')"
@@ -9,7 +14,7 @@
       class="Navbar__Item"
       :to="urlOrRoute(page)"
     >
-      <i class="material-icons">{{page.icon}}</i>
+      <i class="material-icons">{{ page.icon }}</i>
     </nuxt-link>
   </div>
 </template>
@@ -20,7 +25,7 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
   name: 'NavbarControls',
   computed: {
-    closeIcon() {
+    closeIcon () {
       return this.menuVisible ? 'close' : 'menu'
     },
     ...mapGetters(['pageLinks']),

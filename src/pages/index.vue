@@ -1,37 +1,46 @@
 <template>
   <div class="Page PageIndex">
-      <h1 class="offscreen">Início</h1>
-      <Logo class="Home__Logo" :big="true" />
+    <h1 class="offscreen">
+      Início
+    </h1>
+    <Logo
+      class="Home__Logo"
+      :big="true"
+    />
 
-      <el-input
+    <el-input
       v-model="searchQuery"
       class="SearchBar"
       type="text"
       placeholder="Pesquisar no acervo"
-      @change="handleSearch" >
-        <template v-slot:suffix>
-          <nuxt-link
-            :to="{
-              name: 'search',
-              query: {
-                text: searchQuery
-              }
-            }"
-          >
+      @change="handleSearch"
+    >
+      <template v-slot:suffix>
+        <nuxt-link
+          :to="{
+            name: 'search',
+            query: {
+              text: searchQuery
+            }
+          }"
+        >
           <i class="material-icons">search</i>
-          </nuxt-link>
-        </template>
-      </el-input>
+        </nuxt-link>
+      </template>
+    </el-input>
 
-      <TeaserBlock
-        v-if="featuredPage"
-        link-position="center"
-        class="FeaturedPage"
-        :page-item="featuredPage"
-      ></TeaserBlock>
+    <TeaserBlock
+      v-if="featuredPage"
+      link-position="center"
+      class="FeaturedPage"
+      :page-item="featuredPage"
+    />
 
-      <HomeTagCloud :aggregations="tagCloudAggregations" class="HomeTagCloud" />
-</div>
+    <HomeTagCloud
+      :aggregations="tagCloudAggregations"
+      class="HomeTagCloud"
+    />
+  </div>
 </template>
 
 <script>
@@ -48,25 +57,14 @@ export default {
     TeaserBlock,
     Logo
   },
-  data() {
-    return {
-      searchQuery: '',
-      tagCloudAggregations: []
+  async fetch ({ store }) {
+    if (store.getters.featuredPages.length === 0) {
+      try {
+        await store.dispatch('fetchFeaturedPages')
+      } catch {} // eslint-disable-line no-empty
     }
   },
-  head: {
-    title: 'xraM-Memory',
-    bodyAttrs: {
-      class: 'page--index'
-    }
-  },
-  computed: {
-    ...mapGetters(['featuredPages']),
-    featuredPage() {
-      return this.featuredPages.length > 0 && this.featuredPages[0]
-    }
-  },
-  async asyncData({ $axios }) {
+  async asyncData ({ $axios }) {
     try {
       const tagCloudAggregations = await $axios.$get(
         `/api/v1/keywords/top?max=${TAGCLOUD_NUM_KEYWORDS}`
@@ -80,15 +78,20 @@ export default {
       }
     }
   },
-  async fetch({ store }) {
-    if (store.getters.featuredPages.length === 0) {
-      try {
-        await store.dispatch('fetchFeaturedPages')
-      } catch {} //eslint-disable-line no-empty
+  data () {
+    return {
+      searchQuery: '',
+      tagCloudAggregations: []
+    }
+  },
+  computed: {
+    ...mapGetters(['featuredPages']),
+    featuredPage () {
+      return this.featuredPages.length > 0 && this.featuredPages[0]
     }
   },
   methods: {
-    handleSearch(searchQuery) {
+    handleSearch (searchQuery) {
       if (searchQuery && searchQuery.trim()) {
         this.$router.push({
           name: 'search',
@@ -97,6 +100,12 @@ export default {
           }
         })
       }
+    }
+  },
+  head: {
+    title: 'xraM-Memory',
+    bodyAttrs: {
+      class: 'page--index'
     }
   }
 }
@@ -132,8 +141,6 @@ export default {
   order: 2;
   margin-top: 17vh;
 }
-
-
 
 @media only screen and (min-width: 768px) {
   .PageIndex {

@@ -1,13 +1,21 @@
 <template>
   <nav class="Navbar">
-    <Logo v-if="showLogo !== false" :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`" />
-    <div v-dragscroll.x="true" class="main-itens">
+    <Logo
+      v-if="showLogo !== false"
+      :class="`Navbar__Logo Navbar__Logo--display-${showLogo}`"
+    />
+    <div
+      v-dragscroll.x="true"
+      class="main-itens"
+    >
       <nuxt-link
         v-for="(page, index) in pageLinks()"
         :key="index"
         class="Navbar__Item"
         :to="urlOrRoute(page)"
-      >{{page.title}}</nuxt-link>
+      >
+        {{ page.title }}
+      </nuxt-link>
     </div>
     <NavbarControls />
   </nav>
@@ -33,10 +41,10 @@ export default {
     showLogo: {
       type: [String, Boolean],
       default: 'auto',
-      validator(value) {
+      validator (value) {
         return [
-          true, //exiba o logotipo sempre
-          false, //esconda o logotipo sempre
+          true, // exiba o logotipo sempre
+          false, // esconda o logotipo sempre
           'auto', // mostre o logotipo se houver espaço
           'mobile', // sempre mostre o logo apenas em mobile
           'desktop' // sempre mostre o logo em desktop
@@ -44,7 +52,7 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       searchInput: '',
       isMenuItensObfuscated: false,
@@ -55,7 +63,7 @@ export default {
     ...mapGetters(['pageLinks'])
   },
   methods: {
-    menuToggle() {
+    menuToggle () {
       this.toggleMenu()
     },
 

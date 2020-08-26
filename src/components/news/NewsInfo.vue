@@ -1,33 +1,64 @@
 <template>
   <div class="NewsInfo FieldList">
-    <div v-if="teaser" class="FieldList__Field">
+    <div
+      v-if="teaser"
+      class="FieldList__Field"
+    >
       <h2>Resumo da notícia</h2>
-      <p class="NewsInfo__Teaser">{{teaser}}</p>
+      <p class="NewsInfo__Teaser">
+        {{ teaser }}
+      </p>
     </div>
-    <div v-if="url" class="FieldList__Field">
+    <div
+      v-if="url"
+      class="FieldList__Field"
+    >
       <h2>Endereço original</h2>
       <p>
-        <a :href="url.url" target="_blank">{{url.url}}</a>
+        <a
+          :href="url.url"
+          target="_blank"
+        >{{ url.url }}</a>
       </p>
     </div>
-    <div v-if="archivedUrl" class="FieldList__Field">
+    <div
+      v-if="archivedUrl"
+      class="FieldList__Field"
+    >
       <h2>Versão arquivada</h2>
       <p>
-        <a :href="archivedUrl.url" target="_blank">{{archivedUrl.url}}</a>
+        <a
+          :href="archivedUrl.url"
+          target="_blank"
+        >{{ archivedUrl.url }}</a>
       </p>
     </div>
-    <div v-if="newspaper" class="FieldList__Field">
+    <div
+      v-if="newspaper"
+      class="FieldList__Field"
+    >
       <h2>Site / veículo</h2>
       <p>
-        <a class="NewsInfo__Newspaper" :href="newspaper.url" target="_blank">
-          <img v-if="newspaperIcon" :src="newspaperIcon" alt />
-          {{newspaper.title}}
+        <a
+          class="NewsInfo__Newspaper"
+          :href="newspaper.url"
+          target="_blank"
+        >
+          <img
+            v-if="newspaperIcon"
+            :src="newspaperIcon"
+            alt
+          >
+          {{ newspaper.title }}
         </a>
       </p>
     </div>
-    <div v-if="published_date" class="FieldList__Field">
+    <div
+      v-if="published_date"
+      class="FieldList__Field"
+    >
       <h2>Data de publicação</h2>
-      <p>{{published_date}}</p>
+      <p>{{ published_date }}</p>
     </div>
     <div
       v-if="pdf_captures.length"
@@ -39,11 +70,11 @@
         :key="capture.url"
         class="NewsInfo__PDFCapture"
         :to="{
-            name: 'document-document_id',
-            params: {
-              document_id: capture.document_id
-            },
-          }"
+          name: 'document-document_id',
+          params: {
+            document_id: capture.document_id
+          },
+        }"
       >
         <v-img
           :key="capture.url"
@@ -55,21 +86,34 @@
           :contain="false"
           @error="changeImagePlaceholder"
         >
-          <template v-slot:placeholder class="image-slot">
+          <template
+            v-slot:placeholder
+            class="image-slot"
+          >
             <div class="image-slot">
               <v-icon>download</v-icon>
-              <Microtext>{{imagePlaceholder}}</Microtext>
+              <Microtext>{{ imagePlaceholder }}</Microtext>
             </div>
           </template>
         </v-img>
-        <Microtext tag="p">{{capture.title}}</Microtext>
+        <Microtext tag="p">
+          {{ capture.title }}
+        </Microtext>
       </nuxt-link>
     </div>
-    <div v-if="subjects.length" class="FieldList__Field">
+    <div
+      v-if="subjects.length"
+      class="FieldList__Field"
+    >
       <h2>Assuntos</h2>
       <ul class="taxonomy-list">
-        <li v-for="subject in subjects" :key="subject.slug">
-          <nuxt-link :to="{name:'subject-slug', params:{ slug: subject.slug} }">{{subject.name}}</nuxt-link>
+        <li
+          v-for="subject in subjects"
+          :key="subject.slug"
+        >
+          <nuxt-link :to="{name:'subject-slug', params:{ slug: subject.slug} }">
+            {{ subject.name }}
+          </nuxt-link>
         </li>
       </ul>
     </div>
@@ -77,11 +121,11 @@
 </template>
 
 <script>
+import { getMediaUrl } from '@/utils'
+import Microtext from '@/components/common/Microtext'
 const smartTruncate = require('smart-truncate')
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
-import { getMediaUrl } from '@/utils'
-import Microtext from '@/components/common/Microtext'
 export default {
   name: 'NewsInfo',
   components: {
@@ -90,22 +134,22 @@ export default {
   props: {
     newsItem: {
       type: Object,
-      default: function() {
+      default: function () {
         return {}
       }
     }
   },
-  data() {
+  data () {
     return {
       documents: [],
       imagePlaceholder: 'Carregando...'
     }
   },
   computed: {
-    teaser() {
+    teaser () {
       return this.newsItem.teaser
     },
-    keywords() {
+    keywords () {
       try {
         return (
           this.newsItem.keywords &&
@@ -116,7 +160,7 @@ export default {
         return []
       }
     },
-    subjects() {
+    subjects () {
       try {
         return (
           this.newsItem.subjects &&
@@ -127,7 +171,7 @@ export default {
         return []
       }
     },
-    pdf_captures() {
+    pdf_captures () {
       try {
         return (
           this.newsItem.pdf_captures &&
@@ -142,7 +186,7 @@ export default {
         return []
       }
     },
-    published_date() {
+    published_date () {
       try {
         const [time, date] = this.newsItem.published_date && [
           new Date(this.newsItem.published_date).toLocaleTimeString(),
@@ -153,7 +197,7 @@ export default {
         return ''
       }
     },
-    newspaper() {
+    newspaper () {
       try {
         return (
           this.newsItem.newspaper &&
@@ -167,14 +211,14 @@ export default {
         return ''
       }
     },
-    newspaperIcon() {
+    newspaperIcon () {
       try {
         return getMediaUrl(this.newsItem.newspaper.favicon_logo)
       } catch (e) {
         return ''
       }
     },
-    url() {
+    url () {
       try {
         return {
           url: this.newsItem.url,
@@ -184,7 +228,7 @@ export default {
         return ''
       }
     },
-    archivedUrl() {
+    archivedUrl () {
       try {
         if (this.newsItem.archived_news_url) {
           return {
@@ -203,30 +247,30 @@ export default {
   watch: {
     pdf_captures: {
       immediate: true,
-      handler() {
+      handler () {
         this.getDocumentsInfo()
       }
     }
   },
   methods: {
-    changeImagePlaceholder() {
+    changeImagePlaceholder () {
       this.imagePlaceholder = 'Falha ao carregar a imagem.'
     },
-    captureNameAndSize(capture) {
-      let title = {}
+    captureNameAndSize (capture) {
+      const title = {}
       try {
         const dateTime = dayJs(capture.pdf_capture_date)
         if (!dateTime.isValid()) {
           throw new Error()
         }
-        title['date'] = dateTime.toDate().toLocaleDateString()
+        title.date = dateTime.toDate().toLocaleDateString()
       } catch {
         // não adicione
       }
 
       try {
         const size = humanSize(parseInt(capture.pdf_document.size, 10))
-        title['size'] = size
+        title.size = size
       } catch {
         // não adicione
       }
@@ -234,7 +278,7 @@ export default {
         title.size ? `(${title.size})` : ''
       }`
     },
-    getDocumentsInfo() {
+    getDocumentsInfo () {
       Promise.all(
         this.pdf_captures.map(capture => {
           return this.$axios
@@ -249,10 +293,10 @@ export default {
         })
         .catch(() => (this.documents = []))
     },
-    thumbnailForDocument(document_id) {
+    thumbnailForDocument (documentId) {
       try {
         return getMediaUrl(
-          this.documents.find(document => document.document_id === document_id)
+          this.documents.find(document => document.document_id === documentId)
             .thumbnails.document_thumbnail
         )
       } catch {

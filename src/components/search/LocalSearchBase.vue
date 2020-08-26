@@ -198,11 +198,11 @@ export default {
      * Limpa todos o estado dos componentes de busca.
      */
     clear () {
-      for (const collection of [this.searchState, this.filterState]) {
-        for (const key in collection) {
+      [this.searchState, this.filterState].forEach(collection => {
+        collection.forEach(key => {
           this.$set(collection, key, null)
-        }
-      }
+        })
+      })
     }
   },
   provide () {

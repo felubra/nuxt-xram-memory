@@ -1,6 +1,6 @@
 import { setupCache } from 'axios-cache-adapter'
 
-export default function({ $axios }) {
+export default function ({ $axios }) {
   const cache = setupCache({
     maxAge: 15 * 60 * 1000
   })

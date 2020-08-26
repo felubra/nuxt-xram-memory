@@ -1,5 +1,5 @@
 const xss = require('xss')
-export const getMediaUrl = function(path) {
+export const getMediaUrl = function (path) {
   const mediaUrl = process.env.MEDIA_URL
   if (!path) {
     return
@@ -57,7 +57,7 @@ const xssFilterFactory = (allowedClasses = null, whiteList = null) => {
     whiteList: wl,
     stripIgnoreTag: true,
     stripIgnoreTagBody: true,
-    onTagAttr(tag, name, value, isWhiteAttr) {
+    onTagAttr (tag, name, value, isWhiteAttr) {
       // Permita somente classes em allowedClasses
       if (isWhiteAttr && name === 'class') {
         let classes = value.split(' ')
@@ -92,7 +92,7 @@ const allowQuillClasses = classes =>
 export const appClassesXSSFilter = xssFilterFactory(allowQuillClasses)
 
 export const innerInputFocus = {
-  inserted: function(el) {
+  inserted: function (el) {
     el.querySelector('input').focus()
   }
 }
@@ -110,11 +110,11 @@ export const urlOrRoute = item => {
   return typeof item.url === 'object'
     ? item.url
     : {
-        name: 'slug',
-        params: {
-          slug: sanitize(item.url)
-        }
+      name: 'slug',
+      params: {
+        slug: sanitize(item.url)
       }
+    }
 }
 
 /**

@@ -5,20 +5,20 @@ export default Vue.component('Microtext', {
     tag: {
       type: String,
       default: () => 'p',
-      validator(value) {
+      validator (value) {
         return ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'].includes(value)
       }
     },
     arrow: {
       type: String,
-      validator(value) {
+      validator (value) {
         return ['right', 'up', 'down', 'left', 'none'].includes(value)
       },
       default: 'none'
     },
     arrowPosition: {
       type: String,
-      validator(value) {
+      validator (value) {
         return ['before', 'after'].includes(value)
       },
       default: 'after'
@@ -28,7 +28,7 @@ export default Vue.component('Microtext', {
       default: ''
     }
   },
-  render(createElement, context) {
+  render (createElement, context) {
     const { arrow } = context.props
     const { arrowPosition } = context.props
     const additionalClasses =

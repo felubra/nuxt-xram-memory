@@ -15,7 +15,7 @@ const obj = new Vue({
     registeredFilters: []
   },
   computed: {
-    unfilteredSearchResults() {
+    unfilteredSearchResults () {
       try {
         if (this.searchQuery) {
           return Object.freeze(this.index.search(this.searchQuery)).map(
@@ -32,7 +32,7 @@ const obj = new Vue({
     /**
      * Todos os documentos indexados.
      */
-    allDocuments() {
+    allDocuments () {
       try {
         return Object.values(this.index.documentStore.docs)
       } catch {
@@ -42,7 +42,7 @@ const obj = new Vue({
     /**
      * Para cada filtro registrado, retorna os valores disponíveis de acordo com a pesquisa atual.
      */
-    filterDataSources() {
+    filterDataSources () {
       return this.registeredFilters.reduce((filtersData, fieldName) => {
         filtersData[fieldName] = Array.from(
           new Set(
@@ -60,7 +60,7 @@ const obj = new Vue({
     /**
      * Retorna objeto com os filtros que tem algum valor selecionado.
      */
-    selectedFilters() {
+    selectedFilters () {
       return Object.freeze(
         Object.entries(this.filterState).reduce((selected, [key, value]) => {
           if (!isEmpty(value)) {
@@ -73,7 +73,7 @@ const obj = new Vue({
     /**
      * Os resultados de busca filtrados de acordo com o valor nos filtros selecionados.
      */
-    searchResults() {
+    searchResults () {
       try {
         return Object.freeze(
           matchArray(this.unfilteredSearchResults, this.selectedFilters)
@@ -85,7 +85,7 @@ const obj = new Vue({
     /**
      * O valor do texto de busca, concatenado de todos os componentes de busca full-text.
      */
-    searchQuery() {
+    searchQuery () {
       try {
         const values = Object.values(this.searchState)
         return (values.length && values.join(' ')) || ''
@@ -94,7 +94,7 @@ const obj = new Vue({
       }
     }
   },
-  created() {
+  created () {
     // dê suporte à linguagem portuguesa no elasticlunr
     require('lunr-languages/lunr.stemmer.support')(lunr)
     require('lunr-languages/lunr.pt')(lunr)
@@ -103,13 +103,13 @@ const obj = new Vue({
     lunr.Pipeline.registerFunction(replaceDiacritics, 'replaceDiacritics')
   },
   methods: {
-    setFilterState(filterState) {
+    setFilterState (filterState) {
       this.filterState = filterState
     },
-    setSearchState(searchState) {
+    setSearchState (searchState) {
       this.searchState = searchState
     },
-    load(serializedIndex) {
+    load (serializedIndex) {
       this.index = Object.freeze(lunr.Index.load(serializedIndex))
     }
   }

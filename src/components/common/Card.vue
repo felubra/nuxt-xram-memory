@@ -3,19 +3,38 @@
     <slot>
       <nuxt-link :to="itemLink">
         <slot name="image">
-          <img :key="imageSrc" width="250" height="250" class="ImageFilePreview__OriginalImage" :src="imageSrc" @error="removeImage" />
+          <img
+            :key="imageSrc"
+            width="250"
+            height="250"
+            class="ImageFilePreview__OriginalImage"
+            :src="imageSrc"
+            @error="removeImage"
+          >
         </slot>
         <slot name="label">
-          <Microtext v-if="label" class-name="label">{{label}}</Microtext>
+          <Microtext
+            v-if="label"
+            class-name="label"
+          >
+            {{ label }}
+          </Microtext>
         </slot>
         <slot name="title">
-          <h3 v-if="title">{{title}}</h3>
+          <h3 v-if="title">
+            {{ title }}
+          </h3>
         </slot>
         <slot name="teaser">
-          <p v-if="teaser" class="teaser">{{teaser}}</p>
+          <p
+            v-if="teaser"
+            class="teaser"
+          >
+            {{ teaser }}
+          </p>
         </slot>
       </nuxt-link>
-      <slot name="footer"></slot>
+      <slot name="footer" />
     </slot>
   </div>
 </template>
@@ -47,7 +66,7 @@ export default {
     }
   },
   computed: {
-    imageSrc() {
+    imageSrc () {
       try {
         if (this.image.startsWith('/')) {
           return sanitizeOnlyText(getMediaUrl(this.image))
@@ -59,7 +78,7 @@ export default {
     }
   },
   methods: {
-    removeImage(e) {
+    removeImage (e) {
       e.target.remove()
     }
   }

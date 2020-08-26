@@ -1,6 +1,6 @@
 <template>
   <div class="D3TagCloud">
-    <resize-sensor @resize="resize"></resize-sensor>
+    <resize-sensor @resize="resize" />
     <transition-group
       ref="Cloud"
       xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,9 @@
               font-family: 'Vollkorn';
               text-anchor: middle; transform: translate(${d.x}px, ${d.y}px) rotate(${d.rotate}deg);
             `"
-          >{{d.text}}</text>
+          >
+            {{ d.text }}
+          </text>
         </nuxt-link>
       </g>
     </transition-group>
@@ -65,7 +67,7 @@ export default {
       default: TAGCLOUD_KEYWORD_HIGHKEY_COLOR
     }
   },
-  data() {
+  data () {
     return {
       words: [],
       layout: {},
@@ -76,7 +78,7 @@ export default {
   watch: {
     keywords: {
       immediate: true,
-      async handler(keywords) {
+      async handler (keywords) {
         if (keywords.length > 0) {
           await this.$nextTick()
           this.makeCloud()
@@ -84,23 +86,23 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeDestroy () {
     clearInterval(this.interval)
   },
   methods: {
-    colorForSize(size) {
+    colorForSize (size) {
       return chromaJS.scale([this.lowColor, this.hiColor])(
         (size - 1) / (100 - 1)
       )
     },
-    resize({ width, height }) {
+    resize ({ width, height }) {
       this.width = width
       this.height = height > 450 ? height : 450
       this.$nextTick(() => {
         this.makeCloud()
       })
     },
-    makeCloud: debounce(function() {
+    makeCloud: debounce(function () {
       /**
        * faça um clone da prop de palavras-chave para não poluí-la com mais atributos abaixo
        * isso evita que as palavras fiquem embaralhadas, pois, ao se redimensionar, atributos
@@ -119,13 +121,13 @@ export default {
         .words(words)
         .padding(2)
         .font('Vollkorn')
-        .fontSize(function(d) {
+        .fontSize(function (d) {
           return d.size
         })
         .on('end', this.setWords)
       this.layout.start()
     }, 300),
-    setWords(words) {
+    setWords (words) {
       this.words = words
     }
   }

@@ -1,12 +1,12 @@
-const pkg = require('./package')
 import axios from 'axios'
+const pkg = require('./package')
 const WorkerPlugin = require('worker-plugin')
 
 module.exports = {
   mode: 'universal',
   srcDir: 'src/',
   generate: {
-    routes: function() {
+    routes: function () {
       const baseURL = process.env.API_URL || 'http://localhost:8000'
       const axiosInstance = axios.create({
         baseURL
@@ -159,7 +159,7 @@ module.exports = {
         ]
       ]
     },
-    extend(config, ctx) {
+    extend (config, ctx) {
       config.output.globalObject = 'this'
       // suporte para webworkers
       if (ctx.isClient) {

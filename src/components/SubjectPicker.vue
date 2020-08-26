@@ -1,5 +1,8 @@
 <template>
-  <div v-if="hasInitials && hasSubjects" class="SubjectPicker">
+  <div
+    v-if="hasInitials && hasSubjects"
+    class="SubjectPicker"
+  >
     <header>
       <Microtext arrow="down">
         Todos os assuntos
@@ -7,31 +10,47 @@
       </Microtext>
       <transition name="fade">
         <ul class="InitialsList">
-          <li v-for="initial in initials" :key="initial">
+          <li
+            v-for="initial in initials"
+            :key="initial"
+          >
             <nuxt-link
               :title="initial"
               :to="{name:'subjects', hash:`#${initial}`}"
               @click.prevent="selectInitial(initial)"
-            >{{initial}}</nuxt-link>
+            >
+              {{ initial }}
+            </nuxt-link>
           </li>
         </ul>
       </transition>
     </header>
-    <section class="SubjectsList" :style="`min-height: ${minHeight}px`">
-      <ul ref="SubjectsList" class="SubjectsList">
-        <li v-for="subject in subjects" :key="subject.slug">
+    <section
+      class="SubjectsList"
+      :style="`min-height: ${minHeight}px`"
+    >
+      <ul
+        ref="SubjectsList"
+        class="SubjectsList"
+      >
+        <li
+          v-for="subject in subjects"
+          :key="subject.slug"
+        >
           <nuxt-link
             :to="{
               name: 'subject-slug',
               params: {
-                  slug: subject.slug
-                }
-              }"
-          >{{subject.name}}</nuxt-link>
+                slug: subject.slug
+              }
+            }"
+          >
+            {{ subject.name }}
+          </nuxt-link>
         </li>
       </ul>
       <client-only>
-        <resize-sensor @resize="determineMinHeight"></resize-sensor>
+        <resize-sensor @resize="determineMinHeight" />
       </client-only>
     </section>
   </div>
@@ -57,7 +76,7 @@ export default {
       default: 'A'
     }
   },
-  data() {
+  data () {
     return {
       selectedInitial: '',
       subjects: this.initialSubjects,
@@ -65,19 +84,19 @@ export default {
     }
   },
   computed: {
-    hasInitials() {
+    hasInitials () {
       return Array.isArray(this.initials) && this.initials.length > 0
     },
-    hasSubjects() {
+    hasSubjects () {
       return Array.isArray(this.subjects) && this.subjects.length > 0
     },
-    hashInitial() {
+    hashInitial () {
       return this.$route && this.$route.hash[1]
     }
   },
   watch: {
     initials: {
-      handler(initials) {
+      handler (initials) {
         if (!this.selectedInitial && initials.length) {
           this.$router.push({ name: 'subjects', hash: `#${initials[0]}` })
         }
@@ -85,7 +104,7 @@ export default {
     },
     selectedInitial: {
       immediate: true,
-      async handler(initial) {
+      async handler (initial) {
         try {
           if (!initial) {
             return
@@ -94,12 +113,12 @@ export default {
             `api/v1/subjects/initial/${initial}`
           )
           this.$nextTick(() => (this.subjects = subjectsForInitial))
-        } catch {} //eslint-disable-line no-empty
+        } catch {} // eslint-disable-line no-empty
       }
     },
     $route: {
       immediate: true,
-      handler() {
+      handler () {
         if (
           this.hashInitial &&
           this.initials &&
@@ -111,10 +130,10 @@ export default {
     }
   },
   methods: {
-    determineMinHeight({ height }) {
+    determineMinHeight ({ height }) {
       this.minHeight = this.minHeight < height ? height : this.minHeight
     },
-    selectInitial(initial) {
+    selectInitial (initial) {
       if (initial === this.selectedInitial) {
         return
       }

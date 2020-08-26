@@ -1,7 +1,9 @@
 <template>
-  <D3TagCloud v-if="hasData" :keywords="keywords(aggregations)" />
+  <D3TagCloud
+    v-if="hasData"
+    :keywords="keywords(aggregations)"
+  />
 </template>
-
 
 <script>
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
@@ -23,12 +25,12 @@ export default {
     }
   },
   computed: {
-    hasData() {
+    hasData () {
       return this.aggregations && this.aggregations.length
     }
   },
   methods: {
-    keywords(aggregations) {
+    keywords (aggregations) {
       if (!aggregations) {
         return []
       }

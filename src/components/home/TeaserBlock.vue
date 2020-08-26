@@ -1,17 +1,28 @@
 <template>
-  <section v-if="teaser" :class="{'TeaserBlock': true, 'TeaserBlock--home': home}">
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="ql-editor TeaserBlock__Body" v-html="teaser"></div>
+  <section
+    v-if="teaser"
+    :class="{'TeaserBlock': true, 'TeaserBlock--home': home}"
+  >
+    <!-- eslint-disable vue/no-v-html -->
+    <div
+      class="ql-editor TeaserBlock__Body"
+      v-html="teaser"
+    />
+    <!-- eslint-enable vue/no-v-html -->
     <nuxt-link
       v-if="slug && showLink"
       :to="{name: 'slug', params: {slug: slug} }"
       :class="`TeaserBlock__Link TeaserBlock__Link--${linkPosition}`"
     >
-      <Microtext tag="span" arrow="right">{{teaserText}}</Microtext>
+      <Microtext
+        tag="span"
+        arrow="right"
+      >
+        {{ teaserText }}
+      </Microtext>
     </nuxt-link>
   </section>
 </template>
-
 
 <script>
 import { sanitize } from '@/utils/'
@@ -27,7 +38,7 @@ export default {
   props: {
     pageItem: {
       type: Object,
-      default: function() {
+      default: function () {
         return {}
       }
     },
@@ -42,21 +53,21 @@ export default {
     linkPosition: {
       type: String,
       default: 'right',
-      validator(value) {
+      validator (value) {
         return ['left', 'center', 'right'].includes(value)
       }
     }
   },
   computed: {
-    teaser() {
+    teaser () {
       return (
         this.pageItem.teaser !== undefined && sanitize(this.pageItem.teaser)
       )
     },
-    slug() {
+    slug () {
       return this.pageItem.url !== undefined && sanitize(this.pageItem.url)
     },
-    teaserText() {
+    teaserText () {
       return sanitize(this.pageItem.teaser_text) || 'Saiba mais'
     }
   }

@@ -3,22 +3,34 @@
     <div class="NewsPage__Info">
       <header>
         <figure v-if="theImage">
-          <v-img :src="theImage" @error="changeImagePlaceholder">
-            <template v-slot:placeholder class="image-slot">
+          <v-img
+            :src="theImage"
+            @error="changeImagePlaceholder"
+          >
+            <template
+              v-slot:placeholder
+              class="image-slot"
+            >
               <div class="image-slot">
                 <v-icon>download</v-icon>
-                <Microtext>{{imagePlaceholder}}</Microtext>
+                <Microtext>{{ imagePlaceholder }}</Microtext>
               </div>
             </template>
           </v-img>
         </figure>
-        <h1>{{theTitle}}</h1>
+        <h1>{{ theTitle }}</h1>
       </header>
       <main>
-        <NewsInfo class="NewsPage__NewsInfo" :news-item="newsItem"></NewsInfo>
+        <NewsInfo
+          class="NewsPage__NewsInfo"
+          :news-item="newsItem"
+        />
       </main>
     </div>
-    <div v-if="false" class="NewsPage__Capture"></div>
+    <div
+      v-if="false"
+      class="NewsPage__Capture"
+    />
   </section>
 </template>
 
@@ -31,27 +43,34 @@ export default {
   components: {
     NewsInfo
   },
-  head() {
-    return {
-      title: this.newsItem.title,
-      titleTemplate: 'xraM-Memory - %s'
+  async asyncData ({ $axios, route, error }) {
+    const newsSlug = route.params.slug
+    if (newsSlug) {
+      try {
+        const newsItem = await $axios.$get(`/api/v1/news/${newsSlug}`)
+        return { newsItem }
+      } catch (e) {
+        const statusCode = (e.response && e.response.status) || 500
+        return error({ statusCode })
+      }
     }
+    return error({ statusCode: 400 })
   },
-  data() {
+  data () {
     return {
       newsItem: {},
       imagePlaceholder: 'Carregando...'
     }
   },
   computed: {
-    theTitle() {
+    theTitle () {
       return sanitize(this.newsItem.title)
     },
-    theImage() {
+    theImage () {
       const urlVal = sanitize(this.newsItem.thumbnails.news_page)
       return urlVal ? getMediaUrl(urlVal) : ''
     },
-    imageLink() {
+    imageLink () {
       try {
         return {
           name: 'document-document_id',
@@ -63,7 +82,7 @@ export default {
         return null
       }
     },
-    pdfUrl() {
+    pdfUrl () {
       try {
         return (
           this.newsItem.pdf_captures &&
@@ -79,22 +98,15 @@ export default {
       }
     }
   },
-  async asyncData({ $axios, route, error }) {
-    const newsSlug = route.params.slug
-    if (newsSlug) {
-      try {
-        const newsItem = await $axios.$get(`/api/v1/news/${newsSlug}`)
-        return { newsItem }
-      } catch (e) {
-        const statusCode = (e.response && e.response.status) || 500
-        return error({ statusCode })
-      }
-    }
-    return error({ statusCode: 400 })
-  },
   methods: {
-    changeImagePlaceholder() {
+    changeImagePlaceholder () {
       this.imagePlaceholder = 'Falha ao carregar a imagem.'
+    }
+  },
+  head () {
+    return {
+      title: this.newsItem.title,
+      titleTemplate: 'xraM-Memory - %s'
     }
   }
 }
