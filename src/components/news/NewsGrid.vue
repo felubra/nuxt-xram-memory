@@ -1,6 +1,6 @@
 <template>
   <div class="infinite-list-wrapper">
-    <transition-group v-infinite-scroll="loadMore" :infinite-scroll-disabled="!infiniteScroll" class="NewsGrid" name="list-complete" tag="div" infinite-scroll-immediate-check="false">
+    <transition-group v-if="hasItems" v-infinite-scroll="loadMore" :infinite-scroll-disabled="!infiniteScroll" class="NewsGrid" name="list-complete" tag="div" infinite-scroll-immediate-check="false">
       <Card
         v-for="item in itemsDisplayed"
         :key="idFor(item)"
@@ -14,6 +14,9 @@
         <NewspaperInfo v-if="newspaperFor(item)" slot="footer" :newspaper="newspaperFor(item)" />
       </Card>
     </transition-group>
+    <slot v-else name="empty">
+      Sem dados.
+    </slot>
   </div>
 </template>
 
@@ -66,6 +69,9 @@ export default {
       return this.infiniteScroll
         ? this.items.slice(0, this.maxItemsDisplayed)
         : this.items
+    },
+    hasItems() {
+      return this.items.length > 0
     }
   },
   watch: {
