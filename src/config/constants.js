@@ -57,9 +57,9 @@ export const CONTENT_TYPE_LABELS = {
 }
 
 /** Estados de carregamento do índice */
-export const EMPTY = 'EMPTY'
-export const DOWNLOADING = 'DOWNLOADING'
-export const LOADING = 'LOADING'
-export const LOADED = 'LOADED'
-export const LOAD_ERROR = 'LOAD_ERROR'
-export const DOWNLOAD_ERROR = 'DOWNLOAD_ERROR'
+export const EMPTY = 0
+export const DOWNLOADING = 1
+export const LOADING = 2
+export const LOADED = 3
+export const LOAD_ERROR = 4
+export const DOWNLOAD_ERROR = 5

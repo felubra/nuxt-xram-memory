@@ -42,15 +42,13 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.indexState === DOWNLOADING || this.indexState === LOADING
+      return this.indexState < LOADED
     },
     isLoaded() {
       return this.indexState === LOADED
     },
     hasError() {
-      return (
-        this.indexState === DOWNLOAD_ERROR || this.indexState === LOAD_ERROR
-      )
+      return this.indexState >= DOWNLOAD_ERROR
     },
     isEmpty() {
       return isEmpty(this.searchState) && isEmpty(this.filterState)
