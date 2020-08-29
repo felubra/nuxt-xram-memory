@@ -21,3 +21,16 @@ export const LOADING = 2
 export const LOADED = 3
 export const LOAD_ERROR = 4
 export const DOWNLOAD_ERROR = 5
+
+export const AVAILABLE_ORDERINGS = [
+  {
+    field: 'published_date',
+    title: 'Data de publicação',
+    desc: true
+  },
+  {
+    field: 'title',
+    title: 'Título',
+    desc: false
+  }
+]

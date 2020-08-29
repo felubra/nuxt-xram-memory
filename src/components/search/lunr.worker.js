@@ -16,6 +16,7 @@ const obj = new Vue({
     registeredFilters: [],
     orderBy: {
       field: 'published_date',
+      title: 'Data de publicação',
       desc: true
     }
   },

@@ -2,6 +2,7 @@
   <client-only>
     <LocalSearchBase
       v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
+      :order-by="orderBy"
       class="Page SearchPage"
       :initial-state="initialState"
       :serialized-index="serializedIndex"
@@ -73,7 +74,23 @@
             </div>
           </CollapsibleContainer>
 
-          <div>
+          <div class="ResultStatsAndOrdering">
+            <div class="OrderSelector">
+              <Microtext arrow="down">
+                Ordernar por
+              </Microtext>
+              <el-select
+                v-model="orderBy"
+                value-key="field"
+              >
+                <el-option
+                  v-for="option in availableOrderings"
+                  :key="option.field"
+                  :value="option"
+                  :label="option.title"
+                />
+              </el-select>
+            </div>
             <ResultStats
               :time="lastSearchTime"
               :total-results="resultCount"
@@ -99,7 +116,7 @@ import LocalSearchDropDown from '@/components/search/LocalSearchDropDown'
 import NewsGrid from '@/components/news/NewsGrid'
 import ResultStats from '@/components/home/ResultStats.vue'
 import CollapsibleContainer from '@/components/common/CollapsibleContainer'
-import { CONTENT_TYPE_LABELS } from '@/config/constants'
+import { CONTENT_TYPE_LABELS, AVAILABLE_ORDERINGS } from '@/config/constants'
 
 export default {
   name: 'TestPage',
@@ -126,7 +143,9 @@ export default {
   data () {
     return {
       initialState: {},
-      serializedIndex: null
+      serializedIndex: null,
+      orderBy: AVAILABLE_ORDERINGS[0],
+      availableOrderings: Object.freeze(AVAILABLE_ORDERINGS)
     }
   },
   methods: {
@@ -249,8 +268,35 @@ export default {
 .SearchPage .SearchBar i.material-icons {
   color: $link-color;
 }
+.ResultStatsAndOrdering {
+  display: flex;
+  justify-content: space-between;
+  margin: 3rem 4rem 0;
+  flex-direction: column;
+}
+.OrderSelector {
+  display: flex;
+  flex-direction: column;
+  order: -1;
+}
+
+.ResultStats {
+  margin: 1rem 0 0;
+}
 
 .SearchBar .el-input__inner:focus {
   border-color: $link-color-active;
+}
+
+@media only screen and (min-width: 768px) {
+  .ResultStats {
+    margin: 0;
+  }
+  .ResultStatsAndOrdering {
+    flex-direction: row;
+  }
+  .OrderSelector {
+    order: 1;
+  }
 }
 </style>
