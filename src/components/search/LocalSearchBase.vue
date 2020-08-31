@@ -41,6 +41,10 @@ export default {
     initialState: {
       type: Object,
       default: () => {}
+    },
+    orderBy: {
+      type: Object,
+      default: null
     }
   },
   data () {
@@ -88,7 +92,6 @@ export default {
       deep: true,
       async handler (val) {
         this.$worker.searchState = val
-        this.$worker.filterState = this.filterState
         await this.getResultsFromWorker()
         this.filterDataSources = await this.$worker.filterDataSources
       }
@@ -97,9 +100,17 @@ export default {
       deep: true,
       async handler (val) {
         this.$worker.filterState = val
-        this.$worker.searchState = this.searchState
         await this.getResultsFromWorker()
         this.filterDataSources = await this.$worker.filterDataSources
+      }
+    },
+    orderBy: {
+      async handler (val) {
+        if (val) {
+          this.$worker.orderBy = val
+          await this.getResultsFromWorker()
+          this.filterDataSources = await this.$worker.filterDataSources
+        }
       }
     }
   },
