@@ -41,7 +41,6 @@
 import Card from '@/components/common/Card'
 import NewspaperInfo from './NewspaperInfo'
 import { NEWS, DOCUMENT, IMAGE, CONTENT_TYPE_LABELS } from '@/config/constants'
-import infiniteScroll from 'vue-infinite-scroll'
 
 const dayJs = require('dayjs')
 const smartTruncate = require('smart-truncate')
@@ -51,9 +50,6 @@ export default {
   components: {
     Card,
     NewspaperInfo
-  },
-  directives: {
-    infiniteScroll
   },
   props: {
     /** Items a serem exibidos na lista */
