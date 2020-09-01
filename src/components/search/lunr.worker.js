@@ -24,7 +24,13 @@ const obj = new Vue({
     unfilteredSearchResults () {
       try {
         if (this.searchQuery) {
-          return Object.freeze(this.index.search(this.searchQuery)).map(
+          return Object.freeze(this.index.search(this.searchQuery, {
+            fields: {
+              title: { boost: 2 },
+              teaser: { boost: 1 }
+            },
+            bool: 'OR'
+          })).map(
             result => {
               return this.index.documentStore.getDoc(result.ref)
             }
@@ -132,6 +138,7 @@ const obj = new Vue({
     },
     load (serializedIndex) {
       this.index = Object.freeze(lunr.Index.load(serializedIndex))
+      console.log(this.index)
     }
   }
 })
