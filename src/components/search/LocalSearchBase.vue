@@ -205,7 +205,6 @@ export default {
           throw new Error('Nenhuma forma de obter o índice foi definida')
         }
       } catch (e) {
-        console.log(e)
         this.indexState = DOWNLOAD_ERROR
       }
     },
