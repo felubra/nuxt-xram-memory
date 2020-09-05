@@ -5,14 +5,12 @@ import locale from 'element-ui/lib/locale'
 
 import { Select, Option, Input, Loading, Notification } from 'element-ui'
 
-export default () => {
-  locale.use(lang)
-  Vue.use(Select)
-  Vue.use(Option)
-  Vue.use(Input)
+locale.use(lang)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(Input)
 
-  Vue.use(Loading.directive)
+Vue.use(Loading.directive)
 
-  Vue.prototype.$loading = Loading.service
-  Vue.prototype.$notify = Notification
-}
+Vue.prototype.$loading = Loading.service
+Vue.prototype.$notify = Notification
