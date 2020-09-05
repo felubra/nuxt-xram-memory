@@ -129,7 +129,7 @@ export default {
     CollapsibleContainer
   },
   async asyncData ({ route, $axios, $config }) {
-    const serializedIndex = Object.freeze(await $axios.$get($config.lunrIndexUrl))
+    const serializedIndex = Object.freeze(await $axios.$get($config.lunrIndexURL))
     return {
       serializedIndex,
       initialState: {
