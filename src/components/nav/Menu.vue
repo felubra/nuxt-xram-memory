@@ -45,7 +45,6 @@
 <script>
 import Logo from '@/components/nav/Logo'
 import { mapState, mapActions, mapGetters } from 'vuex'
-import { urlOrRoute } from '@/utils/'
 import NavbarControls from '@/components/nav/NavbarControls'
 
 export default {
@@ -60,7 +59,9 @@ export default {
   },
   methods: {
     ...mapActions(['toggleMenu']),
-    urlOrRoute,
+    urlOrRoute (x) {
+      return this.$utils.urlOrRoute(x)
+    },
     keyForLink (item) {
       return typeof item.url === 'object' ? item.url.name : item.url
     }

@@ -82,6 +82,7 @@ module.exports = {
     { src: '@/plugins/drag-scroll', ssr: false },
     { src: '@/plugins/async-computed', ssr: false },
     { src: '@/plugins/infinite-scroll', ssr: false },
+    '@/plugins/utils',
     '@/plugins/axios',
     '@/plugins/essential-content.js'
   ],
@@ -155,6 +156,9 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+    terser: {
+      extractComments: false // default was LICENSES
+    },
     babel: {
       plugins: [
         [

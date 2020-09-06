@@ -9,7 +9,6 @@
   </Section>
 </template>
 <script>
-import { sanitize } from '@/utils/'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
 import Microtext from '@/components/common/Microtext'
@@ -36,7 +35,7 @@ export default {
   },
   computed: {
     theBody () {
-      return sanitize(this.staticPage.body)
+      return this.$utils.sanitize(this.staticPage.body)
     }
   },
   head () {

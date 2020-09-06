@@ -25,7 +25,6 @@
 import Logo from '@/components/nav/Logo'
 import NavbarControls from '@/components/nav/NavbarControls'
 import { mapActions, mapGetters } from 'vuex'
-import { urlOrRoute } from '@/utils/'
 import ClickOutside from 'vue-click-outside'
 
 export default {
@@ -66,8 +65,9 @@ export default {
     menuToggle () {
       this.toggleMenu()
     },
-
-    urlOrRoute,
+    urlOrRoute (x) {
+      return this.$utils.urlOrRoute(x)
+    },
     ...mapActions(['toggleMenu', 'hideMenu'])
   }
 }

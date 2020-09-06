@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { sanitize, getMediaUrl } from '@/utils'
 import Microtext from '@/components/common/Microtext'
 import NewsGrid from '~/components/news/NewsGrid'
 
@@ -57,10 +56,10 @@ export default {
   },
   computed: {
     description () {
-      return sanitize(this.subject.description)
+      return this.$utils.sanitize(this.subject.description)
     },
     cover () {
-      return getMediaUrl(this.subject.big_cover)
+      return this.$utils.getMediaUrl(this.subject.big_cover)
     }
   },
   head () {
