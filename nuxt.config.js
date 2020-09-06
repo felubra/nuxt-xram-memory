@@ -82,6 +82,7 @@ module.exports = {
     { src: '@/plugins/drag-scroll', ssr: false },
     { src: '@/plugins/async-computed', ssr: false },
     { src: '@/plugins/infinite-scroll', ssr: false },
+    '@/plugins/utils',
     '@/plugins/axios',
     '@/plugins/essential-content.js'
   ],
@@ -111,24 +112,30 @@ module.exports = {
     axios: {
       browserBaseURL: process.env.BROWSER_API_URL || process.env.API_URL
     },
-    lunrIndexUrl:
+    lunrIndexURL: process.env.BROWSER_LUNR_INDEX_URL ||
       process.env.LUNR_INDEX_URL ||
-      'http://localhost:8000/media/lunr_index/index.json'
+      'http://localhost:8000/media/lunr_index/index.json',
+    contactMessageRelayURL: process.env.BROWSER_CONTACT_MESSAGE_RELAY_URL ||
+      process.env.CONTACT_MESSAGE_RELAY_URL || 'http://localhost:3001',
+    recaptchaKey: process.env.RECAPTCHA_KEY,
+    mediaURL: process.env.BROWSER_MEDIA_URL ||
+      process.env.MEDIA_URL || 'http://localhost:8000',
+    apiURL: process.env.API_URL ||
+      'http://localhost:8000'
   },
   privateRuntimeConfig: {
     axios: {
       baseURL: process.env.API_URL
-    }
-  },
-  env: {
-    CONTACT_MESSAGE_RELAY_URL:
-      process.env.CONTACT_MESSAGE_RELAY_URL || 'http://localhost:3001',
-    RECAPTCHA_KEY: process.env.RECAPTCHA_KEY,
-    MEDIA_URL: process.env.MEDIA_URL || 'http://localhost:8000',
-    API_URL: process.env.API_URL || 'http://localhost:8000',
-    ELASTIC_SEARCH_SERVER:
-      process.env.ELASTIC_SEARCH_SERVER || 'http://localhost:9200',
-    ELASTIC_SEARCH_CREDENTIALS: process.env.ELASTIC_SEARCH_CREDENTIALS
+    },
+    lunrIndexURL: process.env.LUNR_INDEX_URL ||
+      'http://localhost:8000/media/lunr_index/index.json',
+    contactMessageRelayURL: process.env.CONTACT_MESSAGE_RELAY_URL ||
+      'http://localhost:3001',
+    recaptchaKey: process.env.RECAPTCHA_KEY,
+    mediaURL: process.env.MEDIA_URL ||
+      'http://localhost:8000',
+    apiURL: process.env.API_URL ||
+      'http://localhost:8000'
   },
   router: {
     middleware: ['collapseMenu', 'fetchMenuItems'],
@@ -149,6 +156,9 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+    terser: {
+      extractComments: false // default was LICENSES
+    },
     babel: {
       plugins: [
         [

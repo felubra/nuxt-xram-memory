@@ -112,7 +112,6 @@
 import DocumentViewer from '~/components/viewers/DocumentViewer'
 import Microtext from '~/components/common/Microtext'
 import BackButton from '@/components/common/BackButton'
-import { getMediaUrl } from '@/utils'
 
 const humanSize = require('human-size')
 const dayJs = require('dayjs')
@@ -170,8 +169,8 @@ export default {
         try {
           return this.document.pages.map((page, index, pages) => {
             return {
-              src: getMediaUrl(page.thumbnails.document_preview),
-              thumbnailSrc: getMediaUrl(page.thumbnails.document_thumbnail),
+              src: this.$utils.getMediaUrl(page.thumbnails.document_preview),
+              thumbnailSrc: this.$utils.getMediaUrl(page.thumbnails.document_thumbnail),
               description:
                 page.description || pages.length > 1
                   ? `(página ${index + 1})`
@@ -184,8 +183,8 @@ export default {
       }
       return [
         {
-          src: getMediaUrl(this.document.canonical_url),
-          thumbnailSrc: getMediaUrl(this.document.thumbnails.thumbnail),
+          src: this.$utils.getMediaUrl(this.document.canonical_url),
+          thumbnailSrc: this.$utils.getMediaUrl(this.document.thumbnails.thumbnail),
           description: document.description || ''
         }
       ]
@@ -198,7 +197,7 @@ export default {
       }
     },
     documentOriginalURL () {
-      return getMediaUrl(this.document.canonical_url)
+      return this.$utils.getMediaUrl(this.document.canonical_url)
     },
     documentUploadDate () {
       try {

@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { sanitize } from '@/utils/'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
 import Microtext from '@/components/common/Microtext'
@@ -61,14 +60,14 @@ export default {
   computed: {
     teaser () {
       return (
-        this.pageItem.teaser !== undefined && sanitize(this.pageItem.teaser)
+        this.pageItem.teaser !== undefined && this.$utils.sanitize(this.pageItem.teaser)
       )
     },
     slug () {
-      return this.pageItem.url !== undefined && sanitize(this.pageItem.url)
+      return this.pageItem.url !== undefined && this.$utils.sanitize(this.pageItem.url)
     },
     teaserText () {
-      return sanitize(this.pageItem.teaser_text) || 'Saiba mais'
+      return this.$utils.sanitize(this.pageItem.teaser_text) || 'Saiba mais'
     }
   }
 }

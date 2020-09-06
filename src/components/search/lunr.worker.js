@@ -101,7 +101,6 @@ const obj = new Vue({
                   }
                 }
               } catch (e) {
-                console.log(e)
                 return 0
               }
             }))
@@ -138,7 +137,6 @@ const obj = new Vue({
     },
     load (serializedIndex) {
       this.index = Object.freeze(lunr.Index.load(serializedIndex))
-      console.log(this.index)
     }
   }
 })

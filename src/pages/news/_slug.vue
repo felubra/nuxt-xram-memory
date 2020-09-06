@@ -36,7 +36,6 @@
 
 <script>
 import NewsInfo from '~/components/news/NewsInfo'
-import { sanitize, getMediaUrl } from '@/utils/'
 
 export default {
   name: 'NewsPage',
@@ -64,11 +63,11 @@ export default {
   },
   computed: {
     theTitle () {
-      return sanitize(this.newsItem.title)
+      return this.$utils.sanitize(this.newsItem.title)
     },
     theImage () {
-      const urlVal = sanitize(this.newsItem.thumbnails.news_page)
-      return urlVal ? getMediaUrl(urlVal) : ''
+      const urlVal = this.$utils.sanitize(this.newsItem.thumbnails.news_page)
+      return urlVal ? this.$utils.getMediaUrl(urlVal) : ''
     },
     imageLink () {
       try {

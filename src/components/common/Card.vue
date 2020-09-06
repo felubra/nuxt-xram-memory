@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { sanitizeOnlyText, getMediaUrl } from '@/utils'
 export default {
   name: 'Card',
   props: {
@@ -69,9 +68,9 @@ export default {
     imageSrc () {
       try {
         if (this.image.startsWith('/')) {
-          return sanitizeOnlyText(getMediaUrl(this.image))
+          return this.$utils.sanitizeOnlyText(this.$utils.getMediaUrl(this.image))
         }
-        return sanitizeOnlyText(this.image)
+        return this.$utils.sanitizeOnlyText(this.image)
       } catch {
         return ''
       }

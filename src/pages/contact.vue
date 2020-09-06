@@ -87,14 +87,11 @@ export default {
       import(/* webpackChunkName: "vue-recaptcha" */ 'vue-recaptcha')
   },
   mixins: [validationMixin],
-  async asyncData () {
+  async asyncData ({ $config: { contactMessageRelayURL, recaptchaKey } }) {
     // Esta página estará disponível somente se houver uma chave para o recaptcha
-    const isAvailable =
-      process.env &&
-      process.env.RECAPTCHA_KEY &&
-      process.env.CONTACT_MESSAGE_RELAY_URL
     return {
-      isAvailable
+      recaptchaKey,
+      contactMessageRelayURL
     }
   },
   data () {
@@ -102,15 +99,16 @@ export default {
       error: null,
       success: false,
       isSending: false,
-      isAvailable: false,
+      recaptchaKey: '',
+      contactMessageRelayURL: '',
       name: '',
       email: '',
       message: ''
     }
   },
   computed: {
-    recaptchaKey () {
-      return process.env.RECAPTCHA_KEY
+    isAvailable () {
+      return this.recaptchaKey && this.contactMessageRelayURL
     },
     nameErrors () {
       const errors = []
@@ -157,7 +155,7 @@ export default {
     onCaptchaVerify (response) {
       this.isSending = true
       this.$axios
-        .post(process.env.CONTACT_MESSAGE_RELAY_URL, {
+        .post(this.contactMessageRelayURL, {
           name: this.name,
           email: this.email,
           message: this.message,

@@ -121,7 +121,6 @@
 </template>
 
 <script>
-import { getMediaUrl } from '@/utils'
 import Microtext from '@/components/common/Microtext'
 const smartTruncate = require('smart-truncate')
 const humanSize = require('human-size')
@@ -213,7 +212,7 @@ export default {
     },
     newspaperIcon () {
       try {
-        return getMediaUrl(this.newsItem.newspaper.favicon_logo)
+        return this.$utils.getMediaUrl(this.newsItem.newspaper.favicon_logo)
       } catch (e) {
         return ''
       }
@@ -295,7 +294,7 @@ export default {
     },
     thumbnailForDocument (documentId) {
       try {
-        return getMediaUrl(
+        return this.$utils.getMediaUrl(
           this.documents.find(document => document.document_id === documentId)
             .thumbnails.document_thumbnail
         )

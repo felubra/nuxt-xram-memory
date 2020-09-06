@@ -12,7 +12,6 @@
 <script>
 import BackButton from '@/components/common/BackButton'
 import DocumentViewer from '~/components/viewers/DocumentViewer'
-import { getMediaUrl } from '@/utils'
 
 export default {
   name: 'AlbumPage',
@@ -42,8 +41,8 @@ export default {
     images () {
       return this.album.photos.map(photo => {
         return {
-          src: getMediaUrl(photo.thumbnails.document_preview),
-          thumbnailSrc: getMediaUrl(photo.thumbnails.document_thumbnail),
+          src: this.$utils.getMediaUrl(photo.thumbnails.document_preview),
+          thumbnailSrc: this.$utils.getMediaUrl(photo.thumbnails.document_thumbnail),
           description: photo.description || ' '
         }
       })

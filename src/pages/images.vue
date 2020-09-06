@@ -50,8 +50,6 @@
 import Microtext from '~/components/common/Microtext'
 import Card from '~/components/common/Card'
 
-const { getMediaUrl } = require('~/utils')
-
 export default {
   name: 'AlbumsPage',
   components: {
@@ -81,8 +79,8 @@ export default {
     },
     albums () {
       return this.albumObjects.map(album => {
-        album.big_cover = getMediaUrl(album.big_cover)
-        album.cover = getMediaUrl(album.cover)
+        album.big_cover = this.$utils.getMediaUrl(album.big_cover)
+        album.cover = this.$utils.getMediaUrl(album.cover)
         return album
       })
     }

@@ -28,7 +28,6 @@
 <script>
 import Logo from '@/components/nav/Logo'
 import { mapGetters } from 'vuex'
-import { urlOrRoute } from '@/utils'
 export default {
   components: {
     Logo
@@ -40,7 +39,9 @@ export default {
     ...mapGetters(['pageLinks'])
   },
   methods: {
-    urlOrRoute
+    urlOrRoute (x) {
+      return this.$utils.urlOrRoute(x)
+    }
   }
 }
 </script>
