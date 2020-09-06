@@ -120,7 +120,7 @@ module.exports = {
     recaptchaKey: process.env.RECAPTCHA_KEY,
     mediaURL: process.env.BROWSER_MEDIA_URL ||
       process.env.MEDIA_URL || 'http://localhost:8000',
-    apiURL: process.env.API_URL ||
+    apiURL: process.env.BROWSER_API_URL || process.env.API_URL ||
       'http://localhost:8000'
   },
   privateRuntimeConfig: {
