@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { sanitizeOnlyText, getMediaUrl } from '@/utils'
+
 export default {
   name: 'NewspaperInfo',
   props: {
@@ -19,11 +19,11 @@ export default {
   },
   computed: {
     newspaperURL () {
-      return sanitizeOnlyText(this.newspaper.url)
+      return this.$utils.sanitizeOnlyText(this.newspaper.url)
     },
     newspaperLogo () {
       if (this.newspaper.image) {
-        return sanitizeOnlyText(getMediaUrl(this.newspaper.image))
+        return this.$utils.sanitizeOnlyText(this.$utils.getMediaUrl(this.newspaper.image))
       }
       return ''
     }

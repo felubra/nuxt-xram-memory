@@ -19,7 +19,6 @@
   </div>
 </template>
 <script>
-import { urlOrRoute } from '@/utils/'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
@@ -32,7 +31,9 @@ export default {
     ...mapState(['menuVisible'])
   },
   methods: {
-    urlOrRoute,
+    urlOrRoute (x) {
+      return this.$utils.urlOrRoute(x)
+    },
     ...mapActions(['toggleMenu'])
   }
 }

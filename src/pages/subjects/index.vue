@@ -85,7 +85,6 @@ import HomeTagCloud from '~/components/home/HomeTagCloud'
 import Microtext from '~/components/common/Microtext'
 import SubjectPicker from '~/components/SubjectPicker'
 import Card from '~/components/common/Card'
-import { getMediaUrl } from '~/utils'
 import { TAGCLOUD_NUM_KEYWORDS } from '~/config/constants'
 const smartTruncate = require('smart-truncate')
 
@@ -164,7 +163,7 @@ export default {
       return `${item.items_count} ${item.items_count > 1 ? 'itens' : 'item'}`
     },
     imageFor (item) {
-      return getMediaUrl(item.cover)
+      return this.$utils.getMediaUrl(item.cover)
     },
     titleFor (item) {
       return item.name
