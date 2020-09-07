@@ -110,22 +110,7 @@ module.exports = {
   },
   publicRuntimeConfig: {
     axios: {
-      browserBaseURL: process.env.BROWSER_API_URL || process.env.API_URL
-    },
-    lunrIndexURL: process.env.BROWSER_LUNR_INDEX_URL ||
-      process.env.LUNR_INDEX_URL ||
-      'http://localhost:8000/media/lunr_index/index.json',
-    contactMessageRelayURL: process.env.BROWSER_CONTACT_MESSAGE_RELAY_URL ||
-      process.env.CONTACT_MESSAGE_RELAY_URL || 'http://localhost:3001',
-    recaptchaKey: process.env.RECAPTCHA_KEY,
-    mediaURL: process.env.BROWSER_MEDIA_URL ||
-      process.env.MEDIA_URL || 'http://localhost:8000',
-    apiURL: process.env.BROWSER_API_URL || process.env.API_URL ||
-      'http://localhost:8000'
-  },
-  privateRuntimeConfig: {
-    axios: {
-      baseURL: process.env.API_URL
+      browserBaseURL: process.env.API_URL
     },
     lunrIndexURL: process.env.LUNR_INDEX_URL ||
       'http://localhost:8000/media/lunr_index/index.json',
@@ -135,6 +120,24 @@ module.exports = {
     mediaURL: process.env.MEDIA_URL ||
       'http://localhost:8000',
     apiURL: process.env.API_URL ||
+      'http://localhost:8000'
+  },
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.SSR_API_URL || process.env.API_URL
+    },
+    lunrIndexURL: process.env.SSR_LUNR_INDEX_URL ||
+      process.env.LUNR_INDEX_URL ||
+      'http://localhost:8000/media/lunr_index/index.json',
+    contactMessageRelayURL: process.env.SSR_CONTACT_MESSAGE_RELAY_URL ||
+      process.env.CONTACT_MESSAGE_RELAY_URL ||
+      'http://localhost:3001',
+    recaptchaKey: process.env.RECAPTCHA_KEY,
+    mediaURL: process.env.SSR_MEDIA_URL ||
+      process.env.MEDIA_URL ||
+      'http://localhost:8000',
+    apiURL: process.env.SSR_API_URL ||
+      process.env.API_URL ||
       'http://localhost:8000'
   },
   router: {
