@@ -1,7 +1,7 @@
 <template>
   <client-only>
     <LocalSearchBase
-      v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
+      v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError, hasLoaded}"
       :order-by="orderBy"
       class="Page SearchPage"
       :initial-state="initialState"
@@ -12,23 +12,20 @@
         name="fade"
         mode="out-in"
       >
-        <div v-if="hasError">
-          <section class="CenteredPage">
-            <header>
-              <Microtext
-                tag="h2"
-                arrow="down"
-              >
-                Sem dados
-              </Microtext>
-            </header>
-            <main>
-              <p>Desculpe-nos, mas a pesquisa não está disponível no momento. Por-favor, volte mais tarde.</p>
-            </main>
-          </section>
-        </div>
+        <!-- Três estados são possíveis nesta página: -->
+        <!-- 1o Estado: carregando, quando exibiremos o indicador de carregamento.
+        TODO: considerar o download do índice como carregamento também -->
         <div
-          v-else
+          v-if="isLoading"
+          key="loading"
+          v-loading="isLoading"
+          :items="searchResults"
+          element-loading-text="Carregando..."
+          element-loading-background="transparent"
+        />
+        <!-- 2o Estado: índice carregado, quando exibiremos os resultados de busca e os filtros. -->
+        <div
+          v-if="hasLoaded"
           key="loaded"
         >
           <div class="SearchBar">
@@ -73,7 +70,6 @@
               />
             </div>
           </CollapsibleContainer>
-
           <div class="ResultStatsAndOrdering">
             <div class="OrderSelector">
               <Microtext arrow="down">
@@ -97,13 +93,28 @@
             />
           </div>
           <NewsGrid
-            v-loading="isLoading"
             class="NewsGrid"
             :items="searchResults"
-            element-loading-text="Carregando..."
-            element-loading-background="transparent"
           />
         </div>
+        <!-- 3o Estado: erro (de download do índice ou de carregamento do índice) -->
+        <section
+          v-if="hasError || downloadError"
+          key="error"
+          class="CenteredPage"
+        >
+          <header>
+            <Microtext
+              tag="h2"
+              arrow="down"
+            >
+              Erro
+            </Microtext>
+          </header>
+          <main>
+            <p>Desculpe-nos, mas a pesquisa não está disponível no momento. Por-favor, volte mais tarde.</p>
+          </main>
+        </section>
       </transition>
     </LocalSearchBase>
   </client-only>
@@ -129,9 +140,19 @@ export default {
     CollapsibleContainer
   },
   async asyncData ({ route, $axios, $config }) {
-    const serializedIndex = Object.freeze(await $axios.$get($config.lunrIndexURL))
+    let serializedIndex
+    try {
+      serializedIndex = Object.freeze(
+        await $axios.$get(
+          $config.lunrIndexURL
+        )
+      )
+    } catch {
+      serializedIndex = null
+    }
     return {
       serializedIndex,
+      downloadError: serializedIndex === null,
       initialState: {
         filterState: route.query,
         searchState: {
@@ -143,6 +164,7 @@ export default {
   data () {
     return {
       initialState: {},
+      pageError: false,
       serializedIndex: null,
       orderBy: AVAILABLE_ORDERINGS[0],
       availableOrderings: Object.freeze(AVAILABLE_ORDERINGS)
