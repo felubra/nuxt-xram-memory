@@ -1,7 +1,7 @@
 <template>
   <client-only>
     <LocalSearchBase
-      v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError, hasLoaded}"
+      v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError, hasLoaded, clear}"
       :order-by="orderBy"
       class="Page SearchPage"
       :initial-state="initialState"
@@ -92,10 +92,31 @@
               :total-results="resultCount"
             />
           </div>
-          <NewsGrid
-            class="NewsGrid"
-            :items="searchResults"
-          />
+          <!-- Dentro deste estágio, temos duas possibilidades: -->
+          <transition
+            name="fade"
+            mode="out-in"
+          >
+            <!-- Substado 1: temos resultados -->
+            <NewsGrid
+              v-if="resultCount > 0"
+              key="hasResults"
+              class="NewsGrid"
+              :items="searchResults"
+            />
+            <!-- Substado 2: NÃO temos resultados -->
+            <div
+              v-else
+              key="noResults"
+              class="NoResults"
+            >
+              Sua busca não encontrou nenhum resultado.
+              <br>
+              <el-button @click="clear">
+                Tente novamente
+              </el-button>
+            </div>
+          </transition>
         </div>
         <!-- 3o Estado: erro (de download do índice ou de carregamento do índice) -->
         <section
@@ -308,6 +329,12 @@ export default {
 
 .SearchBar .el-input__inner:focus {
   border-color: $link-color-active;
+}
+
+.NoResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media only screen and (min-width: 768px) {
