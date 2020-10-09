@@ -226,11 +226,12 @@ export default {
      * Limpa todos o estado dos componentes de busca.
      */
     clear () {
-      [this.searchState, this.filterState].forEach(collection => {
-        collection.forEach(key => {
-          this.$set(collection, key, null)
+      [this.searchState, this.filterState]
+        .forEach(collection => {
+          Object.keys(collection).forEach(key => {
+            this.$set(collection, key, null)
+          })
         })
-      })
     }
   },
   provide () {
