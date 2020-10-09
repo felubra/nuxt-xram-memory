@@ -6,7 +6,6 @@
     :infinite-scroll-disabled="!infiniteScroll"
   >
     <transition-group
-      v-if="hasItems"
       class="NewsGrid"
       name="list-complete"
       tag="div"
@@ -28,12 +27,6 @@
         />
       </Card>
     </transition-group>
-    <slot
-      v-else
-      name="empty"
-    >
-      Sem dados.
-    </slot>
   </div>
 </template>
 
@@ -82,9 +75,6 @@ export default {
       return this.infiniteScroll
         ? this.items.slice(0, this.maxItemsDisplayed)
         : this.items
-    },
-    hasItems () {
-      return this.items.length > 0
     }
   },
   watch: {
