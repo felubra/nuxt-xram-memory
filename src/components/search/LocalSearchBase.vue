@@ -5,7 +5,7 @@
         searchResults,
         resultCount,
         clear,
-        isLoaded,
+        hasLoaded,
         hasError,
         isLoading,
         lastSearchTime,
@@ -63,7 +63,7 @@ export default {
     isLoading () {
       return this.indexState < LOADED
     },
-    isLoaded () {
+    hasLoaded () {
       return this.indexState === LOADED
     },
     hasError () {
