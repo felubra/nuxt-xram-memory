@@ -155,8 +155,13 @@ export default {
      * Define o estado dos componentes com base na prop initialState
      */
     processInitialState () {
-      // Preencha o estado dos filtros com as informações passadas à prop initialstate
       if (this.initialState && this.initialState.filterState) {
+        /** Registre antecipadamente um componente de filtro neste estágio para permitir
+         * que ele, quando inserido no DOM num momento futuro, tenha estado correto.
+         */
+        Object.entries(this.initialState.filterState)
+          .forEach(([key]) => this.registerFilter(key))
+        // Preencha o estado dos filtros com as informações passadas à prop initialstate
         this.filterState = Object.assign(
           {},
           Object.entries(this.initialState.filterState)
