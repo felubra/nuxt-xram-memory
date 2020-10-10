@@ -61,7 +61,7 @@ export default {
   },
   computed: {
     isLoading () {
-      return this.indexState < LOADED
+      return this.indexState === LOADING
     },
     hasLoaded () {
       return this.indexState === LOADED
@@ -112,6 +112,12 @@ export default {
           this.filterDataSources = await this.$worker.filterDataSources
         }
       }
+    },
+    indexDownloadProgress: {
+      handler (val) {
+        this.$emit('updateDownloadProgress', val)
+      },
+      immediate: true
     }
   },
   async created () {
