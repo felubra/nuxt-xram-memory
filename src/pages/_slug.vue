@@ -17,11 +17,11 @@ export default {
   components: {
     Microtext
   },
-  async asyncData ({ $axios, route, error }) {
+  async asyncData ({ $api: { Pages }, route, error }) {
     const { slug } = route.params
     if (slug) {
       try {
-        const staticPage = await $axios.$get(`/api/v1/pages/${slug}`)
+        const staticPage = await Pages.getBySlug(slug)
         return { staticPage }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500

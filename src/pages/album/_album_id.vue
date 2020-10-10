@@ -19,11 +19,11 @@ export default {
     BackButton,
     DocumentViewer
   },
-  async asyncData ({ $axios, route, error }) {
+  async asyncData ({ $api: { Albums }, route, error }) {
     const albumId = route.params.album_id
     if (albumId) {
       try {
-        const album = await $axios.$get(`/api/v1/album/${albumId}`)
+        const album = await Albums.getById(albumId)
         return { album }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500

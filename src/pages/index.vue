@@ -57,11 +57,9 @@ export default {
     TeaserBlock,
     Logo
   },
-  async asyncData ({ $axios }) {
+  async asyncData ({ $api: { Keywords } }) {
     try {
-      const tagCloudAggregations = await $axios.$get(
-        `/api/v1/keywords/top?max=${TAGCLOUD_NUM_KEYWORDS}`
-      )
+      const tagCloudAggregations = await Keywords.all(TAGCLOUD_NUM_KEYWORDS)
       return {
         tagCloudAggregations
       }

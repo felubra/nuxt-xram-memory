@@ -94,37 +94,34 @@ export default {
     Card,
     SubjectPicker
   },
-  async asyncData ({ $axios }) {
+  async asyncData ({ $api: { Subjects, Keywords } }) {
+    // REFATORAR para usar Promise.all
     let featuredSubjects
     let subjectInitials
     let initialSubjects
     let firstSelectedInitial
     let tagCloudAggregations
     try {
-      subjectInitials = await $axios.$get('api/v1/subjects/initials')
+      subjectInitials = await Subjects.getInitials()
       firstSelectedInitial = subjectInitials[0] || ''
       if (firstSelectedInitial) {
-        initialSubjects = await $axios.$get(
-          `api/v1/subjects/initial/${firstSelectedInitial}`
-        )
+        initialSubjects = await Subjects.getByInitial(firstSelectedInitial)
       } else {
         initialSubjects = []
       }
-    } catch {
+    } catch (e) {
       subjectInitials = []
       initialSubjects = []
     }
 
     try {
-      tagCloudAggregations = await $axios.$get(
-        `/api/v1/keywords/top?max=${TAGCLOUD_NUM_KEYWORDS}`
-      )
+      tagCloudAggregations = await Keywords.all(TAGCLOUD_NUM_KEYWORDS)
     } catch {
       tagCloudAggregations = []
     }
 
     try {
-      featuredSubjects = await $axios.$get('api/v1/subjects/featured?limit=5')
+      featuredSubjects = await Subjects.getFeatured()
     } catch {
       featuredSubjects = []
     }

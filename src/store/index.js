@@ -2,7 +2,6 @@ import DEFAULT_PAGES from './defaultPages'
 
 export const state = () => ({
   menuVisible: false,
-  isNavBarSearching: false,
   pages: DEFAULT_PAGES
 })
 
@@ -55,11 +54,11 @@ export const actions = {
   toggleMenu: ({ commit }) => commit('toggleMenu'),
   hideMenu: ({ commit }) => commit('hideMenu'),
   async fetchPagesInMenu ({ commit }) {
-    const pagesInMenu = await this.$axios.$get('api/v1/pages/in_menu')
+    const pagesInMenu = await this.$api.Pages.getAllPagesInMenu()
     commit('addPages', pagesInMenu)
   },
   async fetchFeaturedPages ({ commit }) {
-    const featuredPages = await this.$axios.$get('api/v1/pages/featured')
+    const featuredPages = await this.$api.Pages.getAllFeatured()
     commit('addPages', featuredPages)
   }
 }

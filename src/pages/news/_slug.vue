@@ -42,11 +42,11 @@ export default {
   components: {
     NewsInfo
   },
-  async asyncData ({ $axios, route, error }) {
-    const newsSlug = route.params.slug
-    if (newsSlug) {
+  async asyncData ({ $api: { News }, route, error }) {
+    const { slug } = route.params
+    if (slug) {
       try {
-        const newsItem = await $axios.$get(`/api/v1/news/${newsSlug}`)
+        const newsItem = await News.getBySlug(slug)
         return { newsItem }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500

@@ -34,12 +34,12 @@ export default {
     Microtext,
     NewsGrid
   },
-  async asyncData ({ $axios, route, error }) {
+  async asyncData ({ $api: { Subjects }, route, error }) {
     const { slug } = route.params
     if (slug) {
       try {
-        const subject = await $axios.$get(`api/v1/subject/${slug}`)
-        const subjectItems = await $axios.$get(`api/v1/subject/${slug}/items`)
+        const subject = await Subjects.getBySlug(slug)
+        const subjectItems = await Subjects.getItems(slug)
         return { subject, subjectItems }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500

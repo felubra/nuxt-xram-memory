@@ -56,9 +56,9 @@ export default {
     Microtext,
     Card
   },
-  async asyncData ({ $axios }) {
+  async asyncData ({ $api: { Albums } }) {
     try {
-      const albumObjects = await $axios.$get('api/v1/albums')
+      const albumObjects = await Albums.all()
       return {
         albumObjects
       }

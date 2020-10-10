@@ -122,24 +122,22 @@ export default {
     DocumentViewer,
     BackButton
   },
-  async asyncData ({ $axios, route, error }) {
+  async asyncData ({ $api: { Documents }, route, error }) {
     const documentId = route.params.document_id
     if (documentId) {
       try {
-        const document = await $axios.$get(`/api/v1/document/${documentId}`)
+        const document = await Documents.getById(documentId)
         if (document.mime_type === 'application/pdf') {
           try {
             /**
              * Faça outra requisição para pegar as páginas do documento.
              */
-            const { pages } = await $axios.$get(
-              `/api/v1/document/${document.document_id}/pages`
-            )
+            const { pages } = await Document.getPages(documentId)
             document.pages = pages
           } catch {
             /**
              * Adicione a visualização de capa deste documento como failback caso o endpoint das
-             * páginas não esteja disponível
+             * páginas não esteja disponível ainda.
              */
             document.pages = [
               {

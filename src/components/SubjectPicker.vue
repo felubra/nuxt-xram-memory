@@ -105,11 +105,11 @@ export default {
           if (!initial) {
             return
           }
-          const subjectsForInitial = await this.$axios.$get(
-            `api/v1/subjects/initial/${initial}`
-          )
+          const subjectsForInitial = await this.$api.Subjects.getByInitial(initial)
           this.$nextTick(() => (this.subjects = subjectsForInitial))
-        } catch {} // eslint-disable-line no-empty
+        } catch {
+          debugger
+        } // eslint-disable-line no-empty
       }
     },
     $route: {
