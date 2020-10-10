@@ -1,31 +1,44 @@
 <template>
   <client-only>
     <LocalSearchBase
-      v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError, hasLoaded, clear}"
-      :order-by="orderBy"
+      v-slot:default="{
+        searchResults,
+        resultCount,
+        lastSearchTime,
+        isLoading,
+        isDownloading,
+        isEmpty,
+        hasError,
+        hasLoaded,
+        clear,
+      }"
+      :order-by="orderedBy"
       class="Page SearchPage"
       :initial-state="initialState"
-      :serialized-index="serializedIndex"
+      :index-u-r-l="indexURL"
+      @updateDownloadProgress="updateDownloadProgress"
     >
       <transition
+        v-if="!isEmpty"
         appear
         name="fade"
         mode="out-in"
       >
-        <!-- Três estados são possíveis nesta página: -->
-        <!-- 1o Estado: carregando, quando exibiremos o indicador de carregamento.
-        TODO: considerar o download do índice como carregamento também -->
+        <!-- 3 estados principais são possíveis nesta página: -->
+        <!-- 1o Estado: baixando ou carregando o índice, quando exibiremos o indicador de carregamento.
+        TODO: considerar o download do índice como carregamento também
+        TODO: abstrair SearchFilters -->
         <div
-          v-if="isLoading"
+          v-if="isDownloading || isLoading"
           key="loading"
-          v-loading="isLoading"
+          v-loading="true"
           :items="searchResults"
-          element-loading-text="Carregando..."
+          :element-loading-text="isDownloading ? `${downloadProgress}%` : `Carregando...`"
           element-loading-background="transparent"
         />
         <!-- 2o Estado: índice carregado, quando exibiremos os resultados de busca e os filtros. -->
         <div
-          v-if="hasLoaded"
+          v-else-if="hasLoaded"
           key="loaded"
         >
           <div class="SearchBar">
@@ -76,7 +89,7 @@
                 Ordernar por
               </Microtext>
               <el-select
-                v-model="orderBy"
+                v-model="orderedBy"
                 value-key="field"
               >
                 <el-option
@@ -106,7 +119,7 @@
             />
             <!-- Substado 2: NÃO temos resultados -->
             <div
-              v-else
+              v-else-if="resultCount == 0"
               key="noResults"
               class="NoResults"
             >
@@ -120,7 +133,7 @@
         </div>
         <!-- 3o Estado: erro (de download do índice ou de carregamento do índice) -->
         <section
-          v-if="hasError || downloadError"
+          v-else-if="hasError"
           key="error"
           class="CenteredPage"
         >
@@ -161,19 +174,8 @@ export default {
     CollapsibleContainer
   },
   async asyncData ({ route, $axios, $config }) {
-    let serializedIndex
-    try {
-      serializedIndex = Object.freeze(
-        await $axios.$get(
-          $config.lunrIndexURL
-        )
-      )
-    } catch {
-      serializedIndex = null
-    }
     return {
-      serializedIndex,
-      downloadError: serializedIndex === null,
+      indexURL: $config.lunrIndexURL,
       initialState: {
         filterState: route.query,
         searchState: {
@@ -184,10 +186,10 @@ export default {
   },
   data () {
     return {
+      indexURL: '',
+      downloadProgress: 0,
       initialState: {},
-      pageError: false,
-      serializedIndex: null,
-      orderBy: AVAILABLE_ORDERINGS[0],
+      orderedBy: AVAILABLE_ORDERINGS[0],
       availableOrderings: Object.freeze(AVAILABLE_ORDERINGS)
     }
   },
@@ -198,25 +200,22 @@ export default {
       } catch {
         return machineName
       }
+    },
+    updateDownloadProgress (percent) {
+      this.downloadProgress = percent
     }
   }
 }
 </script>
 
 <style scoped>
-.TestPage {
-  flex: 1;
-  display: flex;
-  position: relative;
-}
-
-.TestPage > div {
-  min-height: 10vh;
-  width: 100%;
+.SearchPage {
+  flex-grow: 1;
+  padding: 3rem 0 0;
 }
 .SearchPage .SearchBar {
   max-width: 53rem;
-  margin: 3rem auto 0;
+  margin: 0 auto;
 }
 .Filters {
   margin-top: 1rem;
