@@ -47,7 +47,7 @@
           @input="$v.message.$touch()"
           @blur="$v.message.$touch()"
         />
-        <vue-recaptcha
+        <VueRecaptcha
           v-if="isAvailable"
           ref="recaptcha"
           size="invisible"
@@ -104,6 +104,22 @@ export default {
       name: '',
       email: '',
       message: ''
+    }
+  },
+  head () {
+    return {
+      title: 'Contato',
+      titleTemplate: 'xraM-Memory - %s',
+      script: [
+        {
+          type: 'text/javascript',
+          src:
+            'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit',
+          async: true,
+          defer: true,
+          body: false
+        }
+      ]
     }
   },
   computed: {
@@ -219,22 +235,6 @@ export default {
       this.error = null
       this.success = false
       this.isSending = false
-    }
-  },
-  head () {
-    return {
-      title: 'Contato',
-      titleTemplate: 'xraM-Memory - %s',
-      script: [
-        {
-          type: 'text/javascript',
-          src:
-            'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit',
-          async: true,
-          defer: true,
-          body: false
-        }
-      ]
     }
   },
   validations: {

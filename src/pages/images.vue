@@ -18,7 +18,7 @@
             v-for="album in albums"
             :key="album.album_id"
             :item-link="linkFor(album)"
-            :image="imageFor(album)"
+            :image-u-r-i="imageFor(album)"
             :label="labelFor(album)"
           >
             <h3 slot="title">
@@ -73,6 +73,9 @@ export default {
       albumObjects: []
     }
   },
+  head: {
+    title: 'xraM-Memory - Imagens'
+  },
   computed: {
     hasAlbums () {
       return this.albums.length > 0
@@ -97,10 +100,6 @@ export default {
     imageFor (item) {
       return item.cover
     },
-    titleFor (item) {
-      return item.name
-    },
-
     linkFor (item) {
       return {
         name: 'album-album_id',
@@ -109,9 +108,6 @@ export default {
         }
       }
     }
-  },
-  head: {
-    title: 'xraM-Memory - Imagens'
   }
 }
 </script>

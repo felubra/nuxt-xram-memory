@@ -43,7 +43,7 @@
 export default {
   name: 'Card',
   props: {
-    image: {
+    imageURI: {
       type: String,
       default: () => ''
     },
@@ -65,18 +65,26 @@ export default {
     }
   },
   computed: {
+    /**
+     * Retorna URL absoluta limpa para o source de uma imagem.
+     */
     imageSrc () {
       try {
-        if (this.image.startsWith('/')) {
-          return this.$utils.sanitizeOnlyText(this.$utils.getMediaUrl(this.image))
+        let uri = this.imageURI
+        if (uri.startsWith('/')) {
+          // É um caminho relativo, transforme-o numa url absoluta
+          uri = this.$utils.getMediaUrl(uri)
         }
-        return this.$utils.sanitizeOnlyText(this.image)
+        return this.$utils.sanitizeOnlyText(uri)
       } catch {
         return ''
       }
     }
   },
   methods: {
+    /**
+     * Remove o elemento-alvo de um evento error
+     */
     removeImage (e) {
       e.target.remove()
     }

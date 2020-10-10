@@ -1,7 +1,7 @@
 <template>
   <client-only>
     <LocalSearchBase
-      v-slot:default="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
+      v-slot="{searchResults, resultCount, lastSearchTime, isLoading, hasError}"
       :order-by="orderBy"
       class="Page SearchPage"
       :initial-state="initialState"
@@ -33,10 +33,10 @@
         >
           <div class="SearchBar">
             <LocalSearchInput
-              component-id="query"
+              field-name="query"
               placeholder="Pesquisar no acervo"
             >
-              <template v-slot:suffix>
+              <template #suffix>
                 <i class="material-icons">search</i>
               </template>
             </LocalSearchInput>

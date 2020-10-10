@@ -7,14 +7,14 @@
     />
     <Menu />
 
-    <fixed-header :fixed.sync="navBarFixed">
+    <FixedHeader :fixed.sync="navBarFixed">
       <header class="MainHeader">
         <Navbar class="MainNavBar" />
       </header>
       <client-only>
         <resize-sensor @resize="setSpacerHeight" />
       </client-only>
-    </fixed-header>
+    </FixedHeader>
     <nuxt />
     <Footer />
   </div>
@@ -43,6 +43,13 @@ export default {
       ...mapState(['menuVisible'])
     }
   },
+  head () {
+    return {
+      bodyAttrs: {
+        'menu-visible': this.menuVisible()
+      }
+    }
+  },
   mounted () {
     const isBot =
       navigator &&
@@ -67,13 +74,6 @@ export default {
   methods: {
     setSpacerHeight ({ height }) {
       this.spacerHeight = height
-    }
-  },
-  head () {
-    return {
-      bodyAttrs: {
-        'menu-visible': this.menuVisible()
-      }
     }
   }
 }

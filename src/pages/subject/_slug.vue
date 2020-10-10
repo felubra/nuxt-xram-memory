@@ -54,18 +54,15 @@ export default {
       subjectItems: []
     }
   },
-  computed: {
-    description () {
-      return this.$utils.sanitize(this.subject.description)
-    },
-    cover () {
-      return this.$utils.getMediaUrl(this.subject.big_cover)
-    }
-  },
   head () {
     return {
       title: this.subject.name,
       titleTemplate: 'xraM-Memory - Assunto: %s'
+    }
+  },
+  computed: {
+    description () {
+      return this.$utils.sanitize(this.subject.description)
     }
   }
 }

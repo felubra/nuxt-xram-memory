@@ -37,6 +37,15 @@ export default {
       })
     }
   },
+  head () {
+    return {
+      title: this.title,
+      titleTemplate: 'xraM-Memory - %s',
+      bodyAttrs: {
+        class: 'Navbar--no-logo'
+      }
+    }
+  },
   computed: {
     title () {
       return this.error.statusCode === 404
@@ -66,15 +75,6 @@ export default {
         return keywords
       } catch {
         return []
-      }
-    }
-  },
-  head () {
-    return {
-      title: this.title,
-      titleTemplate: 'xraM-Memory - %s',
-      bodyAttrs: {
-        class: 'Navbar--no-logo'
       }
     }
   }

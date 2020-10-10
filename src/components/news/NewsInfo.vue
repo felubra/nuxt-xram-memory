@@ -87,7 +87,7 @@
           @error="changeImagePlaceholder"
         >
           <template
-            v-slot:placeholder
+            #placeholder
             class="image-slot"
           >
             <div class="image-slot">
@@ -147,17 +147,6 @@ export default {
   computed: {
     teaser () {
       return this.newsItem.teaser
-    },
-    keywords () {
-      try {
-        return (
-          this.newsItem.keywords &&
-          this.newsItem.keywords.length &&
-          this.newsItem.keywords
-        )
-      } catch {
-        return []
-      }
     },
     subjects () {
       try {

@@ -15,7 +15,7 @@
       placeholder="Pesquisar no acervo"
       @change="handleSearch"
     >
-      <template v-slot:suffix>
+      <template #suffix>
         <nuxt-link
           :to="{
             name: 'search',
@@ -57,13 +57,6 @@ export default {
     TeaserBlock,
     Logo
   },
-  async fetch ({ store }) {
-    if (store.getters.featuredPages.length === 0) {
-      try {
-        await store.dispatch('fetchFeaturedPages')
-      } catch {} // eslint-disable-line no-empty
-    }
-  },
   async asyncData ({ $axios }) {
     try {
       const tagCloudAggregations = await $axios.$get(
@@ -84,6 +77,19 @@ export default {
       tagCloudAggregations: []
     }
   },
+  async fetch ({ store }) {
+    if (store.getters.featuredPages.length === 0) {
+      try {
+        await store.dispatch('fetchFeaturedPages')
+      } catch {} // eslint-disable-line no-empty
+    }
+  },
+  head: {
+    title: 'xraM-Memory',
+    bodyAttrs: {
+      class: 'page--index'
+    }
+  },
   computed: {
     ...mapGetters(['featuredPages']),
     featuredPage () {
@@ -100,12 +106,6 @@ export default {
           }
         })
       }
-    }
-  },
-  head: {
-    title: 'xraM-Memory',
-    bodyAttrs: {
-      class: 'page--index'
     }
   }
 }

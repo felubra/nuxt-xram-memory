@@ -33,15 +33,15 @@ export default {
   data () {
     return { staticPage: {} }
   },
-  computed: {
-    theBody () {
-      return this.$utils.sanitize(this.staticPage.body)
-    }
-  },
   head () {
     return {
       title: this.staticPage.title,
       titleTemplate: 'xraM-Memory - %s'
+    }
+  },
+  computed: {
+    theBody () {
+      return this.$utils.sanitize(this.staticPage.body)
     }
   }
 }

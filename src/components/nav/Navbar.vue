@@ -12,7 +12,7 @@
         v-for="(page, index) in pageLinks()"
         :key="index"
         class="Navbar__Item"
-        :to="urlOrRoute(page)"
+        :to="$utils.urlOrRoute(page)"
       >
         {{ page.title }}
       </nuxt-link>
@@ -24,7 +24,7 @@
 <script>
 import Logo from '@/components/nav/Logo'
 import NavbarControls from '@/components/nav/NavbarControls'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import ClickOutside from 'vue-click-outside'
 
 export default {
@@ -51,24 +51,8 @@ export default {
       }
     }
   },
-  data () {
-    return {
-      searchInput: '',
-      isMenuItensObfuscated: false,
-      hasLogoLoaded: false
-    }
-  },
   computed: {
     ...mapGetters(['pageLinks'])
-  },
-  methods: {
-    menuToggle () {
-      this.toggleMenu()
-    },
-    urlOrRoute (x) {
-      return this.$utils.urlOrRoute(x)
-    },
-    ...mapActions(['toggleMenu', 'hideMenu'])
   }
 }
 </script>

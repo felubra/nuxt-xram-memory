@@ -39,7 +39,6 @@
       </section>
       <section class="AllSubjects">
         <SubjectPicker
-          :initial-selected-initial="initialSelectedInitial"
           :initial-subjects="initialSubjects"
           :initials="subjectInitials"
         />
@@ -86,7 +85,6 @@ import Microtext from '~/components/common/Microtext'
 import SubjectPicker from '~/components/SubjectPicker'
 import Card from '~/components/common/Card'
 import { TAGCLOUD_NUM_KEYWORDS } from '~/config/constants'
-const smartTruncate = require('smart-truncate')
 
 export default {
   name: 'SubjectsPage',
@@ -100,14 +98,14 @@ export default {
     let featuredSubjects
     let subjectInitials
     let initialSubjects
-    let initialSelectedInitial
+    let firstSelectedInitial
     let tagCloudAggregations
     try {
       subjectInitials = await $axios.$get('api/v1/subjects/initials')
-      initialSelectedInitial = subjectInitials[0] || ''
-      if (initialSelectedInitial) {
+      firstSelectedInitial = subjectInitials[0] || ''
+      if (firstSelectedInitial) {
         initialSubjects = await $axios.$get(
-          `api/v1/subjects/initial/${initialSelectedInitial}`
+          `api/v1/subjects/initial/${firstSelectedInitial}`
         )
       } else {
         initialSubjects = []
@@ -135,7 +133,7 @@ export default {
       featuredSubjects,
       subjectInitials,
       initialSubjects,
-      initialSelectedInitial,
+      firstSelectedInitial,
       tagCloudAggregations
     }
   },
@@ -146,6 +144,9 @@ export default {
       initialSubjects: [],
       tagCloudAggregations: []
     }
+  },
+  head: {
+    title: 'xraM-Memory - Assuntos'
   },
   computed: {
     hasData () {
@@ -168,9 +169,6 @@ export default {
     titleFor (item) {
       return item.name
     },
-    teaserFor (item) {
-      return smartTruncate(item.teaser, 180)
-    },
     linkFor (item) {
       return {
         name: 'subject-slug',
@@ -179,9 +177,6 @@ export default {
         }
       }
     }
-  },
-  head: {
-    title: 'xraM-Memory - Assuntos'
   }
 }
 </script>

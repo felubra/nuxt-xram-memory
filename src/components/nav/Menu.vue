@@ -13,7 +13,7 @@
         <nuxt-link
           :title="page.title"
           :alt="`Clique para visitar a página '${page.title}'`"
-          :to="urlOrRoute(page)"
+          :to="$utils.urlOrRoute(page)"
         >
           {{ page.title }}
         </nuxt-link>
@@ -32,7 +32,7 @@
           <nuxt-link
             :title="page.title"
             :alt="`Clique para visitar a página '${page.title}'`"
-            :to="urlOrRoute(page)"
+            :to="$utils.urlOrRoute(page)"
           >
             {{ page.title }}
           </nuxt-link>
@@ -58,13 +58,7 @@ export default {
     ...mapGetters(['pageLinks'])
   },
   methods: {
-    ...mapActions(['toggleMenu']),
-    urlOrRoute (x) {
-      return this.$utils.urlOrRoute(x)
-    },
-    keyForLink (item) {
-      return typeof item.url === 'object' ? item.url.name : item.url
-    }
+    ...mapActions(['toggleMenu'])
   }
 }
 </script>

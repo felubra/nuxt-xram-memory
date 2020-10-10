@@ -160,6 +160,15 @@ export default {
   data () {
     return { document: {} }
   },
+  head () {
+    return {
+      title: this.document.name,
+      titleTemplate: 'xraM-Memory - Documento: %s',
+      bodyAttrs: {
+        class: 'page--full-screen'
+      }
+    }
+  },
   computed: {
     documentIsPDF () {
       return this.document.mime_type === 'application/pdf'
@@ -227,15 +236,6 @@ export default {
     },
     newsRelated () {
       return this.document.news_items.length && this.document.news_items
-    }
-  },
-  head () {
-    return {
-      title: this.document.name,
-      titleTemplate: 'xraM-Memory - Documento: %s',
-      bodyAttrs: {
-        class: 'page--full-screen'
-      }
     }
   }
 }

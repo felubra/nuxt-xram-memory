@@ -70,10 +70,6 @@ export default {
     initialSubjects: {
       type: Array,
       default: () => []
-    },
-    initialSelectedInitial: {
-      type: String,
-      default: 'A'
     }
   },
   data () {

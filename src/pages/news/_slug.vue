@@ -8,7 +8,7 @@
             @error="changeImagePlaceholder"
           >
             <template
-              v-slot:placeholder
+              #placeholder
               class="image-slot"
             >
               <div class="image-slot">
@@ -61,6 +61,12 @@ export default {
       imagePlaceholder: 'Carregando...'
     }
   },
+  head () {
+    return {
+      title: this.newsItem.title,
+      titleTemplate: 'xraM-Memory - %s'
+    }
+  },
   computed: {
     theTitle () {
       return this.$utils.sanitize(this.newsItem.title)
@@ -68,44 +74,11 @@ export default {
     theImage () {
       const urlVal = this.$utils.sanitize(this.newsItem.thumbnails.news_page)
       return urlVal ? this.$utils.getMediaUrl(urlVal) : ''
-    },
-    imageLink () {
-      try {
-        return {
-          name: 'document-document_id',
-          params: {
-            document_id: this.newsItem.image_capture.image_document.document_id
-          }
-        }
-      } catch {
-        return null
-      }
-    },
-    pdfUrl () {
-      try {
-        return (
-          this.newsItem.pdf_captures &&
-          this.newsItem.pdf_captures.map(capture => {
-            return {
-              document_id: capture.pdf_document.document_id,
-              title: this.captureNameAndSize(capture)
-            }
-          })[0]
-        )
-      } catch {
-        return ''
-      }
     }
   },
   methods: {
     changeImagePlaceholder () {
       this.imagePlaceholder = 'Falha ao carregar a imagem.'
-    }
-  },
-  head () {
-    return {
-      title: this.newsItem.title,
-      titleTemplate: 'xraM-Memory - %s'
     }
   }
 }

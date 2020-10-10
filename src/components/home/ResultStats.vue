@@ -29,13 +29,9 @@ export default {
   },
   computed: {
     resultStats () {
-      try {
-        return `${this.totalResults} ${
-          this.totalResults > 1 ? 'resultados' : 'resultado'
-        } em ${this.time.toFixed(2)}ms`
-      } catch {
-        return ''
-      }
+      const resultsLabel = this.totalResults > 1 ? 'resultados' : 'resultado'
+      const meaningfulTime = this.time > 0 ? ` em ${this.time.toFixed(2)}ms` : ''
+      return `${this.totalResults} ${resultsLabel + meaningfulTime}`
     }
   }
 }
@@ -46,9 +42,7 @@ export default {
 }
 .ResultsCounter.microtext {
   margin-right: 1rem;
-
 }
-
 .ResultStats {
   display: flex;
   flex-direction: column;

@@ -37,6 +37,15 @@ export default {
       album: {}
     }
   },
+  head () {
+    return {
+      title: this.album.name,
+      titleTemplate: 'xraM-Memory - Álbum: %s',
+      bodyAttrs: {
+        class: 'page--full-screen'
+      }
+    }
+  },
   computed: {
     images () {
       return this.album.photos.map(photo => {
@@ -46,15 +55,6 @@ export default {
           description: photo.description || ' '
         }
       })
-    }
-  },
-  head () {
-    return {
-      title: this.album.name,
-      titleTemplate: 'xraM-Memory - Álbum: %s',
-      bodyAttrs: {
-        class: 'page--full-screen'
-      }
     }
   }
 }

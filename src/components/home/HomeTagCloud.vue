@@ -26,19 +26,19 @@ export default {
   },
   computed: {
     hasData () {
-      return this.aggregations && this.aggregations.length
+      return Array.isArray(this.aggregations) && this.aggregations.length
     }
   },
   methods: {
     keywords (aggregations) {
-      if (!aggregations) {
-        return []
-      }
-      const keywordsStdDeviation = deviation(
-        aggregations,
-        keyword => keyword.news_count
-      )
       try {
+        if (!aggregations) {
+          throw new Error()
+        }
+        const keywordsStdDeviation = deviation(
+          aggregations,
+          keyword => keyword.news_count
+        )
         return aggregations.map(keyword => {
           return {
             text: keyword.name,

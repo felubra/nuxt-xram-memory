@@ -17,7 +17,7 @@
         class="item"
         :item-link="linkFor(item)"
         :label="labelFor(item)"
-        :image="imageFor(item)"
+        :image-u-r-i="imageFor(item)"
         :teaser="teaserFor(item)"
         :title="titleFor(item)"
       >

@@ -6,16 +6,14 @@
       :options="getViewerOptions()"
       @inited="onViewerStarted"
     >
-      <template>
-        <img
-          v-for="image in images"
-          :key="image.src"
-          :alt="image.description"
-          class="hidden"
-          :src="image.thumbnailSrc"
-          :originalURL="image.src"
-        >
-      </template>
+      <img
+        v-for="image in images"
+        :key="image.src"
+        :alt="image.description"
+        class="hidden"
+        :src="image.thumbnailSrc"
+        :originalURL="image.src"
+      >
     </Viewer>
   </div>
 </template>
@@ -80,10 +78,10 @@ export default {
         navbar: true,
         toolbar: {
           zoomIn: { show: true },
-          zoomOut: { show: true },
-          prev: { show: true },
+          prev: { show: this.images.length > 1 },
           oneToOne: { show: true, size: 'large' },
-          next: { show: true }
+          next: { show: this.images.length > 1 },
+          zoomOut: { show: true }
         },
         tooltip: true,
         movable: true,

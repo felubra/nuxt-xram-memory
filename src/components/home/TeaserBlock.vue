@@ -1,7 +1,7 @@
 <template>
   <section
     v-if="teaser"
-    :class="{'TeaserBlock': true, 'TeaserBlock--home': home}"
+    class="TeaserBlock"
   >
     <!-- eslint-disable vue/no-v-html -->
     <div
@@ -37,13 +37,7 @@ export default {
   props: {
     pageItem: {
       type: Object,
-      default: function () {
-        return {}
-      }
-    },
-    home: {
-      type: Boolean,
-      default: true
+      required: true
     },
     showLink: {
       type: Boolean,
@@ -58,17 +52,9 @@ export default {
     }
   },
   computed: {
-    teaser () {
-      return (
-        this.pageItem.teaser !== undefined && this.$utils.sanitize(this.pageItem.teaser)
-      )
-    },
-    slug () {
-      return this.pageItem.url !== undefined && this.$utils.sanitize(this.pageItem.url)
-    },
-    teaserText () {
-      return this.$utils.sanitize(this.pageItem.teaser_text) || 'Saiba mais'
-    }
+    teaser () { return this.$utils.sanitize(this.pageItem.teaser) },
+    slug () { return this.$utils.sanitize(this.pageItem.url) },
+    teaserText () { return this.$utils.sanitize(this.pageItem.teaser_text) || 'Saiba mais' }
   }
 }
 </script>

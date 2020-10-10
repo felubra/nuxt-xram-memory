@@ -14,9 +14,9 @@
       </p>
       <div class="links">
         <nuxt-link
-          v-for="(page, index) in footerLinks"
+          v-for="(page, index) in pageLinks('menu-footer')"
           :key="index"
-          :to="urlOrRoute(page)"
+          :to="$utils.urlOrRoute(page)"
         >
           {{ page.title }}
         </nuxt-link>
@@ -33,15 +33,7 @@ export default {
     Logo
   },
   computed: {
-    footerLinks () {
-      return this.pageLinks('menu-footer')
-    },
     ...mapGetters(['pageLinks'])
-  },
-  methods: {
-    urlOrRoute (x) {
-      return this.$utils.urlOrRoute(x)
-    }
   }
 }
 </script>
@@ -115,4 +107,5 @@ p.by a {
     flex-direction: row;
   }
 }
+
 </style>
