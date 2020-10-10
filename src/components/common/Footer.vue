@@ -7,7 +7,7 @@
         <strong>xraM-Memory</strong>
       </p>
       <p class="version">
-        Versão 0.5.6
+        Versão {{ $utils.version }}
       </p>
       <p class="by">
         <a href="https://br.linkedin.com/in/felubra">Desenvolvido por Felipe Lube Bragança</a>
