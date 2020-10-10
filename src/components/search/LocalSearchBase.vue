@@ -198,10 +198,10 @@ export default {
         // TODO: mover o download do índice para a webworker
         this.indexState = DOWNLOADING
 
-        const onDownloadProgress = progress => {
-          this.indexDownloadProgress = (progress.loaded / progress.total) * 100
-        }
         if (this.indexURL) {
+          const onDownloadProgress = progress => {
+            this.indexDownloadProgress = ((progress.loaded / progress.total) * 100).toFixed(2)
+          }
           const serializedIndex = await this.$axios.$get(this.indexURL, {
             onDownloadProgress
           })
