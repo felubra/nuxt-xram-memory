@@ -8,6 +8,7 @@
         hasLoaded,
         hasError,
         isLoading,
+        isDownloading,
         lastSearchTime,
         indexDownloadProgress
       }"
@@ -62,6 +63,9 @@ export default {
   computed: {
     isLoading () {
       return this.indexState === LOADING
+    },
+    isDownloading () {
+      return this.indexState === DOWNLOADING
     },
     hasLoaded () {
       return this.indexState === LOADED
