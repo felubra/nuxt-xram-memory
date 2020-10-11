@@ -59,9 +59,8 @@ export default {
   },
   async asyncData ({ $api: { Keywords } }) {
     try {
-      const tagCloudAggregations = await Keywords.all(TAGCLOUD_NUM_KEYWORDS)
       return {
-        tagCloudAggregations
+        tagCloudAggregations: (await Keywords.all(TAGCLOUD_NUM_KEYWORDS))
       }
     } catch {
       return {
@@ -73,13 +72,6 @@ export default {
     return {
       searchQuery: '',
       tagCloudAggregations: []
-    }
-  },
-  async fetch ({ store }) {
-    if (store.getters.featuredPages.length === 0) {
-      try {
-        await store.dispatch('fetchFeaturedPages')
-      } catch {} // eslint-disable-line no-empty
     }
   },
   head: {
@@ -96,7 +88,7 @@ export default {
   },
   methods: {
     handleSearch (searchQuery) {
-      if (searchQuery && searchQuery.trim()) {
+      if (searchQuery.trim()) {
         this.$router.push({
           name: 'search',
           query: {

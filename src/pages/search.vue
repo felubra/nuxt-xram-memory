@@ -119,7 +119,7 @@ import CollapsibleContainer from '@/components/common/CollapsibleContainer'
 import { CONTENT_TYPE_LABELS, AVAILABLE_ORDERINGS } from '@/config/constants'
 
 export default {
-  name: 'TestPage',
+  name: 'SearchPage',
   components: {
     LocalSearchBase,
     LocalSearchInput,

@@ -12,7 +12,7 @@
       v-for="(page, index) in pageLinks('menu-controls')"
       :key="index"
       class="Navbar__Item"
-      :to="urlOrRoute(page)"
+      :to="$utils.urlOrRoute(page)"
     >
       <i class="material-icons">{{ page.icon }}</i>
     </nuxt-link>
@@ -30,12 +30,7 @@ export default {
     ...mapGetters(['pageLinks']),
     ...mapState(['menuVisible'])
   },
-  methods: {
-    urlOrRoute (x) {
-      return this.$utils.urlOrRoute(x)
-    },
-    ...mapActions(['toggleMenu'])
-  }
+  methods: mapActions(['toggleMenu'])
 }
 </script>
 

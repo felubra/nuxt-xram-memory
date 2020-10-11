@@ -51,9 +51,7 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters(['pageLinks'])
-  }
+  computed: mapGetters(['pageLinks'])
 }
 </script>
 

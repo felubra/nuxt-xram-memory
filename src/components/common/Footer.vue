@@ -32,9 +32,7 @@ export default {
   components: {
     Logo
   },
-  computed: {
-    ...mapGetters(['pageLinks'])
-  }
+  computed: mapGetters(['pageLinks'])
 }
 </script>
 

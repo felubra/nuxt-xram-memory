@@ -25,7 +25,6 @@ import Navbar from '~/components/nav/Navbar'
 import Menu from '~/components/nav/Menu'
 import Footer from '~/components/common/Footer'
 import FixedHeader from 'vue-fixed-header'
-import { mapState } from 'vuex'
 import { getCookie, setCookie } from 'tiny-cookie'
 
 export default {
@@ -39,15 +38,7 @@ export default {
   data () {
     return {
       navBarFixed: false,
-      spacerHeight: 80,
-      ...mapState(['menuVisible'])
-    }
-  },
-  head () {
-    return {
-      bodyAttrs: {
-        'menu-visible': this.menuVisible()
-      }
+      spacerHeight: 80
     }
   },
   mounted () {

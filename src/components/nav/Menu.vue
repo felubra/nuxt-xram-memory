@@ -57,9 +57,7 @@ export default {
     ...mapState(['menuVisible']),
     ...mapGetters(['pageLinks'])
   },
-  methods: {
-    ...mapActions(['toggleMenu'])
-  }
+  methods: mapActions(['toggleMenu'])
 }
 </script>
 
