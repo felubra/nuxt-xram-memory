@@ -16,11 +16,8 @@
 <script>
 export default {
   name: 'LocalSearchDropDown',
+  inject: ['registerFilter', 'state'],
   props: {
-    componentId: {
-      type: String,
-      required: true
-    },
     labelFn: {
       type: Function,
       default: null
@@ -36,12 +33,7 @@ export default {
     }
   },
   created () {
-    // Fazer uma função para registrar o valor selecionado e os disponóveis
     this.registerFilter(this.fieldName)
-  },
-  inject: ['registerFilter', 'state']
+  }
 }
 </script>
-
-<style>
-</style>

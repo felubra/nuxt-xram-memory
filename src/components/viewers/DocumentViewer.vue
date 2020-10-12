@@ -6,16 +6,14 @@
       :options="getViewerOptions()"
       @inited="onViewerStarted"
     >
-      <template>
-        <img
-          v-for="image in images"
-          :key="image.src"
-          :alt="image.description"
-          class="hidden"
-          :src="image.thumbnailSrc"
-          :originalURL="image.src"
-        >
-      </template>
+      <img
+        v-for="image in images"
+        :key="image.src"
+        :alt="image.description"
+        class="hidden"
+        :src="image.thumbnailSrc"
+        :originalURL="image.src"
+      >
     </Viewer>
   </div>
 </template>
@@ -80,10 +78,10 @@ export default {
         navbar: true,
         toolbar: {
           zoomIn: { show: true },
-          zoomOut: { show: true },
-          prev: { show: true },
+          prev: { show: this.images.length > 1 },
           oneToOne: { show: true, size: 'large' },
-          next: { show: true }
+          next: { show: this.images.length > 1 },
+          zoomOut: { show: true }
         },
         tooltip: true,
         movable: true,
@@ -103,33 +101,28 @@ export default {
   }
 }
 </script>
-<style>
-.viewer-canvas.viewer-loading > img {
+
+<style lang="stylus" scoped>
+.DocumentViewer
+  flex: 1
+
+>>>.viewer-navbar
+  background: transparent
+
+>>>.viewer-title
+  color: #000
+  font-family: $sans-serif
+  font-size: 16px
+  text-shadow: 0px 0px 5px #dfdfdf
+
+>>>.viewer-fixed .viewer-title
+  color: #efefef
+  text-shadow: 0px 0px 5px #000
+
+>>>.viewer-backdrop
+  background-color: #e6e6e6
+
+>>>.viewer-canvas.viewer-loading > img
   display: none;
-}
-</style>
 
-<style lang="stylus">
-.DocumentViewer {
-  flex: 1;
-}
-.viewer-navbar {
-  background: transparent;
-}
-
-.viewer-title {
-  color: #000;
-  font-family: $sans-serif;
-  font-size: 16px;
-  text-shadow: 0px 0px 5px #dfdfdf;
-}
-
-.viewer-fixed .viewer-title {
-  color: #efefef;
-  text-shadow: 0px 0px 5px #000;
-}
-
-.viewer-backdrop {
-  background-color: #e6e6e6;
-}
 </style>

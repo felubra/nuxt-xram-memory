@@ -134,42 +134,37 @@ export default {
 }
 </script>
 
-<style>
-.D3TagCloud {
-  position: relative;
-  width: 100%;
-  min-height: 600px;
-}
-svg {
-  display: block;
-  margin: 0 auto;
-  backface-visibility: hidden;
-  perspective: 1000;
-}
+<style lang="stylus" scoped>
+.D3TagCloud
+  position: relative
+  width: 100%
+  min-height: 600px
 
-g {
-  transition: opacity 0.5s ease;
-}
+svg
+  display: block
+  margin: 0 auto
+  backface-visibility: hidden
+  perspective: 1000
 
-a.Cloud__Word > text {
-  transition: all 0.25s ease, fill 0.25s ease;
-}
+g
+  transition: opacity 0.5s ease
 
-a.Cloud__Word:focus,
-a.Cloud__Word:active,
-a.Cloud__Word:hover {
-  text-decoration: none;
-}
+a.Cloud__Word > text
+  transition: all 0.25s ease, fill 0.25s ease
 
-a.Cloud__Word:focus > text,
-a.Cloud__Word:active > text,
-a.Cloud__Word:hover > text {
-  fill: #ce5454 !important;
-}
+a.Cloud__Word
+  &:focus
+  &:active
+  &:hover
+    text-decoration: none
+    outline: none
+  &:focus > text
+  &:active > text
+  &:hover > text
+    fill: $tag-cloud-active-color !important
 
-.list-complete-enter,
-.list-complete-leave-to {
-  opacity: 0;
-  width: 0;
-}
+.list-complete-enter
+.list-complete-leave-to
+  opacity: 0
+  width: 0
 </style>
