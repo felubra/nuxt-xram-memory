@@ -47,7 +47,7 @@
           @input="$v.message.$touch()"
           @blur="$v.message.$touch()"
         />
-        <vue-recaptcha
+        <VueRecaptcha
           v-if="isAvailable"
           ref="recaptcha"
           size="invisible"
@@ -104,6 +104,22 @@ export default {
       name: '',
       email: '',
       message: ''
+    }
+  },
+  head () {
+    return {
+      title: 'Contato',
+      titleTemplate: 'xraM-Memory - %s',
+      script: [
+        {
+          type: 'text/javascript',
+          src:
+            'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit',
+          async: true,
+          defer: true,
+          body: false
+        }
+      ]
     }
   },
   computed: {
@@ -221,22 +237,6 @@ export default {
       this.isSending = false
     }
   },
-  head () {
-    return {
-      title: 'Contato',
-      titleTemplate: 'xraM-Memory - %s',
-      script: [
-        {
-          type: 'text/javascript',
-          src:
-            'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit',
-          async: true,
-          defer: true,
-          body: false
-        }
-      ]
-    }
-  },
   validations: {
     name: { required, maxLength: maxLength(255) },
     email: { required, email },
@@ -246,24 +246,21 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-h1 {
+h1
   margin-top: 0;
-}
 
-main {
+main
   font-family: $sans-serif;
-}
 
-.Contact__Form {
+.Contact__Form
   font-size: 1.2rem;
   padding: 1rem 0;
-}
 
-.v-btn.primary {
+>>>.v-btn.primary
   /** Existe um bug no vuletify que não está carregando a cor de fundo deste botão */
   background-color: $link-color-active !important;
-}
-.v-input {
+
+>>>.v-input
   padding: 24px 0;
-}
+
 </style>

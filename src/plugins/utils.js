@@ -1,6 +1,7 @@
 const xss = require('xss')
+const isString = require('lodash/isString')
 
-export default ({ $config: { mediaURL, apiURL } }, inject) => {
+export default ({ $config: { mediaURL, apiURL, version } }, inject) => {
   const getMediaUrl = function (path) {
     if (!path) {
       return
@@ -88,12 +89,12 @@ export default ({ $config: { mediaURL, apiURL } }, inject) => {
 
   /** Permita classes que são prefixadas com ql- (do Quill Editor) */
   const allowQuillClasses = classes =>
-    classes.filter(klass => klass.startsWith('ql-'))
+    classes.filter(className => className.startsWith('ql-'))
 
   const appClassesXSSFilter = xssFilterFactory(allowQuillClasses)
 
   const sanitize = (str, classes = appClassesXSSFilter) =>
-    xss(str, classes)
+    isString(str) ? xss(str, classes) : ''
 
   const sanitizeOnlyText = str =>
     sanitize(str, {
@@ -113,6 +114,7 @@ export default ({ $config: { mediaURL, apiURL } }, inject) => {
 
   inject('utils', {
     sanitize,
+    version,
     sanitizeOnlyText,
     appClassesXSSFilter,
     getMediaUrl,

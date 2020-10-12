@@ -1,13 +1,15 @@
 <template>
+  <!-- TODO: não pode ser um renderless component? -->
   <div>
     <slot
       v-bind="{
         searchResults,
         resultCount,
         clear,
-        isLoaded,
+        hasLoaded,
         hasError,
         isLoading,
+        isDownloading,
         lastSearchTime,
         indexDownloadProgress
       }"
@@ -29,6 +31,29 @@ import * as Comlink from 'comlink'
 
 export default {
   name: 'LocalSearchBase',
+  provide () {
+    const state = {}
+    Object.defineProperties(state, {
+      filterDataSources: {
+        get: () => this.filterDataSources,
+        enumerable: true
+      },
+      searchState: {
+        get: () => this.searchState,
+        set: v => (this.searchState = v),
+        enumerable: true
+      },
+      filterState: {
+        get: () => this.filterState,
+        set: v => (this.filterState = v),
+        enumerable: true
+      }
+    })
+    return {
+      state,
+      registerFilter: this.registerFilter
+    }
+  },
   props: {
     indexURL: {
       type: String,
@@ -61,9 +86,12 @@ export default {
   },
   computed: {
     isLoading () {
-      return this.indexState < LOADED
+      return this.indexState === LOADING
     },
-    isLoaded () {
+    isDownloading () {
+      return this.indexState === DOWNLOADING
+    },
+    hasLoaded () {
       return this.indexState === LOADED
     },
     hasError () {
@@ -112,6 +140,12 @@ export default {
           this.filterDataSources = await this.$worker.filterDataSources
         }
       }
+    },
+    indexDownloadProgress: {
+      handler (val) {
+        this.$emit('updateDownloadProgress', val)
+      },
+      immediate: true
     }
   },
   async created () {
@@ -155,8 +189,13 @@ export default {
      * Define o estado dos componentes com base na prop initialState
      */
     processInitialState () {
-      // Preencha o estado dos filtros com as informações passadas à prop initialstate
       if (this.initialState && this.initialState.filterState) {
+        /** Registre antecipadamente um componente de filtro neste estágio para permitir
+         * que ele, quando inserido no DOM num momento futuro, tenha estado correto.
+         */
+        Object.entries(this.initialState.filterState)
+          .forEach(([key]) => this.registerFilter(key))
+        // Preencha o estado dos filtros com as informações passadas à prop initialstate
         this.filterState = Object.assign(
           {},
           Object.entries(this.initialState.filterState)
@@ -183,10 +222,10 @@ export default {
         // TODO: mover o download do índice para a webworker
         this.indexState = DOWNLOADING
 
-        const onDownloadProgress = progress => {
-          this.indexDownloadProgress = (progress.loaded / progress.total) * 100
-        }
         if (this.indexURL) {
+          const onDownloadProgress = progress => {
+            this.indexDownloadProgress = ((progress.loaded / progress.total) * 100).toFixed(2)
+          }
           const serializedIndex = await this.$axios.$get(this.indexURL, {
             onDownloadProgress
           })
@@ -210,7 +249,6 @@ export default {
     },
     /**
      * Registra um filtro
-     * TODO: remover
      */
     registerFilter (fieldName) {
       if (!this.registeredFilters.includes(fieldName)) {
@@ -221,38 +259,13 @@ export default {
      * Limpa todos o estado dos componentes de busca.
      */
     clear () {
-      [this.searchState, this.filterState].forEach(collection => {
-        collection.forEach(key => {
-          this.$set(collection, key, null)
+      [this.searchState, this.filterState]
+        .forEach(collection => {
+          Object.keys(collection).forEach(key => {
+            this.$set(collection, key, null)
+          })
         })
-      })
-    }
-  },
-  provide () {
-    const state = {}
-    Object.defineProperties(state, {
-      filterDataSources: {
-        get: () => this.filterDataSources,
-        enumerable: true
-      },
-      searchState: {
-        get: () => this.searchState,
-        set: v => (this.searchState = v),
-        enumerable: true
-      },
-      filterState: {
-        get: () => this.filterState,
-        set: v => (this.filterState = v),
-        enumerable: true
-      }
-    })
-    return {
-      state,
-      registerFilter: this.registerFilter
     }
   }
 }
 </script>
-
-<style>
-</style>
