@@ -55,19 +55,20 @@
           @expired="onExpired"
           @verify="onCaptchaVerify"
         />
-        <v-btn
+        <el-button
           :disabled="isSending || !isAvailable"
-          color="primary"
+          type="primary"
           @click="onSubmit"
         >
           Enviar
-        </v-btn>
-        <v-btn
+        </el-button>
+        <el-button
           :disabled="isSending || !isAvailable"
+          type="text"
           @click="clearForm"
         >
           Limpar
-        </v-btn>
+        </el-button>
       </v-form>
     </main>
   </section>
