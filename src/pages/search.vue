@@ -33,7 +33,7 @@
           key="loading"
           v-loading="true"
           :items="searchResults"
-          :element-loading-text="isDownloading ? `${downloadProgress}%` : `Carregando...`"
+          :element-loading-text="isDownloading && isFinite(downloadProgress) ? `${downloadProgress}%` : `Carregando...`"
           element-loading-background="transparent"
         />
         <!-- 2o Estado: índice carregado, quando exibiremos os resultados de busca e os filtros. -->
