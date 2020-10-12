@@ -101,33 +101,28 @@ export default {
   }
 }
 </script>
-<style>
-.viewer-canvas.viewer-loading > img {
+
+<style lang="stylus" scoped>
+.DocumentViewer
+  flex: 1
+
+>>>.viewer-navbar
+  background: transparent
+
+>>>.viewer-title
+  color: #000
+  font-family: $sans-serif
+  font-size: 16px
+  text-shadow: 0px 0px 5px #dfdfdf
+
+>>>.viewer-fixed .viewer-title
+  color: #efefef
+  text-shadow: 0px 0px 5px #000
+
+>>>.viewer-backdrop
+  background-color: #e6e6e6
+
+>>>.viewer-canvas.viewer-loading > img
   display: none;
-}
-</style>
 
-<style lang="stylus">
-.DocumentViewer {
-  flex: 1;
-}
-.viewer-navbar {
-  background: transparent;
-}
-
-.viewer-title {
-  color: #000;
-  font-family: $sans-serif;
-  font-size: 16px;
-  text-shadow: 0px 0px 5px #dfdfdf;
-}
-
-.viewer-fixed .viewer-title {
-  color: #efefef;
-  text-shadow: 0px 0px 5px #000;
-}
-
-.viewer-backdrop {
-  background-color: #e6e6e6;
-}
 </style>

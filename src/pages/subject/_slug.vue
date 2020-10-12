@@ -68,46 +68,37 @@ export default {
 }
 </script>
 <style lang="stylus">
-.SubjectItemsList > .SubjectItemsList__ResultsInfo {
-  max-width: $max-width;
-  margin: 0 auto;
-  display: block;
-}
+.SubjectItemsList > .SubjectItemsList__ResultsInfo
+  max-width: $max-width
+  margin: 0 auto
+  display: block
 
-.SubjectItemsList > .masonry-container {
-  margin: 0 auto;
-}
+.SubjectItemsList > .masonry-container
+  margin: 0 auto
+
 </style>
 
 <style lang="stylus" scoped >
-section > header, section > section, section > main {
-  max-width: $max-width;
-  margin: 0 auto;
-}
+section > header, section > section, section > main
+  max-width: $max-width
+  margin: 0 auto
 
-.Subject__Description > div {
-  text-align: justify;
-  flex-basis: 750px;
-  line-height: 1.5;
-}
+.Subject__Description > div
+  text-align: justify
+  flex-basis: 750px
+  line-height: 1.5
 
-.Subject__Description > img {
-  margin: 20px;
-}
+.Subject__Description > img
+  margin: 20px
 
-.Subject__Description {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-}
+.Subject__Description
+  display: flex
+  align-items: center
+  justify-content: space-between
+  flex-direction: column
 
-.SubjectItemsList__ResultsInfo {
-}
+@media only screen and (min-width: $tablet)
+  .Subject__Description
+    flex-direction: row
 
-@media only screen and (min-width: $tablet) {
-  .Subject__Description {
-    flex-direction: row;
-  }
-}
 </style>

@@ -61,64 +61,56 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-main {
-  display: flex;
-}
+main
+  display: flex
+
 </style>
 
 <style lang="stylus">
-.BackButton {
-  z-index: 9;
-  position: absolute;
-  top: 48px;
-  left: 24px;
-}
+.BackButton
+  z-index: 9
+  position: absolute
+  top: 48px
+  left: 24px
 
-.viewer-navbar {
-  background: transparent;
-}
+.viewer-navbar
+  background: transparent
 
-.viewer-title {
-  color: #000;
-  font-family: $sans-serif;
-  font-size: 16px;
-  text-shadow: 0px 0px 5px #dfdfdf;
-}
+.viewer-title
+  color: #000
+  font-family: $sans-serif
+  font-size: 16px
+  text-shadow: 0px 0px 5px #dfdfdf
 
-.viewer-fixed .viewer-title {
-  color: #efefef;
-  text-shadow: 0px 0px 5px #000;
-}
+.viewer-fixed .viewer-title
+  color: #efefef
+  text-shadow: 0px 0px 5px #000
+
 </style>
 
 <style lang="stylus" scoped>
-.AlbumPage {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding: 0;
-}
+.AlbumPage
+  display: flex
+  flex-direction: column
+  position: relative
+  padding: 0
 
-aside {
-  flex-basis: 85px;
-}
+aside
+  flex-basis: 85px
 
-.Thumbnails {
-  display: flex;
-}
+.Thumbnails
+  display: flex
 
-.Thumbnails > img {
-  height: 75px;
-  padding: 5px;
-}
+.Thumbnails > img
+  height: 75px
+  padding: 5px
 
-.AlbumPage, main {
-  flex-grow: 1;
-}
+.AlbumPage, main
+  flex-grow: 1
 
-.AlbumInfo {
-  max-width: $max-width;
-  margin: 0 auto;
-  width: 100%;
-}
+.AlbumInfo
+  max-width: $max-width
+  margin: 0 auto
+  width: 100%
+
 </style>

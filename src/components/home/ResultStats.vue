@@ -36,19 +36,18 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
-.ResultsCounter {
-  order: 1;
-}
-.ResultsCounter.microtext {
-  margin-right: 1rem;
-}
-.ResultStats {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
+<style lang="stylus" scoped>
+.ResultStats
+  display: flex
+  flex-direction: column
+  text-align: center
+  display: flex
+  justify-content: flex-start
+  align-items: center
+
+.ResultsCounter
+  order: 1
+
+.ResultsCounter.microtext
+  margin-right: 1rem
 </style>

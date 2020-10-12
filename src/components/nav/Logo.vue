@@ -41,14 +41,12 @@ export default {
   }
 }
 </script>
-<style scoped>
-.Logo img {
-  height: 38px;
-  width: 156.27px;
-}
+<style lang="stylus" scoped>
+.Logo img
+  height: 38px
+  width: 156.27px
 
-.Logo.Logo--big img {
-  height: 56px;
-  width: 230.28px;
-}
+.Logo.Logo--big img
+  height: 56px
+  width: 230.28px
 </style>

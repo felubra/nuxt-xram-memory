@@ -102,88 +102,76 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.PageIndex {
-  margin-top: 5vh;
-}
+.PageIndex
+  margin-top: 5vh
 
-.FeaturedPage, .SearchBar {
-  margin-left: auto;
-  margin-right: auto;
-}
+.FeaturedPage, .SearchBar
+  margin-left: auto
+  margin-right: auto
 
-.PageIndex__SearchArea, .HomeTagCloud {
-  transition: margin-top 0.35s ease;
-}
+.PageIndex__SearchArea, .HomeTagCloud
+  transition: margin-top 0.35s ease
 
-.PageIndex__SearchArea {
-  margin-top: 20vh;
-}
+.PageIndex__SearchArea
+  margin-top: 20vh
 
-.PageIndex__SearchArea--searching {
-  margin-top: 1rem;
-}
+.PageIndex__SearchArea--searching
+  margin-top: 1rem
 
-.Home__Logo {
-  text-align: center;
-}
+.Home__Logo
+  text-align: center
 
-.HomeTagCloud {
-  order: 2;
-  margin-top: 17vh;
-}
+.HomeTagCloud
+  order: 2
+  margin-top: 17vh
 
-@media only screen and (min-width: 768px) {
-  .PageIndex {
-    margin-top: 20vh;
-  }
+@media only screen and (min-width: $tablet)
+  .PageIndex
+    margin-top: 20vh
 
-  .HomeTagCloud {
-    margin-top: 15vh;
-  }
-}
+  .HomeTagCloud
+    margin-top: 15vh
+
 </style>
 
 <style lang="stylus">
-.PageIndex .SearchBar {
-  max-width: 730px;
-  display: block;
-  margin: 0 auto;
-}
-.PageIndex .SearchBar input.el-input__inner {
-  transition: border-color 0.25s ease;
-  font-size: 16px;
-}
-.PageIndex .SearchBar input.el-input__inner:focus,
-.PageIndex .SearchBar input.el-input__inner:hover,
-.PageIndex .SearchBar input.el-input__inner:active {
-  border-color: $link-color;
-}
-.PageIndex .SearchBar input.el-input__inner::placeholder {
-  transition: color 0.25s ease, border-color 0.25s ease;
-  color: #888;
-}
+.PageIndex .SearchBar
+  max-width: 730px
+  display: block
+  margin: 0 auto
 
-.PageIndex .SearchBar i.el-icon-search {
-  color: $link-color;
-}
+.PageIndex .SearchBar input.el-input__inner
+  transition: border-color 0.25s ease
+  font-size: 16px
 
-.PageIndex .SearchBar .el-input__suffix {
-  display: flex;
-  align-items: center;
-  cursor: hand;
-}
+.PageIndex .SearchBar input.el-input__inner:focus
+.PageIndex .SearchBar input.el-input__inner:hover
+.PageIndex .SearchBar input.el-input__inner:active
+  border-color: $link-color
 
-.PageIndex .SearchBar .el-input__suffix a {
-  display: flex;
-}
+.PageIndex .SearchBar input.el-input__inner::placeholder
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease
+  color: #888
 
-.PageIndex .SearchBar .el-input__suffix .material-icons {
-  font-size: 18px;
-}
+.PageIndex .SearchBar i.el-icon-search
+  color: $link-color
 
-.PageIndex .SearchBar input.el-input__inner:active::placeholder,
-.PageIndex .SearchBar input.el-input__inner:hover::placeholder,
-.PageIndex .SearchBar input.el-input__inner:focus::placeholder {
-  color: #333;
-}
+.PageIndex .SearchBar .el-input__suffix
+  display: flex
+  align-items: center
+  cursor: hand
+
+.PageIndex .SearchBar .el-input__suffix a
+  display: flex
+
+.PageIndex .SearchBar .el-input__suffix .material-icons
+  font-size: 18px
+
+.PageIndex .SearchBar input.el-input__inner:active::placeholder
+.PageIndex .SearchBar input.el-input__inner:hover::placeholder
+.PageIndex .SearchBar input.el-input__inner:focus::placeholder
+  color: #333
+
 </style>

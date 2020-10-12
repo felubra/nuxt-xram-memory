@@ -59,39 +59,33 @@ export default {
 }
 </script>
 
-<style scoped>
-.TeaserBlock {
-  max-width: 40.5rem;
-  align-self: center;
-  width: 100%;
-  padding: 0 0.5rem;
-}
+<style lang="stylus" scoped>
+.TeaserBlock
+  max-width: 40.5rem
+  align-self: center
+  width: 100%
+  padding: 0 0.5rem
 
-.TeaserBlock__Link {
-  display: block;
-  text-align: center;
-}
+.TeaserBlock__Link
+  display: block
+  text-align: center
 
-.TeaserBlock__Link .microtext {
-  font-size: 14px;
-}
+.TeaserBlock__Link .microtext
+  font-size: 14px
 
-.TeaserBlock__Link--left {
-  text-align: right;
-}
+.TeaserBlock__Link--left
+  text-align: right
 
-.TeaserBlock__Link--right {
-  text-align: left;
-}
+.TeaserBlock__Link--right
+  text-align: left
 
-.TeaserBlock__Link--center {
-  text-align: center;
-}
+.TeaserBlock__Link--center
+  text-align: center
 
-.TeaserBlock__Body {
-  font-size: 1rem;
-}
-.TeaserBlock__Body.ql-editor {
-  padding: 0.75rem 0 0;
-}
+.TeaserBlock__Body
+  font-size: 1rem
+
+.TeaserBlock__Body.ql-editor
+  padding: 0.75rem 0 0
+
 </style>

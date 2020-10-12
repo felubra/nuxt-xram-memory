@@ -215,37 +215,29 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.NewsGrid {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
+.NewsGrid
+  display: flex
+  flex-wrap: wrap
+  width: 100%
+  justify-content: center
+  align-items: center
 
-.item {
-  margin: 20px;
-  width: 100%;
-  transition: all 0.25s;
-  margin-right: 10px;
-}
+.item
+  margin: 20px
+  width: 100%
+  transition: all 0.25s
+  margin-right: 10px
+  @media only screen and (min-width: $tablet)
+    width: 250px
 
-.list-complete-enter, .list-complete-leave-to {
-  opacity: 0;
-  transform: translateY(60px);
-}
+.list-complete-enter, .list-complete-leave-to
+  opacity: 0
+  transform: translateY(60px)
 
-.list-complete-leave-active {
-  position: absolute;
-}
+.list-complete-leave-active
+  position: absolute
 
-.NewspaperInfo {
-  margin-top: auto;
-}
+.NewspaperInfo
+  margin-top: auto
 
-@media only screen and (min-width: 768px) {
-  .item {
-    width: 250px;
-  }
-}
 </style>

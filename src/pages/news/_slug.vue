@@ -84,69 +84,58 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-header {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  min-height: 200px;
-  margin-bottom: 40px;
-}
+header
+  display: flex
+  align-items: center
+  flex-direction: column
+  min-height: 200px
+  margin-bottom: 40px
 
-.NewsPage {
-  display: flex;
-  flex-direction: column;
-  padding-top: 0;
-}
+.NewsPage
+  display: flex
+  flex-direction: column
+  padding-top: 0
 
-.NewsPage__Info {
-  flex-grow: 1;
-  text-align: center;
-  max-width: $max-width;
-}
+.NewsPage__Info
+  flex-grow: 1
+  text-align: center
+  max-width: $max-width
 
-.NewsPage__NewsInfo {
-  text-align: justify;
-}
+.NewsPage__NewsInfo
+  text-align: justify
 
-figure {
-  min-height: 350px;
-  transition: all 0.25s ease;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
+figure
+  min-height: 350px
+  transition: all 0.25s ease
+  display: flex
+  align-items: center
+  margin-bottom: 1rem
 
-p.microtext {
-  margin-top: auto;
-}
+p.microtext
+  margin-top: auto
 
-h1 {
-  margin: auto 0;
-}
+h1
+  margin: auto 0
 
-a.ImageLink {
-  border: solid 1px #efefef;
-  display: inline-flex;
-  padding: 2px;
-  transition: border-color 0.25s ease;
-}
+a.ImageLink
+  border: solid 1px #efefef
+  display: inline-flex
+  padding: 2px
+  transition: border-color 0.25s ease
 
-a.ImageLink:hover {
-  border-color: #a00;
-}
+a.ImageLink:hover
+  border-color: #a00
 
-.image-slot {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
+.image-slot
+  display: flex
+  align-items: center
+  flex-direction: column
+  justify-content: center
+  height: 100%
 
-@media only screen and (min-width: 960px) {
-  .NewsPage {
-    flex-direction: row;
-    justify-content: center;
-  }
-}
+@media only screen and (min-width: $desktop)
+  .NewsPage
+    flex-direction: row
+    justify-content: center
+
 </style>

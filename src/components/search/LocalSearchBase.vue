@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: não pode ser um renderless component? -->
   <div>
     <slot
       v-bind="{

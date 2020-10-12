@@ -246,24 +246,21 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-h1 {
+h1
   margin-top: 0;
-}
 
-main {
+main
   font-family: $sans-serif;
-}
 
-.Contact__Form {
+.Contact__Form
   font-size: 1.2rem;
   padding: 1rem 0;
-}
 
-.v-btn.primary {
+>>>.v-btn.primary
   /** Existe um bug no vuletify que não está carregando a cor de fundo deste botão */
   background-color: $link-color-active !important;
-}
-.v-input {
+
+>>>.v-input
   padding: 24px 0;
-}
+
 </style>

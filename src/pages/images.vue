@@ -113,52 +113,42 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-h1 {
-  margin: 0;
-}
+h1
+  margin: 0
 
-.NoAlbuns p {
-  margin: 0;
-}
+.NoAlbuns p
+  margin: 0
 
-.ImagesPage > section {
-  display: flex;
-  margin: 4rem auto;
-  max-width: $max-width;
-  flex-flow: wrap;
-}
+.ImagesPage > section
+  display: flex
+  margin: 4rem auto
+  max-width: $max-width
+  flex-flow: wrap
 
-.ImagesPage > section:first-of-type {
-  margin-top: 0;
-}
+.ImagesPage > section:first-of-type
+  margin-top: 0
 
-section > footer, section > header {
-  width: 100%;
-}
+section > footer, section > header
+  width: 100%
 
-section > footer {
-  text-align: right;
-}
+section > footer
+  text-align: right
 
-.AlbumList {
-  grid-auto-flow: row;
-  grid-template-columns: repeat(auto-fill, 250px);
-  width: 100%;
-  grid-column-gap: 20px;
-  display: grid;
-  grid-row-gap: 20px;
-  justify-content: space-evenly;
-}
+.AlbumList
+  grid-auto-flow: row
+  grid-template-columns: repeat(auto-fill, 250px)
+  width: 100%
+  grid-column-gap: 20px
+  display: grid
+  grid-row-gap: 20px
+  justify-content: space-evenly
 
-h3 {
-  font-family: $small-caps;
-  margin-top: 0.25rem;
-  font-size: 18px;
-  line-height: 25px;
-  text-align: center;
-  color: #000000;
-}
+h3
+  font-family: $small-caps
+  margin-top: 0.25rem
+  font-size: 18px
+  line-height: 25px
+  text-align: center
+  color: #000000
 
-@media only screen and (min-width: $tablet) {
-}
 </style>

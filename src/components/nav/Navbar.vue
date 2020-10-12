@@ -56,56 +56,54 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.Navbar {
-  font-family: $menu-font;
-  font-size: $text-size;
-  z-index: 900;
-  max-width: $max-width;
-  margin: 0 auto;
-  width: 100%;
-  position: relative;
-  justify-content: space-between;
-  align-items: stretch;
-  display: flex;
-  min-height: 80px;
-  padding: 0 0.5rem;
-}
+.Navbar
+  font-family: $menu-font
+  font-size: $text-size
+  z-index: 900
+  max-width: $max-width
+  margin: 0 auto
+  width: 100%
+  position: relative
+  justify-content: space-between
+  align-items: stretch
+  display: flex
+  min-height: 80px
+  padding: 0 0.5rem
+  @media only screen and (min-width: $tablet)
+    min-height: 100px
 
-.Navbar__Logo, .main-itens, .controls, .main-itens a, .controls a {
-  align-items: center;
-  display: flex;
-}
+.Navbar__Logo
+.main-itens
+.controls
+.main-itens a
+.controls a
+  align-items: center
+  display: flex
 
-.Navbar__Logo {
-  transition: opacity 0.25s ease;
-}
+.Navbar__Logo
+  transition: opacity 0.25s ease
 
-.main-itens, .controls {
-  align-items: stretch;
-}
+.main-itens
+.controls
+  align-items: stretch
 
-.main-itens a, .controls a {
-  color: #555;
-  margin: 0 0.5rem;
-  outline: none;
-  transition: color 0.25s ease;
-}
+.main-itens a
+.controls a
+  color: #555
+  margin: 0 0.5rem
+  outline: none
+  transition: color 0.25s ease
 
-nav a.nuxt-link-exact-active, nav a:hover, nav a:active, nav a:focus {
-  color: $link-color-active;
-}
+nav a
+  &.nuxt-link-exact-active
+  &:hover
+  &:active
+  &:focus
+    color: $link-color-active
 
-.main-itens {
-  display: none;
-}
+.main-itens
+  display: none
+  @media only screen and (min-width: $tablet)
+    display: flex
 
-@media only screen and (min-width: $tablet) {
-  .Navbar {
-    min-height: 100px;
-  }
-
-  .main-itens {
-    display: flex;
-  }
-}
 </style>

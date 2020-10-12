@@ -82,18 +82,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-section.ErrorPage {
-  flex-grow: 1;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
+section.ErrorPage
+  flex-grow: 1
+  text-align: center
+  display: flex
+  flex-direction: column
 
-h1 {
-  font-weight: bold;
-}
+h1
+  font-weight: bold
 
-.TagCloud {
-  margin: auto 0;
-}
+.TagCloud
+  margin: auto 0
 </style>

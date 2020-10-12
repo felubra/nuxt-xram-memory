@@ -179,73 +179,59 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.SubjectsPage > section {
-  max-width: $max-width;
-  margin: 4rem auto;
-}
+.SubjectsPage > section
+  max-width: $max-width
+  margin: 4rem auto
 
-.SubjectsPage > section.SubjectsPage__TagCloud {
-}
+.SubjectsPage > section.SubjectsPage__TagCloud
 
-.SubjectsPage > section.SubjectsPage__TagCloud > header {
-  max-width: $max-width;
-  margin: 0 auto;
-}
+.SubjectsPage > section.SubjectsPage__TagCloud > header
+  max-width: $max-width
+  margin: 0 auto
 
-.SubjectsPage > section:first-of-type {
-  margin-top: 0;
-}
+.SubjectsPage > section:first-of-type
+  margin-top: 0
 
-.SubjectsList {
-  grid-auto-flow: row;
-  grid-template-columns: repeat(auto-fill, 250px);
-  width: 100%;
-  grid-column-gap: 20px;
-  display: grid;
-  grid-row-gap: 20px;
-  justify-content: space-evenly;
-}
+.SubjectsList
+  grid-auto-flow: row
+  grid-template-columns: repeat(auto-fill, 250px)
+  width: 100%
+  grid-column-gap: 20px
+  display: grid
+  grid-row-gap: 20px
+  justify-content: space-evenly
 
-.SubjectCard {
-  transition: all 0.25s ease;
-  min-height: 275px;
-}
+.SubjectCard
+  transition: all 0.25s ease
+  min-height: 275px
 
-.SubjectCard img {
-  margin-top: auto;
-  position: relative;
-  display: inline-block;
-  filter: grayscale($grayscale-image);
-}
+.SubjectCard img
+  margin-top: auto
+  position: relative
+  display: inline-block
+  filter: grayscale($grayscale-image)
 
-.SubjectCard a:active img, .SubjectCard a:focus img, .SubjectCard a:hover img {
-  filter: none;
-}
+.SubjectCard a:active img, .SubjectCard a:focus img, .SubjectCard a:hover img
+  filter: none
 
-h3, .microtext {
-  order: -1;
-}
+h3, .microtext
+  order: -1
 
-.Card p.microtext {
-  color: #777474;
-  font-size: 12px;
-}
+.Card p.microtext
+  color: #777474
+  font-size: 12px
 
-h3 {
-  font-family: $small-caps;
-  margin-top: 0.25rem;
-  margin: 1rem;
-  font-size: 22px;
-  line-height: 25px;
-  text-align: center;
-  color: #000000;
-  word-break: break-word;
-}
+h3
+  font-family: $small-caps
+  margin-top: 0.25rem
+  margin: 1rem
+  font-size: 22px
+  line-height: 25px
+  text-align: center
+  color: #000000
+  word-break: break-word
 
-footer {
-  text-align: right;
-}
+footer
+  text-align: right
 
-@media only screen and (min-width: 768px) {
-}
 </style>

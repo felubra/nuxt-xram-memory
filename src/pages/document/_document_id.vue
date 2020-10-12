@@ -240,75 +240,66 @@ export default {
 </script>
 
 <style lang="stylus" >
-.viewer-backdrop {
+.viewer-backdrop
   background-color: #e6e6e6;
-}
+
 </style>
 
 <style lang="stylus" scoped>
-.BackButton {
-  z-index: 9;
-  position: absolute;
-  top: 48px;
-  left: 24px;
-}
+.BackButton
+  z-index: 9
+  position: absolute
+  top: 48px
+  left: 24px
 
-.DocumentPage {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-}
+.DocumentPage
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  padding: 0
 
-main {
-  display: flex;
-  flex-grow: 1;
-  min-height: 75vh;
-}
+main
+  display: flex
+  flex-grow: 1
+  min-height: 75vh
 
-aside {
-  max-width: 960px;
-  margin: 0 auto;
-  position: relative;
-  padding: 1rem;
-  width: 100%;
-}
+aside
+  max-width: 960px
+  margin: 0 auto
+  position: relative
+  padding: 1rem
+  width: 100%
 
-.NoPreview {
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
-}
+.NoPreview
+  display: flex
+  flex-grow: 1
+  align-items: center
+  justify-content: center
+  text-align: center
+  flex-direction: column
 
-.NoPreview i {
-  display: block;
-}
+.NoPreview i
+  display: block
 
-.NoPreview p > i {
-  text-align: center;
-  font-size: 72px;
-  color: #888;
-  margin: 1rem 0 0;
-}
+.NoPreview p > i
+  text-align: center
+  font-size: 72px
+  color: #888
+  margin: 1rem 0 0
 
-aside > header {
-  display: flex;
-  align-items: center;
-}
+aside > header
+  display: flex
+  align-items: center
 
-.download-area {
-  margin-left: auto;
-  color: #606266;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
+.download-area
+  margin-left: auto
+  color: #606266
+  text-align: center
+  display: flex
+  flex-direction: column
 
-.download-area p.microtext {
-  display: block;
-  margin: 0.5rem;
-}
+.download-area p.microtext
+  display: block
+  margin: 0.5rem
+
 </style>

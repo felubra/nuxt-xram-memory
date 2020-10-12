@@ -32,19 +32,17 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-p {
-  margin: 0;
-  padding: 0;
-}
+p
+  margin: 0
+  padding: 0
 
-img {
-  display: block;
-  clear: both;
-}
+img
+  display: block
+  clear: both
 
-a {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
+a
+  align-items: center
+  display: flex
+  flex-direction: column
+
 </style>
