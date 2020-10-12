@@ -39,43 +39,37 @@ export default {
 }
 </script>
 
-<style scoped>
-.CollapsibleContainer {
-  overflow: hidden;
-}
-.CollapsibleContainer > section {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.25s ease-out;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+<style lang="stylus" scoped>
+.CollapsibleContainer
+  overflow: hidden
 
-.CollapsibleContainer > section.visible {
-  max-height: 1000px;
-  overflow-y: auto;
-}
+.CollapsibleContainer > section
+  display: flex
+  flex-direction: column
+  overflow: hidden
+  max-height: 0
+  transition: max-height 0.25s ease-out
+  justify-content: center
+  flex-wrap: wrap
+  @media only screen and (min-width: $tablet)
+    flex-direction: row
+    margin-top: 2rem
+    max-height: 1000px
+    overflow: visible
 
-.CollapsibleContainer > footer {
-  text-align: right;
-  padding: 0.5rem 0;
-}
-.ShowFilters > a {
-  display: inline-flex;
-  align-items: center;
-}
+.CollapsibleContainer > section.visible
+  max-height: 1000px
+  overflow-y: auto
 
-@media only screen and (min-width: 768px) {
-  .CollapsibleContainer > section {
-    flex-direction: row;
-    margin-top: 2rem;
-    max-height: 1000px;
-    overflow: visible;
-  }
-  .ShowFilters {
-    display: none;
-  }
-}
+.CollapsibleContainer > footer
+  text-align: right
+  padding: 0.5rem 0
+
+.ShowFilters > a
+  display: inline-flex
+  align-items: center
+
+@media only screen and (min-width: $tablet)
+  .ShowFilters
+      display: none
 </style>

@@ -37,6 +37,15 @@ export default {
       })
     }
   },
+  head () {
+    return {
+      title: this.title,
+      titleTemplate: 'xraM-Memory - %s',
+      bodyAttrs: {
+        class: 'Navbar--no-logo'
+      }
+    }
+  },
   computed: {
     title () {
       return this.error.statusCode === 404
@@ -68,32 +77,20 @@ export default {
         return []
       }
     }
-  },
-  head () {
-    return {
-      title: this.title,
-      titleTemplate: 'xraM-Memory - %s',
-      bodyAttrs: {
-        class: 'Navbar--no-logo'
-      }
-    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-section.ErrorPage {
-  flex-grow: 1;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
+section.ErrorPage
+  flex-grow: 1
+  text-align: center
+  display: flex
+  flex-direction: column
 
-h1 {
-  font-weight: bold;
-}
+h1
+  font-weight: bold
 
-.TagCloud {
-  margin: auto 0;
-}
+.TagCloud
+  margin: auto 0
 </style>

@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: não pode ser um renderless component? -->
   <div>
     <slot
       v-bind="{
@@ -30,6 +31,29 @@ import * as Comlink from 'comlink'
 
 export default {
   name: 'LocalSearchBase',
+  provide () {
+    const state = {}
+    Object.defineProperties(state, {
+      filterDataSources: {
+        get: () => this.filterDataSources,
+        enumerable: true
+      },
+      searchState: {
+        get: () => this.searchState,
+        set: v => (this.searchState = v),
+        enumerable: true
+      },
+      filterState: {
+        get: () => this.filterState,
+        set: v => (this.filterState = v),
+        enumerable: true
+      }
+    })
+    return {
+      state,
+      registerFilter: this.registerFilter
+    }
+  },
   props: {
     indexURL: {
       type: String,
@@ -225,7 +249,6 @@ export default {
     },
     /**
      * Registra um filtro
-     * TODO: remover
      */
     registerFilter (fieldName) {
       if (!this.registeredFilters.includes(fieldName)) {
@@ -243,32 +266,6 @@ export default {
           })
         })
     }
-  },
-  provide () {
-    const state = {}
-    Object.defineProperties(state, {
-      filterDataSources: {
-        get: () => this.filterDataSources,
-        enumerable: true
-      },
-      searchState: {
-        get: () => this.searchState,
-        set: v => (this.searchState = v),
-        enumerable: true
-      },
-      filterState: {
-        get: () => this.filterState,
-        set: v => (this.filterState = v),
-        enumerable: true
-      }
-    })
-    return {
-      state,
-      registerFilter: this.registerFilter
-    }
   }
 }
 </script>
-
-<style>
-</style>

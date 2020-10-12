@@ -8,6 +8,8 @@ import lunr from 'elasticlunr'
 import asciiFolder from 'fold-to-ascii'
 import natsort from 'natsort'
 
+/* eslint vue/no-unused-properties: 0 */
+
 const obj = new Vue({
   data: {
     index: null,
@@ -124,7 +126,7 @@ const obj = new Vue({
     // dê suporte à linguagem portuguesa no elasticlunr
     require('lunr-languages/lunr.stemmer.support')(lunr)
     require('lunr-languages/lunr.pt')(lunr)
-    // adicione no pipline uma função para remover os acentos ao pesquisar
+    // adicione no pipeline uma função para remover os acentos ao pesquisar
     const replaceDiacritics = token => asciiFolder.foldReplacing(token)
     lunr.Pipeline.registerFunction(replaceDiacritics, 'replaceDiacritics')
   },
@@ -142,3 +144,5 @@ const obj = new Vue({
 })
 
 Comlink.expose(obj)
+
+/* eslint-enable */

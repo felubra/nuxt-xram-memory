@@ -1,6 +1,6 @@
 <template>
   <el-input
-    v-model="state.searchState[componentId]"
+    v-model="state.searchState[fieldName]"
     type="text"
     :placeholder="placeholder"
   >
@@ -15,8 +15,9 @@
 <script>
 export default {
   name: 'LocalSearchInput',
+  inject: ['state'],
   props: {
-    componentId: {
+    fieldName: {
       type: String,
       required: true
     },
@@ -24,7 +25,6 @@ export default {
       type: String,
       default: ''
     }
-  },
-  inject: ['state']
+  }
 }
 </script>

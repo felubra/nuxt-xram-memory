@@ -18,7 +18,7 @@
             v-for="album in albums"
             :key="album.album_id"
             :item-link="linkFor(album)"
-            :image="imageFor(album)"
+            :image-u-r-i="imageFor(album)"
             :label="labelFor(album)"
           >
             <h3 slot="title">
@@ -56,9 +56,9 @@ export default {
     Microtext,
     Card
   },
-  async asyncData ({ $axios }) {
+  async asyncData ({ $api: { Albums } }) {
     try {
-      const albumObjects = await $axios.$get('api/v1/albums')
+      const albumObjects = await Albums.all()
       return {
         albumObjects
       }
@@ -72,6 +72,9 @@ export default {
     return {
       albumObjects: []
     }
+  },
+  head: {
+    title: 'xraM-Memory - Imagens'
   },
   computed: {
     hasAlbums () {
@@ -97,10 +100,6 @@ export default {
     imageFor (item) {
       return item.cover
     },
-    titleFor (item) {
-      return item.name
-    },
-
     linkFor (item) {
       return {
         name: 'album-album_id',
@@ -109,60 +108,47 @@ export default {
         }
       }
     }
-  },
-  head: {
-    title: 'xraM-Memory - Imagens'
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-h1 {
-  margin: 0;
-}
+h1
+  margin: 0
 
-.NoAlbuns p {
-  margin: 0;
-}
+.NoAlbuns p
+  margin: 0
 
-.ImagesPage > section {
-  display: flex;
-  margin: 4rem auto;
-  max-width: $max-width;
-  flex-flow: wrap;
-}
+.ImagesPage > section
+  display: flex
+  margin: 4rem auto
+  max-width: $max-width
+  flex-flow: wrap
 
-.ImagesPage > section:first-of-type {
-  margin-top: 0;
-}
+.ImagesPage > section:first-of-type
+  margin-top: 0
 
-section > footer, section > header {
-  width: 100%;
-}
+section > footer, section > header
+  width: 100%
 
-section > footer {
-  text-align: right;
-}
+section > footer
+  text-align: right
 
-.AlbumList {
-  grid-auto-flow: row;
-  grid-template-columns: repeat(auto-fill, 250px);
-  width: 100%;
-  grid-column-gap: 20px;
-  display: grid;
-  grid-row-gap: 20px;
-  justify-content: space-evenly;
-}
+.AlbumList
+  grid-auto-flow: row
+  grid-template-columns: repeat(auto-fill, 250px)
+  width: 100%
+  grid-column-gap: 20px
+  display: grid
+  grid-row-gap: 20px
+  justify-content: space-evenly
 
-h3 {
-  font-family: $small-caps;
-  margin-top: 0.25rem;
-  font-size: 18px;
-  line-height: 25px;
-  text-align: center;
-  color: #000000;
-}
+h3
+  font-family: $small-caps
+  margin-top: 0.25rem
+  font-size: 18px
+  line-height: 25px
+  text-align: center
+  color: #000000
 
-@media only screen and (min-width: $tablet) {
-}
 </style>

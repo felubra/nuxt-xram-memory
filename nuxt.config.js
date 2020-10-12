@@ -82,8 +82,9 @@ module.exports = {
     { src: '@/plugins/drag-scroll', ssr: false },
     { src: '@/plugins/async-computed', ssr: false },
     { src: '@/plugins/infinite-scroll', ssr: false },
-    '@/plugins/utils',
     '@/plugins/axios',
+    '@/plugins/dataSources',
+    '@/plugins/utils',
     '@/plugins/essential-content.js'
   ],
 
@@ -109,6 +110,7 @@ module.exports = {
     progress: false
   },
   publicRuntimeConfig: {
+    version: '0.5.7',
     axios: {
       browserBaseURL: process.env.API_URL
     },

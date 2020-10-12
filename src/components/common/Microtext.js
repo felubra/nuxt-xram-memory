@@ -29,10 +29,8 @@ export default Vue.component('Microtext', {
     }
   },
   render (createElement, context) {
-    const { arrow } = context.props
-    const { arrowPosition } = context.props
-    const additionalClasses =
-      context.props.className && context.props.className.split(' ')
+    const { arrow, arrowPosition, className } = context.props
+    const additionalClasses = className.split(' ')
     if (arrow !== 'none') {
       const arrowIcon =
         arrow === 'down' || arrow === 'up'

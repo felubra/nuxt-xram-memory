@@ -70,10 +70,6 @@ export default {
     initialSubjects: {
       type: Array,
       default: () => []
-    },
-    initialSelectedInitial: {
-      type: String,
-      default: 'A'
     }
   },
   data () {
@@ -109,11 +105,11 @@ export default {
           if (!initial) {
             return
           }
-          const subjectsForInitial = await this.$axios.$get(
-            `api/v1/subjects/initial/${initial}`
-          )
+          const subjectsForInitial = await this.$api.Subjects.getByInitial(initial)
           this.$nextTick(() => (this.subjects = subjectsForInitial))
-        } catch {} // eslint-disable-line no-empty
+        } catch {
+          debugger
+        } // eslint-disable-line no-empty
       }
     },
     $route: {
@@ -144,72 +140,60 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-ul {
-  list-style: none;
-  padding: 0;
-  font-size: 22px;
-  color: #555;
-  margin: 0;
-  display: grid;
-  grid-column-gap: 1rem;
-  grid-auto-rows: max-content;
-  grid-auto-columns: max-content;
-  grid-template-columns: repeat(min-maxauto-fill, 1fr);
-  grid-template-columns: repeat(auto-fill, minmax(24px, 1fr));
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-  align-content: center;
-}
+ul
+  list-style: none
+  padding: 0
+  font-size: 22px
+  color: #555
+  margin: 0
+  display: grid
+  grid-column-gap: 1rem
+  grid-auto-rows: max-content
+  grid-auto-columns: max-content
+  grid-template-columns: repeat(min-maxauto-fill, 1fr)
+  grid-template-columns: repeat(auto-fill, minmax(24px, 1fr))
+  width: 100%
+  align-items: center
+  justify-content: center
+  justify-items: center
+  align-content: center
 
-ul > li {
-  margin: 0;
-}
+ul > li
+  margin: 0
 
-a {
-  color: #343333;
-}
+a
+  color: #343333
 
-a, header li {
-  transition: color 0.25s ease;
-}
+a, header li
+  transition: color 0.25s ease
 
-header a {
-  color: #888;
-}
+header a
+  color: #888
 
-ul > li:first-of-type {
-  margin-left: 0;
-}
+ul > li:first-of-type
+  margin-left: 0
 
-ul > li:last-of-type {
-  margin-right: 0;
-}
+ul > li:last-of-type
+  margin-right: 0
 
-ul.SubjectsList {
-  display: block;
-  column-count: 1;
-  padding: 0;
-  list-style: none;
-  font-size: 20px;
-}
+ul.SubjectsList
+  display: block
+  column-count: 1
+  padding: 0
+  list-style: none
+  font-size: 20px
+  @media only screen and (min-width: $tablet)
+    column-count: 2
 
-section.SubjectsList {
-  transition: height 0.25s ease;
-}
+section.SubjectsList
+  transition: height 0.25s ease
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
-}
+.fade-enter-active
+.fade-leave-active
+  transition: opacity 0.5s
 
-.fade-enter, .fade-leave-to { /* .fade-leave-active below version 2.1.8 */
-  opacity: 0;
-}
+.fade-enter
+.fade-leave-to
+  opacity: 0
 
-@media only screen and (min-width: $tablet) {
-  ul.SubjectsList {
-    column-count: 2;
-  }
-}
 </style>
