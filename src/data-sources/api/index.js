@@ -14,13 +14,13 @@ export default ($axios) => ({
   },
   Pages: {
     getBySlug (slug) {
-      return $axios.$get(`/api/v1/pages/${slug}`)
+      return $axios.$get(`/api/v1/page/${slug}`)
     },
     getAllPagesInMenu () {
-      return $axios.$get('api/v1/pages/in_menu')
+      return $axios.$get('api/v1/pages?filterBy=in_menu')
     },
     getAllFeatured () {
-      return $axios.$get('api/v1/pages/featured')
+      return $axios.$get('api/v1/pages?filterBy=featured')
     }
   },
   Albums: {
