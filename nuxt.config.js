@@ -1,12 +1,11 @@
-import axios from 'axios'
 const pkg = require('./package')
-const WorkerPlugin = require('worker-plugin')
+import axios from 'axios'
 
 module.exports = {
   mode: 'universal',
   srcDir: 'src/',
   generate: {
-    routes: function () {
+    routes: function() {
       const baseURL = process.env.API_URL || 'http://localhost:8000'
       const axiosInstance = axios.create({
         baseURL
@@ -78,13 +77,10 @@ module.exports = {
   ],
   plugins: [
     { src: '@/plugins/resize-sensor.js', ssr: false },
+    { src: '@/plugins/reactive-search', ssr: false },
     { src: '@/plugins/element-ui', ssr: false },
     { src: '@/plugins/drag-scroll', ssr: false },
-    { src: '@/plugins/async-computed', ssr: false },
-    { src: '@/plugins/infinite-scroll', ssr: false },
     '@/plugins/axios',
-    '@/plugins/dataSources',
-    '@/plugins/utils',
     '@/plugins/essential-content.js'
   ],
 
@@ -93,7 +89,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/dotenv', // TODO: remover
+    '@nuxtjs/dotenv',
     '@nuxtjs/axios',
     'nuxt-device-detect',
     '@nuxtjs/style-resources'
@@ -110,49 +106,27 @@ module.exports = {
     progress: false
   },
   publicRuntimeConfig: {
-    version: '0.5.7',
     axios: {
-      browserBaseURL: process.env.API_URL
-    },
-    lunrIndexURL: process.env.LUNR_INDEX_URL ||
-      'http://localhost:8000/media/lunr_index/index.json',
-    contactMessageRelayURL: process.env.CONTACT_MESSAGE_RELAY_URL ||
-      'http://localhost:3001',
-    recaptchaKey: process.env.RECAPTCHA_KEY,
-    mediaURL: process.env.MEDIA_URL ||
-      'http://localhost:8000',
-    apiURL: process.env.API_URL ||
-      'http://localhost:8000'
+      browserBaseURL: process.env.BROWSER_API_URL || process.env.API_URL
+    }
   },
   privateRuntimeConfig: {
     axios: {
-      baseURL: process.env.SSR_API_URL || process.env.API_URL
-    },
-    lunrIndexURL: process.env.SSR_LUNR_INDEX_URL ||
-      process.env.LUNR_INDEX_URL ||
-      'http://localhost:8000/media/lunr_index/index.json',
-    contactMessageRelayURL: process.env.SSR_CONTACT_MESSAGE_RELAY_URL ||
-      process.env.CONTACT_MESSAGE_RELAY_URL ||
-      'http://localhost:3001',
-    recaptchaKey: process.env.RECAPTCHA_KEY,
-    mediaURL: process.env.SSR_MEDIA_URL ||
-      process.env.MEDIA_URL ||
-      'http://localhost:8000',
-    apiURL: process.env.SSR_API_URL ||
-      process.env.API_URL ||
-      'http://localhost:8000'
+      baseURL: process.env.API_URL
+    }
+  },
+  env: {
+    CONTACT_MESSAGE_RELAY_URL:
+      process.env.CONTACT_MESSAGE_RELAY_URL || 'http://localhost:3001',
+    RECAPTCHA_KEY: process.env.RECAPTCHA_KEY,
+    MEDIA_URL: process.env.MEDIA_URL || 'http://localhost:8000',
+    API_URL: process.env.API_URL || 'http://localhost:8000',
+    ELASTIC_SEARCH_SERVER:
+      process.env.ELASTIC_SEARCH_SERVER || 'http://localhost:9200',
+    ELASTIC_SEARCH_CREDENTIALS: process.env.ELASTIC_SEARCH_CREDENTIALS
   },
   router: {
-    middleware: ['collapseMenu', 'fetchMenuItems'],
-    parseQuery: qs => {
-      // FIXME: não importe 'query-string' aqui
-      const queryString = require('query-string')
-      const parsed = queryString.parse(qs)
-      if (parsed) {
-        return parsed
-      }
-      return {}
-    }
+    middleware: ['collapseMenu', 'fetchMenuItems']
   },
   /*
   ** Build configuration
@@ -161,9 +135,6 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    terser: {
-      extractComments: false // default was LICENSES
-    },
     babel: {
       plugins: [
         [
@@ -175,13 +146,7 @@ module.exports = {
         ]
       ]
     },
-    extend (config, ctx) {
-      config.output.globalObject = 'this'
-      // suporte para webworkers
-      if (ctx.isClient) {
-        config.plugins.push(new WorkerPlugin())
-      }
-
+    extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.devtool = 'source-map'

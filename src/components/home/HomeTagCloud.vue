@@ -1,13 +1,21 @@
 <template>
-  <D3TagCloud
-    v-if="hasData"
-    :keywords="keywords(aggregations)"
-  />
+  <ReactiveComponent
+    class="ReactiveD3TagCloud--home"
+    component-id="ReactiveD3TagCloud"
+    :default-query="tagCloudQuery"
+  >
+    <template v-slot:default="{ aggregations, error }">
+      <div>
+        <D3TagCloud v-if="!error" :keywords="keywords(aggregations)" />
+      </div>
+    </template>
+  </ReactiveComponent>
 </template>
+
 
 <script>
 import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
-import { deviation } from 'd3-array'
+import { TAGCLOUD_QUERY } from '~/config/constants'
 
 export default {
   name: 'HomeTagCloud',
@@ -17,39 +25,70 @@ export default {
   props: {
     sizeDelta: {
       type: Number,
-      default: 48
-    },
-    aggregations: {
-      type: Array,
-      default: () => []
+      default: 16
     }
   },
   computed: {
-    hasData () {
-      return Array.isArray(this.aggregations) && this.aggregations.length
+    tagCloudQuery() {
+      return function() {
+        return TAGCLOUD_QUERY
+      }
     }
   },
   methods: {
-    keywords (aggregations) {
+    keywords(aggregations) {
+      if (!aggregations) {
+        return []
+      }
+      const keywordsStdDeviation = this.keywordsStdDeviation(aggregations)
       try {
-        if (!aggregations) {
-          throw new Error()
-        }
-        const keywordsStdDeviation = deviation(
-          aggregations,
-          keyword => keyword.news_count
-        )
-        return aggregations.map(keyword => {
+        return aggregations.keywords.names.buckets.map(keyword => {
           return {
-            text: keyword.name,
-            slug: keyword.slug,
-            size: (keyword.news_count / keywordsStdDeviation) * this.sizeDelta
+            text: keyword.key,
+            slug: keyword.slug.buckets[0].key,
+            size: (keyword.doc_count / keywordsStdDeviation) * this.sizeDelta
           }
         })
       } catch {
         return []
       }
+    },
+    keywordsStdDeviation(aggregations) {
+      function standardDeviation(values) {
+        const avg = average(values)
+
+        const squareDiffs = values.map(function(value) {
+          const diff = value - avg
+          const sqrDiff = Math.sqrt((diff * diff) ^ 2)
+          return sqrDiff
+        })
+
+        const avgSquareDiff = average(squareDiffs)
+
+        const stdDev = Math.sqrt(avgSquareDiff)
+        return stdDev
+      }
+
+      function average(data) {
+        const sum = data.reduce(function(sum, value) {
+          return sum + value
+        }, 0)
+
+        const avg = sum / data.length
+        return avg
+      }
+      try {
+        return standardDeviation(
+          aggregations.keywords.names.buckets.map(keyword => keyword.doc_count)
+        )
+      } catch {
+        return 1
+      }
     }
   }
 }
 </script>
+
+
+<style scoped>
+</style>

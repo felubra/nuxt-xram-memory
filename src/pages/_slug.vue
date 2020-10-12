@@ -1,14 +1,15 @@
 <template>
   <Section class="Page CenteredPage">
     <header>
-      <Microtext>{{ staticPage.teaser_text }}</Microtext>
-      <h1>{{ staticPage.title }}</h1>
+      <Microtext>{{staticPage.teaser_text}}</Microtext>
+      <h1>{{staticPage.title}}</h1>
     </header>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <main v-html="theBody" />
+    <main v-html="theBody"></main>
   </Section>
 </template>
 <script>
+import { sanitize } from '@/utils/'
 // Importe os estilos padrão do quill para formatar corretamente o nosso html feito com este editor
 import 'quill/assets/core.styl'
 import Microtext from '@/components/common/Microtext'
@@ -17,11 +18,25 @@ export default {
   components: {
     Microtext
   },
-  async asyncData ({ $api: { Pages }, route, error }) {
+  head() {
+    return {
+      title: this.staticPage.title,
+      titleTemplate: 'xraM-Memory - %s'
+    }
+  },
+  data() {
+    return { staticPage: {} }
+  },
+  computed: {
+    theBody() {
+      return sanitize(this.staticPage.body)
+    }
+  },
+  async asyncData({ $axios, route, error }) {
     const { slug } = route.params
     if (slug) {
       try {
-        const staticPage = await Pages.getBySlug(slug)
+        const staticPage = await $axios.$get(`/api/v1/pages/${slug}`)
         return { staticPage }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500
@@ -29,20 +44,6 @@ export default {
       }
     }
     return error({ statusCode: 400 })
-  },
-  data () {
-    return { staticPage: {} }
-  },
-  head () {
-    return {
-      title: this.staticPage.title,
-      titleTemplate: 'xraM-Memory - %s'
-    }
-  },
-  computed: {
-    theBody () {
-      return this.$utils.sanitize(this.staticPage.body)
-    }
   }
 }
 </script>

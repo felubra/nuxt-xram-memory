@@ -6,16 +6,8 @@
     </header>
 
     <main>
-      <v-alert
-        v-if="alertText"
-        :type="alertType"
-      >
-        {{ alertText }}
-      </v-alert>
-      <v-form
-        ref="form"
-        @input="resetSuccess"
-      >
+      <v-alert v-if="alertText" :type="alertType">{{alertText}}</v-alert>
+      <v-form ref="form" @input="resetSuccess">
         <v-text-field
           v-model="name"
           autocomplete="name"
@@ -25,7 +17,7 @@
           :error-messages="nameErrors"
           @input="$v.name.$touch()"
           @blur="$v.name.$touch()"
-        />
+        ></v-text-field>
         <v-text-field
           v-model="email"
           autocomplete="email"
@@ -36,7 +28,7 @@
           :error-messages="emailErrors"
           @input="$v.email.$touch()"
           @blur="$v.email.$touch()"
-        />
+        ></v-text-field>
         <v-textarea
           v-model="message"
           autocomplete="off"
@@ -46,28 +38,17 @@
           :error-messages="messageErrors"
           @input="$v.message.$touch()"
           @blur="$v.message.$touch()"
-        />
-        <VueRecaptcha
+        ></v-textarea>
+        <vue-recaptcha
           v-if="isAvailable"
           ref="recaptcha"
           size="invisible"
           :sitekey="recaptchaKey"
           @expired="onExpired"
           @verify="onCaptchaVerify"
-        />
-        <v-btn
-          :disabled="isSending || !isAvailable"
-          color="primary"
-          @click="onSubmit"
-        >
-          Enviar
-        </v-btn>
-        <v-btn
-          :disabled="isSending || !isAvailable"
-          @click="clearForm"
-        >
-          Limpar
-        </v-btn>
+        ></vue-recaptcha>
+        <v-btn :disabled="isSending || !isAvailable" color="primary" @click="onSubmit">Enviar</v-btn>
+        <v-btn :disabled="isSending || !isAvailable" @click="clearForm">Limpar</v-btn>
       </v-form>
     </main>
   </section>
@@ -87,26 +68,73 @@ export default {
       import(/* webpackChunkName: "vue-recaptcha" */ 'vue-recaptcha')
   },
   mixins: [validationMixin],
-  async asyncData ({ $config: { contactMessageRelayURL, recaptchaKey } }) {
-    // Esta página estará disponível somente se houver uma chave para o recaptcha
-    return {
-      recaptchaKey,
-      contactMessageRelayURL
-    }
-  },
-  data () {
+  data() {
     return {
       error: null,
       success: false,
       isSending: false,
-      recaptchaKey: '',
-      contactMessageRelayURL: '',
+      isAvailable: false,
       name: '',
       email: '',
       message: ''
     }
   },
-  head () {
+  computed: {
+    recaptchaKey() {
+      return process.env.RECAPTCHA_KEY
+    },
+    nameErrors() {
+      const errors = []
+      if (!this.$v.name.$dirty) return errors
+      !this.$v.name.maxLength &&
+        errors.push('O nome não pode ter mais do que 255 caracteres')
+      !this.$v.name.required && errors.push('É necessário digitar um nome')
+      return errors
+    },
+    emailErrors() {
+      const errors = []
+      if (!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('E-mail inválido')
+      !this.$v.email.required && errors.push('É necessário digitar um e-mail')
+      return errors
+    },
+    messageErrors() {
+      const errors = []
+      if (!this.$v.message.$dirty) return errors
+      !this.$v.message.minLength && errors.push('Mensagem curta demais')
+      !this.$v.message.required &&
+        errors.push('É necessário digitar uma mensagem')
+      return errors
+    },
+    alertType() {
+      return this.error ? 'error' : 'success'
+    },
+    alertText() {
+      return this.error && this.error.message
+        ? this.error.message
+        : this.success
+          ? 'Mensagem enviada com sucesso'
+          : ''
+    }
+  },
+  async asyncData() {
+    // Esta página estará disponível somente se houver uma chave para o recaptcha
+    const isAvailable =
+      process.env &&
+      process.env.RECAPTCHA_KEY &&
+      process.env.CONTACT_MESSAGE_RELAY_URL
+    return {
+      isAvailable
+    }
+  },
+  mounted() {
+    if (!this.isAvailable) {
+      this.error = new ServerError(
+        'Formulário indisponível, por-favor tente novamente mais tarde.'
+      )
+    }
+  },
+  head() {
     return {
       title: 'Contato',
       titleTemplate: 'xraM-Memory - %s',
@@ -122,56 +150,11 @@ export default {
       ]
     }
   },
-  computed: {
-    isAvailable () {
-      return this.recaptchaKey && this.contactMessageRelayURL
-    },
-    nameErrors () {
-      const errors = []
-      if (!this.$v.name.$dirty) return errors
-      !this.$v.name.maxLength &&
-        errors.push('O nome não pode ter mais do que 255 caracteres')
-      !this.$v.name.required && errors.push('É necessário digitar um nome')
-      return errors
-    },
-    emailErrors () {
-      const errors = []
-      if (!this.$v.email.$dirty) return errors
-      !this.$v.email.email && errors.push('E-mail inválido')
-      !this.$v.email.required && errors.push('É necessário digitar um e-mail')
-      return errors
-    },
-    messageErrors () {
-      const errors = []
-      if (!this.$v.message.$dirty) return errors
-      !this.$v.message.minLength && errors.push('Mensagem curta demais')
-      !this.$v.message.required &&
-        errors.push('É necessário digitar uma mensagem')
-      return errors
-    },
-    alertType () {
-      return this.error ? 'error' : 'success'
-    },
-    alertText () {
-      return this.error && this.error.message
-        ? this.error.message
-        : this.success
-          ? 'Mensagem enviada com sucesso'
-          : ''
-    }
-  },
-  mounted () {
-    if (!this.isAvailable) {
-      this.error = new ServerError(
-        'Formulário indisponível, por-favor tente novamente mais tarde.'
-      )
-    }
-  },
   methods: {
-    onCaptchaVerify (response) {
+    onCaptchaVerify(response) {
       this.isSending = true
       this.$axios
-        .post(this.contactMessageRelayURL, {
+        .post(process.env.CONTACT_MESSAGE_RELAY_URL, {
           name: this.name,
           email: this.email,
           message: this.message,
@@ -196,10 +179,10 @@ export default {
           this.isSending = false
         })
     },
-    onExpired () {
+    onExpired() {
       this.$refs.recaptcha.reset()
     },
-    onSubmit () {
+    onSubmit() {
       if (this.$v.$invalid) {
         this.showValidationError()
       } else {
@@ -208,28 +191,30 @@ export default {
         this.$refs.recaptcha.execute()
       }
     },
-    resetSuccess () {
+    resetSuccess() {
       this.success = false
     },
-    showValidationError (message = 'Por-favor, corrija os erros abaixo:') {
+    showValidationError(message = 'Por-favor, corrija os erros abaixo:') {
       this.error = new ValidationError(message)
       this.$v.$touch()
     },
-    showUnavailabilityError () {
+    showUnavailabilityError() {
       this.error = new ServerError(
         'Formulário indisponível, por-favor tente novamente mais tarde.'
       )
       this.$v.$reset()
     },
-    showSuccess () {
+    showSuccess() {
       this.success = true
       this.$v.$reset()
       this.clearFields()
     },
-    clearFields () {
-      ['name', 'email', 'message'].forEach(fieldName => { this[fieldName] = '' })
+    clearFields() {
+      for (let fieldName of ['name', 'email', 'message']) {
+        this[fieldName] = ''
+      }
     },
-    clearForm () {
+    clearForm() {
       this.clearFields()
       this.$v.$reset()
       this.error = null
@@ -246,21 +231,24 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-h1
+h1 {
   margin-top: 0;
+}
 
-main
+main {
   font-family: $sans-serif;
+}
 
-.Contact__Form
+.Contact__Form {
   font-size: 1.2rem;
   padding: 1rem 0;
+}
 
->>>.v-btn.primary
+.v-btn.primary {
   /** Existe um bug no vuletify que não está carregando a cor de fundo deste botão */
   background-color: $link-color-active !important;
-
->>>.v-input
+}
+.v-input {
   padding: 24px 0;
-
+}
 </style>

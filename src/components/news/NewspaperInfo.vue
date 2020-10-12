@@ -1,14 +1,14 @@
 <template>
   <p class="NewspaperInfo">
     <a :href="newspaperURL">
-      <img :src="newspaperLogo">
-      {{ newspaper.title }}
+      <img :src="newspaperLogo" />
+      {{newspaper.title}}
     </a>
   </p>
 </template>
 
 <script>
-
+import { sanitizeOnlyText, getMediaUrl } from '@/utils'
 export default {
   name: 'NewspaperInfo',
   props: {
@@ -18,12 +18,12 @@ export default {
     }
   },
   computed: {
-    newspaperURL () {
-      return this.$utils.sanitizeOnlyText(this.newspaper.url)
+    newspaperURL() {
+      return sanitizeOnlyText(this.newspaper.url)
     },
-    newspaperLogo () {
+    newspaperLogo() {
       if (this.newspaper.image) {
-        return this.$utils.sanitizeOnlyText(this.$utils.getMediaUrl(this.newspaper.image))
+        return sanitizeOnlyText(getMediaUrl(this.newspaper.image))
       }
       return ''
     }
@@ -32,17 +32,19 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-p
-  margin: 0
-  padding: 0
+p {
+  margin: 0;
+  padding: 0;
+}
 
-img
-  display: block
-  clear: both
+img {
+  display: block;
+  clear: both;
+}
 
-a
-  align-items: center
-  display: flex
-  flex-direction: column
-
+a {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
 </style>

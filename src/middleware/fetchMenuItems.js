@@ -1,4 +1,4 @@
-export default async function ({ store }) {
+export default async function({ store }) {
   if (!store.hasPagesOfMenu) {
     try {
       await store.dispatch('fetchPagesInMenu')

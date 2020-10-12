@@ -1,20 +1,11 @@
 <template>
   <section class="ErrorPage">
-    <h1>{{ title }}</h1>
-    <nuxt-link
-      class="active"
-      to="/"
-    >
-      <Microtext arrow="left">
-        Voltar à página inicial
-      </Microtext>
+    <h1>{{title}}</h1>
+    <nuxt-link class="active" to="/">
+      <Microtext arrow="left">Voltar à página inicial</Microtext>
     </nuxt-link>
     <client-only>
-      <D3TagCloud
-        hi-color="#999"
-        class="TagCloud"
-        :keywords="errorKeywords"
-      />
+      <D3TagCloud hi-color="#999" class="TagCloud" :keywords="errorKeywords" />
     </client-only>
   </section>
 </template>
@@ -37,22 +28,13 @@ export default {
       })
     }
   },
-  head () {
-    return {
-      title: this.title,
-      titleTemplate: 'xraM-Memory - %s',
-      bodyAttrs: {
-        class: 'Navbar--no-logo'
-      }
-    }
-  },
   computed: {
-    title () {
+    title() {
       return this.error.statusCode === 404
         ? 'Página não encontrada'
         : 'Oops, infelizmente um erro aconteceu.'
     },
-    errorKeywords () {
+    errorKeywords() {
       try {
         const keywords = []
         for (let i = 0; i < TAGCLOUD_NUM_KEYWORDS; i++) {
@@ -77,20 +59,32 @@ export default {
         return []
       }
     }
+  },
+  head() {
+    return {
+      title: this.title,
+      titleTemplate: 'xraM-Memory - %s',
+      bodyAttrs: {
+        class: 'Navbar--no-logo'
+      }
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-section.ErrorPage
-  flex-grow: 1
-  text-align: center
-  display: flex
-  flex-direction: column
+section.ErrorPage {
+  flex-grow: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
 
-h1
-  font-weight: bold
+h1 {
+  font-weight: bold;
+}
 
-.TagCloud
-  margin: auto 0
+.TagCloud {
+  margin: auto 0;
+}
 </style>

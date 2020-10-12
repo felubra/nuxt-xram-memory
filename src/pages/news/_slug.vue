@@ -3,50 +3,87 @@
     <div class="NewsPage__Info">
       <header>
         <figure v-if="theImage">
-          <v-img
-            :src="theImage"
-            @error="changeImagePlaceholder"
-          >
-            <template
-              #placeholder
-              class="image-slot"
-            >
+          <v-img :src="theImage" @error="changeImagePlaceholder">
+            <template v-slot:placeholder class="image-slot">
               <div class="image-slot">
                 <v-icon>download</v-icon>
-                <Microtext>{{ imagePlaceholder }}</Microtext>
+                <Microtext>{{imagePlaceholder}}</Microtext>
               </div>
             </template>
           </v-img>
         </figure>
-        <h1>{{ theTitle }}</h1>
+        <h1>{{theTitle}}</h1>
       </header>
       <main>
-        <NewsInfo
-          class="NewsPage__NewsInfo"
-          :news-item="newsItem"
-        />
+        <NewsInfo class="NewsPage__NewsInfo" :news-item="newsItem"></NewsInfo>
       </main>
     </div>
-    <div
-      v-if="false"
-      class="NewsPage__Capture"
-    />
+    <div v-if="false" class="NewsPage__Capture"></div>
   </section>
 </template>
 
 <script>
 import NewsInfo from '~/components/news/NewsInfo'
+import { sanitize, getMediaUrl } from '@/utils/'
 
 export default {
   name: 'NewsPage',
   components: {
     NewsInfo
   },
-  async asyncData ({ $api: { News }, route, error }) {
-    const { slug } = route.params
-    if (slug) {
+  head() {
+    return {
+      title: this.newsItem.title,
+      titleTemplate: 'xraM-Memory - %s'
+    }
+  },
+  data() {
+    return {
+      newsItem: {},
+      imagePlaceholder: 'Carregando...'
+    }
+  },
+  computed: {
+    theTitle() {
+      return sanitize(this.newsItem.title)
+    },
+    theImage() {
+      const urlVal = sanitize(this.newsItem.thumbnails.news_page)
+      return urlVal ? getMediaUrl(urlVal) : ''
+    },
+    imageLink() {
       try {
-        const newsItem = await News.getBySlug(slug)
+        return {
+          name: 'document-document_id',
+          params: {
+            document_id: this.newsItem.image_capture.image_document.document_id
+          }
+        }
+      } catch {
+        return null
+      }
+    },
+    pdfUrl() {
+      try {
+        return (
+          this.newsItem.pdf_captures &&
+          this.newsItem.pdf_captures.map(capture => {
+            return {
+              document_id: capture.pdf_document.document_id,
+              title: this.captureNameAndSize(capture)
+            }
+          })[0]
+        )
+      } catch {
+        return ''
+      }
+    }
+  },
+  async asyncData({ $axios, route, error }) {
+    const newsSlug = route.params.slug
+    if (newsSlug) {
+      try {
+        const newsItem = await $axios.$get(`/api/v1/news/${newsSlug}`)
         return { newsItem }
       } catch (e) {
         const statusCode = (e.response && e.response.status) || 500
@@ -55,87 +92,77 @@ export default {
     }
     return error({ statusCode: 400 })
   },
-  data () {
-    return {
-      newsItem: {},
-      imagePlaceholder: 'Carregando...'
-    }
-  },
-  head () {
-    return {
-      title: this.newsItem.title,
-      titleTemplate: 'xraM-Memory - %s'
-    }
-  },
-  computed: {
-    theTitle () {
-      return this.$utils.sanitize(this.newsItem.title)
-    },
-    theImage () {
-      const urlVal = this.$utils.sanitize(this.newsItem.thumbnails.news_page)
-      return urlVal ? this.$utils.getMediaUrl(urlVal) : ''
-    }
-  },
   methods: {
-    changeImagePlaceholder () {
+    changeImagePlaceholder() {
       this.imagePlaceholder = 'Falha ao carregar a imagem.'
     }
   }
 }
 </script>
 <style lang="stylus" scoped>
-header
-  display: flex
-  align-items: center
-  flex-direction: column
-  min-height: 200px
-  margin-bottom: 40px
+header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: 200px;
+  margin-bottom: 40px;
+}
 
-.NewsPage
-  display: flex
-  flex-direction: column
-  padding-top: 0
+.NewsPage {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;
+}
 
-.NewsPage__Info
-  flex-grow: 1
-  text-align: center
-  max-width: $max-width
+.NewsPage__Info {
+  flex-grow: 1;
+  text-align: center;
+  max-width: $max-width;
+}
 
-.NewsPage__NewsInfo
-  text-align: justify
+.NewsPage__NewsInfo {
+  text-align: justify;
+}
 
-figure
-  min-height: 350px
-  transition: all 0.25s ease
-  display: flex
-  align-items: center
-  margin-bottom: 1rem
+figure {
+  min-height: 350px;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 
-p.microtext
-  margin-top: auto
+p.microtext {
+  margin-top: auto;
+}
 
-h1
-  margin: auto 0
+h1 {
+  margin: auto 0;
+}
 
-a.ImageLink
-  border: solid 1px #efefef
-  display: inline-flex
-  padding: 2px
-  transition: border-color 0.25s ease
+a.ImageLink {
+  border: solid 1px #efefef;
+  display: inline-flex;
+  padding: 2px;
+  transition: border-color 0.25s ease;
+}
 
-a.ImageLink:hover
-  border-color: #a00
+a.ImageLink:hover {
+  border-color: #a00;
+}
 
-.image-slot
-  display: flex
-  align-items: center
-  flex-direction: column
-  justify-content: center
-  height: 100%
+.image-slot {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
 
-@media only screen and (min-width: $desktop)
-  .NewsPage
-    flex-direction: row
-    justify-content: center
-
+@media only screen and (min-width: 960px) {
+  .NewsPage {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
 </style>

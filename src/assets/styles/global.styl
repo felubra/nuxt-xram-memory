@@ -1,6 +1,9 @@
 @import variables
+/*
+* Elementos de layout
+*/
 *
-  box-sizing: border-box
+  box-sizing: border-box;
 
 html
 body
@@ -9,7 +12,7 @@ body
   height: 100%
 
 
-#main-wrapper
+#main-wrapper 
   overflow: hidden
   position: relative
   min-height: 100%
@@ -28,20 +31,15 @@ a
   text-decoration: none
   color: $link-color
 
-a:hover
-a:active
-a:focus
+a:hover,
+a:active,
+a:focus,
 a.nuxt-link-exact-active,
 a.nuxt-link-active
   color: $link-color-active
 
 
-h1
-h2
-h3
-h4
-h5
-h6
+h1, h2, h3, h4, h5, h6
   font-family: $header-font
   font-weight: 500
 
@@ -61,7 +59,7 @@ h1
   font-size: $microtext
   text-transform: uppercase
   color: $micro-text-color
-  display: inline-flex
+  display: inline-flex;
   align-items: center
   margin: 0
 
@@ -81,31 +79,31 @@ header > .microtext > span
 .ql-editor
   overflow: hidden
 
-.fade-enter-active, .fade-leave-active
-  transition: opacity 0.25s
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.25s;
+}
 
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 
-.fade-enter, .fade-leave-to
-  opacity: 0
-
-
-.page-enter-active, .page-leave-active
+.page-enter-active, .page-leave-active {
   transition: opacity .250s
-
-.page-enter, .page-leave-active
+}
+.page-enter, .page-leave-active {
   opacity: 0
+}
 
-
-.offscreen
-  clip-path: inset(100%)
-  clip: rect(1px 1px 1px 1px) /* IE 6/7 */
-  clip: rect(1px, 1px, 1px, 1px)
-  height: 1px
-  overflow: hidden
-  position: absolute
-  white-space: nowrap /* added line */
-  width: 1px
-
+.offscreen {
+  clip-path: inset(100%);
+  clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; /* added line */
+  width: 1px;
+}
 
 .hidden
   display: none
@@ -118,15 +116,28 @@ header > .microtext > span
 
 .viewer-canvas > img
   box-shadow: 0 0 15px #ccc
-  backface-visibility: hidden
+  backface-visibility: hidden;
 
 .viewer-fixed .viewer-canvas > img
   box-shadow: none
 
+@keyframes filterActive {
+  0% {
+    border-color: #E1DADA;
+  }
+
+  20% {
+    border-color: #d84848;
+  }
+
+  100% {
+    border-color: #E1DADA;
+  }
+}
 
 @media only screen and (min-width: $tablet)
   html
-    overflow-y: scroll
+    overflow-y: scroll;
 
 @media only screen and (min-width: $desktop)
   .Page
