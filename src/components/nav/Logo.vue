@@ -1,7 +1,18 @@
 <template>
-  <div :class="{'Logo': true, 'Logo--big': big}">
-    <nuxt-link class="Logo__Link" to="/">
-      <img :src="src" alt @load="imageLoaded" />
+  <div
+    :class="{
+      'Logo': true,
+      'Logo--big': big
+    }"
+  >
+    <nuxt-link
+      class="Logo__Link"
+      to="/"
+    >
+      <img
+        :src="src"
+        alt
+      >
     </nuxt-link>
   </div>
 </template>
@@ -12,12 +23,7 @@ export default {
     variant: {
       type: String,
       default: 'original',
-      validator(value) {
-        if (!value.length) {
-          return true
-        }
-        return ['original', 'claro', 'pb', 'pb--branco'].includes(value)
-      }
+      validator: value => ['original', 'claro', 'pb', 'pb--branco'].includes(value)
     },
     big: {
       type: Boolean,
@@ -25,29 +31,22 @@ export default {
     }
   },
   computed: {
-    src() {
+    src () {
       const base = '/logo'
       if (this.variant === 'original') {
         return `${base}.svg`
       }
       return `${base}--${this.variant}.svg`
     }
-  },
-  methods: {
-    imageLoaded() {
-      this.$emit('load')
-    }
   }
 }
 </script>
-<style scoped>
-.Logo img {
-  height: 38px;
-  width: 156.27px;
-}
+<style lang="stylus" scoped>
+.Logo img
+  height: 38px
+  width: 156.27px
 
-.Logo.Logo--big img {
-  height: 56px;
-  width: 230.28px;
-}
+.Logo.Logo--big img
+  height: 56px
+  width: 230.28px
 </style>

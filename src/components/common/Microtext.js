@@ -5,20 +5,20 @@ export default Vue.component('Microtext', {
     tag: {
       type: String,
       default: () => 'p',
-      validator(value) {
+      validator (value) {
         return ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'].includes(value)
       }
     },
     arrow: {
       type: String,
-      validator(value) {
+      validator (value) {
         return ['right', 'up', 'down', 'left', 'none'].includes(value)
       },
       default: 'none'
     },
     arrowPosition: {
       type: String,
-      validator(value) {
+      validator (value) {
         return ['before', 'after'].includes(value)
       },
       default: 'after'
@@ -28,11 +28,9 @@ export default Vue.component('Microtext', {
       default: ''
     }
   },
-  render(createElement, context) {
-    const { arrow } = context.props
-    const { arrowPosition } = context.props
-    const additionalClasses =
-      context.props.className && context.props.className.split(' ')
+  render (createElement, context) {
+    const { arrow, arrowPosition, className } = context.props
+    const additionalClasses = className.split(' ')
     if (arrow !== 'none') {
       const arrowIcon =
         arrow === 'down' || arrow === 'up'
