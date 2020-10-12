@@ -125,7 +125,10 @@
             >
               Sua busca não encontrou nenhum resultado.
               <br>
-              <el-button @click="clear">
+              <el-button
+                type="primary"
+                @click="clear"
+              >
                 Tente novamente
               </el-button>
             </div>
@@ -307,6 +310,9 @@ export default {
 
 .SearchBar .el-input__inner:focus
   border-color: $link-color-active
+
+.NoResults
+  text-align: center
 
 @media only screen and (min-width: $tablet)
   .ResultStats
