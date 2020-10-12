@@ -4,6 +4,8 @@ WORKDIR /src
 
 COPY package.json yarn.lock ./
 
+RUN apk add --no-cache git
+
 RUN yarn install \
   --prefer-offline \
   --frozen-lockfile \
@@ -48,6 +50,8 @@ CMD [ "yarn", "start" ]
 FROM node:lts-alpine as development
 
 WORKDIR /home/node
+
+RUN apk add --no-cache git
 
 USER 1000
 

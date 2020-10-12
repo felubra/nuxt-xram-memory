@@ -3,29 +3,47 @@
     <slot>
       <nuxt-link :to="itemLink">
         <slot name="image">
-          <img :key="imageSrc" width="250" height="250" class="ImageFilePreview__OriginalImage" :src="imageSrc" @error="removeImage" />
+          <img
+            :key="imageSrc"
+            width="250"
+            height="250"
+            class="ImageFilePreview__OriginalImage"
+            :src="imageSrc"
+            @error="removeImage"
+          >
         </slot>
         <slot name="label">
-          <Microtext v-if="label" class-name="label">{{label}}</Microtext>
+          <Microtext
+            v-if="label"
+            class-name="label"
+          >
+            {{ label }}
+          </Microtext>
         </slot>
         <slot name="title">
-          <h3 v-if="title">{{title}}</h3>
+          <h3 v-if="title">
+            {{ title }}
+          </h3>
         </slot>
         <slot name="teaser">
-          <p v-if="teaser" class="teaser">{{teaser}}</p>
+          <p
+            v-if="teaser"
+            class="teaser"
+          >
+            {{ teaser }}
+          </p>
         </slot>
       </nuxt-link>
-      <slot name="footer"></slot>
+      <slot name="footer" />
     </slot>
   </div>
 </template>
 
 <script>
-import { sanitizeOnlyText, getMediaUrl } from '@/utils'
 export default {
   name: 'Card',
   props: {
-    image: {
+    imageURI: {
       type: String,
       default: () => ''
     },
@@ -47,19 +65,27 @@ export default {
     }
   },
   computed: {
-    imageSrc() {
+    /**
+     * Retorna URL absoluta limpa para o source de uma imagem.
+     */
+    imageSrc () {
       try {
-        if (this.image.startsWith('/')) {
-          return sanitizeOnlyText(getMediaUrl(this.image))
+        let uri = this.imageURI
+        if (uri.startsWith('/')) {
+          // É um caminho relativo, transforme-o numa url absoluta
+          uri = this.$utils.getMediaUrl(uri)
         }
-        return sanitizeOnlyText(this.image)
+        return this.$utils.sanitizeOnlyText(uri)
       } catch {
         return ''
       }
     }
   },
   methods: {
-    removeImage(e) {
+    /**
+     * Remove o elemento-alvo de um evento error
+     */
+    removeImage (e) {
       e.target.remove()
     }
   }
@@ -67,86 +93,86 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.Card {
-  background-image: linear-gradient(rgba(250, 249, 246, 1) 0%, rgba(255, 255, 255, 1) 25%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  justify-content: flex-end;
-  justify-content: flex-end;
-  border: solid 1px #efefef;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
-  text-align: center;
-  position: relative;
-  max-width: 350px;
-}
+.Card
+  background-image:
+    linear-gradient(rgba(250, 249, 246, 1) 0%,
+    rgba(255, 255, 255, 1) 25%)
+  display: flex
+  flex-direction: column
+  align-items: center
+  overflow: hidden
+  justify-content: flex-end
+  border: solid 1px #efefef
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease
+  text-align: center
+  position: relative
+  max-width: 350px
+  &:focus-within
+  &:active
+  &:focus
+  &:hover
+    box-shadow: 0px 5px 25px #efefef
+    border-color: #d84848
 
-.Card h3 {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 500;
-}
+.Card h3
+  text-align: center
+  font-size: 18px
+  font-weight: 500
 
-.Card > a {
-  text-align: center;
-  transition: background-color 0.25s ease, color 0.15s ease-out;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  word-break: break-all;
-  width: 100%;
-  padding: 0;
-  align-items: center;
-  justify-content: flex-start;
-}
+.Card > a
+  text-align: center
+  transition: background-color 0.25s ease, color 0.15s ease-out
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  word-break: break-all
+  width: 100%
+  padding: 0
+  align-items: center
+  justify-content: flex-start
 
-.Card p, .Card h3 {
-  word-break: break-word;
-  padding: 0.5rem;
-}
+.Card p
+.Card h3
+  word-break: break-word
+  padding: 0.5rem
 
-.Card p {
-  color: #333333;
-  font-family: $sans-serif;
-}
+.Card p
+  color: $text-color
+  font-family: $sans-serif
 
-.Card h3 {
-  margin: auto;
-}
+.Card h3
+  margin: auto
 
-.Card p.label {
-  text-align: center;
-  margin-top: 15px;
-}
+.Card p.label
+  text-align: center
+  margin-top: 15px
 
-.Card img {
-  filter: grayscale($grayscale-image);
-  transition: opacity 0.25s ease;
-  object-fit: cover;
-}
+.Card img
+  filter: grayscale($grayscale-image)
+  transition: opacity 0.25s ease
+  object-fit: cover
 
-.Card a:hover, .Card a:active, .Card a:focus {
-  outline: none;
-}
+.Card
+  &focus-within img
+  &:active img
+  &:focus img
+  &:hover img
+    filter: none
 
-.Card:focus-within img, .Card:active img, .Card:focus img, .Card:hover img {
-  filter: none;
-}
+.Card a
+  &:hover
+  &:active
+  &:focus
+    outline: none
 
-.Card:focus-within, .Card:active, .Card:focus, .Card:hover {
-  box-shadow: 0px 5px 25px #efefef;
-  border-color: #d84848;
-}
+>>>p.microtext
+  justify-content: center
+  color: #a1a1a1
 
-.microtext {
-  justify-content: center;
-  color: #a1a1a1 !important;
-}
+.teaser
+  text-align: justify
+  line-height: 1.5
 
-.teaser {
-  text-align: justify;
-  line-height: 1.5;
-}
 </style>
