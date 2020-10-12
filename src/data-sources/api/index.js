@@ -14,13 +14,13 @@ export default ($axios) => ({
   },
   Pages: {
     getBySlug (slug) {
-      return $axios.$get(`/api/v1/pages/${slug}`)
+      return $axios.$get(`/api/v1/page/${slug}`)
     },
     getAllPagesInMenu () {
-      return $axios.$get('api/v1/pages/in_menu')
+      return $axios.$get('api/v1/pages?filterBy=in_menu')
     },
     getAllFeatured () {
-      return $axios.$get('api/v1/pages/featured')
+      return $axios.$get('api/v1/pages?filterBy=featured')
     }
   },
   Albums: {
@@ -33,7 +33,7 @@ export default ($axios) => ({
   },
   Keywords: {
     all (max) {
-      return $axios.$get(`/api/v1/keywords/top?max=${max}`)
+      return $axios.$get(`/api/v1/keywords?orderBy=top&max=${max}`)
     }
   },
   Subjects: {
@@ -47,10 +47,10 @@ export default ($axios) => ({
       return $axios.$get('api/v1/subjects/initials')
     },
     getByInitial (initial) {
-      return $axios.$get(`api/v1/subjects/initial/${initial}`)
+      return $axios.$get(`api/v1/subjects?initial=${initial}`)
     },
     getFeatured (limit = 5) {
-      return $axios.$get(`api/v1/subjects/featured?limit=${limit}`)
+      return $axios.$get(`api/v1/subjects?filterBy=featured&limit=${limit}`)
     }
   }
 })

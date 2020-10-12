@@ -7,27 +7,28 @@
       class="Home__Logo"
       :big="true"
     />
-
-    <el-input
-      v-model="searchQuery"
-      class="SearchBar"
-      type="text"
-      placeholder="Pesquisar no acervo"
-      @change="handleSearch"
-    >
-      <template #suffix>
-        <nuxt-link
-          :to="{
-            name: 'search',
-            query: {
-              text: searchQuery
-            }
-          }"
-        >
-          <i class="material-icons">search</i>
-        </nuxt-link>
-      </template>
-    </el-input>
+    <client-only>
+      <el-input
+        v-model="searchQuery"
+        class="SearchBar"
+        type="text"
+        placeholder="Pesquisar no acervo"
+        @change="handleSearch"
+      >
+        <template #suffix>
+          <nuxt-link
+            :to="{
+              name: 'search',
+              query: {
+                text: searchQuery
+              }
+            }"
+          >
+            <i class="material-icons">search</i>
+          </nuxt-link>
+        </template>
+      </el-input>
+    </client-only>
 
     <TeaserBlock
       v-if="featuredPage"
@@ -36,10 +37,12 @@
       :page-item="featuredPage"
     />
 
-    <HomeTagCloud
-      :aggregations="tagCloudAggregations"
-      class="HomeTagCloud"
-    />
+    <client-only>
+      <HomeTagCloud
+        :aggregations="tagCloudAggregations"
+        class="HomeTagCloud"
+      />
+    </client-only>
   </div>
 </template>
 
