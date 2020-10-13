@@ -2,6 +2,1087 @@ Changelog
 =========
 
 
+(não publicado)
+---------------
+
+Corrigido
+~~~~~~~~~
+- Correção na geração do changelog. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Documentação de .env.dist. [Felipe Lube de Bragança]
+- Reorganização de arquivos e remoção de não usados. [Felipe Lube de
+  Bragança]
+
+
+0.6.1 (2020-10-12)
+------------------
+
+Corrigido
+~~~~~~~~~
+- Só mostre a porcentagem se o número for finito. [Felipe Lube de
+  Bragança]
+
+
+0.6.0 (2020-10-12)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- Pesquisa local com ElasticLunr (#109) [Felipe Lube de Bragança]
+
+  BREAKING CHANGE
+
+  close #95
+  * feat: LocalSearchBase: estado e funções para alterar a busca e os filtros
+
+  * feat: LocalSearchDropDown e LocalSearchInput: manipulação básica de estado
+
+  * chore: página de testes para novos componentes
+
+  * feat: funcionalidade para carregamento do índice
+
+  * feat: suporte à filtragem básica
+
+  * feat: fluxo de registro de um componente-filtro junto ao componente-base
+
+  * feat: filtragem de resultados sem reatividade com outros filtros
+  - valores dos filtros apenas reagem à busca textual
+  - filtragem usando d3-array.groups()
+  - passagem de estado para componente filho
+  - uso de v-model em LoalSearchInput
+  - adicionado campo de assuntos na página de teste
+
+  * feat: suporte a notação de ponto para definir campos-filho
+
+  * refat: ajustes em NewsGrid para o novo formato
+
+  * feat: disponibilize os resultados de busca como um scpedSlot
+
+  * feat: adicione mais filtros e uma lista com os resultados
+
+  * feat: exiba todos os resultados se o usuário não pesquisou por nada
+
+  * feat: remova uma seleção para uma opção que já não existe mais
+
+  * feat: filtros respeitam escolha de outros filtros
+
+  * chore: temporariamente importe todos os componentes de element-ui
+
+  * feat: utilize componentes element-ui: LocalSearchDropDown
+  - susbtitua select padrão por el-select
+  - suporte a múltiplos valores
+  - exibição de tags compacta
+
+  * feat: habilidade de filtrar valores em LocalSearchDropDown
+
+  * feat: prop para placeholder em LocalSearchInput
+
+  * feat: contagem de resultados
+
+  * refat: simplificação da arquitetura com acesso direto aos dados
+  - 2-way data binding com searchState e filterState
+  - computed prop para filtros de fato com alguma seleção
+
+  * feat: função para limpar o estado da busca e dos filtros
+
+  * refat: transforme filterDataSources numa computed prop
+
+  * chore: documentação básica
+
+  * feat: utilize query-string para processar query strings
+
+  * feat: LocalSearchBase: suporte à definição inicial do estado
+
+  * feat: defina o estado inicial dos filtros de busca pela url
+
+  * refat: substitua função renderizadora por template
+
+  * feat: computed props helpers de estado
+
+  * feat: estrutura básica do controle de estado dos componentes
+
+  * chore: atualizações em nuxt e em @nuxt/axios
+
+  * chore: remova setTimeout usado para testes
+
+  * chore: atualize nuxt e @nuxt/axios
+
+  * fix: corrija a largura dos containers, que devem ocupar 100%
+
+  * feat: adicione o contador de resultados
+
+  * feat: ajustes no contador de resultados
+  - computed prop para o texto principal
+  - remoção de componentes e estilos não mais usados
+
+  * style: posicionamento básico dos componentes de pesquisa
+
+  * fix: Filtre itens vazios em filterDataSources
+
+  * fix: centralize itens na lista
+
+  * feat: remova botão limpar
+
+  * chore: atualização do element-ui
+
+  * fix: remova placeholder hardcoded
+
+  * feat: defina a linguagem do element-ui
+
+  * Revert "fix: Filtre itens vazios em filterDataSources"
+
+  This reverts commit 47894bf.
+
+  * feat: labels e ordenação correta dos filtros
+
+  * chore: substitua a página de busca pela nova desenvolvida
+
+  * feat: suporte à definição do estado de busca
+
+  * feat: preencha a busca textual com base nos parâmetros da url
+
+  * feat: fonte de dados alterada para nuvem de tags da página inicial
+  - as informações serão buscadas do backend em Django ao invés do ES
+
+  * fix: link na nuvem de tags deve usar o texto da palavra
+  - situação até que #102 seja implementada
+
+  * feat: readicione o componente de pesquisa na página inicial
+
+  * chore: início da utilização de webworkers
+
+  * feat: carregamento do índice e retorno de resultados filtrados da base
+
+  * chore: tentativa de otimização com Object.freeze
+
+  * feat: componente para encapsular os filtros
+
+  * feat: ajustes no layout dos filtros
+
+  * chore: alteração no nome do arquivo de índice
+
+  * feat: suporte à pesquisa com e sem acentos
+
+  * feat: página do assunto deve pegar itens do backend em Django
+
+  * chore: remoção do reactive-base
+  - remoção do plugin
+  - remoção dos componentes
+  - não utilização dos componentes
+
+  * fix: passe booleano corretamente para prop
+
+  * refat: dados são repassados ao HomeTagCloud via props
+  - o componente não fará a busca pelos dados
+
+  * chore: correção em grafia de mensagem
+
+  * refat: carregamento dos dados para a nuvem de tags pelas páginas
+
+  * feat: mensagem de erro para páginas vazias padronizada
+
+  * feat: enxugamento dos componentes carregados do element-ui
+
+  * feat: estilização dos componentes tal como antes com o ReactiveSearch
+
+  * feat: LocalSearchInput - passe slots do pai para o filho
+
+  * fix: use o ícone de pesquisa do material-design
+
+  * fix: não mostre o link para exibir filtros em desktop
+
+  * feat: permita alterar o label dos options em LocalSearchDropDown
+  - utilização de uma função customizada passada via props
+
+  * fix: adicione a diretiva Loading
+
+  * fix: inclua Notification
+
+  * feat: pesquisa feita com webworker (#103)
+
+  * feat: mova o trabalho pesado para a webworker [wip]
+  - Pesquisa textual funcionando
+  - FIltros desabilitados
+
+  * feat: mova o trabalho pesado para a webworker [wip]
+  - Retorno dos filtros
+  - Webworker também manterá estado dos componentes filhos
+
+  * feat: otimizações para reduzir uso de memória
+
+  * fix: remova filtragem no dropdown para evitar carregamento do teclado em mobile
+
+  * feat: rolagem infinita na lista de notícias
+
+  * chore: atualização para o nuxt 2.14.3
+
+  * fix: ajustes no layout da página de pesquisa
+
+  * refat: otimização nos imports e configuração do lunr na hook created
+
+  * feat: parametrize a url do índice numa variável ambiente
+
+  * feat: cronômetro para as pesquisas
+
+  * fix: ajuste no estilo das tags dos selects
+
+  * fix: correção no cálculo do desvio padrão com utilização de d3-array
+
+  * fix: filtros reagem apenas ao campo texto completo e não aos próprios
+
+  * feat: NewsGrid: slot para quando sem dados
+
+  * refat: simplifique indexState com constantes numéricas
+
+  * chore: atualização da configuração do eslint
+
+  * feat: progresso de download do índice
+
+  * fix: eslint e correção na lista infinita de notícias
+
+  * fix: crite a web worker antes em beforeCreate
+
+  * refat: permita passar o índice já baixado para o componente
+
+  * feat: suporte à ordenação dos resultados (#104)
+
+  * feat: suporte à ordenação [wip]
+  - ordene as notícias por data de publicação por padrão
+
+  * chore: atualização do nuxt para 2.14.4
+
+  * feat: ordenação dos resultados
+
+  * fix: instale a diretiva infinite-scroll globalmente para corrigir SSR
+
+  * fix: correção no carregamento das configurações do ElasticLunr
+
+  * fix: adicione o git, necessário para pegar alguns repositórios
+
+  * fix: não registre plugins vue dentro de funções exportadas
+
+  * fix: inclua worker-plugin dentro de dependencies
+
+  * chore: remoção de console.log
+
+  * chore: renomeie variável
+
+  * refat: migração de @/utils para um plugin com suporte a runtimeConfig
+
+  * chore: remoção de console.log
+
+  * chore: renomeie variável
+
+  * refat: migração do uso de variáveis ambiente para runtimeConfig [wip]
+
+  * refat: migração de @/utils para um plugin com suporte a rutimeConfig
+
+  * fix: correção em apiURL (runtimeConfig)
+
+  * chore: adicione variáveis opcionais do navegador
+
+  * refat: use variáveis para dar override em SSR ao invés do cliente
+
+  * chore: atualização em .env.dist
+
+  * fix: refatoração na página de busca para resolver problemas
+
+  close #105
+
+  -  indique com mais clareza (problemas no layout) o seu carregamento
+  - acerte a mensagem de sem resultados com botão para reiniciar a busca
+  - organize os componentes no código do template
+
+  * chore: Limpeza no código e utilização do Repository Pattern
+  - use a syntaxe do syulus para os estilos
+  - Encapsule métodos de chamada à API em objetos (Repository Pattern)
+  - atualização (das configurações) do
+
+      - refatorações simples
+      - renomeações de variável
+      - remoção de códigi não usado
+      - pequenas adições de documentação
+      - aderência às regras atualizadas do eslint-plugin-vue
+      - remoção de props não usadas
+      - remoção de arquivos README
+      - remoção de estado não usado na store
+  - utilize versão no rodapé definida nas configurações
+- Pesquisa local com ElasticLunr (#109) [Felipe Lube de Bragança]
+
+  BREAKING CHANGE
+
+  close #95
+  * feat: LocalSearchBase: estado e funções para alterar a busca e os filtros
+
+  * feat: LocalSearchDropDown e LocalSearchInput: manipulação básica de estado
+
+  * chore: página de testes para novos componentes
+
+  * feat: funcionalidade para carregamento do índice
+
+  * feat: suporte à filtragem básica
+
+  * feat: fluxo de registro de um componente-filtro junto ao componente-base
+
+  * feat: filtragem de resultados sem reatividade com outros filtros
+  - valores dos filtros apenas reagem à busca textual
+  - filtragem usando d3-array.groups()
+  - passagem de estado para componente filho
+  - uso de v-model em LoalSearchInput
+  - adicionado campo de assuntos na página de teste
+
+  * feat: suporte a notação de ponto para definir campos-filho
+
+  * refat: ajustes em NewsGrid para o novo formato
+
+  * feat: disponibilize os resultados de busca como um scpedSlot
+
+  * feat: adicione mais filtros e uma lista com os resultados
+
+  * feat: exiba todos os resultados se o usuário não pesquisou por nada
+
+  * feat: remova uma seleção para uma opção que já não existe mais
+
+  * feat: filtros respeitam escolha de outros filtros
+
+  * chore: temporariamente importe todos os componentes de element-ui
+
+  * feat: utilize componentes element-ui: LocalSearchDropDown
+  - susbtitua select padrão por el-select
+  - suporte a múltiplos valores
+  - exibição de tags compacta
+
+  * feat: habilidade de filtrar valores em LocalSearchDropDown
+
+  * feat: prop para placeholder em LocalSearchInput
+
+  * feat: contagem de resultados
+
+  * refat: simplificação da arquitetura com acesso direto aos dados
+  - 2-way data binding com searchState e filterState
+  - computed prop para filtros de fato com alguma seleção
+
+  * feat: função para limpar o estado da busca e dos filtros
+
+  * refat: transforme filterDataSources numa computed prop
+
+  * chore: documentação básica
+
+  * feat: utilize query-string para processar query strings
+
+  * feat: LocalSearchBase: suporte à definição inicial do estado
+
+  * feat: defina o estado inicial dos filtros de busca pela url
+
+  * refat: substitua função renderizadora por template
+
+  * feat: computed props helpers de estado
+
+  * feat: estrutura básica do controle de estado dos componentes
+
+  * chore: atualizações em nuxt e em @nuxt/axios
+
+  * chore: remova setTimeout usado para testes
+
+  * chore: atualize nuxt e @nuxt/axios
+
+  * fix: corrija a largura dos containers, que devem ocupar 100%
+
+  * feat: adicione o contador de resultados
+
+  * feat: ajustes no contador de resultados
+  - computed prop para o texto principal
+  - remoção de componentes e estilos não mais usados
+
+  * style: posicionamento básico dos componentes de pesquisa
+
+  * fix: Filtre itens vazios em filterDataSources
+
+  * fix: centralize itens na lista
+
+  * feat: remova botão limpar
+
+  * chore: atualização do element-ui
+
+  * fix: remova placeholder hardcoded
+
+  * feat: defina a linguagem do element-ui
+
+  * Revert "fix: Filtre itens vazios em filterDataSources"
+
+  This reverts commit 47894bfc9d625705364f2a2d1a0687a3627380aa.
+
+  * feat: labels e ordenação correta dos filtros
+
+  * chore: substitua a página de busca pela nova desenvolvida
+
+  * feat: suporte à definição do estado de busca
+
+  * feat: preencha a busca textual com base nos parâmetros da url
+
+  * feat: fonte de dados alterada para nuvem de tags da página inicial
+  - as informações serão buscadas do backend em Django ao invés do ES
+
+  * fix: link na nuvem de tags deve usar o texto da palavra
+  - situação até que #102 seja implementada
+
+  * feat: readicione o componente de pesquisa na página inicial
+
+  * chore: início da utilização de webworkers
+
+  * feat: carregamento do índice e retorno de resultados filtrados da base
+
+  * chore: tentativa de otimização com Object.freeze
+
+  * feat: componente para encapsular os filtros
+
+  * feat: ajustes no layout dos filtros
+
+  * chore: alteração no nome do arquivo de índice
+
+  * feat: suporte à pesquisa com e sem acentos
+
+  * feat: página do assunto deve pegar itens do backend em Django
+
+  * chore: remoção do reactive-base
+  - remoção do plugin
+  - remoção dos componentes
+  - não utilização dos componentes
+
+  * fix: passe booleano corretamente para prop
+
+  * refat: dados são repassados ao HomeTagCloud via props
+  - o componente não fará a busca pelos dados
+
+  * chore: correção em grafia de mensagem
+
+  * refat: carregamento dos dados para a nuvem de tags pelas páginas
+
+  * feat: mensagem de erro para páginas vazias padronizada
+
+  * feat: enxugamento dos componentes carregados do element-ui
+
+  * feat: estilização dos componentes tal como antes com o ReactiveSearch
+
+  * feat: LocalSearchInput - passe slots do pai para o filho
+
+  * fix: use o ícone de pesquisa do material-design
+
+  * fix: não mostre o link para exibir filtros em desktop
+
+  * feat: permita alterar o label dos options em LocalSearchDropDown
+  - utilização de uma função customizada passada via props
+
+  * fix: adicione a diretiva Loading
+
+  * fix: inclua Notification
+
+  * feat: pesquisa feita com webworker (#103)
+
+  * feat: mova o trabalho pesado para a webworker [wip]
+  - Pesquisa textual funcionando
+  - FIltros desabilitados
+
+  * feat: mova o trabalho pesado para a webworker [wip]
+  - Retorno dos filtros
+  - Webworker também manterá estado dos componentes filhos
+
+  * feat: otimizações para reduzir uso de memória
+
+  * fix: remova filtragem no dropdown para evitar carregamento do teclado em mobile
+
+  * feat: rolagem infinita na lista de notícias
+
+  * chore: atualização para o nuxt 2.14.3
+
+  * fix: ajustes no layout da página de pesquisa
+
+  * refat: otimização nos imports e configuração do lunr na hook created
+
+  * feat: parametrize a url do índice numa variável ambiente
+
+  * feat: cronômetro para as pesquisas
+
+  * fix: ajuste no estilo das tags dos selects
+
+  * fix: correção no cálculo do desvio padrão com utilização de d3-array
+
+  * fix: filtros reagem apenas ao campo texto completo e não aos próprios
+
+  * feat: NewsGrid: slot para quando sem dados
+
+  * refat: simplifique indexState com constantes numéricas
+
+  * chore: atualização da configuração do eslint
+
+  * feat: progresso de download do índice
+
+  * fix: eslint e correção na lista infinita de notícias
+
+  * fix: crite a web worker antes em beforeCreate
+
+  * refat: permita passar o índice já baixado para o componente
+
+  * feat: suporte à ordenação dos resultados (#104)
+
+  * feat: suporte à ordenação [wip]
+  - ordene as notícias por data de publicação por padrão
+
+  * chore: atualização do nuxt para 2.14.4
+
+  * feat: ordenação dos resultados
+
+  * fix: instale a diretiva infinite-scroll globalmente para corrigir SSR
+
+  * fix: correção no carregamento das configurações do ElasticLunr
+
+  * fix: adicione o git, necessário para pegar alguns repositórios
+
+  * fix: não registre plugins vue dentro de funções exportadas
+
+  * fix: inclua worker-plugin dentro de dependencies
+
+  * chore: remoção de console.log
+
+  * chore: renomeie variável
+
+  * refat: migração de @/utils para um plugin com suporte a runtimeConfig
+
+  * chore: remoção de console.log
+
+  * chore: renomeie variável
+
+  * refat: migração do uso de variáveis ambiente para runtimeConfig [wip]
+
+  * refat: migração de @/utils para um plugin com suporte a rutimeConfig
+
+  * fix: correção em apiURL (runtimeConfig)
+
+  * chore: adicione variáveis opcionais do navegador
+
+  * refat: use variáveis para dar override em SSR ao invés do cliente
+
+  * chore: atualização em .env.dist
+
+  * fix: refatoração na página de busca para resolver problemas
+
+  close #105
+
+  -  indique com mais clareza (problemas no layout) o seu carregamento
+  - acerte a mensagem de sem resultados com botão para reiniciar a busca
+  - organize os componentes no código do template
+
+  * chore: Limpeza no código e utilização do Repository Pattern
+  - use a syntaxe do syulus para os estilos
+  - Encapsule métodos de chamada à API em objetos (Repository Pattern)
+  - atualização (das configurações) do
+
+      - refatorações simples
+      - renomeações de variável
+      - remoção de códigi não usado
+      - pequenas adições de documentação
+      - aderência às regras atualizadas do eslint-plugin-vue
+      - remoção de props não usadas
+      - remoção de arquivos README
+      - remoção de estado não usado na store
+  - utilize versão no rodapé definida nas configurações
+- Use o runtimeConfig do Nuxt 2.13+ [Felipe Lube de Bragança]
+
+  * chore(docker): use a variante lts-alpine
+
+  * chore(docker): ignore a cópia de arquivos do docker para a imagem
+
+  * feat(docker): mais um estágio para uma imagem de desenvolvimento
+
+  * chore: atualização de @nuxtjs/axios para suportar runtimeConfig
+
+  * feat: utilize parcialmente a nova runtimeConfig
+  - permita substituir o baseURL nos browsers quando em cliente
+  - utilize sempre API_URL quando em SSR
+- Multi stage build (#99) [Felipe Lube de Bragança]
+
+  * chore(docker): use a variante lts-alpine
+
+  * chore(docker): ignore a cópia de arquivos do docker para a imagem
+
+  * feat(docker): mais um estágio para uma imagem de desenvolvimento
+
+Corrigido
+~~~~~~~~~
+- Atualização dos endpoints rest (#110) [Felipe Lube de Bragança]
+
+  * fix: não renderize componentes interativos em SSR
+
+  * fix: correção nos endpoints de Página
+
+  * fix: atualização dos endpoints de taxonomia
+- Não renderize componentes interativos em SSR. [Felipe Lube de
+  Bragança]
+- Centralize a mensagem de sem resultados; estilo do botão primário.
+  [Felipe Lube de Bragança]
+- Utilize o mesmo estilo de botão no formulário de contato. [Felipe Lube
+  de Bragança]
+- Correção de tipo de initialSubjects. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Atualização para a versão 0.6.0. [Felipe Lube de Bragança]
+- Desabilite telemetria. [Felipe Lube de Bragança]
+- Desabilite telemetria. [Felipe Lube de Bragança]
+- Ignore mais pastas no dockerignore. [Felipe Lube de Bragança]
+- Chore: mova "@nuxtjs/vuetify" de devDependencies. [Felipe Lube de
+  Bragança]
+- Chore: atualização do nuxt e do @nuxt/axios. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- Merge branch 'dev' of github.com:felubra/nuxt-xram-memory into dev.
+  [Felipe Lube de Bragança]
+- Revert "feat: pesquisa local com ElasticLunr (#109)" [Felipe Lube de
+  Bragança]
+
+  This reverts commit b6a2da956a6130fa5dd494bd61a2bca9306badaa.
+- Merge branch 'dev' of github.com:felubra/nuxt-xram-memory into dev.
+  [Felipe Lube de Bragança]
+- Merge branch 'dev' of github.com:felubra/nuxt-xram-memory into dev.
+  [Felipe Lube de Bragança]
+
+
+0.5.6 (2020-05-28)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- Remova o título da página do documento; bump version. [Felipe]
+
+
+0.5.5 (2020-05-27)
+------------------
+
+Outros
+~~~~~~
+- Chore(deps): atualização de pacotes. [Felipe]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- Refat: remoção de palavras-chave dos detalhes da notícia; bump
+  version. [Felipe]
+
+
+0.5.4 (2020-03-30)
+------------------
+
+Corrigido
+~~~~~~~~~
+- Evite imagens 'esticadas' em Card. [Felipe]
+
+
+0.5.3 (2020-03-30)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- HomeTagCloud: não faça cálculos se não houver agregações. [Felipe]
+
+Corrigido
+~~~~~~~~~
+- Correção em palavra. [Felipe]
+
+Outros
+~~~~~~
+- Aumente a versão. [Felipe]
+
+
+0.5.2 (2020-01-13)
+------------------
+
+Corrigido
+~~~~~~~~~
+- Correção no texto by e nos links em footer. [Felipe Lube de Bragança]
+- Fix (close #74): só mostre a imagem quando ela tiver sido carregada
+  pelo visualizador. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Versão 0.5.2. [Felipe Lube de Bragança]
+
+
+0.5.1 (2020-01-13)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- "(capa)" como failback para descrição de documento com uma página.
+  [Felipe]
+
+Corrigido
+~~~~~~~~~
+- Fix (close #72): correção nos links de download do documento. [Felipe]
+- Mantenha o aspecto da imagem da visualização da captura. [Felipe]
+- Use a fonte sem serifa padrão. [Felipe]
+- Atributo autocomplete correto. [Felipe]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- Merge tag '0.5.0' into dev. [Felipe]
+
+  Versão 0.5.0
+
+
+0.5.0 (2020-01-12)
+------------------
+
+Corrigido
+~~~~~~~~~
+- Readicione a fonte Vollkorn e remova a Cabin. [Felipe]
+
+Outros
+~~~~~~
+- Versão 0.5.0. [Felipe]
+
+
+0.4.9 (2020-01-10)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- Microtext - permita definir posição da seta, esquerda ou direita.
+  [Felipe Lube de Bragança]
+- Desabilite autocompletar nos campos (nos navegadores que respeitam)
+  [Felipe Lube de Bragança]
+- Use a nova página de contato. [Felipe Lube de Bragança]
+- #57 a imagem na página da notícia deve carregar suavemente. [Felipe
+  Lube de Bragança]
+- #57 imagens na lista de resultados devem ter altura pré definida -
+  imagem em que houver erro na requisição será removida. [Felipe Lube de
+  Bragança]
+- Répica da página de contato com o vuetify. [Felipe Lube de Bragança]
+- Feat (vuetify): use v-btn em _document_id. [Felipe Lube de Bragança]
+- Feat (vuetify): substitua el-button em BackButton. [Felipe Lube de
+  Bragança]
+- Feat (vuetify): substitua el-image em NewsInfo. [Felipe Lube de
+  Bragança]
+- Adicione Vuetify. [Felipe Lube de Bragança]
+- Ordene pela data de publicação. [Felipe Lube de Bragança]
+
+Corrigido
+~~~~~~~~~
+- Utilize a fonte definida na variável da folha de estilos. [Felipe Lube
+  de Bragança]
+- Adequação dos elementos de formulário ao estilo do site - remova a
+  animação da borda quando em foco - remova a animação do label quando
+  em foco - defina o tamho e o corpotamento do label quando em foco.
+  [Felipe Lube de Bragança]
+- Texto em maíscula nos lábels do formulário de contato. [Felipe Lube de
+  Bragança]
+- Dê espaçamento entre os inputs do formulário. [Felipe Lube de
+  Bragança]
+- Padronize os labels com a fonte usada. [Felipe Lube de Bragança]
+- #57 cores constantes na barra de menus - remoção da cor da borda do
+  link. [Felipe Lube de Bragança]
+- Force a cor de fundo do botão de submit. [Felipe Lube de Bragança]
+- #57 fixe no código as dimensões da imagen do logo para evitar 'pulos'
+  [Felipe Lube de Bragança]
+- #57 remova 'pulo' na barra de navegação, que estava duplicadaa.
+  [Felipe Lube de Bragança]
+- Correções na imagem de captura - mostre o estado carregando...
+  inicialmente - não ultrapasse a borda do link. [Felipe Lube de
+  Bragança]
+- (SubjectPicker) correção nos scroll dos links. [Felipe Lube de
+  Bragança]
+- Fix (SubjectPicker):  id do link da inicial. [Felipe Lube de Bragança]
+- Só renderize o spacer se for necessário. [Felipe Lube de Bragança]
+- O BackButtom deve ser gerado com um router-link. [Felipe Lube de
+  Bragança]
+- Fix (SubjectPicker):  id do link da inicial. [Felipe Lube de Bragança]
+- Só renderize o spacer se for necessário. [Felipe Lube de Bragança]
+- #61 corrija a fonte no select de ordenação. [Felipe Lube de Bragança]
+- #61 corrija a exibição do select do filtro. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Atualize a versão. [Felipe Lube de Bragança]
+- Atualização de pacotes. [Felipe Lube de Bragança]
+- Atualize o vuetify para 1.9.1. [Felipe Lube de Bragança]
+- Atualize o ano no rodapé. [Felipe Lube de Bragança]
+- Merge branch 'issue-57' into dev. [Felipe Lube de Bragança]
+- Remoção de componentes não mais usados do element-ui. [Felipe Lube de
+  Bragança]
+- Adicione vuelidate. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- Style (close #68): ordenação dos filtros, resultados de pesquisa e
+  seletor na página de pesquisa. [Felipe Lube de Bragança]
+- Style: barra de pesquisa - cor do placholder quando usado com filtro.
+  [Felipe Lube de Bragança]
+- Style: ajustes estéticos diversos - tamanho da fonte do filtro
+  selecionado - tamanho da fonta na barra de pesquisa - cor do ícone do
+  drop-down - reduza o tamanho do botão voltar. [Felipe Lube de
+  Bragança]
+- Style: #57 barra de pesquisa com aparência idêntica ao dos filtros na
+  página de pesquisa. [Felipe Lube de Bragança]
+- Style: #57 estilize a barra de pesquisa em foco. [Felipe Lube de
+  Bragança]
+- Style: animação dos filtros. [Felipe Lube de Bragança]
+- Merge branch 'issue-57' of https://github.com/felubra/nuxt-xram-memory
+  into issue-57. [Felipe Lube de Bragança]
+- Merge branch 'issue-57' of https://github.com/felubra/nuxt-xram-memory
+  into issue-57. [Felipe Lube de Bragança]
+- Merge branch 'issue-61' into dev. [Felipe Lube de Bragança]
+- Merge branch 'dev' into issue-61. [Felipe Lube de Bragança]
+
+
+0.4.8 (2020-01-03)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- Ligue a imagem na página da notícia ao documento correspondente *
+  closes #37. [Felipe Lube de Bragança]
+- Ordenação das notícias na lista de resultados (#66) [Felipe Lübe de
+  Bragança]
+
+  * feat: ordene pela data de publicação
+
+  * fix: #61 corrija a exibição do select do filtro
+
+  * fix: #61 corrija a fonte no select de ordenação
+- Não mostre a notificação de cookies para robôs de busca. [Felipe Lube
+  de Bragança]
+- #60 use um adaptador de cache para o axios. [Felipe Lube de Bragança]
+- DocumentViewer: entre em tela inteira no modo paisagem. [Felipe Lube
+  de Bragança]
+- Barra de progresso até que paginas de um documento sejam geradas.
+  [Felipe Lube de Bragança]
+- [wip] componente para visualizar documentos. [Felipe Lube de Bragança]
+- #57 Menu: itens, logotipo e layout do menu carregam suavemente.
+  [Felipe Lube de Bragança]
+- #57 diversas melhorias na interface. [Felipe Lube de Bragança]
+- Adicione informações de desenvolvimento ao rodapé - versão -
+  desenvolvedor - ajuste a separação entre os itens. [Felipe Lube de
+  Bragança]
+- Links para iniciais na página de assuntos. [Felipe Lube de Bragança]
+- Feat (HomeTagCloud): permita definir tamanho base para fonte. [Felipe
+  Lube de Bragança]
+- Feat (ui): espaçamento e melhor separador para label. [Felipe Lube de
+  Bragança]
+- Ajuste o microtexto para 12px. [Felipe Lube de Bragança]
+- Altere a fonte sans-serif para Roboto. [Felipe Lube de Bragança]
+
+Corrigido
+~~~~~~~~~
+- Centralize o texto e a imagem da página da notícia no cabeçalho.
+  [Felipe Lube de Bragança]
+- Resultados - centralize o ordenador em caso de não resultados. [Felipe
+  Lube de Bragança]
+- Importe viewerjs como componente. [Felipe Lube de Bragança]
+- Failback para caso a api de páginas não esteja disponível. [Felipe
+  Lube de Bragança]
+- Defina um id válido para uma elemento g em D3TagCloud. [Felipe Lube de
+  Bragança]
+- Correções na página de erro - alinhe os elementos para o começo do
+  container - defina a palavra failback como '500' ao invés de erro.
+  [Felipe Lube de Bragança]
+- Não use a imagem no tamanho original no visualizador. [Felipe Lube de
+  Bragança]
+- Destrua o componente viewerjs antes de destruir DocumentViewer.
+  [Felipe Lube de Bragança]
+- Remoção de transição inútil. [Felipe Lube de Bragança]
+- Tipo correto para a prop size-delta. [Felipe Lube de Bragança]
+- Adicione/corrija títulos em páginas. [Felipe Lube de Bragança]
+- Fix (SubjectPicker): não faça requisições à toa. [Felipe Lube de
+  Bragança]
+- Desabilite a barra de progresso para cada req. do axios. [Felipe Lube
+  de Bragança]
+- Defina a cor dos links com classe nuxt-link. [Felipe Lube de Bragança]
+- Melhorias na legibilidade do texto de descrição. [Felipe Lube de
+  Bragança]
+- Remova um label inútil. [Felipe Lube de Bragança]
+- Fix (getMediaUrl): não retorne nada se não for informado um path.
+  [Felipe Lube de Bragança]
+- Fix (notícia): melhorias na página quando sem imagem. [Felipe Lube de
+  Bragança]
+- #57 transição suave de cores. [Felipe Lube de Bragança]
+- #57 mensagem/botão de recomeçar deve estar em fonte sans-serif.
+  [Felipe Lube de Bragança]
+- #57 correção do estado hover do filtro. [Felipe Lube de Bragança]
+- Remoção de estlo escondido de elementos. [Felipe Lube de Bragança]
+- Remoção de transição inútil. [Felipe Lube de Bragança]
+- Só renderize o spacer se for necessário. [Felipe Lube de Bragança]
+- Fix (Contact): correção no tamanho da mensagem de erro. [Felipe Lube
+  de Bragança]
+- Contadores zerados. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Linting. [Felipe]
+- Remoção de bibliotecas não usadas com deprecação do componente pdf.
+  [Felipe Lube de Bragança]
+- Remova componentes não mais usados. [Felipe Lube de Bragança]
+- Atualização do element-ui. [Felipe Lube de Bragança]
+- Atualização e ajustes para o appbaseio/reactivesearch-vue 1.0.0-rc.1.
+  [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- Merge pull request #64 from felubra/issue-60. [Felipe Lübe de
+  Bragança]
+
+  feat: close #60 use um adaptador de cache para o axios
+- Merge pull request #62 from felubra/issue-58. [Felipe Lübe de
+  Bragança]
+
+  feat: visualização das páginas de um PDF como imagens
+- Refat: renomeie computed props para nome mais significativos. [Felipe
+  Lube de Bragança]
+- Refat: simplificação da página do Álbum - uso do componente
+  DocumentViewer - dropado suporte a diversos tamanhos de imagem de
+  acordo com resolução da tela. [Felipe Lube de Bragança]
+- Refat: simplifique o contrato de DocumentViewer - DocumentViewer
+  recebe um array de imagens já carregadas - A página do documento fica
+  encarregada de buscar as páginas. [Felipe Lube de Bragança]
+- Style: remoção de espaço denecessário. [Felipe Lube de Bragança]
+- Revert "chore: atualização do element-ui" [Felipe Lube de Bragança]
+
+  This reverts commit c51ae83e1376630376f179d409a15a4f9a40b366.
+- Style: diminua a nuvem de tags na página de assuntos. [Felipe Lube de
+  Bragança]
+- Refat: ajuste na cor do microtexto e renomeação e variável. [Felipe
+  Lube de Bragança]
+- Refat (Subject): reutilize o componente ResultStats. [Felipe Lube de
+  Bragança]
+- Refat: use a nova sintaxe para scoped-slots. [Felipe Lube de Bragança]
+
+
+0.4.7 (2019-10-29)
+------------------
+
+Corrigido
+~~~~~~~~~
+- Suporte para vue-dragscroll ssr. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- Revert "drag-scroll" [Felipe Lube de Bragança]
+
+  This reverts commit dbe4d045868a2a3439fc13b8b5693bd4ffd54e55.
+- Drag-scroll. [Felipe Lube de Bragança]
+
+
+0.4.6 (2019-10-29)
+------------------
+
+Corrigido
+~~~~~~~~~
+- Defina uma data de expiração para o cookie GDPR (closes #56) [Felipe
+  Lube de Bragança]
+
+
+0.4.5 (2019-09-05)
+------------------
+
+Corrigido
+~~~~~~~~~
+- Use <client-only> ao invés de <no-ssr>, que será deprecado. [Felipe
+  Lube de Bragança]
+- NewsInfo: não exiba campos que não tem informações. [Felipe Lube de
+  Bragança]
+- Correção na cor do fundo do visualizador de documentos. [Felipe Lube
+  de Bragança]
+
+Outros
+~~~~~~
+- Atualização de pacotes. [Felipe Lube de Bragança]
+
+
+0.4.4 (2019-08-18)
+------------------
+
+Corrigido
+~~~~~~~~~
+- Remova laço duplo com duas imagens para cada captura em NewsInfo.
+  [Felipe Lube de Bragança]
+- Correção no link do jornal. [Felipe Lube de Bragança]
+
+
+0.4.3 (2019-08-18)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- Coloque um label no botão para baixar documento (fixes #55) [Felipe
+  Lube de Bragança]
+
+Corrigido
+~~~~~~~~~
+- Importe corretamente as variáveis do tema customizado do element-ui.
+  [Felipe Lube de Bragança]
+
+
+0.4.2 (2019-07-30)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- Atualização do favicon. [Felipe Lube de Bragança]
+
+Corrigido
+~~~~~~~~~
+- Não provoque um erro se houver falha ao buscar páginas publicadas na
+  página inicial. [Felipe Lube de Bragança]
+- Esconda corretamente o SubjectPicker se não houver dados. [Felipe Lube
+  de Bragança]
+- Não permita que o middleware interrompa o site em caso de erro.
+  [Felipe Lube de Bragança]
+- ThumbnailForDocument deve retornar uma string vazia em caso de erro.
+  [Felipe Lube de Bragança]
+- Correção no indicador de navegação nos controles. [Felipe Lube de
+  Bragança]
+
+Outros
+~~~~~~
+- Otimize carregamento do v-viewer somente nas páginas necessárias.
+  [Felipe Lube de Bragança]
+- Carregue apenas o que for usado do element-ui. [Felipe Lube de
+  Bragança]
+- Carregue o vue-recaptcha sobre demanda. [Felipe Lube de Bragança]
+- Otimize o carregamento do ReactiveSearch importando apenas os
+  componentes necessários. [Felipe Lube de Bragança]
+- Image-webpack-loader para otimizar imagens. [Felipe Lube de Bragança]
+- Redução do tamanho dos arquivos do logo. [Felipe Lube de BraganÃa]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- Refat: padronização das funções asyncData. [Felipe Lube de Bragança]
+- Merge branch 'dev' of https://github.com/felubra/nuxt-xram-memory into
+  dev. [Felipe Lube de Bragança]
+
+
+0.4.1 (2019-07-27)
+------------------
+
+Adicionado
+~~~~~~~~~~
+- SubjectPicker: permita selcionar inicial inicial. [Felipe Lube de
+  Bragança]
+
+Corrigido
+~~~~~~~~~
+- Mensgam de erro em português para nenhum item encontrado. [Felipe Lube
+  de Bragança]
+- Selecione uma inicial inicial na página de assuntos. [Felipe Lube de
+  Bragança]
+- Não monitore initials imediatamente para evitar subjectsForInitial
+  vazio. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Atualize a versao para 0.4.0. [Felipe Lube de Bragança]
+
+
 0.4.0 (2019-07-27)
 ------------------
 
@@ -385,13 +1466,30 @@ Corrigido
 
 Outros
 ~~~~~~
-- Chore: atualização de pacotes. [Felipe Lube de Bragança]
+- Atualização de pacotes. [Felipe Lube de Bragança]
+- Remoção de arquivo não mais usado. [Felipe Lube de Bragança]
+- Remoção de arquivo não usado. [Felipe Lube de Bragança]
+- Substituição  do velho DocumentPreview pelo novo. [Felipe Lube de
+  Bragança]
+- Remoção de arquivo não usado. [Felipe Lube de Bragança]
+- Mova os componentes de navegação para uma pasta própria. [Felipe Lube
+  de Bragança]
+- Renomação do componente NewCard. [Felipe Lube de Bragança]
+- Remoção de layout não usado. [Felipe Lube de Bragança]
+- Pasta para componentes da página inicial. [Felipe Lube de Bragança]
+- Atualização de pacotes. [Felipe Lube de Bragança]
+- Atualização do nuxt para 2.8.0. [Felipe Lube de Bragança]
+- Atualize o nuxt para v2.6.3. [Felipe Lube de Bragança]
+- Renomeie arquivos. [Felipe Lube de Bragança]
+- Eslint. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
 - Refat: remoção de mensagem de copyright. [Felipe Lube de Bragança]
 - Refat: retorno do menu. [Felipe Lube de Bragança]
 - Refat: refatoração do menu em tela inteira. [Felipe Lube de Bragança]
 - Refat: componete substitui página 'Todos os Assuntos' [Felipe Lube de
   Bragança]
-- Chore: remoção de arquivo não mais usado. [Felipe Lube de Bragança]
 - Refat: consolide a porcentagem do efeito preto-e-branco numa variável.
   [Felipe Lube de Bragança]
 - Refat: redesign dos cartões página assuntos; atualização do enpoint na
@@ -399,43 +1497,28 @@ Outros
 - Refat: padronize, numa classe só, as páginas centralizadas. [Felipe
   Lube de Bragança]
 - Refat: fim do componente AbstractPage. [Felipe Lube de Bragança]
-- Chore: remoção de arquivo não usado. [Felipe Lube de Bragança]
 - Merge branch 'new-design' of github.com:felubra/nuxt-xram-memory into
   new-design. [Felipe Lube de Bragança]
-- Chore: substituição  do velho DocumentPreview pelo novo. [Felipe Lube
-  de Bragança]
-- Chore: remoção de arquivo não usado. [Felipe Lube de Bragança]
-- Chore: mova os componentes de navegação para uma pasta própria.
-  [Felipe Lube de Bragança]
-- Chore: renomação do componente NewCard. [Felipe Lube de Bragança]
 - Refat: limpeza da página índice e reorganização em sub-componentes.
   [Felipe Lube de Bragança]
 - Refat: obsolete o reactiveMixin por um componente já configurado.
   [Felipe Lube de Bragança]
 - Refat: remoção do vue-masonry. [Felipe Lube de Bragança]
-- Chore: remoção de layout não usado. [Felipe Lube de Bragança]
 - Refat: sintaxe es6, mais curta. [Felipe Lube de Bragança]
 - Refat: mova a doretiva cardImageDimensions para utils. [Felipe Lube de
   Bragança]
-- Chore: pasta para componentes da página inicial. [Felipe Lube de
-  Bragança]
-- Chore: atualização de pacotes. [Felipe Lube de Bragança]
 - Refat: mova a transição 'fade' para a folha de estilos global. [Felipe
   Lube de Bragança]
 - [wip] [Felipe Lube de Bragança]
 - Refat: mova urlOrRoute para utils. [Felipe Lube de Bragança]
 - Refat: encapsule a nuvem de tags num componente próprio. [Felipe Lube
   de Bragança]
-- Chore: atualização do nuxt para 2.8.0. [Felipe Lube de Bragança]
 - Refat: páginas padrão na store, ao invés de hardcoded no componente.
   [Felipe Lube de Bragança]
-- Chore: atualize o nuxt para v2.6.3. [Felipe Lube de Bragança]
 - Merge pull request #44 from felubra/document_in_index. [Felipe Lübe de
   Bragança]
 
   Pesquise também documentos no índice
-- Chore: renomeie arquivos. [Felipe Lube de Bragança]
-- Chore: eslint. [Felipe Lube de Bragança]
 
 
 0.3.0 (2019-04-23)
@@ -462,10 +1545,13 @@ Corrigido
 
 Outros
 ~~~~~~
+- Adicione um changelog e a configuração para gerá-lo. [Felipe Lube de
+  Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
 - Merge branch 'dev' of github.com:felubra/nuxt-xram-memory into dev.
   [Felipe Lube de Bragança]
-- Chore: adicione um changelog e a configuração para gerá-lo. [Felipe
-  Lube de Bragança]
 
 
 0.2.0 (2019-04-18)
@@ -489,10 +1575,9 @@ Corrigido
 
 Outros
 ~~~~~~
-- Chore: atualização do nuxt para 2.6.1. [Felipe Lube de Bragança]
-- Chore: atualização do reactivesearch. [Felipe Lube de Bragança]
-- Chore: padronização de estilos para a sidebar. [Felipe Lube de
-  Bragança]
+- Atualização do nuxt para 2.6.1. [Felipe Lube de Bragança]
+- Atualização do reactivesearch. [Felipe Lube de Bragança]
+- Padronização de estilos para a sidebar. [Felipe Lube de Bragança]
 
 
 0.1.0 (2019-04-12)
@@ -932,11 +2017,18 @@ Corrigido
 
 Outros
 ~~~~~~
+- Merge de no-reactivebase-layout. [Felipe Lube de Bragança]
+- Atualização do reactivesearch => 1.0 beta 10. [Felipe Lube de
+  Bragança]
+- Atualizações (nuxt, reactivesearch) [Felipe Lube de Bragança]
+- Chore: atualização para @appbaseio/reactivesearch-vue@1.0.0-beta.9.
+  [Felipe Lube de Bragança]
+- Diff fantasma. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
 - Merge branch 'desktop_layout' of https://github.com/felubra/nuxt-xram-
   memory into desktop_layout. [Felipe Lube de Bragança]
-- Chore: merge de no-reactivebase-layout. [Felipe Lube de Bragança]
-- Chore: atualização do reactivesearch => 1.0 beta 10. [Felipe Lube de
-  Bragança]
 - Merge branch 'dev' into tag_cloud_refactoring. [Felipe Lube de
   Bragança]
 - Revert "fix: remoção do smartTruncate" [Felipe Lube de Bragança]
@@ -944,9 +2036,6 @@ Outros
   This reverts commit fe952599df82650303114ee2bfaea8b064948883.
 - Fix (page/search) faça o próprio parse da querystring. [Felipe Lube de
   Bragança]
-- Chore: atualizações (nuxt, reactivesearch) [Felipe Lube de Bragança]
-- Chore: atualização para @appbaseio/reactivesearch-vue@1.0.0-beta.9.
-  [Felipe Lube de Bragança]
 - Merge pull request #10 from felubra/pdf-viewer-2. [Felipe Lübe de
   Bragança]
 
@@ -955,7 +2044,6 @@ Outros
   [Felipe Lube de Bragança]
 
   This reverts commit 7eb35e448febff51a63475a4e7299197bf72f251.
-- Chore: diff fantasma. [Felipe Lube de Bragança]
 - Revert "fix: ignore o proxy na requsição do documento à API" [Felipe
   Lube de Bragança]
 
