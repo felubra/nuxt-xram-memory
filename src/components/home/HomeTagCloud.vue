@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import D3TagCloud from '~/components/tag-cloud/D3TagCloud'
+import D3TagCloud from '~/components/common/D3TagCloud'
 import { deviation } from 'd3-array'
 
 export default {

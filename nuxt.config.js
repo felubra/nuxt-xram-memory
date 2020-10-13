@@ -77,15 +77,15 @@ module.exports = {
     '@nuxtjs/vuetify'
   ],
   plugins: [
-    { src: '@/plugins/resize-sensor.js', ssr: false },
-    { src: '@/plugins/element-ui', ssr: false },
-    { src: '@/plugins/drag-scroll', ssr: false },
-    { src: '@/plugins/async-computed', ssr: false },
-    { src: '@/plugins/infinite-scroll', ssr: false },
-    '@/plugins/axios',
-    '@/plugins/dataSources',
-    '@/plugins/utils',
-    '@/plugins/essential-content.js'
+    { src: '@/plugins/contrib/resize-sensor.js', ssr: false },
+    { src: '@/plugins/contrib/element-ui', ssr: false },
+    { src: '@/plugins/contrib/drag-scroll', ssr: false },
+    { src: '@/plugins/contrib/async-computed', ssr: false },
+    { src: '@/plugins/contrib/infinite-scroll', ssr: false },
+    '@/plugins/contrib/axios',
+    '@/plugins/custom/dataSources',
+    '@/plugins/custom/utils',
+    '@/plugins/custom/essential-content.js'
   ],
 
   /*

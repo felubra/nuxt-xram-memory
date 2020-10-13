@@ -82,7 +82,7 @@
 <script>
 import HomeTagCloud from '~/components/home/HomeTagCloud'
 import Microtext from '~/components/common/Microtext'
-import SubjectPicker from '~/components/SubjectPicker'
+import SubjectPicker from '~/components/nav/SubjectPicker'
 import Card from '~/components/common/Card'
 import { TAGCLOUD_NUM_KEYWORDS } from '~/config/constants'
 

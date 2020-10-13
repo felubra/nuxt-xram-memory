@@ -22,6 +22,7 @@ export const LOADED = 3
 export const LOAD_ERROR = 4
 export const DOWNLOAD_ERROR = 5
 
+/** Tipos de ordenação disponíveis para os resultados de busca */
 export const AVAILABLE_ORDERINGS = [
   {
     field: 'published_date',

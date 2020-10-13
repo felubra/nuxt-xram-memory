@@ -3,6 +3,7 @@ export default async function ({ store }) {
     try {
       await store.dispatch('fetchPagesInMenu')
     } catch {
+      // ignore erros
       return Promise.resolve()
     }
   }
