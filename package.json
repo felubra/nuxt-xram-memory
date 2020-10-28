@@ -33,7 +33,7 @@
     "email-validator": "^2.0.4",
     "fold-to-ascii": "^5.0.0",
     "human-size": "^1.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "lunr-languages": "git+https://github.com/weixsong/lunr-languages.git",
     "natsort": "^2.0.2",
     "nuxt": "^2.4.3",
