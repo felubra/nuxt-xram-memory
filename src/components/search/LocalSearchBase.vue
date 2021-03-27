@@ -119,7 +119,7 @@ export default {
     searchState: {
       deep: true,
       async handler (val) {
-        this.$worker.searchState = val
+        await this.$worker.setSearchState(val)
         await this.getResultsFromWorker()
         this.filterDataSources = await this.$worker.filterDataSources
       }

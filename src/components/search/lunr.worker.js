@@ -73,16 +73,22 @@ const obj = new Vue({
     },
     /**
      * Retorna objeto com os filtros que tem algum valor selecionado.
+     * Exclua o filtro de busca de texto completo ("text"), pois ele
+     * não corresponde a nenhuma propriedade dos objetos indexados.
+     * Se não houver nenhum filtro selecionado, retorne `null`.
      */
     selectedFilters () {
-      return Object.freeze(
+      const selectedFilters = Object.freeze(
         Object.entries(this.filterState).reduce((selected, [key, value]) => {
-          if (!isEmpty(value)) {
+          if (key !== 'text' && !isEmpty(value)) {
             selected[key] = value
           }
           return selected
         }, {})
       )
+      return selectedFilters && Object.keys(selectedFilters).length === 0 && obj.constructor === Object
+        ? selectedFilters
+        : null
     },
     /**
      * Os resultados de busca filtrados de acordo com o valor nos filtros selecionados.
@@ -90,22 +96,24 @@ const obj = new Vue({
     searchResults () {
       try {
         const sortFn = natsort({ insensitive: true, desc: this.orderBy.desc })
-        return Object.freeze(
-          matchArray(this.unfilteredSearchResults, this.selectedFilters)
-            .sort((a, b) => {
-              try {
-                switch (this.orderBy.field) {
-                  case 'title': {
-                    return sortFn(a.uri, b.uri)
-                  }
-                  default: {
-                    return sortFn(a[this.orderBy.field], b[this.orderBy.field])
-                  }
+        const searchResults = this.selectedFilters
+          ? matchArray(this.unfilteredSearchResults, this.selectedFilters)
+          : this.unfilteredSearchResults
+        return Object.freeze(searchResults
+          .sort((a, b) => {
+            try {
+              switch (this.orderBy.field) {
+                case 'title': {
+                  return sortFn(a.uri, b.uri)
                 }
-              } catch (e) {
-                return 0
+                default: {
+                  return sortFn(a[this.orderBy.field], b[this.orderBy.field])
+                }
               }
-            }))
+            } catch (e) {
+              return 0
+            }
+          }))
       } catch (e) {
         return []
       }
