@@ -43,7 +43,9 @@ export default {
           return {
             text: keyword.name,
             slug: keyword.slug,
-            size: (keyword.news_count / keywordsStdDeviation) * this.sizeDelta
+            size: keywordsStdDeviation === 0
+              ? this.sizeDelta
+              : (keyword.news_count / keywordsStdDeviation) * this.sizeDelta
           }
         })
       } catch {
