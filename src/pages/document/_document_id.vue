@@ -172,8 +172,8 @@ export default {
       return this.document.mime_type === 'application/pdf'
     },
     documentPages () {
-      if (this.documentIsPDF) {
-        try {
+      try {
+        if (this.documentIsPDF) {
           return this.document.pages.map((page, index, pages) => {
             return {
               src: this.$utils.getMediaUrl(page.thumbnails.document_preview),
@@ -184,17 +184,17 @@ export default {
                   : '(capa)'
             }
           })
-        } catch {
-          return []
         }
+        return [
+          {
+            src: this.$utils.getMediaUrl(this.document.canonical_url),
+            thumbnailSrc: this.$utils.getMediaUrl(this.document.thumbnails.thumbnail),
+            description: this.document.description || ''
+          }
+        ]
+      } catch {
+        return []
       }
-      return [
-        {
-          src: this.$utils.getMediaUrl(this.document.canonical_url),
-          thumbnailSrc: this.$utils.getMediaUrl(this.document.thumbnails.thumbnail),
-          description: this.document.description || ''
-        }
-      ]
     },
     documentSize () {
       try {
