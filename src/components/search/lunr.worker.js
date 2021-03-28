@@ -78,17 +78,17 @@ const obj = new Vue({
      * Se não houver nenhum filtro selecionado, retorne `null`.
      */
     selectedFilters () {
-      const selectedFilters = Object.freeze(
-        Object.entries(this.filterState).reduce((selected, [key, value]) => {
-          if (key !== 'text' && !isEmpty(value)) {
-            selected[key] = value
-          }
-          return selected
-        }, {})
+      return Object.freeze(
+        Object.entries(this.filterState)
+          .reduce((selected, [key, value]) => {
+            if (key !== 'text') {
+              if (!isEmpty(value)) {
+                selected[key] = value
+              }
+            }
+            return selected
+          }, {})
       )
-      return selectedFilters && Object.keys(selectedFilters).length === 0 && obj.constructor === Object
-        ? selectedFilters
-        : null
     },
     /**
      * Os resultados de busca filtrados de acordo com o valor nos filtros selecionados.
@@ -96,10 +96,11 @@ const obj = new Vue({
     searchResults () {
       try {
         const sortFn = natsort({ insensitive: true, desc: this.orderBy.desc })
-        const searchResults = this.selectedFilters
-          ? matchArray(this.unfilteredSearchResults, this.selectedFilters)
-          : this.unfilteredSearchResults
-        return searchResults
+        const searchResults = isEmpty(this.selectedFilters)
+          ? this.unfilteredSearchResults
+          : matchArray(this.unfilteredSearchResults, this.selectedFilters)
+        return Object.freeze(searchResults
+          .slice()
           .sort((a, b) => {
             try {
               switch (this.orderBy.field) {
@@ -113,7 +114,7 @@ const obj = new Vue({
             } catch (e) {
               return 0
             }
-          })
+          }))
       } catch (e) {
         return []
       }
