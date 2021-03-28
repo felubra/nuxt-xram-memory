@@ -99,7 +99,7 @@ const obj = new Vue({
         const searchResults = this.selectedFilters
           ? matchArray(this.unfilteredSearchResults, this.selectedFilters)
           : this.unfilteredSearchResults
-        return Object.freeze(searchResults
+        return searchResults
           .sort((a, b) => {
             try {
               switch (this.orderBy.field) {
@@ -113,7 +113,7 @@ const obj = new Vue({
             } catch (e) {
               return 0
             }
-          }))
+          })
       } catch (e) {
         return []
       }
