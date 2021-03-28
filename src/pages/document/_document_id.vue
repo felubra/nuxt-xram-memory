@@ -192,7 +192,7 @@ export default {
         {
           src: this.$utils.getMediaUrl(this.document.canonical_url),
           thumbnailSrc: this.$utils.getMediaUrl(this.document.thumbnails.thumbnail),
-          description: document.description || ''
+          description: this.document.description || ''
         }
       ]
     },
