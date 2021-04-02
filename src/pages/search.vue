@@ -17,27 +17,28 @@
       :index-u-r-l="indexURL"
       @updateDownloadProgress="updateDownloadProgress"
     >
-      <!-- 3 estados principais são possíveis nesta página: -->
-      <!-- 1o Estado: baixando ou carregando o índice, quando exibiremos o indicador de carregamento.
-        TODO: considerar o download do índice como carregamento também
-        TODO: abstrair SearchFilters -->
-
-      <div
-        v-loading="isDownloading || isLoading"
-        :class="{
-          'Page SearchPage': true,
-          'SearchPage--loading': isLoading || isDownloading
-        }"
-      >
+      <div class="Page SearchPage">
         <transition
           v-if="!isEmpty"
           appear
           name="fade"
           mode="out-in"
         >
+          <!-- 3 estados principais são possíveis nesta página: -->
+          <!-- 1o Estado: baixando ou carregando o índice, quando exibiremos o indicador de carregamento.
+        TODO: considerar o download do índice como carregamento também
+        TODO: abstrair SearchFilters -->
+          <div
+            v-if="isDownloading || isLoading"
+            key="loading"
+            v-loading="true"
+            :items="searchResults"
+            :element-loading-text="isDownloading && isFinite(downloadProgress) ? `${downloadProgress}%` : `Carregando...`"
+            element-loading-background="transparent"
+          />
           <!-- 2o Estado: índice carregado, quando exibiremos os resultados de busca e os filtros. -->
           <div
-            v-if="hasLoaded"
+            v-else-if="hasLoaded"
             key="loaded"
           >
             <div class="SearchBar">
@@ -187,7 +188,6 @@ export default {
       }
     }
   },
-
   data () {
     return {
       indexURL: '',
@@ -226,9 +226,6 @@ export default {
   display: flex
   flex-direction: column
 
-.SearchPage--loading
-  flex: 1
-
 @media only screen and (min-width: $tablet)
   .Filter
     width: auto
@@ -249,6 +246,9 @@ export default {
 
 .SearchPage .SearchBar .el-input__inner
   padding: .5rem
+
+.Page.SearchPage > div > div > div.el-loading-spinner
+  margin-top: 0
 
 .Filter label .microtext
   color: #a1a1a1
