@@ -17,8 +17,17 @@
       :index-u-r-l="indexURL"
       @updateDownloadProgress="updateDownloadProgress"
     >
+      <!-- 3 estados principais são possíveis nesta página: -->
+      <!-- 1o Estado: baixando ou carregando o índice, quando exibiremos o indicador de carregamento.
+        TODO: considerar o download do índice como carregamento também
+        TODO: abstrair SearchFilters -->
+
       <div
-        class="Page SearchPage"
+        v-loading="isDownloading || isLoading"
+        :class="{
+          'Page SearchPage': true,
+          'SearchPage--loading': isLoading || isDownloading
+        }"
       >
         <transition
           v-if="!isEmpty"
@@ -26,21 +35,9 @@
           name="fade"
           mode="out-in"
         >
-          <!-- 3 estados principais são possíveis nesta página: -->
-          <!-- 1o Estado: baixando ou carregando o índice, quando exibiremos o indicador de carregamento.
-        TODO: considerar o download do índice como carregamento também
-        TODO: abstrair SearchFilters -->
-          <div
-            v-if="isDownloading || isLoading"
-            key="loading"
-            v-loading="true"
-            :items="searchResults"
-            :element-loading-text="isDownloading && isFinite(downloadProgress) ? `${downloadProgress}%` : `Carregando...`"
-            element-loading-background="transparent"
-          />
           <!-- 2o Estado: índice carregado, quando exibiremos os resultados de busca e os filtros. -->
           <div
-            v-else-if="hasLoaded"
+            v-if="hasLoaded"
             key="loaded"
           >
             <div class="SearchBar">
@@ -190,6 +187,7 @@ export default {
       }
     }
   },
+
   data () {
     return {
       indexURL: '',
@@ -227,6 +225,9 @@ export default {
   width: 100%
   display: flex
   flex-direction: column
+
+.SearchPage--loading
+  flex: 1
 
 @media only screen and (min-width: $tablet)
   .Filter
