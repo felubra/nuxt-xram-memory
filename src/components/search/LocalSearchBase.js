@@ -1,22 +1,3 @@
-<template>
-  <!-- TODO: não pode ser um renderless component? -->
-  <div>
-    <slot
-      v-bind="{
-        searchResults,
-        resultCount,
-        clear,
-        hasLoaded,
-        hasError,
-        isLoading,
-        isDownloading,
-        lastSearchTime,
-        indexDownloadProgress
-      }"
-    />
-  </div>
-</template>
-<script>
 import {
   EMPTY,
   DOWNLOADING,
@@ -266,6 +247,18 @@ export default {
           })
         })
     }
+  },
+  render () {
+    return this.$scopedSlots.default({
+      searchResults: this.searchResults,
+      resultCount: this.resultCount,
+      clear: this.clear,
+      hasLoaded: this.hasLoaded,
+      hasError: this.hasError,
+      isLoading: this.isLoading,
+      isDownloading: this.isDownloading,
+      lastSearchTime: this.lastSearchTime,
+      indexDownloadProgress: this.indexDownloadProgress
+    })
   }
 }
-</script>

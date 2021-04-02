@@ -13,146 +13,149 @@
         clear,
       }"
       :order-by="orderedBy"
-      class="Page SearchPage"
       :initial-state="initialState"
       :index-u-r-l="indexURL"
       @updateDownloadProgress="updateDownloadProgress"
     >
-      <transition
-        v-if="!isEmpty"
-        appear
-        name="fade"
-        mode="out-in"
+      <div
+        class="Page SearchPage"
       >
-        <!-- 3 estados principais são possíveis nesta página: -->
-        <!-- 1o Estado: baixando ou carregando o índice, quando exibiremos o indicador de carregamento.
+        <transition
+          v-if="!isEmpty"
+          appear
+          name="fade"
+          mode="out-in"
+        >
+          <!-- 3 estados principais são possíveis nesta página: -->
+          <!-- 1o Estado: baixando ou carregando o índice, quando exibiremos o indicador de carregamento.
         TODO: considerar o download do índice como carregamento também
         TODO: abstrair SearchFilters -->
-        <div
-          v-if="isDownloading || isLoading"
-          key="loading"
-          v-loading="true"
-          :items="searchResults"
-          :element-loading-text="isDownloading && isFinite(downloadProgress) ? `${downloadProgress}%` : `Carregando...`"
-          element-loading-background="transparent"
-        />
-        <!-- 2o Estado: índice carregado, quando exibiremos os resultados de busca e os filtros. -->
-        <div
-          v-else-if="hasLoaded"
-          key="loaded"
-        >
-          <div class="SearchBar">
-            <LocalSearchInput
-              field-name="query"
-              placeholder="Pesquisar no acervo"
-            >
-              <template #suffix>
-                <i class="material-icons">search</i>
-              </template>
-            </LocalSearchInput>
-          </div>
-
-          <CollapsibleContainer class="Filters">
-            <div class="Filter">
-              <label for="typeFilter"><Microtext>Tipo</Microtext></label>
-              <LocalSearchDropDown
-                :label-fn="getLabelForType"
-                field-name="type"
-                component-id="typeFilter"
-              />
-            </div>
-            <div class="Filter">
-              <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
-              <LocalSearchDropDown
-                field-name="newspaper.title"
-                component-id="newspaperFilter"
-              />
-            </div>
-            <div class="Filter">
-              <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
-              <LocalSearchDropDown
-                field-name="keywords"
-                component-id="keywordsFilter"
-              />
-            </div>
-            <div class="Filter">
-              <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
-              <LocalSearchDropDown
-                field-name="subjects"
-                component-id="subjectsFilter"
-              />
-            </div>
-          </CollapsibleContainer>
-          <div class="ResultStatsAndOrdering">
-            <div class="OrderSelector">
-              <Microtext arrow="down">
-                Ordernar por
-              </Microtext>
-              <el-select
-                v-model="orderedBy"
-                value-key="field"
-              >
-                <el-option
-                  v-for="option in availableOrderings"
-                  :key="option.field"
-                  :value="option"
-                  :label="option.title"
-                />
-              </el-select>
-            </div>
-            <ResultStats
-              :time="lastSearchTime"
-              :total-results="resultCount"
-            />
-          </div>
-          <!-- Dentro deste estágio, temos duas possibilidades: -->
-          <transition
-            name="fade"
-            mode="out-in"
+          <div
+            v-if="isDownloading || isLoading"
+            key="loading"
+            v-loading="true"
+            :items="searchResults"
+            :element-loading-text="isDownloading && isFinite(downloadProgress) ? `${downloadProgress}%` : `Carregando...`"
+            element-loading-background="transparent"
+          />
+          <!-- 2o Estado: índice carregado, quando exibiremos os resultados de busca e os filtros. -->
+          <div
+            v-else-if="hasLoaded"
+            key="loaded"
           >
-            <!-- Substado 1: temos resultados -->
-            <NewsGrid
-              v-if="resultCount > 0"
-              key="hasResults"
-              class="NewsGrid"
-              :items="searchResults"
-            />
-            <!-- Substado 2: NÃO temos resultados -->
-            <div
-              v-else-if="resultCount == 0"
-              key="noResults"
-              class="NoResults"
-            >
-              Sua busca não encontrou nenhum resultado.
-              <br>
-              <el-button
-                type="primary"
-                @click="clear"
+            <div class="SearchBar">
+              <LocalSearchInput
+                field-name="query"
+                placeholder="Pesquisar no acervo"
               >
-                Tente novamente
-              </el-button>
+                <template #suffix>
+                  <i class="material-icons">search</i>
+                </template>
+              </LocalSearchInput>
             </div>
-          </transition>
-        </div>
-        <!-- 3o Estado: erro (de download do índice ou de carregamento do índice) -->
-        <section
-          v-else-if="hasError"
-          key="error"
-          class="CenteredPage"
-        >
-          <header>
-            <Microtext
-              tag="h2"
-              arrow="down"
+
+            <CollapsibleContainer class="Filters">
+              <div class="Filter">
+                <label for="typeFilter"><Microtext>Tipo</Microtext></label>
+                <LocalSearchDropDown
+                  :label-fn="getLabelForType"
+                  field-name="type"
+                  component-id="typeFilter"
+                />
+              </div>
+              <div class="Filter">
+                <label for="siteFilter"><Microtext>Site/Veículo</Microtext></label>
+                <LocalSearchDropDown
+                  field-name="newspaper.title"
+                  component-id="newspaperFilter"
+                />
+              </div>
+              <div class="Filter">
+                <label for="keywordsFilter"><Microtext>Palavras-chave</Microtext></label>
+                <LocalSearchDropDown
+                  field-name="keywords"
+                  component-id="keywordsFilter"
+                />
+              </div>
+              <div class="Filter">
+                <label for="subjectsFilter"><Microtext>Assuntos</Microtext></label>
+                <LocalSearchDropDown
+                  field-name="subjects"
+                  component-id="subjectsFilter"
+                />
+              </div>
+            </CollapsibleContainer>
+            <div class="ResultStatsAndOrdering">
+              <div class="OrderSelector">
+                <Microtext arrow="down">
+                  Ordernar por
+                </Microtext>
+                <el-select
+                  v-model="orderedBy"
+                  value-key="field"
+                >
+                  <el-option
+                    v-for="option in availableOrderings"
+                    :key="option.field"
+                    :value="option"
+                    :label="option.title"
+                  />
+                </el-select>
+              </div>
+              <ResultStats
+                :time="lastSearchTime"
+                :total-results="resultCount"
+              />
+            </div>
+            <!-- Dentro deste estágio, temos duas possibilidades: -->
+            <transition
+              name="fade"
+              mode="out-in"
             >
-              Erro
-            </Microtext>
-          </header>
-          <main>
-            <p>Desculpe-nos, mas a pesquisa não está disponível no momento. Por-favor, volte mais tarde.</p>
-          </main>
-        </section>
-      </transition>
+              <!-- Substado 1: temos resultados -->
+              <NewsGrid
+                v-if="resultCount > 0"
+                key="hasResults"
+                class="NewsGrid"
+                :items="searchResults"
+              />
+              <!-- Substado 2: NÃO temos resultados -->
+              <div
+                v-else-if="resultCount == 0"
+                key="noResults"
+                class="NoResults"
+              >
+                Sua busca não encontrou nenhum resultado.
+                <br>
+                <el-button
+                  type="primary"
+                  @click="clear"
+                >
+                  Tente novamente
+                </el-button>
+              </div>
+            </transition>
+          </div>
+          <!-- 3o Estado: erro (de download do índice ou de carregamento do índice) -->
+          <section
+            v-else-if="hasError"
+            key="error"
+            class="CenteredPage"
+          >
+            <header>
+              <Microtext
+                tag="h2"
+                arrow="down"
+              >
+                Erro
+              </Microtext>
+            </header>
+            <main>
+              <p>Desculpe-nos, mas a pesquisa não está disponível no momento. Por-favor, volte mais tarde.</p>
+            </main>
+          </section>
+        </transition>
+      </div>
     </LocalSearchBase>
   </client-only>
 </template>
