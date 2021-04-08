@@ -52,12 +52,7 @@ module.exports = {
         href: '/favicon-16x16.png'
       },
       { rel: 'manifest', href: '/site.webmanifest' },
-      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#5bbad5' },
-      {
-        rel: 'stylesheet',
-        href:
-          'https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Roboto:400,400i,500,500i|Vollkorn:400,400i,700,700i|Vollkorn+SC&display=swap'
-      }
+      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#5bbad5' }
     ]
   },
   /*
@@ -77,6 +72,7 @@ module.exports = {
     '@nuxtjs/vuetify'
   ],
   plugins: [
+    '@/plugins/custom/fontSource.js',
     { src: '@/plugins/contrib/resize-sensor.js', ssr: false },
     { src: '@/plugins/contrib/element-ui', ssr: false },
     { src: '@/plugins/contrib/drag-scroll', ssr: false },
