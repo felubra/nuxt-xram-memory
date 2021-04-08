@@ -106,7 +106,7 @@ module.exports = {
     progress: false
   },
   publicRuntimeConfig: {
-    version: '0.6.11',
+    version: '0.6.12',
     axios: {
       browserBaseURL: process.env.API_URL
     },
