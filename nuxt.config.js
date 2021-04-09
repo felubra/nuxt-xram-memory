@@ -106,7 +106,7 @@ module.exports = {
     progress: false
   },
   publicRuntimeConfig: {
-    version: '0.6.12',
+    version: '0.7.1',
     axios: {
       browserBaseURL: process.env.API_URL
     },
@@ -157,6 +157,13 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+    transpile: [
+      '@fontsource/material-icons',
+      '@fontsource/roboto',
+      '@fontsource/material-icons-outlined',
+      '@fontsource/vollkorn',
+      '@fontsource/vollkorn-sc'
+    ],
     terser: {
       extractComments: false // default was LICENSES
     },
