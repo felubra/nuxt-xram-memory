@@ -81,7 +81,8 @@ module.exports = {
     '@/plugins/contrib/axios',
     '@/plugins/custom/dataSources',
     '@/plugins/custom/utils',
-    '@/plugins/custom/essential-content.js'
+    '@/plugins/custom/essential-content.js',
+    '@/plugins/contrib/lazy-sizes'
   ],
 
   /*
