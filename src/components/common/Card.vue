@@ -7,8 +7,8 @@
             :key="imageSrc"
             width="250"
             height="250"
-            class="ImageFilePreview__OriginalImage"
-            :src="imageSrc"
+            class="ImageFilePreview__OriginalImage lazyload"
+            :data-src="imageSrc"
             @error="removeImage"
           >
         </slot>
