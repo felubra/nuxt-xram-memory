@@ -37,6 +37,7 @@
     "email-validator": "^2.0.4",
     "fold-to-ascii": "^5.0.0",
     "human-size": "^1.1.0",
+    "lazysizes": "^5.3.2",
     "lodash": "^4.17.20",
     "lunr-languages": "git+https://github.com/weixsong/lunr-languages.git",
     "natsort": "^2.0.2",
