@@ -123,6 +123,9 @@ header > .microtext > span
 .viewer-fixed .viewer-canvas > img
   box-shadow: none
 
+img.lazyload:not([src]) {
+	visibility: hidden;
+}
 
 @media only screen and (min-width: $tablet)
   html
