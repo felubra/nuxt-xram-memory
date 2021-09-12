@@ -114,6 +114,7 @@ export default {
       }
     },
     orderBy: {
+      immediate: true,
       async handler (val) {
         if (val) {
           this.$worker.orderBy = val
