@@ -108,7 +108,6 @@ export default {
           const subjectsForInitial = await this.$api.Subjects.getByInitial(initial)
           this.$nextTick(() => (this.subjects = subjectsForInitial))
         } catch {
-          debugger
         } // eslint-disable-line no-empty
       }
     },

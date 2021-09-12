@@ -105,11 +105,11 @@ export default ({ $config: { mediaURL, apiURL, version } }, inject) => {
     return typeof item.url === 'object'
       ? item.url
       : {
-        name: 'slug',
-        params: {
-          slug: sanitize(item.url)
+          name: 'slug',
+          params: {
+            slug: sanitize(item.url)
+          }
         }
-      }
   }
 
   inject('utils', {

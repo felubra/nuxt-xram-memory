@@ -3,7 +3,6 @@ const pkg = require('./package')
 const WorkerPlugin = require('worker-plugin')
 
 module.exports = {
-  mode: 'universal',
   srcDir: 'src/',
   generate: {
     routes: function () {
@@ -92,7 +91,6 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/dotenv', // TODO: remover
     '@nuxtjs/axios',
-    'nuxt-device-detect',
     '@nuxtjs/style-resources'
   ],
   styleResources: {
