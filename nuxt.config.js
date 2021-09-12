@@ -6,18 +6,34 @@ module.exports = {
   target: 'static',
   srcDir: 'src/',
   generate: {
-    routes: function () {
+    crawler: true,
+    routes: async function () {
       const baseURL = process.env.API_URL || 'http://localhost:8000'
+      const username = process.env.WEBSITE_USER
+      const password = process.env.WEBSITE_PASSWORD
+
+      const { data: { token = '' } } = await axios.post('/api/v1/auth_token', {
+        username,
+        password
+      }, { baseURL })
+
+      if (token) {
+        console.log('Token de autenticação obtido com sucesso')
+      }
+
       const axiosInstance = axios.create({
-        baseURL
+        baseURL,
+        headers: {
+          Authorization: `Token ${token}`
+        }
       })
+
       return Promise.all([
-        axiosInstance.get('api/v1/pages/in_menu'),
-        axiosInstance.get('api/v1/pages/featured')
+        axiosInstance.get('api/v1/news')
       ])
         .then(responses => responses.map(response => response.data))
         .then(pages => pages.reduce((acc, val) => acc.concat(val), []))
-        .then(pages => pages.map(page => `/${page.id}`))
+        .then(pages => pages.map(page => `/news/${page.slug}`))
     }
   },
   /*
