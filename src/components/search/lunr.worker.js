@@ -104,6 +104,9 @@ const obj = new Vue({
           .sort((a, b) => {
             try {
               switch (this.orderBy.field) {
+                case 'relevance': {
+                  return 0
+                }
                 case 'title': {
                   return sortFn(a.uri, b.uri)
                 }
