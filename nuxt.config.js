@@ -3,6 +3,7 @@ const pkg = require('./package')
 const WorkerPlugin = require('worker-plugin')
 
 module.exports = {
+  target: 'static',
   srcDir: 'src/',
   generate: {
     routes: function () {
