@@ -2,18 +2,267 @@ Changelog
 =========
 
 
-(não publicado)
----------------
+v0.8.0 (2021-09-12)
+-------------------
 
 Corrigido
 ~~~~~~~~~
+- Allow prefixed tags with a 'v' [Felipe]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.8.0. [Felipe]
+- Feat/relevance sorting (#127) [Felipe Lube de Bragança]
+
+  * chore: add relevance filter option
+
+  * feat: sort by relevance (the original sort order)
+
+  * fix: orderBy should be considered immediately on the first listing
+
+
+v0.7.3 (2021-09-12)
+-------------------
+
+Adicionado
+~~~~~~~~~~
+- Image lazy loading in Card's default image. [Felipe]
+- Set node version via .nvmrc. [Felipe]
+
+Corrigido
+~~~~~~~~~
+- Avoid broken image symbol. [Felipe]
+- Rename file. [Felipe]
+
+Outros
+~~~~~~
+- Update packages and remove unused ones. [Felipe]
+
+  Squashed commit of the following:
+
+  commit 46a9f08a0cc54de30283f0de7b05292c210c469a
+- Install a plugin for the lazysizes library. [Felipe]
+- Add lazysizes library. [Felipe]
+- Add npmrc file. [Felipe]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.7.3. [Felipe]
+
+
+v0.7.2 (2021-04-09)
+-------------------
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.7.2. [Felipe Lube de Bragança]
+
+
+v0.7.1 (2021-04-09)
+-------------------
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.7.1. [Felipe Lube de Bragança]
+
+
+v0.7.0 (2021-04-08)
+-------------------
+
+Adicionado
+~~~~~~~~~~
+- Create a plugin to load the fonts. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Load the fonts via the plugin; remove external links. [Felipe Lube de
+  Bragança]
+- Add fonts used by the project. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.7.0. [Felipe Lube de Bragança]
+
+
+v0.6.11 (2021-04-02)
+--------------------
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.11. [Felipe Lube de Bragança]
+- Revert "fix: center loading spinner" [Felipe Lube de Bragança]
+
+  This reverts commit b098a8e4239a3a002ec81ce00823c680fea233c8.
+
+
+v0.6.10 (2021-04-02)
+--------------------
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.10. [Felipe Lube de Bragança]
+
+
+v0.6.9 (2021-04-02)
+-------------------
+
+Corrigido
+~~~~~~~~~
+- Center loading spinner. [Felipe Lube de Bragança]
+
+Outros
+~~~~~~
+- Update packages. [Felipe Lube de Bragança]
+- Update target browser list. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.9. [Felipe Lube de Bragança]
+- Refactor: LocalSearchBase as renderless component. [Felipe Lube de
+  Bragança]
+
+
+v0.6.8 (2021-03-28)
+-------------------
+
+Corrigido
+~~~~~~~~~
+- DocumentPages wrong variable access. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.8. [Felipe Lube de Bragança]
+- Refactor: protect whole documentPages with try/catch. [Felipe Lube de
+  Bragança]
+
+
+v0.6.7 (2021-03-28)
+-------------------
+
+Corrigido
+~~~~~~~~~
+- Search and filtering bug. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.7. [Felipe Lube de Bragança]
+
+
+v0.6.6 (2021-03-28)
+-------------------
+
+Corrigido
+~~~~~~~~~
+- Remove Object.freeze. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.6. [Felipe Lube de Bragança]
+
+
+v0.6.5 (2021-03-28)
+-------------------
+
+Corrigido
+~~~~~~~~~
+- Revert to direct access to searchState to aviod read only error.
+  [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.5. [Felipe Lube de Bragança]
+
+
+v0.6.4 (2021-03-27)
+-------------------
+
+Corrigido
+~~~~~~~~~
+- Update version. [Felipe Lube de Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.4. [Felipe Lube de Bragança]
+
+
+v0.6.3 (2021-03-27)
+-------------------
+
+Corrigido
+~~~~~~~~~
+- HomTagCloud: guard against zero standard deviation. [Felipe Lube de
+  Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.3. [Felipe Lube de Bragança]
+
+
+v0.6.2 (2021-03-27)
+-------------------
+
+Corrigido
+~~~~~~~~~
+- Update package version. [Felipe Lube de Bragança]
+- Do not filter results if there is no valid filter selected (#121)
+  [Felipe Lube de Bragança]
 - Correção na geração do changelog. [Felipe Lube de Bragança]
 
 Outros
 ~~~~~~
+- Chore: update @nuxt/axios. [Felipe Lube de Bragança]
+- Remove ava and boilerplate tests. [Felipe Lube de Bragança]
+- Chore(deps): [security] bump node-fetch from 2.6.0 to 2.6.1 (#112)
+  [dependabot-preview[bot]]
+
+  Bumps [node-fetch](https://github.com/bitinn/node-fetch) from 2.6.0 to 2.6.1. **This update includes a security fix.**
+  - [Release notes](https://github.com/bitinn/node-fetch/releases)
+  - [Changelog](https://github.com/node-fetch/node-fetch/blob/master/docs/CHANGELOG.md)
+  - [Commits](https://github.com/bitinn/node-fetch/compare/v2.6.0...v2.6.1)
+- Chore(deps): [security] bump bl from 1.2.2 to 1.2.3 (#116)
+  [dependabot-preview[bot]]
+
+  Bumps [bl](https://github.com/rvagg/bl) from 1.2.2 to 1.2.3. **This update includes a security fix.**
+  - [Release notes](https://github.com/rvagg/bl/releases)
+  - [Commits](https://github.com/rvagg/bl/compare/v1.2.2...v1.2.3)
+- Chore(deps): [security] bump ini from 1.3.5 to 1.3.8 (#119)
+  [dependabot-preview[bot]]
+
+  Bumps [ini](https://github.com/isaacs/ini) from 1.3.5 to 1.3.8. **This update includes a security fix.**
+  - [Release notes](https://github.com/isaacs/ini/releases)
+  - [Commits](https://github.com/isaacs/ini/compare/v1.3.5...v1.3.8)
+- Chore(deps): [security] bump elliptic from 6.5.3 to 6.5.4 (#120)
+  [dependabot-preview[bot]]
+
+  Bumps [elliptic](https://github.com/indutny/elliptic) from 6.5.3 to 6.5.4. **This update includes a security fix.**
+  - [Release notes](https://github.com/indutny/elliptic/releases)
+  - [Commits](https://github.com/indutny/elliptic/compare/v6.5.3...v6.5.4)
+- Chore(deps): [security] bump object-path from 0.11.4 to 0.11.5 (#114)
+  [dependabot-preview[bot]]
+
+  Bumps [object-path](https://github.com/mariocasciaro/object-path) from 0.11.4 to 0.11.5. **This update includes a security fix.**
+  - [Release notes](https://github.com/mariocasciaro/object-path/releases)
+  - [Commits](https://github.com/mariocasciaro/object-path/commits)
+- Chore(deps): [security] bump dot-prop from 4.2.0 to 4.2.1 (#115)
+  [dependabot-preview[bot]]
+
+  Bumps [dot-prop](https://github.com/sindresorhus/dot-prop) from 4.2.0 to 4.2.1. **This update includes a security fix.**
+  - [Release notes](https://github.com/sindresorhus/dot-prop/releases)
+  - [Commits](https://github.com/sindresorhus/dot-prop/compare/v4.2.0...v4.2.1)
+- Chore(deps): [security] bump lodash from 4.17.15 to 4.17.20 (#117)
+  [dependabot-preview[bot]]
+
+  Bumps [lodash](https://github.com/lodash/lodash) from 4.17.15 to 4.17.20. **This update includes security fixes.**
+  - [Release notes](https://github.com/lodash/lodash/releases)
+  - [Commits](https://github.com/lodash/lodash/compare/4.17.15...4.17.20)
+- Atualização de Changelog e Readme. [Felipe Lube de Bragança]
 - Documentação de .env.dist. [Felipe Lube de Bragança]
 - Reorganização de arquivos e remoção de não usados. [Felipe Lube de
   Bragança]
+
+Não categorizado
+~~~~~~~~~~~~~~~~
+- V0.6.2. [Felipe Lube de Bragança]
 
 
 0.6.1 (2020-10-12)
