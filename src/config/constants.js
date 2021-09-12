@@ -25,6 +25,11 @@ export const DOWNLOAD_ERROR = 5
 /** Tipos de ordenação disponíveis para os resultados de busca */
 export const AVAILABLE_ORDERINGS = [
   {
+    field: 'relevance',
+    title: 'Relevância',
+    desc: true
+  },
+  {
     field: 'published_date',
     title: 'Data de publicação',
     desc: true
