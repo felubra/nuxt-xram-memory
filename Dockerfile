@@ -4,7 +4,7 @@ WORKDIR /src
 
 COPY package.json yarn.lock ./
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git automake autoconf libtool zlib zlib-dev g++ make libpng-dev
 
 RUN yarn install \
   --prefer-offline \
@@ -51,7 +51,7 @@ FROM node:lts-alpine as development
 
 WORKDIR /home/node
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git automake autoconf libtool zlib zlib-dev g++ make libpng-dev
 
 USER 1000
 
