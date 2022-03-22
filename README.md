@@ -1,96 +1,85 @@
-# Site do xRAM-Memory
+# xRAM-Memory's website
 
-Este é o site para o projeto xRAM-Memory, um mecanismo de busca e arquivo de notícias sobre assuntos determinados assuntos da política.
+This is the website of xRAM-Memory project, a search engine and archive of news about political subjects.
 
-## Entidades de dados
+## Data entities
 
-As peças de conteúdo do site podem ser divididas em:
-- Entidades de conteúdo:
-  - News (Notícia): uma notícia arquivada.
-  - Document (Documento): um documento, que pode ser uma imagem, uma captura de notícia em pdf ou um arquivo em formato diverso
-  - Page (Página estática): uma página com conteúdo em HTML arbitrário
-  - Album (Álbum de fotos): um conjunto de Documentos do tipo imagem com uma página associada
-- Entidades de taxonomia (classificação do conteúdo):
-  - Keyword (Palavra-chave): uma simples palavra usada para descrever um conteúdo, exemplos: prisão, polícia federal, operação etc.
-  - Subject (Assunto): um tópico que pode ter um texto descritivo e estar em destaque no site, por exemplo: "A prisão do presidente Temer".
+- Content types:
+  - News: a archived news;
+  - Document: a document that could be an image, an pdf capture or other file;
+  - Static page: an arbitrary content page created in the backend; and
+  - Photo album: a set of image documents in a gallery.
 
+- Taxonomy types:
+  - Keyword: simple words associated with a piece of content
+  - Subject: an topic with an title e.g. "President Temer imprisonment' associated with pieces of content and with a
+    dedicated page
 
-## Estrutura do projeto
+## Project structure
 
-O site foi feito em [Nuxt.js](https://nuxtjs.org/), um framework para criação de sites em Vue.js.
-A seguinte estrutura de arquivos foi adotada na pasta `src`:
+This site was made using [Nuxt.js 2.x](https://nuxtjs.org/), a framework based on [Vue.js framework](https://vuejs.org/)
+The following folder structure was adopted:
 
 ```
+src
 ├── assets
-│   └── styles - estilos em formato dos processadores Sass e Stylus
-├── components - os componentes em Vue utilizados no site
-│   ├── common - componentes utilizados em vários locais
-│   ├── home - componentes utilizados na página inicial
-│   ├── nav - componentes de navegação
-│   ├── news - componentes para exibição de informações de notícias
-│   ├── search - componentes usados na página de busca
-│   └── viewers - componentes para visualização de arquivos
-├── config - configuração estática, com algumas constantes utilizadas por todo site
-├── data-sources - serviços para busca de dados via HTTP
-│   └── api - serviço para comunicação com a API em Django
-├── layouts - componentes de layout, encapsulam os outros, utilizados pelas páginas
-├── middleware - funções executadas a cada transição de página do site
-├── pages - componentes vue que encapsulam as páginas do site
-│   ├── album
-│   │   └── _album_id.vue - página de um Álbum de Fotos, uma coleção de imagens
-│   ├── contact.vue - página de contato
-│   ├── document
-│   │   └── _document_id.vue - página para um Documento individual, aberto num visualizador
-│   ├── images.vue - página com os Álbuns de Fotos
-│   ├── index.vue - página inicial
+│   └── styles - global stylesheets in sass and stylus
+├── components - components sorted by feature/area of use
+│   ├── common
+│   ├── home
+│   ├── nav
 │   ├── news
-│   │   └── _slug.vue - página individual de uma Notícia
-│   ├── search.vue - página de pesquisa
-│   ├── _slug.vue - página para uma Página Estática
+│   ├── search
+│   └── viewers
+├── config - static configuration and constants
+├── data-sources - data services
+│   └── api - REST api for the Django backend
+├── layouts - layout components
+├── middleware - functions plugged in the request/response lifecycle
+├── pages - page components
+│   ├── album
+│   │   └── _album_id.vue
+│   ├── contact.vue
+│   ├── document
+│   │   └── _document_id.vue
+│   ├── images.vue
+│   ├── index.vue
+│   ├── news
+│   │   └── _slug.vue
+│   ├── search.vue
+│   ├── _slug.vue
 │   ├── subject
-│   │   └── _slug.vue - página de um Assunto
-│   ├── subjects - página com os Assuntos e as Palavras-chave
-│   └── subjects.vue - página com Assuntos e Palavras-chave
-├── plugins
-│   ├── contrib - componentes/bibliotecas de terceiros
-│   └── custom - componentes/bibliotecas próprios/customizados
-├── static - arquivos estáticos (imagens, favicons e metadados do site)
-└── store - uma store Vuex
+│   │   └── _slug.vue
+│   ├── subjects
+│   └── subjects.vue
+├── plugins - third-party libraries and custom components
+│   ├── contrib
+│   └── custom
+├── static - static files like images, icons and metadata
+└── store - [Vuex](https://vuex.vuejs.org/) store
 ```
+## Running the project
 
-A pasta `test` conterá os testes automatizados, ainda não implementados nesta etapa do projeto.
+### Locally
 
-## Rodando o projeto
+By default, the front-end expect that the following services are running in the following ports:
+- [Django (API)](https://github.com/felubra/django-xram_memory): `http://localhost:8000`
+- [Contact Message Relay](https://github.com/felubra/xram_memory-contact_message_relay): `http://localhost:3001`
 
-### Localmente
+The `.env.dist` file is a template for a `.env`file that should be copied into `./src` folder. This file contains the environment options that allow, e.g., changing the addresses of the services above.
 
-Por padrão, o site espera que os seguintes serviços estejam rodando nos endereços abaixo:
+Providing an `.env` file is not needed unless you want to change the default values.
 
-- Backend em Django (API): `http://localhost:8000`
-- Serviço relay de mensagens de contato: `http://localhost:3001`
-
-O arquivo `.env.dist` é um template para um arquivo `.env` que deverá ser copiado para a pasta `./src`. Este arquivo permite configurar o endereço dos serviços acima tanto em *client-side* ou *server-side*, além de outras configurações - o arquivo está documentado e possui valores padrão.
-
-O arquivo `.env` não é necessário para iniciar o site a menos que você queira alterar os valores padrão.
-
-Uma vez configurado, o site pode ser iniciado em desenvolvimento com os comandos abaixo. O site rodará por padrão em `http://localhost:3000`
+After installing the dependecies with `yarn`, you can run the site with the following command:
 
 ```bash
 yarn dev
 ```
-ou
+or
 ```bash
 npm run dev
 ```
 
-Às vezes é interessante iniciar o site em modo SPA (*server side rendering* desabilitado) para ter uma visibilidade melhor dos erros, além de depurar código no navegador com mais facilidade. Para isso, rode:
-
-```bash
-yarn dev:spa
-```
-ou
-```bash
-npm run dev:spa
-```
-
 ### Via Docker
+
+#TODO:
