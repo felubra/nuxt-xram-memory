@@ -1,6 +1,6 @@
 # xRAM-Memory's website
 
-This is the website of xRAM-Memory project, a search engine and archive of news about political subjects.
+This is the website (frontend) of xRAM-Memory project, a search engine and archive of news about political subjects.
 
 ## Data entities
 
